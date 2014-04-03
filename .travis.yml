@@ -1,0 +1,24 @@
+language: ruby
+env:
+  global:
+    - TRAVIS=true
+  matrix:
+    - TASK=spec DB=postgresql
+cache: bundler
+bundler_args: --without production
+before_install:
+  - sudo apt-get install libicu-dev -y
+branches:
+  only:
+    - 'feature/11-travis'
+rvm:
+  - 2.1.0
+services:
+
+before_script:
+  - "cp config/database.example.yml config/database.yml"
+  - "bundle exec rake db:setup"
+script: "bundle exec rake $TASK --trace"
+notifications:
+  email:
+    - kvirani@lighthouselabs.ca
