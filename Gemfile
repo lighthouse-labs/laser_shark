@@ -45,3 +45,5 @@ group :test do
   gem 'email_spec'
   # gem 'shoulda-matchers' # not ready for 4.1
 end
+
+gem 'omniauth'
