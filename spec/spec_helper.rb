@@ -5,6 +5,8 @@ require 'rspec/rails'
 require 'email_spec'
 require 'rspec/autorun'
 require 'database_cleaner'
+require 'capybara/rspec'
+require 'capybara/rails'
 require 'capybara/poltergeist'
 
 # Requires supporting ruby files with custom matchers and macros, etc,
