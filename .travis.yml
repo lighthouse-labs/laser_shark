@@ -8,9 +8,6 @@ cache: bundler
 bundler_args: --without production
 before_install:
   - sudo apt-get install libicu-dev -y
-branches:
-  only:
-    - 'feature/11-travis'
 rvm:
   - 2.1.0
 services:
