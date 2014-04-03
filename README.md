@@ -14,7 +14,7 @@ This project is built with:
 
 1. clone
 2. `bundle install`
-3. Setup your `config/database.yml` based off config/database.example.yml
+3. Setup your `config/database.yml` based off `config/database.example.yml` (`cp` it)
 4. `rake db:setup`
 
 ## Server
