@@ -26,4 +26,23 @@ describe Student do
 		student = build(:student, phone_number: "invalid_phone")
 		expect(student).to be_invalid
 	end
+
+	describe "#needs_setup?" do
+		it "returns true when first_name is nil" do
+			student = create(:student, first_name: nil)
+			expect(student.needs_setup?).to be_true
+		end
+		it "returns true when last_name is nil" do
+			student = create(:student, last_name: nil)
+			expect(student.needs_setup?).to be_true
+		end
+		it "returns true when email is nil" do
+			student = create(:student, email: nil)
+			expect(student.needs_setup?).to be_true
+		end
+		it "returns false when first_name, last_name, email are non-nil" do
+			student = create(:student)
+			expect(student.needs_setup?).to be_false
+		end
+	end
 end
