@@ -1,0 +1,19 @@
+h1 Enter Your Details
+div == form_for @student, as: :student, url: students_path, method: :post do |f|
+	== f.label :first_name
+	== f.text_field :first_name
+	br
+	== f.label :last_name
+	== f.text_field :last_name
+	br
+	== f.label :email
+	== f.email_field :email
+	br
+	== f.label :phone_number
+	== f.telephone_field :phone_number
+	br
+	== f.label :twitter
+	== f.text_field :twitter
+	br
+	== f.label :skype
+	== f.text_field :skype
