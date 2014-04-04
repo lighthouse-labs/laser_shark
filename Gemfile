@@ -20,6 +20,9 @@ gem 'bourbon'
 gem 'neat'
 gem 'font-awesome-rails'
 
+# Code Coverage via: www.coveralls.io
+gem 'coveralls', require: false
+
 group :development do
   gem 'spring'
   gem 'quiet_assets'
