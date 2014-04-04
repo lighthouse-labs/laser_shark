@@ -1,4 +1,5 @@
 language: ruby
+cache: bundler
 env:
   global:
     - TRAVIS=true
@@ -18,7 +19,10 @@ before_script:
   - "bin/rake db:create"
   - "bin/rake db:schema:load"
   - "bin/rake db:test:prepare" # shouldn't need this in 4.1 but doesn't work sometimes
-script: "bin/$TASK -f d"
+script: 
+  - RAILS_ENV=test bundle exec rake db:migrate --trace
+  - bundle exec rake db:test:prepare
+  - bundle exec rake
 notifications:
   email:
     - kvirani@lighthouselabs.ca
