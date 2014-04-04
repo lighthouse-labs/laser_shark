@@ -5,7 +5,9 @@ require 'rspec/rails'
 require 'email_spec'
 require 'rspec/autorun'
 require 'database_cleaner'
-require 'factory_girl_rails'
+require 'capybara/rspec'
+require 'capybara/rails'
+require 'capybara/poltergeist'
 
 # Requires supporting ruby files with custom matchers and macros, etc,
 # in spec/support/ and its subdirectories.
@@ -32,7 +34,7 @@ RSpec.configure do |config|
   # If you're not using ActiveRecord, or you'd prefer not to run each of your
   # examples within a transaction, remove the following line or assign false
   # instead of true.
-  config.use_transactional_fixtures = true
+  config.use_transactional_fixtures = false
 
   # If true, the base class of anonymous controllers will be inferred
   # automatically. This will be the default behavior in future versions of
@@ -45,13 +47,21 @@ RSpec.configure do |config|
   #     --seed 1234
   config.order = "random"
 
-  config.before(:suite) do
-    DatabaseCleaner.strategy = :truncation
+  # As per: http://blog.yux.ch/blog/2013/01/19/javascript-tests-with-phantomjs/
+  config.before :suite do
+    DatabaseCleaner.strategy = :transaction
+    DatabaseCleaner.clean_with :truncation
+    Capybara.javascript_driver = :poltergeist
   end
-  config.before(:each) do
-    DatabaseCleaner.start
+  config.before :each do
+    if example.metadata[:js]
+      DatabaseCleaner.strategy = :truncation
+    else
+      DatabaseCleaner.strategy = :transaction
+      DatabaseCleaner.start
+    end
   end
-  config.after(:each) do
+  config.after :each do
     DatabaseCleaner.clean
   end
 end
