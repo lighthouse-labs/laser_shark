@@ -3,8 +3,8 @@ env:
   global:
     - TRAVIS=true
   matrix:
-    - TASK=spec DB=postgresql
-cache: bundler
+    - TASK=rspec
+#cache: bundler # <= only for private repos on travis, it turns out
 bundler_args: --without production
 before_install:
   - sudo apt-get install libicu-dev -y
@@ -15,8 +15,10 @@ services:
 before_script:
   - psql -c 'create database travis_ci_test;' -U postgres
   - "cp config/database.yml.travis config/database.yml"
-  - "bundle exec rake db:setup"
-script: "bundle exec rake $TASK --trace"
+  - "bin/rake db:create"
+  - "bin/rake db:schema:load"
+  - "bin/rake db:test:prepare" # shouldn't need this in 4.1 but doesn't work sometimes
+script: "bin/$TASK -f d"
 notifications:
   email:
     - kvirani@lighthouselabs.ca

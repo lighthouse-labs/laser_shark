@@ -42,6 +42,7 @@ end
 
 group :test do
   gem 'capybara'
+  gem 'poltergeist'
   gem 'database_cleaner', '1.0.1'
   gem 'email_spec'
   # gem 'shoulda-matchers' # not ready for 4.1
