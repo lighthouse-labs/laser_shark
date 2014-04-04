@@ -22,4 +22,13 @@ ActiveRecord::Schema.define(version: 20140403025300) do
     t.datetime "updated_at"
   end
 
+  create_table "students", force: true do |t|
+    t.string "first_name"
+    t.string "last_name"
+    t.string "email"
+    t.string "phone_number"
+    t.string "twitter"
+    t.string "skype"
+  end
+
 end
