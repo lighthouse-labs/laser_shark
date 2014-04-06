@@ -34,4 +34,4 @@ build:
 
         - script:
             name: rspec
-            code: bin/rspec spec
+            code: CODECLIMATE_REPO_TOKEN=b22fff4f064105716d709c4f8271faf2f45846a8ea0a08172df3a945b7376d0b bin/rspec spec
