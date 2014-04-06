@@ -1,6 +1,10 @@
 LaserShark
 =========
 
+[![Code Climate](https://codeclimate.com/github/lighthouse-labs/laser_shark.png)](https://codeclimate.com/github/lighthouse-labs/laser_shark)
+
+
+
 ## Ruby / Rails
 
 This project is built with:
@@ -9,6 +13,9 @@ This project is built with:
 * slim instead of erb/haml
 * postgres 9.x
 * bourbon instead of bootstrap/foundation
+* phantomjs (use `brew` to install) for integration test driver
+  * Please make sure your phantomjs brew package is up2date: `brew update && brew upgrade phantomjs`
+* poltergeist for phantomjs driver
 
 ## Setup
 
