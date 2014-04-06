@@ -1,8 +1,9 @@
 LaserShark
 =========
 
-[![Code Climate](https://codeclimate.com/github/lighthouse-labs/laser_shark.png)](https://codeclimate.com/github/lighthouse-labs/laser_shark)
+[![Coverage Status](https://coveralls.io/repos/lighthouse-labs/laser_shark/badge.png)](https://coveralls.io/r/lighthouse-labs/laser_shark)
 
+[![Code Climate](https://codeclimate.com/github/lighthouse-labs/laser_shark.png)](https://codeclimate.com/github/lighthouse-labs/laser_shark)
 
 
 ## Ruby / Rails
