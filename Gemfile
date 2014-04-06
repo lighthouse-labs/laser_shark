@@ -46,6 +46,9 @@ group :test do
   gem 'database_cleaner', '1.0.1'
   gem 'email_spec'
   # gem 'shoulda-matchers' # not ready for 4.1
+
+  # http://d.pr/i/N429/2oGamluY
+  gem "codeclimate-test-reporter", require: nil
 end
 
 gem 'omniauth'
