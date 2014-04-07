@@ -4,18 +4,7 @@ describe SessionsController do
 
   describe "GET #create" do
     before :each do
-      request.env['omniauth.auth'] = {
-        "uid" => "uid",
-        "credentials" => {
-          "token" => "token"
-        },
-        'info' => {
-          'nickname' => 'kvirani',
-          'name' => 'Khurram Virani',
-          'email' => 'kvirani@lighthouselabs.ca',
-          'image' => 'http://imgur.com/fdsafsa.png',
-        }
-      }
+      request.env['omniauth.auth'] = GITHUB_OAUTH_HASH
     end
     context "student does not exist locally" do
       it "creates a new student" do

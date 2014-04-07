@@ -59,6 +59,10 @@ RSpec.configure do |config|
     DatabaseCleaner.strategy = :transaction
     DatabaseCleaner.clean_with :truncation
     Capybara.javascript_driver = :poltergeist
+
+    OmniAuth.config.test_mode = true
+
+    OmniAuth.config.mock_auth[:github] = OmniAuth::AuthHash.new(GITHUB_OAUTH_HASH)
   end
   config.before :each do
     if example.metadata[:js]
