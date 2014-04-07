@@ -7,7 +7,7 @@ class ApplicationController < ActionController::Base
   private
 
   def authenticate
-  	redirect_to github_session_path if !current_student
+    redirect_to github_session_path if !current_student
   end
 
   def current_student
