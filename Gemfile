@@ -20,6 +20,9 @@ gem 'bourbon'
 gem 'neat'
 gem 'font-awesome-rails'
 
+gem 'email_validator'
+gem 'reform'
+
 group :development do
   gem 'spring'
   gem 'quiet_assets'
@@ -46,4 +49,10 @@ group :test do
   gem 'database_cleaner', '1.0.1'
   gem 'email_spec'
   # gem 'shoulda-matchers' # not ready for 4.1
+
+  # http://d.pr/i/N429/2oGamluY
+  gem "codeclimate-test-reporter", require: nil
 end
+
+gem 'omniauth'
+gem 'omniauth-github'
