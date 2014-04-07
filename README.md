@@ -25,6 +25,15 @@ This project is built with:
 2. `bundle install`
 3. Setup your `config/database.yml` based off `config/database.example.yml` (`cp` it)
 4. `rake db:setup`
+5. Create an entry in your `/etc/hosts` called beacon.dev pointing to 127.0.0.1 so that your dev URL becomes `http://beacon.dev:3000/` instead of `http://localhost:3000/`
+6. Create a Github App (see below)
+
+## Github App Setup
+
+1. Create a Github application on your Github profile (for your dev environment): <https://github.com/settings/applications/new>
+2. Specify `http://beacon.dev:3000/auth/github/callback` as the Callback URL
+3. Add the OAuth client ID and client secret as `GITHUB_KEY` and `GITHUB_SECRET` to your `.env` file
+4. Restart your `guard` (just in case)
 
 ## Server
 

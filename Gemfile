@@ -20,6 +20,9 @@ gem 'bourbon'
 gem 'neat'
 gem 'font-awesome-rails'
 
+gem 'email_validator'
+gem 'reform'
+
 group :development do
   gem 'spring'
   gem 'quiet_assets'
@@ -50,3 +53,6 @@ group :test do
   # http://d.pr/i/N429/2oGamluY
   gem "codeclimate-test-reporter", require: nil
 end
+
+gem 'omniauth'
+gem 'omniauth-github'
