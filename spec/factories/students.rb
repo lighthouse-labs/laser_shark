@@ -10,6 +10,11 @@ FactoryGirl.define do
   	sequence(:token, 2000)
     completed_registration true
 
+    factory :student_for_auth do
+      token "token"
+      uid   "uid"
+    end
+
     factory :unregistered_student do
       phone_number nil
       twitter      nil
