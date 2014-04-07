@@ -20,6 +20,9 @@ gem 'bourbon'
 gem 'neat'
 gem 'font-awesome-rails'
 
+gem 'email_validator'
+gem 'reform'
+
 group :development do
   gem 'spring'
   gem 'quiet_assets'

@@ -1,14 +1,25 @@
 class Student < ActiveRecord::Base
-	validates_presence_of :uid, :token
-	validates :email, format: {with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i, message: "must have valid email address"}, unless:  Proc.new { |n| email.nil? }
-	validates :phone_number, length: {is: 10}, unless:  Proc.new { |n| phone_number.nil? }
 
-	def self.find_by_auth_hash(auth_hash)
-		where(uid: auth_hash["uid"]).first_or_create(token: auth_hash["credentials"]["token"])
-	end
+	validates :uid,   presence: true
+	validates :token, presence: true
 
-	def needs_setup?
-		first_name.nil? || last_name.nil? || email.nil?
+	class << self
+		def authenticate_via_github(auth)
+			where(uid: auth["uid"]).first_or_create(attributes_from_oauth(auth))
+		end
+
+		private
+
+		def attributes_from_oauth(auth)
+			{
+				token: auth["credentials"]["token"],
+				github_username: auth["info"]["nickname"],
+				first_name: auth["info"]["name"].to_s.split.first,
+				last_name: auth["info"]["name"].to_s.split.last,
+				avatar_url: auth["info"]["image"],
+				email: auth["info"]["email"]
+			}
+		end
 	end
 
 end

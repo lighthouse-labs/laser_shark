@@ -4,7 +4,18 @@ describe SessionsController do
 
 	describe "GET #create" do
 		before :each do
-			request.env['omniauth.auth'] = {"uid" => "uid", "credentials" => {"token" => "token"}}
+			request.env['omniauth.auth'] = {
+				"uid" => "uid",
+				"credentials" => {
+					"token" => "token"
+				},
+				'info' => {
+					'nickname' => 'kvirani',
+					'name' => 'Khurram Virani',
+					'email' => 'kvirani@lighthouselabs.ca',
+					'image' => 'http://imgur.com/fdsafsa.png',
+				}
+			}
 		end
 		context "student does not exist locally" do
 			it "creates a new student" do
@@ -12,10 +23,10 @@ describe SessionsController do
 					get :create, provider: "github"
 				end.to change(Student, :count).by(1)
 			end
-			it "redirect to new student" do
+			it "redirects to registration page" do
 				student = create(:student)
 				get :create, provider: "github"
-				expect(response).to redirect_to new_student_path
+				expect(response).to redirect_to new_registration_path
 			end
 		end
 		context "student does exist locally" do

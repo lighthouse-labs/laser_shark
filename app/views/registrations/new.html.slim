@@ -1,0 +1,37 @@
+h1 Enter Your Details
+
+/ Note: most of the markup here will get improved/fixed. Consider it temporary
+
+div
+	= form_for @form, as: :student, url: registration_path, method: :post do |f|
+
+		- if @form.errors.full_messages.any?
+			.errors
+				strong Please correct the following errors:
+				- @form.errors.full_messages.each do |msg|
+					li = msg
+			hr
+
+		div
+			= image_tag current_student.avatar_url, size: '100x100' if current_student.avatar_url?
+
+		= f.label :first_name
+		= f.text_field :first_name
+		br
+		= f.label :last_name
+		= f.text_field :last_name
+		br
+		= f.label :email
+		= f.email_field :email
+		br
+		= f.label :phone_number
+		= f.telephone_field :phone_number
+		br
+		= f.label :twitter
+		= f.text_field :twitter
+		br
+		= f.label :skype
+		= f.text_field :skype
+
+		hr
+		= f.submit 'Register'

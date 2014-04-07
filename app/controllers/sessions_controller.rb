@@ -2,12 +2,12 @@ class SessionsController < ApplicationController
 	skip_before_action :authenticate, only: [:create]
 
 	def create
-		@current_student = Student.find_by_auth_hash(auth_hash_params)
+		@current_student = Student.authenticate_via_github auth_hash_params
 		session[:student_id] = @current_student.id
-		if @current_student.needs_setup?
-			redirect_to new_student_path
+		if @current_student.completed_registration?
+			redirect_to :root
 		else
-			redirect_to root_url
+			redirect_to [:new, :registration]
 		end
 	end
 

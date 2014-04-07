@@ -1,13 +1,13 @@
 require 'spec_helper'
 
-describe StudentsController do
-	
+describe RegistrationsController do
+
 	logged_in_student
 
 	describe "GET #new" do
-		it "assigns a student form to @student" do
+		it "assigns a registration form to @form" do
 			get :new
-			expect(assigns(:student)).to be_a(NewStudentForm)
+			expect(assigns(:form)).to be_a(RegistrationForm)
 		end
 		it "renders :new" do
 			get :new
@@ -16,9 +16,9 @@ describe StudentsController do
 	end
 
 	describe "POST #create" do
-		it "assigns the student form to @student" do
+		it "assigns the registration form to @form" do
 			post :create, student: attributes_for(:student, uid: current_student.uid, token: current_student.token)
-			expect(assigns(:student)).to be_a(NewStudentForm)
+			expect(assigns(:form)).to be_a(RegistrationForm)
 		end
 		context "with valid attributes" do
 			it "does save the attributes to student" do
