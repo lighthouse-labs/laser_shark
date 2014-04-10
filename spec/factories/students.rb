@@ -9,6 +9,7 @@ FactoryGirl.define do
   	sequence(:uid, 1000)
   	sequence(:token, 2000)
     completed_registration true
+    association(:cohort)
 
     factory :student_for_auth do
       token "token"
