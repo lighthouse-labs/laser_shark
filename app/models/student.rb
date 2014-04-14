@@ -1,5 +1,6 @@
 class Student < ActiveRecord::Base
 
+  belongs_to :cohort
   validates :uid,   presence: true
   validates :token, presence: true
 
