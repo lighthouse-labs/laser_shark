@@ -36,6 +36,7 @@ Follow these steps in order please:
 6. Setup a `.env` file based on `.env.example` in the project root: `cp .env.example .env`
 7. Create a Github App (see steps below)
 8. Start the server, using the `bundle exec guard` or the `bin/rails server` command
+
 ## Github App Setup
 
 User (student/teacher) Authentication can only happen through Github. Much like how Facebook has Apps that you need if you want to allow users to login through Facebook, we need to create an "app" on Github).
