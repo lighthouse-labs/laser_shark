@@ -29,9 +29,10 @@ Follow these steps in order please:
   * _If you are using vagrant_ (which already has postgres on it): please remove `host: localhost` from both the `development` and `test` db settings. Also, please add `username: ` and `password: ` as empty keys under both sections.
 4. `rake db:setup`
 5. Setup new DNS Alias for `localhost`:
-  * Add the following entry as a new line at the end of your `/etc/hosts` file: `beacon.dev 127.0.0.1`.
+  * Add the following entry as a new line at the end of your `/etc/hosts` file: `127.0.0.1 beacon.dev`.
   * Now you can go to the URL `http://beacon.dev:3000/` instead of `http://localhost:3000/` for when you are working on this app.
-6. Create a Github App (see steps below)
+6. Setup a `.env` file based on `.env.example` in the project root: `cp .env.example .env`
+7. Create a Github App (see steps below)
 
 ## Github App Setup
 
