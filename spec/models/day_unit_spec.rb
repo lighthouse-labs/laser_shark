@@ -13,9 +13,9 @@ describe DayUnit do
   end
 
   it "should be invalid without day" do
-  	day_unit = build(:day_unit, day: nil)
-  	expect(day_unit).to be_invalid
-  	expect(day_unit).to have(1).errors_on(:day)
+    day_unit = build(:day_unit, day: nil)
+    expect(day_unit).to be_invalid
+    expect(day_unit).to have(1).errors_on(:day)
   end
 
 
