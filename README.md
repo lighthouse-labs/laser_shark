@@ -29,11 +29,13 @@ Follow these steps in order please:
   * _If you are using vagrant_ (which already has postgres on it): please remove `host: localhost` from both the `development` and `test` db settings. Also, please add `username: ` and `password: ` as empty keys under both sections.
 4. `rake db:setup`
 5. Setup new DNS Alias for `localhost`:
-  * Add the following entry as a new line at the end of your `/etc/hosts` file: `127.0.0.1 beacon.dev`.
+  * From your terminal, type in `sudo nano /etc/hosts` (Mac/Linux Only)
+  * Note: if you are using a VM (Vagrant, etc), this should be done on your host (main) machine, not your virtual machine
+  * Add the following entry as a new line at the end of the `/etc/hosts` file: `127.0.0.1 beacon.dev`.
   * Now you can go to the URL `http://beacon.dev:3000/` instead of `http://localhost:3000/` for when you are working on this app.
 6. Setup a `.env` file based on `.env.example` in the project root: `cp .env.example .env`
 7. Create a Github App (see steps below)
-
+8. Start the server, using the `bundle exec guard` or the `bin/rails server` command
 ## Github App Setup
 
 User (student/teacher) Authentication can only happen through Github. Much like how Facebook has Apps that you need if you want to allow users to login through Facebook, we need to create an "app" on Github).
