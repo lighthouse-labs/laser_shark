@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe DayUnit do
 
-	it "has a valid factory" do
+	it "has a valid factory" do 
 		expect(build(:day_unit)).to be_valid
 	end
 
