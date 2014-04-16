@@ -18,7 +18,7 @@ describe RegistrationForm do
       end
       it "does not update the student model" do
         expect do
-          registration_form.validate(attributes_for(:registration_form, first_name: nil, last_name: "test"))
+          registration_form.validate(attributes_for(:registration_form, first_name: nil, last_name: "test", start_date: nil))
           student.reload
         end.not_to change(student, :last_name)
       end
