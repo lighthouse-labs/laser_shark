@@ -7,7 +7,7 @@ LaserShark::Application.routes.draw do
 
   resource :session, :only => [:create, :destroy]
 
-  resource :registration, only: [:new, :create, :destroy]
+  resource :registration, only: [:new, :create]
 
 
 end
