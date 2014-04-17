@@ -13,7 +13,7 @@ class SessionsController < ApplicationController
  
   def destroy
     reset_session 
-    redirect_to root_path
+    redirect_to github_session_path
   end
 
   protected

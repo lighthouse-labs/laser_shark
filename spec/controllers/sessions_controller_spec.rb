@@ -47,6 +47,17 @@ describe SessionsController do
     end
   end
 
+  describe "DELETE #destroy" do
+    it "clears session" do
+      delete :destroy
+      expect(session[:student_id]).to be_nil
+    end
+    it "redirects to github session path" do
+      delete :destroy
+      expect(response).to redirect_to github_session_path
+    end
+  end
+
   context "registered student is logged in" do
     logged_in_student 
 
