@@ -13,14 +13,3 @@ class ProfilesController < ApplicationController
     end
   end  
 end
-
-#These actions should operate on current_student
-#GET the form(edit)
-#POST to send the form(update)
-
-
-
- 
-
-
-  
