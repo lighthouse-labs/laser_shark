@@ -11,6 +11,7 @@ LaserShark::Application.routes.draw do
 
   namespace :admin do
     root to: 'dashboard#show'
+    resources :students, only: [:index] 
   end
 
 end
