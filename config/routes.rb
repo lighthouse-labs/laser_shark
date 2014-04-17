@@ -6,7 +6,11 @@ LaserShark::Application.routes.draw do
   get '/auth/github', as: 'github_session'
 
   resource :registration, only: [:new, :create]
-
+  
   resource :profile, only: [:edit, :update]
+
+  namespace :admin do
+    root to: 'dashboard#show'
+  end
 
 end
