@@ -1,17 +1,10 @@
 class Admin::BaseController < ApplicationController
   
-  http_basic_authenticate_with name:, password:
+  http_basic_authenticate_with name: 'admin' , password: 'password'
 
-  def index
-    render admin: "Thanks for logging in."
-  end
+  skip_before_action :authenticate_student
 
-  def edit
-    render admin: "Edit your account."
-  end
 
-  def show
-    @admin = Admin.find(params[:id])
-  end
+  
 
 end
