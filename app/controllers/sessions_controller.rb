@@ -1,5 +1,5 @@
 class SessionsController < ApplicationController
-  skip_before_action :authenticate, only: [:create]
+  skip_before_action :authenticate_student, only: [:create]
 
   def create
     @current_student = Student.authenticate_via_github auth_hash_params
