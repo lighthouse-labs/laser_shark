@@ -1,0 +1,12 @@
+h1 Cohort
+table
+  thead
+    tr
+      th 
+      th Name
+      th Start Date
+  tbody
+    - @cohorts.each do |cohort|
+      tr
+        td = cohort.name
+        td = cohort.start_date

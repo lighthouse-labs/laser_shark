@@ -1,15 +1,15 @@
 require 'spec_helper'
 
-describe Admin::StudentsController do
-  before :each do
+describe Admin::CohortsController do
+    before :each do
     set_valid_auth
   end
-  
+
   describe 'GET #index' do
-    it 'assigns all students to @students' do
-      students = create_list(:student, 5)
+    it 'assigns all cohorts to @cohorts' do
+      cohorts = create_list(:cohort, 5)
       get :index 
-      expect(assigns(:students)).to match_array(students)
+      expect(assigns(:cohorts)).to match_array(cohorts)
     end
 
     it 'renders index template' do
