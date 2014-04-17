@@ -1,0 +1,23 @@
+h1 Student
+table
+  thead
+    tr
+      th 
+      th Name
+      th Email
+      th Phone
+      th Twitter
+      th Skype
+      th GitHub Username
+      th Completed Registration
+  tbody
+    - @students.each do |student|
+      tr
+        td = image_tag(student.avatar_url, {size:'100x100'})
+        td = student.full_name 
+        td = student.email
+        td = student.phone_number
+        td = student.twitter
+        td = student.skype
+        td = student.github_username
+        td = completed_registration_formatter(student)
