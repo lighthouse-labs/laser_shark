@@ -9,4 +9,8 @@ describe Cohort do
   	expect(build(:cohort, name: nil)).to have(1).errors_on(:name)
   end
 
+  it "is invalid without a start date" do
+    expect(build(:cohort, start_date: nil)).to have(1).errors_on(:start_date)
+  end  
+
 end
