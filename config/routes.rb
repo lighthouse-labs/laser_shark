@@ -9,5 +9,8 @@ LaserShark::Application.routes.draw do
 
   resource :registration, only: [:new, :create]
 
+  namespace :admin do
+    root to: 'dashboard#show'
+  end
 
 end
