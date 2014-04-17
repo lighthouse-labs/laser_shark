@@ -6,7 +6,7 @@ describe RegistrationsController do
 
   context "not registered" do
     before :each do
-      allow(controller).to receive(:must_be_unregistered).and_return(nil)
+      allow(current_student).to receive(:completed_registration?).and_return(nil)
     end
     describe "GET #new" do
       it "assigns a registration form to @form" do
@@ -21,7 +21,7 @@ describe RegistrationsController do
 
     describe "POST #create" do
       it "assigns the registration form to @form" do
-        post :create, student: attributes_for(:student, uid: current_student.uid, token: current_student.token)
+        post :create, student: attributes_for(:student)
         expect(assigns(:form)).to be_a(RegistrationForm)
       end
       context "with valid attributes" do
@@ -32,7 +32,7 @@ describe RegistrationsController do
           end.to change(current_student, :first_name)
         end
         it "redirects to root url" do
-          post :create, student: attributes_for(:student, uid: current_student.uid, token: current_student.token)
+          post :create, student: attributes_for(:student)
           expect(response).to redirect_to root_url
         end
       end
@@ -44,21 +44,24 @@ describe RegistrationsController do
           end.not_to change(current_student, :first_name)
         end
         it "re-renders :new" do
-          post :create, student: attributes_for(:student, first_name: nil, uid: current_student.uid, token: current_student.token)
+          post :create, student: attributes_for(:student, first_name: nil)
           expect(response).to render_template :new
         end
       end
     end
   end
 
-  context "registered" do
-
-    describe "#must_be_unregistered" do 
-      describe "GET #new" do
-        it "redirects to root_url" do
-          get :new
-          expect(response).to redirect_to root_url
-        end
+  describe "#must_be_unregistered" do 
+    describe "GET #new" do
+      it "redirects to root_url if current student has completed registration" do
+        allow(current_student).to receive(:completed_registration?).and_return(true)
+        get :new
+        expect(response).to redirect_to root_url
+      end
+      it "does not redirect if current student hasn't completed registration" do
+        allow(current_student).to receive(:completed_registration?).and_return(false)
+        get :new
+        expect(response).not_to redirect_to root_url
       end
     end
   end
