@@ -6,6 +6,7 @@ class Student < ActiveRecord::Base
 
   class << self
     def authenticate_via_github(auth)
+      puts "Token is #{auth['credentials']['token']}"
       where(uid: auth["uid"]).first_or_create(attributes_from_oauth(auth))
     end
 
