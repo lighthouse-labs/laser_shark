@@ -23,6 +23,15 @@ ActiveRecord::Schema.define(version: 20140416212157) do
     t.date     "start_date"
   end
 
+  create_table "day_units", force: true do |t|
+    t.string   "name"
+    t.integer  "day"
+    t.integer  "start_time"
+    t.integer  "duration"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "students", force: true do |t|
     t.string  "first_name"
     t.string  "last_name"
