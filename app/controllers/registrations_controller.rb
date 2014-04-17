@@ -19,9 +19,7 @@ class RegistrationsController < ApplicationController
   private
 
   def must_be_unregistered
-    if current_student.completed_registration? 
-      redirect_to root_url
-    end
+    redirect_to root_url if current_student.completed_registration?
   end
 
 end
