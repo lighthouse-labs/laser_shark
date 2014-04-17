@@ -4,7 +4,6 @@ class Admin::BaseController < ApplicationController
 
   skip_before_action :authenticate_student
 
-
-  
+  layout 'admin'
 
 end
