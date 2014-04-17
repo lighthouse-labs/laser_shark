@@ -13,7 +13,7 @@ class ApplicationController < ActionController::Base
   end
 
   def current_student
-    @current_student ||= Student.find_by_id(session[:student_id])
+    @current_student ||= Student.find_by_id(session[:student_id]) if session[:student_id]
   end
   helper_method :current_student
 
