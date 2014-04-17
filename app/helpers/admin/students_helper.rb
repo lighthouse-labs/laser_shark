@@ -1,6 +1,6 @@
 module Admin::StudentsHelper
 
-  def completed_registration_formatter(student)
+  def completed_registration?(student)
     student.completed_registration ? "YES" : "NO"
   end
 end
