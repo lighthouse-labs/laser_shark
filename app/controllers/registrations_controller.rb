@@ -1,11 +1,9 @@
 class RegistrationsController < ApplicationController
 
+  before_action :must_be_unregistered 
+
   def new
-    if current_student.completed_registration 
-      redirect_to root_url
-    else
-      @form = RegistrationForm.new(current_student)
-    end
+    @form = RegistrationForm.new(current_student)
   end
 
   def create
@@ -18,11 +16,12 @@ class RegistrationsController < ApplicationController
     end
   end
 
-  # DELETE /registration
-  def destroy 
-    current_student.destroy
-    reset_session
-    redirect_to root_path
+  private
+
+  def must_be_unregistered
+    if current_student.completed_registration? 
+      redirect_to root_url
+    end
   end
 
 end

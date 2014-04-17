@@ -13,7 +13,7 @@ class SessionsController < ApplicationController
     end
   end
 
-  # DELETE /session
+ 
   def destroy
     current_student.token = nil
     current_student.save
