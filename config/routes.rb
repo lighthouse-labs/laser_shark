@@ -7,4 +7,6 @@ LaserShark::Application.routes.draw do
 
   resource :registration, only: [:new, :create]
 
+  resource :profile, only: [:edit, :update]
+
 end
