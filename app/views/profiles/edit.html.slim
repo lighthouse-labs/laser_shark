@@ -3,7 +3,7 @@ h1 Edit Your Details
 / Note: most of the markup here will get improved/fixed. Consider it temporary
 
 div
-  = form_for @form, as: :student, url: profile_path, method: :post do |f|
+  = form_for @form, as: :student, url: profile_path, method: :patch do |f|
 
     - if @form.errors.full_messages.any?
       .errors
