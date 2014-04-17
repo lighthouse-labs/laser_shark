@@ -15,9 +15,7 @@ class SessionsController < ApplicationController
 
  
   def destroy
-    current_student.token = nil
-    current_student.save
-    reset_session
+    reset_session 
     redirect_to root_path
   end
 

@@ -47,4 +47,15 @@ describe SessionsController do
     end
   end
 
+  context "registered student is logged in" do
+    logged_in_student 
+
+    it "destroys student session when signing out" do
+      delete :destroy
+      expect(assigns(:current_student)).to eq nil
+    end
+  end
+
+
+    
 end
