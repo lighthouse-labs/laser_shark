@@ -19,4 +19,11 @@ describe Student do
     expect(student).to be_invalid
   end
 
+  describe "#full_name" do
+    it "returns a concatenation of first_name and last_name" do
+      student = create(:student)
+      expect(student.full_name).to eq "#{student.first_name} #{student.last_name}"
+    end
+  end
+
 end
