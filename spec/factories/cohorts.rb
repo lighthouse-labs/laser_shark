@@ -2,7 +2,7 @@
 
 FactoryGirl.define do
   factory :cohort do
-    name "Foxes"
+    name { "Foxes" }
     start_date   { Date.today }
   end
 end
