@@ -2,6 +2,7 @@
 
 FactoryGirl.define do
   factory :cohort do
-    name "Foxes"
+    name { Faker::Name.name }
+    start_date   { Date.today }
   end
 end
