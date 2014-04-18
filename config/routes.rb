@@ -5,6 +5,8 @@ LaserShark::Application.routes.draw do
   get '/auth/:provider/callback', to: 'sessions#create'
   get '/auth/github', as: 'github_session'
 
+  resource :session, :only => [:destroy]
+
   resource :registration, only: [:new, :create]
   
   resource :profile, only: [:edit, :update]

@@ -1,5 +1,7 @@
 class RegistrationsController < ApplicationController
 
+  before_action :must_be_unregistered 
+
   def new
     @form = RegistrationForm.new(current_student)
   end
@@ -12,6 +14,12 @@ class RegistrationsController < ApplicationController
     else
       render :new
     end
+  end
+
+  private
+
+  def must_be_unregistered
+    redirect_to root_url if current_student.completed_registration?
   end
 
 end

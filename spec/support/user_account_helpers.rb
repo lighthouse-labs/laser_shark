@@ -12,7 +12,7 @@ module UserAccountHelpers
     end
 
     def logged_in_student
-      current_student { create(:student) }
+      current_student { create(:student_for_auth) }
     end
 
   end
