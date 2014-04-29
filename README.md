@@ -45,3 +45,7 @@ User (student/teacher) Authentication can only happen through Github. Much like 
 ## Server
 
 1. Use [guard](https://github.com/guard/guard) to start the server and run the tests: `bundle exec guard`
+
+## Notes
+
+<https://github.com/wingrunr21/flat-ui-sass> was used to convert FlatUI Pro from LESS to SASS (located in `vendor/assets` )

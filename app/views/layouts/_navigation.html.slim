@@ -10,7 +10,7 @@ nav.navbar.navbar-inverse.navbar-fixed-top
       = link_to 'Home', root_path, class: 'navbar-brand'
       = link_to 'Edit profile', edit_profile_path, class: 'navbar-brand'
       = link_to 'Sign Out', session_path, :method => :delete
-      
+
     .collapse.navbar-collapse
       ul.nav.navbar-nav
         == render 'layouts/navigation_links'

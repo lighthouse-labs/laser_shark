@@ -3,7 +3,7 @@ h1 Enter Your Details
 / Note: most of the markup here will get improved/fixed. Consider it temporary
 
 div
-  = form_for @form, as: :student, url: registration_path, method: :post do |f|
+  = simple_form_for @form, as: :student, url: registration_path, method: :post do |f|
 
     - if @form.errors.full_messages.any?
       .errors
