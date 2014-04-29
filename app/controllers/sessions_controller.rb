@@ -10,6 +10,11 @@ class SessionsController < ApplicationController
       redirect_to [:new, :registration]
     end
   end
+ 
+  def destroy
+    reset_session 
+    redirect_to github_session_path
+  end
 
   protected
 
