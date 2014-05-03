@@ -1,8 +1,8 @@
 h1 Student
-table
+table.table
   thead
     tr
-      th 
+      th
       th Name
       th Email
       th Phone
@@ -14,7 +14,7 @@ table
     - @students.each do |student|
       tr
         td = image_tag(student.avatar_url, {size:'100x100'})
-        td = student.full_name 
+        td = student.full_name
         td = student.email
         td = student.phone_number
         td = student.twitter
