@@ -2,7 +2,7 @@ LaserShark::Application.routes.draw do
 
   root to: 'home#show'
 
-  # STUDENT AUTH
+  # STUDENT / TEACHER AUTH
   get '/auth/:provider/callback', to: 'sessions#create'
   get '/auth/github', as: 'github_session'
   resource :session, :only => [:destroy]

@@ -1,14 +1,14 @@
 class RegistrationForm < Reform::Form
   include Reform::Form::ActiveRecord
 
-  property :first_name,   on: :student
-  property :last_name,    on: :student
-  property :email,  		  on: :student
-  property :phone_number, on: :student
-  property :twitter,  		on: :student
-  property :skype,  			on: :student
+  property :first_name,   on: :user
+  property :last_name,    on: :user
+  property :email,  		  on: :user
+  property :phone_number, on: :user
+  property :twitter,  		on: :user
+  property :skype,  			on: :user
 
-  property :completed_registration, on: :student
+  property :completed_registration, on: :user
 
   validates :first_name,   presence: true
   validates :last_name,    presence: true

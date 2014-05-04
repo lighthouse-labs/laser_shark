@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140504061359) do
+ActiveRecord::Schema.define(version: 20140504193420) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -35,7 +35,7 @@ ActiveRecord::Schema.define(version: 20140504061359) do
     t.date     "start_date"
   end
 
-  create_table "students", force: true do |t|
+  create_table "users", force: true do |t|
     t.string  "first_name"
     t.string  "last_name"
     t.string  "email"
@@ -48,16 +48,9 @@ ActiveRecord::Schema.define(version: 20140504061359) do
     t.string  "github_username"
     t.string  "avatar_url"
     t.integer "cohort_id"
+    t.string  "type"
   end
 
-  add_index "students", ["cohort_id"], name: "index_students_on_cohort_id", using: :btree
-
-  create_table "teachers", force: true do |t|
-    t.string   "first_name"
-    t.string   "last_name"
-    t.string   "email"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
+  add_index "users", ["cohort_id"], name: "index_users_on_cohort_id", using: :btree
 
 end

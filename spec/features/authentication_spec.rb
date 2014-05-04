@@ -4,22 +4,22 @@ require 'spec_helper'
 
 describe 'Authentication' do
 
-  context "with new student profile" do
-    it 'creates a Student record based on Github OAuth Response Hash' do
-      FactoryGirl.create :student # => 1
+  context "with new user profile" do
+    it 'creates a user record based on Github OAuth Response Hash' do
+      FactoryGirl.create :user # => 1
       visit root_path
-      expect(Student.count).to eq(2)
+      expect(User.count).to eq(2)
     end
 
-    it "defaults the student information based on Github" do
+    it "defaults the user information based on Github" do
       visit root_path
-      student = Student.last
-      expect(student.first_name).to eq('Khurram')
-      expect(student.last_name).to eq('Virani')
-      expect(student.github_username).to eq('kvirani')
-      expect(student.email).to eq('kvirani@lighthouselabs.ca')
-      expect(student.uid).to eq('uid')
-      expect(student.token).to eq('token')
+      user = User.last
+      expect(user.first_name).to eq('Khurram')
+      expect(user.last_name).to eq('Virani')
+      expect(user.github_username).to eq('kvirani')
+      expect(user.email).to eq('kvirani@lighthouselabs.ca')
+      expect(user.uid).to eq('uid')
+      expect(user.token).to eq('token')
     end
 
     it "redirects to registration page" do
@@ -28,12 +28,12 @@ describe 'Authentication' do
     end
   end
 
-  context "with existing registered student" do
-    let!(:student) { FactoryGirl.create :student_for_auth }
+  context "with existing registered user" do
+    let!(:user) { FactoryGirl.create :user_for_auth }
 
-    it "does not create a new student record" do
+    it "does not create a new user record" do
       visit root_path
-      expect(Student.count).to eq(1) # was already 1 due to FG.create above
+      expect(User.count).to eq(1) # was already 1 due to FG.create above
     end
 
     it "redirects to home page (instead of registration page)" do
@@ -42,12 +42,12 @@ describe 'Authentication' do
     end
   end
 
-  context "with existing unregistered student" do
-    let!(:student) { FactoryGirl.create :unregistered_student, uid: "uid", token: "token" }
+  context "with existing unregistered user" do
+    let!(:user) { FactoryGirl.create :unregistered_user, uid: "uid", token: "token" }
 
-    it "does not create a new student record" do
+    it "does not create a new user record" do
       visit root_path
-      expect(Student.count).to eq(1) # was already 1 due to FG.create above
+      expect(User.count).to eq(1) # was already 1 due to FG.create above
     end
 
     it "redirects to registration page" do
