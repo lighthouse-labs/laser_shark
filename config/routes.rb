@@ -10,7 +10,9 @@ LaserShark::Application.routes.draw do
   resource :profile, only: [:edit, :update]
 
   # CONTENT BROWSING
-  resources :days, param: :day, only: [:show]
+  resources :days, param: :number, only: [:show] do
+    resources :activities, only: [:show]
+  end
 
   # ADMIN
   namespace :admin do

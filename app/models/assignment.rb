@@ -1,0 +1,3 @@
+class Assignment < Activity
+  
+end

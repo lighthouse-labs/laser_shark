@@ -23,6 +23,9 @@ gem 'compass-rails'
 gem 'email_validator'
 gem 'reform'
 
+gem 'github_api'
+gem 'redcarpet'
+
 group :development do
   gem 'spring'
   gem 'quiet_assets'

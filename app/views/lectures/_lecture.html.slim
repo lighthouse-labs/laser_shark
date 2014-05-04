@@ -1,3 +1,3 @@
-div
-  | Lecture: 
-  = lecture.name
+.lecture
+  | Lecture:
+  = link_to lecture.name, day_activity_path(day, lecture)

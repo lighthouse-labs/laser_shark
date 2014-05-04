@@ -1,0 +1,23 @@
+- content_for :side_nav do
+  h1.day = day.upcase
+  == render 'layouts/calendar'
+
+h1 = @activity.name
+
+div.form-group
+  div.input-group
+    span.input-group-addon
+      | Original
+      i.fa.fa-github
+    input.form-control type="text" value=@activity.gist_url
+
+  br
+  div.input-group
+    span.input-group-addon
+      | Your
+      i.fa.fa-github
+    input.form-control type="text" value=@activity.gist_url
+
+
+.activity
+  == markdown @activity.instructions

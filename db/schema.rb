@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140504053747) do
+ActiveRecord::Schema.define(version: 20140504061359) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -24,6 +24,8 @@ ActiveRecord::Schema.define(version: 20140504053747) do
     t.datetime "updated_at"
     t.string   "type"
     t.string   "day"
+    t.string   "gist_url"
+    t.text     "instructions"
   end
 
   create_table "cohorts", force: true do |t|

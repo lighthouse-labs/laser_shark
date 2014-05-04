@@ -1,27 +1,28 @@
-class DaysController < ApplicationController
+module CourseCalendar
+  extend ActiveSupport::Concern
 
-  def show
-    @activities = Activity.chronological.for_day(day)
+  included do
+    helper_method :today
+    helper_method :day
   end
 
   private
 
   def day
-    @day ||= case params[:day]
+    d = params[:number] || params[:day_number]
+    @day ||= case d
     when nil, 'today'
       today
     when 'yesterday'
       yesterday
     else
-      params[:day]
+      d
     end
   end
-  helper_method :day
 
   def today
     @today ||= formatted_day_for(Date.today)
   end
-  helper_method :today
 
   def yesterday
     @yesterday ||= formatted_day_for(Date.today - 1)
