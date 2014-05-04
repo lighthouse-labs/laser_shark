@@ -3,6 +3,7 @@ LaserShark
 
 [![wercker status](https://app.wercker.com/status/6070c1bb6d7619eb6e874b177dc3f995/m/ "wercker status")](https://app.wercker.com/project/bykey/6070c1bb6d7619eb6e874b177dc3f995) [![Code Climate](https://codeclimate.com/github/lighthouse-labs/laser_shark.png)](https://codeclimate.com/github/lighthouse-labs/laser_shark) [![Code Climate](https://codeclimate.com/github/lighthouse-labs/laser_shark/coverage.png)](https://codeclimate.com/github/lighthouse-labs/laser_shark/code?sort=covered_percent&sort_direction=desc) [![Dependency Status](https://gemnasium.com/lighthouse-labs/laser_shark.svg)](https://gemnasium.com/lighthouse-labs/laser_shark)
 
+
 ## Ruby / Rails
 
 This project is built with:
@@ -45,6 +46,10 @@ User (student/teacher) Authentication can only happen through Github. Much like 
 ## Server
 
 1. Use [guard](https://github.com/guard/guard) to start the server and run the tests: `bundle exec guard`
+
+## Project Management
+
+At the moment, this project is managed via a [Public Trello Board](https://trello.com/b/5jhOVghs/laser-sharks)
 
 ## Notes
 
