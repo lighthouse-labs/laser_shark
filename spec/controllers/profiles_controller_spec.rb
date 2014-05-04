@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe ProfilesController do
 
-  logged_in_student
+  logged_in_user
 
   describe "GET #edit" do
     it "assigns a registration form to @form" do
@@ -17,30 +17,30 @@ describe ProfilesController do
 
   describe "PATCH #update" do
     it "assigns the registration form to @form" do
-      patch :update, student: attributes_for(:student)
+      patch :update, user: attributes_for(:user)
       expect(assigns(:form)).to be_a(RegistrationForm)
     end
     context "with valid attributes" do
-      it "does save the attributes to student" do
+      it "does save the attributes to user" do
         expect do
-          patch :update, student: attributes_for(:student, first_name: "new")
-          current_student.reload
-        end.to change(current_student, :first_name)
+          patch :update, user: attributes_for(:user, first_name: "new")
+          current_user.reload
+        end.to change(current_user, :first_name)
       end
       it "redirects to root url" do
-        patch :update, student: attributes_for(:student)
+        patch :update, user: attributes_for(:user)
         expect(response).to redirect_to root_url
       end
     end
     context "with invalid attributes" do
-      it "does not save the attributes to student" do
+      it "does not save the attributes to user" do
         expect do
-          patch :update, student: attributes_for(:student, first_name: nil)
-          current_student.reload
-        end.not_to change(current_student, :first_name)
+          patch :update, user: attributes_for(:user, first_name: nil)
+          current_user.reload
+        end.not_to change(current_user, :first_name)
       end
       it "re-renders :edit" do
-        patch :update, student: attributes_for(:student, first_name: nil)
+        patch :update, user: attributes_for(:user, first_name: nil)
         expect(response).to render_template :edit
       end
     end

@@ -2,8 +2,8 @@ require 'spec_helper'
 
 describe RegistrationForm do
 
-  let(:student) { create(:student) }
-  subject(:registration_form) { RegistrationForm.new(student) }
+  let(:user) { create(:user) }
+  subject(:registration_form) { RegistrationForm.new(user) }
 
   describe '#validate' do
 
@@ -16,11 +16,11 @@ describe RegistrationForm do
         result = registration_form.validate(attributes_for(:registration_form))
         expect(result).to be_true
       end
-      it "does not update the student model" do
+      it "does not update the user model" do
         expect do
           registration_form.validate(attributes_for(:registration_form, first_name: nil, last_name: "test"))
-          student.reload
-        end.not_to change(student, :last_name)
+          user.reload
+        end.not_to change(user, :last_name)
       end
     end
 
@@ -47,22 +47,22 @@ describe RegistrationForm do
 
   describe '#save' do
     context "with valid attributes" do
-      it "updates the student model" do
+      it "updates the user model" do
         expect do
           registration_form.validate("email" => "e@e.com")
           registration_form.save
-          student.reload
-        end.to change(student, :email)
+          user.reload
+        end.to change(user, :email)
       end
     end
 
     context "with invalid attributes" do
-      it "doesn't update the student model" do
+      it "doesn't update the user model" do
         expect do
           registration_form.validate("email" => "")
           registration_form.save
-          student.reload
-        end.not_to change(student, :first_name)
+          user.reload
+        end.not_to change(user, :first_name)
       end
     end
   end
