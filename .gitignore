@@ -3,6 +3,9 @@
 /vendor/bundle/
 /vendor/ruby/
 
+# Project specific
+db/activities_seed.rb
+
 # minimal Rails specific artifacts
 db/*.sqlite3
 /db/*.sqlite3-journal

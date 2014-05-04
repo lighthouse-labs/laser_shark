@@ -6,3 +6,12 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 # Environment variables (ENV['...']) can be set in the file .env file.
+
+Cohort.destroy_all
+Cohort.create! name: "May, 2014", start_date: "May 05, 2014"
+
+activities_file = File.join(Rails.root, "db", "activities_seed.rb")
+if File.exists?(activities_file)
+  puts "Loading Activities seed file"
+  require(activities_file)
+end

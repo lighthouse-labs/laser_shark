@@ -12,7 +12,7 @@ nav.calendar {
 
   .week {
     @extend .pagination;
-    @extend .pagination-minimal;
+    @extend .pagination-minimal; //flatUI
     margin: 2px;
 
     ul {
