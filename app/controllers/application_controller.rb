@@ -15,4 +15,9 @@ class ApplicationController < ActionController::Base
   end
   helper_method :current_student
 
+  def cohort
+    @cohort ||= @current_student.cohort if @current_student
+    @cohort ||= Cohort.last
+  end
+
 end

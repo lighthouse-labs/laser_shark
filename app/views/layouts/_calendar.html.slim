@@ -1,0 +1,14 @@
+nav.calendar
+  - (1..WEEKS).each do |w|
+    .week
+      ul
+        li.previous.week-number
+          a href="#"
+            | W
+            = w
+        - (1..5).each do |d|
+          li.day-number class=day_status_css("w#{w}d#{d}") = link_to(d, "w#{w}d#{d}")
+        li.day-number class=day_status_css("w#{w}e") = link_to("e", "w#{w}e")
+  = link_to 'Yesterday', day_path('yesterday'), class: 'btn-yesterday'
+  | &nbsp;
+  = link_to 'Today', day_path('today'), class: 'btn-today'

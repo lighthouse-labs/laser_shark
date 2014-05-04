@@ -1,4 +1,19 @@
 body {
-  min-height: 2000px;
+  min-height: 900px;
   padding-top: 70px;
+}
+
+main {
+  @include make-row;
+
+  aside.primary {
+    @include make-xs-column(5);
+    @include make-md-column(3);
+    @import "layout/aside.primary";
+  }
+
+  .content {
+    @include make-xs-column(7);
+    @include make-md-column(9);
+  }
 }

@@ -1,0 +1,6 @@
+- content_for :side_nav do
+  h1.day = day.upcase
+  == render 'layouts/calendar'
+
+h1 Schedule
+= render @activities

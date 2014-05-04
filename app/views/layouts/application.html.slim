@@ -13,4 +13,8 @@ html
       == render 'layouts/navigation'
     main.container[role="main"]
       == render 'layouts/messages'
-      == yield
+      aside.primary
+        == yield :side_nav
+
+      .content
+        == yield
