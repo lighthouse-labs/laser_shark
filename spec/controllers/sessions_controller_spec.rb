@@ -52,9 +52,9 @@ describe SessionsController do
       delete :destroy
       expect(session[:user_id]).to be_nil
     end
-    it "redirects to github session path" do
+    it "redirects to new session path" do
       delete :destroy
-      expect(response).to redirect_to github_session_path
+      expect(response).to redirect_to new_session_path
     end
   end
 

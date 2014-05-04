@@ -7,12 +7,12 @@ describe 'Authentication' do
   context "with new user profile" do
     it 'creates a user record based on Github OAuth Response Hash' do
       FactoryGirl.create :user # => 1
-      visit root_path
+      visit github_session_path
       expect(User.count).to eq(2)
     end
 
     it "defaults the user information based on Github" do
-      visit root_path
+      visit github_session_path
       user = User.last
       expect(user.first_name).to eq('Khurram')
       expect(user.last_name).to eq('Virani')
@@ -23,7 +23,7 @@ describe 'Authentication' do
     end
 
     it "redirects to registration page" do
-      visit root_path
+      visit github_session_path
       expect(current_path).to eq(new_registration_path)
     end
   end
@@ -32,12 +32,12 @@ describe 'Authentication' do
     let!(:user) { FactoryGirl.create :user_for_auth }
 
     it "does not create a new user record" do
-      visit root_path
+      visit github_session_path
       expect(User.count).to eq(1) # was already 1 due to FG.create above
     end
 
     it "redirects to home page (instead of registration page)" do
-      visit new_registration_path
+      visit github_session_path
       expect(current_path).to eq(root_path)
     end
   end
@@ -46,12 +46,12 @@ describe 'Authentication' do
     let!(:user) { FactoryGirl.create :unregistered_user, uid: "uid", token: "token" }
 
     it "does not create a new user record" do
-      visit root_path
+      visit github_session_path
       expect(User.count).to eq(1) # was already 1 due to FG.create above
     end
 
     it "redirects to registration page" do
-      visit root_path
+      visit github_session_path
       expect(current_path).to eq(new_registration_path) # was already 1 due to FG.create above
     end
   end

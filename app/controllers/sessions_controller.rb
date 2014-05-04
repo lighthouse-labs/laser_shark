@@ -1,5 +1,11 @@
 class SessionsController < ApplicationController
-  skip_before_action :authenticate_user, only: [:create]
+  skip_before_action :authenticate_user, only: [:new, :create]
+
+  def new
+    if current_user
+      redirect_to day_path('today')
+    end
+  end
 
   def create
     @current_user = User.authenticate_via_github auth_hash_params
@@ -13,7 +19,7 @@ class SessionsController < ApplicationController
 
   def destroy
     reset_session
-    redirect_to github_session_path
+    redirect_to :root
   end
 
   protected
