@@ -11,7 +11,7 @@ class Activity < ActiveRecord::Base
   def update_instructions_from_gist
     if self.gist_url?
       github = Github.new
-      gist = github.gists.get '99deb315bd062252d182'
+      gist = github.gists.get self.gist_url.split('/').last
       if readme = gist.files['README.md'].try(:content)
         self.instructions = readme
         self.save
