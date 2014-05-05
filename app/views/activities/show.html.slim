@@ -4,7 +4,7 @@
 
 h1 = @activity.name
 
-- if @activity.instructions?
+- if @activity.gist_url?
   .actions
     .form-group
       .input-group
@@ -13,12 +13,13 @@ h1 = @activity.name
           i.fa.fa-github
         input.form-control type="text" value=@activity.gist_url
 
-      br
-      .input-group
-        span.input-group-addon
-          | Your
-          i.fa.fa-github
-        input.form-control type="text" value=@activity.gist_url
+      / br
+      / .input-group
+      /   span.input-group-addon
+      /     | Your
+      /     i.fa.fa-github
+      /   input.form-control type="text" value=@activity.gist_url
+  hr
 
 - if @activity.instructions?
   .instructions
