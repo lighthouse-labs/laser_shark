@@ -16,7 +16,7 @@ class ApplicationController < ActionController::Base
   helper_method :current_user
 
   def cohort
-    @cohort ||= @current_user.cohort if current_user
+    @cohort ||= current_user.try(:cohort)
     @cohort ||= Cohort.last
   end
 
