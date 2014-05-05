@@ -39,5 +39,10 @@ main {
   .content {
     @include make-xs-column(7);
     @include make-md-column(9);
+
+    .jumbotron {
+      padding-top: 30px;
+      padding-bottom: 30px;
+    }
   }
 }
