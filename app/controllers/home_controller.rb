@@ -1,8 +1,8 @@
 class HomeController < ApplicationController
 
-  skip_before_action :authenticate_student
+  skip_before_action :authenticate_user
 
   def show
   end
-  
+
 end
