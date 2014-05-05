@@ -4,6 +4,7 @@ module CourseCalendar
   included do
     helper_method :today
     helper_method :day
+    before_filter :allowed_day?
   end
 
   private
@@ -21,21 +22,16 @@ module CourseCalendar
   end
 
   def today
-    @today ||= formatted_day_for(Date.today)
+    @today ||= CurriculumDay.new(Date.today, cohort).to_s
   end
 
   def yesterday
-    @yesterday ||= formatted_day_for(Date.today - 1)
+    @yesterday ||= CurriculumDay.new((Date.today - 1).to_date, cohort).to_s
   end
 
-  def formatted_day_for(date)
-    days = (date.to_date - cohort.start_date).to_i
-    w = (days / 7) + 1
-    if date.sunday? || date.saturday?
-      "w#{w}e"
-    else
-      "w#{w}d#{date.wday}"
-    end
+  def allowed_day?
+    # raise day.inspect
+    redirect_to(day_path('today'), alert: 'Access not allowed yet!') unless current_user.can_access_day?(day)
   end
 
 end

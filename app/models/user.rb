@@ -5,6 +5,18 @@ class User < ActiveRecord::Base
   validates :uid,   presence: true
   validates :token, presence: true
 
+  def can_access_day?(day)
+    return true if day == 'w1d1'
+    return false unless cohort
+
+    today = CurriculumDay.new(Date.today, cohort).to_s
+    if today <= day
+      true
+    else
+      false
+    end
+  end
+
   class << self
     def authenticate_via_github(auth)
       where(uid: auth["uid"]).first_or_create(attributes_from_oauth(auth))
