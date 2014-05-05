@@ -1,5 +1,7 @@
 class User < ActiveRecord::Base
 
+  belongs_to :cohort
+
   validates :uid,   presence: true
   validates :token, presence: true
 
