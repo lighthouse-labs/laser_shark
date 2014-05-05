@@ -18,5 +18,18 @@ describe Activity do
     expect(activity).to have(1).errors_on(:day)
   end
 
+  it "should calculate the end time of an activity" do
+    activity = create(:activity, start_time: 900, duration: 90)
+    activity.end_time.should eql 1030
+
+    activity = create(:activity, start_time: 1100, duration: 30)
+    activity.end_time.should eql 1130
+
+    activity = create(:activity, start_time: 1130, duration: 30)
+    activity.end_time.should eql 1200 
+
+    activity = create(:activity, start_time: 1130, duration: 40)
+    activity.end_time.should eql 1210 
+  end
 
 end

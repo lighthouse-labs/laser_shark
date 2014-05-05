@@ -1,3 +1,27 @@
 // Place all the styles related to the days controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+.activity {
+  height: 80px;
+  margin-bottom: 20px;
+  border-radius: 6px;
+  background-color: #2c3e50;
+  color: #798795;
+  .icon {
+    padding: 8px 20px;
+    font-size: 35px;
+  }
+  .time {
+    padding: 9px;
+    color: #fff;
+    text-align: center;
+    font-size: 14px;
+    line-height: 1.5;
+  }
+  .name {
+    height: 60px;
+    margin: 20px 0 0 20px;
+    font-size: 24px;
+  }
+}
