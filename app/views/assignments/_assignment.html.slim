@@ -1,3 +1,12 @@
-.assignment
-  | Assignment:
-  = link_to assignment.name, day_activity_path(day, assignment)
+.assignment.activity
+  .pull-left.icon
+    span.fui-new
+  .pull-left.time
+    = integer_time_to_s assignment.start_time
+    br
+    | to
+    br
+    = integer_time_to_s assignment.end_time
+  .pull-left.name
+    = link_to assignment.name, day_activity_path(day, assignment)
+  .clearfix
