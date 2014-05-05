@@ -13,7 +13,7 @@ class SessionsController < ApplicationController
     if @current_user.completed_registration?
       redirect_to :root
     else
-      redirect_to [:new, :registration]
+      redirect_to [:edit, :registration]
     end
   end
 
