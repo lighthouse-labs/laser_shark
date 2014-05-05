@@ -58,5 +58,7 @@ group :test do
   gem "codeclimate-test-reporter", require: nil
 end
 
+gem 'rails_12factor', group: :production
+
 gem 'omniauth'
 gem 'omniauth-github'
