@@ -9,8 +9,8 @@ nav.navbar.navbar-inverse.navbar-embossed.navbar-fixed-top role="navigation"
         = link_to "Home", root_path
       li
         = link_to day_path('today') do
-          span.fui-calendar-solid
-          | Schedule
+          i.fa.fa-calendar
+          |  Schedule
     ul.nav.navbar-nav.navbar-right
       - if current_user
         li.dropdown.student

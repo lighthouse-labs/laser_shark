@@ -7,7 +7,7 @@ LaserShark
 ## Ruby / Rails
 
 This project is built with:
-* ruby 2.1.0 (mentioned in the Gemfile)
+* ruby 2.1.1 (mentioned in the Gemfile)
 * rails 4.1.0 (rc2 for now)
 * slim instead of erb/haml
 * postgres 9.x
