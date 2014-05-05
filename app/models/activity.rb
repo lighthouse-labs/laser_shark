@@ -27,12 +27,19 @@ class Activity < ActiveRecord::Base
   def update_instructions_from_gist
     if self.gist_url?
       github = Github.new
-      gist = github.gists.get self.gist_url.split('/').last
-      if readme = gist.files['README.md'].try(:content)
+      gist = github.gists.get gist_id
+      file = gist.files['README.md'] || gist.files.detect { |f| f.first.ends_with?('.md') }.try(:last)
+      if readme = file.try(:content)
         self.instructions = readme
         self.save
       end
     end
+  end
+
+  protected
+
+  def gist_id
+    self.gist_url.split('/').last
   end
 
 end
