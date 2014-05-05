@@ -24,7 +24,7 @@ describe 'Authentication' do
 
     it "redirects to registration page" do
       visit github_session_path
-      expect(current_path).to eq(new_registration_path)
+      expect(current_path).to eq(edit_registration_path)
     end
   end
 
@@ -52,7 +52,7 @@ describe 'Authentication' do
 
     it "redirects to registration page" do
       visit github_session_path
-      expect(current_path).to eq(new_registration_path) # was already 1 due to FG.create above
+      expect(current_path).to eq(edit_registration_path) # was already 1 due to FG.create above
     end
   end
 

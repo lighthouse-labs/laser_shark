@@ -4,6 +4,10 @@ class User < ActiveRecord::Base
 
   validates :uid,   presence: true
   validates :token, presence: true
+  validates :first_name,    presence: true, on: :update
+  validates :last_name,     presence: true, on: :update
+  validates :email,         presence: true, on: :update
+  validates :phone_number,  presence: true, on: :update
 
   class << self
     def authenticate_via_github(auth)
@@ -27,5 +31,4 @@ class User < ActiveRecord::Base
   def full_name
     "#{self.first_name} #{self.last_name}"
   end
-
 end

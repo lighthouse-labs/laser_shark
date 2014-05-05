@@ -15,7 +15,7 @@ describe SessionsController do
       it "redirects to registration page" do
         user = create(:user)
         get :create, provider: "github"
-        expect(response).to redirect_to new_registration_path
+        expect(response).to redirect_to edit_registration_path
       end
     end
     context "user does exist locally" do

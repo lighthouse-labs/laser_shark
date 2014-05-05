@@ -17,6 +17,7 @@ gem 'puma'
 gem 'simple_form', '3.1.0.rc1'
 gem 'slim-rails'
 gem 'bootstrap-sass'
+gem 'bootstrap_form'
 gem 'font-awesome-rails'
 gem 'compass-rails'
 
@@ -33,6 +34,7 @@ group :development do
   gem 'rb-fchange', :require=>false
   gem 'rb-fsevent', :require=>false
   gem 'rb-inotify', :require=>false
+  gem 'debugger'
 end
 
 group :development, :test do

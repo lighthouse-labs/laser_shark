@@ -2,17 +2,17 @@ class RegistrationsController < ApplicationController
 
   before_action :must_be_unregistered
 
-  def new
-    @form = RegistrationForm.new(current_user)
+  def edit
+    @user = current_user
   end
 
-  def create
-    @form = RegistrationForm.new(current_user)
-    @form.completed_registration = true
-    if @form.validate(params[:user]) && @form.save
+  def update
+    @user = current_user
+    @user.completed_registration = true
+    if @user.update_attributes(user_params)
       redirect_to root_url
     else
-      render :new
+      render :edit
     end
   end
 
@@ -20,6 +20,10 @@ class RegistrationsController < ApplicationController
 
   def must_be_unregistered
     redirect_to root_url if current_user.completed_registration?
+  end
+
+  def user_params
+    params.require(:user).permit(:first_name, :last_name, :email, :phone_number, :skype, :twitter)
   end
 
 end
