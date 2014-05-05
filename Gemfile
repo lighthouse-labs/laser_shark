@@ -26,6 +26,9 @@ gem 'reform'
 gem 'github_api'
 gem 'redcarpet'
 
+gem 'omniauth'
+gem 'omniauth-github'
+
 group :development do
   gem 'spring'
   gem 'quiet_assets'
@@ -59,6 +62,3 @@ group :test do
 end
 
 gem 'rails_12factor', group: :production
-
-gem 'omniauth'
-gem 'omniauth-github'
