@@ -1,0 +1,3 @@
+class Homework < Activity
+
+end

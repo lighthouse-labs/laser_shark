@@ -1,3 +1,12 @@
-.lecture
-  | Lecture:
-  = link_to lecture.name, day_activity_path(day, lecture)
+.lecture.activity
+  .pull-left.icon
+    span.fui-user
+  .pull-left.time
+    = integer_time_to_s lecture.start_time
+    br
+    | to
+    br
+    = integer_time_to_s lecture.end_time
+  .pull-left.name
+    = link_to lecture.name, day_activity_path(day, lecture)
+  .clearfix

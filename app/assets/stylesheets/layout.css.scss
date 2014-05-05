@@ -28,6 +28,8 @@ nav {
 main {
   @include make-row;
 
+  width: 1100px;
+
   aside.primary {
     @include make-xs-column(5);
     @include make-md-column(3);

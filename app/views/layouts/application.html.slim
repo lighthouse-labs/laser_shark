@@ -11,10 +11,11 @@ html
   body
     header
       == render 'layouts/navigation'
-    main.container[role="main"]
+    main.container-fluid[role="main"]
       == render 'layouts/messages'
-      aside.primary
-        == yield :side_nav
+      - if content_for? :side_nav
+        aside.primary
+          == yield :side_nav
 
       .content
         == yield
