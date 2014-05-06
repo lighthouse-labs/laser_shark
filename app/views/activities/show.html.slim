@@ -2,25 +2,26 @@
   h1.day = day.upcase
   == render 'layouts/calendar'
 
-h1 = @activity.name
+section.activity-details
+  h1 = @activity.name
 
-- if @activity.gist_url?
-  .actions
-    .form-group
-      .input-group
-        span.input-group-addon
-          | Original
-          i.fa.fa-github
-        input.form-control type="text" value=@activity.gist_url
+  - if @activity.gist_url?
+    .actions
+      .form-group
+        .input-group
+          span.input-group-addon
+            | Original
+            i.fa.fa-github
+          input.form-control type="text" value=@activity.gist_url
 
-      / br
-      / .input-group
-      /   span.input-group-addon
-      /     | Your
-      /     i.fa.fa-github
-      /   input.form-control type="text" value=@activity.gist_url
-  hr
+        / br
+        / .input-group
+        /   span.input-group-addon
+        /     | Your
+        /     i.fa.fa-github
+        /   input.form-control type="text" value=@activity.gist_url
+    hr
 
-- if @activity.instructions?
-  .instructions
-    == markdown @activity.instructions
+  - if @activity.instructions?
+    .instructions
+      == markdown @activity.instructions
