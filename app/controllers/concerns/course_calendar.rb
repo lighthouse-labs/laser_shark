@@ -22,11 +22,11 @@ module CourseCalendar
   end
 
   def today
-    @today ||= CurriculumDay.new(Date.today, cohort).to_s
+    @today ||= CurriculumDay.new(Time.zone.now.to_date, cohort).to_s
   end
 
   def yesterday
-    @yesterday ||= CurriculumDay.new((Date.today - 1).to_date, cohort).to_s
+    @yesterday ||= CurriculumDay.new((Time.zone.now.to_date - 1).to_date, cohort).to_s
   end
 
   def allowed_day?

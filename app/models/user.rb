@@ -9,7 +9,7 @@ class User < ActiveRecord::Base
     return true if day == 'w1d1'
     return false unless cohort
 
-    today = CurriculumDay.new(Date.today, cohort).to_s
+    today = CurriculumDay.new(Time.zone.now.to_date, cohort).to_s
     if today <= day
       true
     else
