@@ -17,7 +17,7 @@ class ApplicationController < ActionController::Base
 
   def cohort
     @cohort ||= current_user.try(:cohort)
-    @cohort ||= Cohort.last
+    @cohort ||= Cohort.most_recent.first
   end
 
 end
