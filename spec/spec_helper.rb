@@ -65,7 +65,6 @@ RSpec.configure do |config|
     Capybara.javascript_driver = :poltergeist
 
     OmniAuth.config.test_mode = true
-
     OmniAuth.config.mock_auth[:github] = OmniAuth::AuthHash.new(GITHUB_OAUTH_HASH)
   end
   config.before :each do
