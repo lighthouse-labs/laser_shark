@@ -1,7 +1,7 @@
 class Activity < ActiveRecord::Base
 
   validates :name, presence: true, length: { maximum: 56 }
-  validates :day, format: { with: /\A(w\dd\d)|(w\de\d)\z/ }
+  validates :day, format: { with: /\A(w\dd\d)|(w\de)\z/ }
 
   scope :chronological, -> { order(:start_time) }
   scope :for_day, -> (day) { where(day: day) }
@@ -20,7 +20,7 @@ class Activity < ActiveRecord::Base
       minutes = (duration_minutes + minutes) % 60
       duration_minutes = 0
     end
-    
+
     return (hours + duration_hours) * 100 + (minutes + duration_minutes)
   end
 
