@@ -1,0 +1,12 @@
+.test.activity
+  .pull-left.icon
+    i.fa.fa-gavel
+  .pull-left.time
+    = integer_time_to_s test.start_time
+    br
+    | to
+    br
+    = integer_time_to_s test.end_time
+  .pull-left.name
+    = link_to test.name, day_activity_path(day, test)
+  .clearfix
