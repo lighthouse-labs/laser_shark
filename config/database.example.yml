@@ -4,7 +4,7 @@ development:
   adapter:  postgresql
   host:     localhost
   encoding: unicode
-  database: beacon_development
+  database: compass_development
   min_messages: warning
   pool:     5
 
@@ -12,6 +12,6 @@ test:
   adapter:  postgresql
   host:     localhost
   encoding: unicode
-  database: beacon_test
+  database: compass_test
   pool:     5
   min_messages: warning
