@@ -7,7 +7,7 @@ class ApplicationController < ActionController::Base
   private
 
   def authenticate_user
-    redirect_to new_session_path if !current_user
+    redirect_to new_session_path, alert: 'Please login first!' unless current_user
   end
 
   def current_user
@@ -15,9 +15,24 @@ class ApplicationController < ActionController::Base
   end
   helper_method :current_user
 
+  def teacher?
+    current_user && current_user.is_a?(Teacher)
+  end
+  helper_method :teacher?
+
   def cohort
     @cohort ||= current_user.try(:cohort)
+    # Teachers can switch to any cohort
+    if teacher?
+      @cohort ||= Cohort.find session[:cohort_id] if session[:cohort_id]
+    end
     @cohort ||= Cohort.most_recent.first
   end
+  helper_method :cohort
+
+  def cohorts
+    @cohorts ||= Cohort.all
+  end
+  helper_method :cohorts
 
 end
