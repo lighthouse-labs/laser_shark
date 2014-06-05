@@ -4,6 +4,17 @@
 
 section.activity-details
   h1 = @activity.name
+  .actions
+    .form-group
+      .input-group
+        span.input-group-addon
+          i.fa.fa-clock-o
+          | &nbsp;Start time
+        input.form-control type="text" value=integer_time_to_s(@activity.start_time)
+        span.input-group-addon
+          i.fa.fa-clock-o
+          | &nbsp;End time
+        input.form-control type="text" value=integer_time_to_s(@activity.end_time)
 
   - if @activity.gist_url?
     .actions
@@ -20,7 +31,8 @@ section.activity-details
         /     | Your
         /     i.fa.fa-github
         /   input.form-control type="text" value=@activity.gist_url
-    hr
+
+  hr
 
   - if @activity.instructions?
     .instructions
