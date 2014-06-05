@@ -6,7 +6,7 @@ class Activity < ActiveRecord::Base
   scope :chronological, -> { order(:start_time) }
   scope :for_day, -> (day) { where(day: day) }
 
-  #after_create :update_instructions_from_gist
+  after_create :update_instructions_from_gist
 
   # Given the start_time and duration, return the end_time
   def end_time
