@@ -5,6 +5,8 @@
 section.activity-details
   h1 = @activity.name
 
+  time = @activity.updated_at
+
   - if @activity.gist_url?
     .actions
       .form-group
