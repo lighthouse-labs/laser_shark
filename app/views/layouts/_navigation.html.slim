@@ -39,4 +39,9 @@ nav.navbar.navbar-inverse.navbar-embossed.navbar-fixed-top role="navigation"
       - else
         li
           = link_to "Sign In", new_session_path
+
+      = form_tag
+          input type="text" name="search"
+          input type="submit" value="Search"
+
 /! /.navbar-collapse

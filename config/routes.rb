@@ -14,6 +14,11 @@ LaserShark::Application.routes.draw do
     resources :activities, only: [:show]
   end
 
+  # SEARCH
+  namespace :search do
+    resources :activities
+  end
+
   resources :cohorts, only: [] do
     put :switch_to, on: :member
   end
