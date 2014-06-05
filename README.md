@@ -24,7 +24,7 @@ Follow these steps in order please:
 2. `bundle install`
 3. Setup your `config/database.yml` based off `config/database.example.yml` (`cp` it)
   * _If you are using vagrant_ (which already has postgres on it): please remove `host: localhost` from both the `development` and `test` db settings. Also, please add `username: ` and `password: ` as empty keys under both sections.
-4. `rake db:setup`
+4. `bin/rake db:setup`
 5. Setup new DNS Alias for `localhost`:
   * From your terminal, type in `sudo nano /etc/hosts` (Mac/Linux Only)
   * Note: if you are using a VM (Vagrant, etc), this should be done on your host (main) machine, not your virtual machine
