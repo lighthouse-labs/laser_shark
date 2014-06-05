@@ -44,7 +44,7 @@ group :development, :test do
   gem 'guard-rails'
   gem 'guard-rspec'
   gem 'factory_girl_rails'
-  gem 'rspec-rails'
+  gem 'rspec-rails', '2.14.2'
   gem 'dotenv'
   gem 'faker'
 end
