@@ -10,14 +10,27 @@ module CourseCalendar
   private
 
   def day
+    
     d = params[:number] || params[:day_number]
+    
     @day ||= case d
     when nil, 'today'
       today
     when 'yesterday'
       yesterday
     else
-      d
+      
+      week_day_string = params[:number].split("d")
+      week = week_day_string[0].split("w")[1].to_i
+      day = week_day_string[1].to_i
+
+      if (week < 8) || (week == 8 && day <= 5)
+        d
+      else 
+        d = "w8d5"
+        redirect_to day_path(d)
+      end
+
     end
   end
 
