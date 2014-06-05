@@ -17,6 +17,7 @@ div
     .form-group
       .col-sm-offset-3.col-sm-9
         = image_tag current_user.avatar, size: '100x100' if current_user.avatar
+        = f.file_field :custom_avatar, title: "Please Choose File", class: "file-picker" 
 
     = f.input :first_name
     = f.input :last_name
@@ -24,7 +25,7 @@ div
     = f.input :phone_number
     = f.input :twitter
     = f.input :skype
-    = f.file_field :custom_avatar
+ 
 
     .form-group
       .col-sm-offset-3.col-sm-9
