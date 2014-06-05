@@ -45,7 +45,9 @@ User (student/teacher) Authentication can only happen through Github. Much like 
 
 ## Server
 
-1. Use [guard](https://github.com/guard/guard) to start the server and run the tests: `bundle exec guard`
+Use [guard](https://github.com/guard/guard) to start the server and run the tests: `bundle exec guard`
+
+Alternatively, you could start the server using: `bin/rails s` and run the tests using `bin/rake spec`
 
 ## Project Management
 
@@ -54,3 +56,7 @@ At the moment, this project is managed via a [Public Trello Board](https://trell
 ## Notes
 
 <https://github.com/wingrunr21/flat-ui-sass> was used to convert FlatUI Pro from LESS to SASS (located in `vendor/assets` )
+
+## Activities Seed
+
+Ask the teachers for the `activites_seed.rb` which has some activities that can be populated by the `bin/rake db:seed` command. They will send you a gist with the rb file in it.
