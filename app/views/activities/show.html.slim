@@ -5,7 +5,9 @@
 section.activity-details
   h1 = @activity.name
 
-  time = @activity.updated_at
+  p
+    | Last updated at: 
+    time = @activity.last_updated_at
 
   - if @activity.gist_url?
     .actions

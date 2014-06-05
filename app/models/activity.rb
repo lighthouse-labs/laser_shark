@@ -36,6 +36,10 @@ class Activity < ActiveRecord::Base
     end
   end
 
+  def last_updated_at
+    self.updated_at.strftime("%b %e, %l:%M %p")
+  end
+
   protected
 
   def gist_id
