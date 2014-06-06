@@ -13,6 +13,7 @@
 
 ActiveRecord::Schema.define(version: 20140605221411) do
 
+
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -26,6 +27,7 @@ ActiveRecord::Schema.define(version: 20140605221411) do
     t.string   "day"
     t.string   "gist_url"
     t.text     "instructions"
+    t.text     "teacher_notes"
   end
 
   create_table "cohorts", force: true do |t|
