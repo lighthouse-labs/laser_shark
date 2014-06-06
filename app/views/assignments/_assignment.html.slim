@@ -9,4 +9,11 @@
     = integer_time_to_s assignment.end_time
   .pull-left.name
     = link_to assignment.name, day_activity_path(day, assignment)
+  .pull-right.icon
+    - if current_user.completed_activity?(assignment)
+      = link_to activity_activity_submission_path(assignment), method: :delete
+        i.fa.fa-check-square-o
+    - else
+      = link_to activity_activity_submission_path(assignment), method: :post
+        i.fa.fa-times
   .clearfix
