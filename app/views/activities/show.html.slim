@@ -25,3 +25,8 @@ section.activity-details
   - if @activity.instructions?
     .instructions
       == markdown @activity.instructions
+  - if @activity.teacher_notes
+    - if teacher?
+      h3 = "Teacher Notes"
+      .instructions
+        == markdown @activity.teacher_notes
