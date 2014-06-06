@@ -1,7 +1,7 @@
-= form_for [@commentable, @comment] do |f|
+= form_for Comment.new, url: day_activity_comments_path(@day, @activity) do |f|
   - if @comment.errors.any?
     .error_messages
-      h2 Please correct the following errors.
+      h2 Please correct the follwing errors.
       ul
         - @comment.errors.full_messages.each do |msg|
           li = msg
