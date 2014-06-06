@@ -16,10 +16,9 @@ LaserShark::Application.routes.draw do
   end
 
   resources :activities do 
-    resources :comments, only: [:create] do 
+    resources :comments do 
     end
   end
-
 
   resources :cohorts, only: [] do
     put :switch_to, on: :member

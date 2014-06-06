@@ -2,14 +2,6 @@ class CommentsController < ApplicationController
   
   before_action :load_commentable
 
-  def index
-    @comments = @commentable.comments
-  end
-
-  def new
-    @comment = @commentable.comments.new
-  end
-
   def create
 
     @activity = Activity.find(params[:activity_id])
