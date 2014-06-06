@@ -36,6 +36,15 @@ class Activity < ActiveRecord::Base
     end
   end
 
+  def next
+    Activity.where('start_time > ? AND day = ?', self.start_time, self.day).order(start_time: :asc).first
+  end
+
+  def previous
+    Activity.where('start_time < ? AND day = ?', self.start_time, self.day).order(start_time: :desc).first
+  end
+
+
   protected
 
   def gist_id
