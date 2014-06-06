@@ -27,6 +27,10 @@ section.activity-details
             i.fa.fa-check-square-o
             | &nbsp;Mark as complete
 
+  p
+    | Last updated at: 
+    time = format_date_time(@activity.updated_at)
+
   - if @activity.gist_url?
     .actions
       .form-group
