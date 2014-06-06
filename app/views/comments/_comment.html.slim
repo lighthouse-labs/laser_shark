@@ -1,9 +1,6 @@
 div.comment
-  simple_format
-    div.text
-      strong = comment.user.full_name 
-      |&nbsp;
-      em = comment.created_at.strftime("%b %e, %I:%M %p")
-      br
-      em = comment.content
-        
+  strong = comment.user.full_name 
+  |&nbsp;
+  em = comment.created_at.strftime("%b %e, %I:%M %p")
+  br
+  em = comment.content
