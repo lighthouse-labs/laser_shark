@@ -15,17 +15,18 @@ section.activity-details
           | &nbsp;to&nbsp;
           = integer_time_to_s(@activity.end_time)
           | &nbsp;(
-          = @activity.duration_in_hours.round(2)
-          | &nbsp;hours)
+          = duration_in_hours(@activity.duration)
+          | h)
 
   - if @activity.gist_url?
     .actions
       .form-group
         .input-group
           span.input-group-addon
-            | Original
             i.fa.fa-github
-          input.form-control type="text" value=@activity.gist_url
+            | &nbsp;Original
+          span.form-control
+            = @activity.gist_url
 
         / br
         / .input-group
