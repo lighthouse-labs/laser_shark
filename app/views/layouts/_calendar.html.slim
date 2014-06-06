@@ -15,7 +15,8 @@ nav.calendar
   = link_to 'Today', day_path('today'), class: 'btn-today'
 
   br
-
+  
+  .search
     = form_tag search_activities_path, :method => :get do
       input type="text" name="query"
       input type="submit" value="Search"
