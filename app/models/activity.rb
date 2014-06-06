@@ -36,6 +36,17 @@ class Activity < ActiveRecord::Base
     end
   end
 
+  def self.search(query)
+    queries = query.to_s.strip.split
+    query_string = []
+    queries.each do |q|
+      query_string << "activities.name ILIKE '%#{q}%'"
+    end
+    s="SELECT activities.* FROM activities  WHERE "+query_string.join(' OR ')
+    Activity.find_by_sql s
+  end
+
+
   protected
 
   def gist_id

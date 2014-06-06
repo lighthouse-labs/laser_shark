@@ -8,12 +8,17 @@ class ActivitiesController < ApplicationController
   end
 
   def search
-		@activities = search_activities(params[:query])
-    #@activities = Activity.chronological.for_day("w1d1")
+    # Search by exact single type only
+		# @activities = search_activities(params[:query])
+
+    @activities = Activity.search(params[:query])
+    
   end
+
   #helper_method :search
 
 	def search_activities(q)
+
 
 		Activity.where('type LIKE ?', q)
 

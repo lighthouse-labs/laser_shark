@@ -8,5 +8,5 @@
     br
     = integer_time_to_s homework.end_time
   .pull-left.name
-    = link_to homework.name, day_activity_path(day, homework)
+    = link_to homework.name, day_activity_path(homework.day, homework)
   .clearfix
