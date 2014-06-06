@@ -1,0 +1,13 @@
+= form_for Comment.new, url: activity_comments_path(@activity) do |f|
+  - if @comment.errors.any?
+    .error_messages
+      h2 Please correct the follwing errors.
+      ul
+        - @comment.errors.full_messages.each do |msg|
+          li = msg
+
+  .field
+  = f.text_area :content
+  
+  .actions
+  = f.submit
