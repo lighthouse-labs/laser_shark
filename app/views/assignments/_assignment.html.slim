@@ -1,13 +1,12 @@
-- if current_user.can_access_day?(assignment.day)
-  .assignment.activity
-    .pull-left.icon
-      i.fa.fa-edit
-    .pull-left.time
-      = integer_time_to_s assignment.start_time
-      br
-      | to
-      br
-      = integer_time_to_s assignment.end_time
-    .pull-left.name
-      = link_to assignment.name, day_activity_path(assignment.day, assignment)
-    .clearfix
+.assignment.activity
+  .pull-left.icon
+    i.fa.fa-edit
+  .pull-left.time
+    = integer_time_to_s assignment.start_time
+    br
+    | to
+    br
+    = integer_time_to_s assignment.end_time
+  .pull-left.name
+    = link_to assignment.name, day_activity_path(assignment.day, assignment)
+  .clearfix

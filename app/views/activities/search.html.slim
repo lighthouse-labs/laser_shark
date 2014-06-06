@@ -6,7 +6,12 @@
 section.activity-details
   h3 Activities Search Results
 
-  = render @activities
+  - @activities.each do |activity|
+  	= render activity if current_user.can_access_day?(activity.day)
+
+
+
+
 
 
 
