@@ -8,5 +8,5 @@
     br
     = integer_time_to_s lecture.end_time
   .pull-left.name
-    = link_to lecture.name, day_activity_path(day, lecture)
+    = link_to lecture.name, day_activity_path(lecture.day, lecture)
   .clearfix

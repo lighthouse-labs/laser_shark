@@ -10,6 +10,8 @@ section.activity-details
 - @activities.each do |activity|
     = link_to activity.name, day_activity_path(activity.day, activity)
 
+= render @activities
+
 
 
 
