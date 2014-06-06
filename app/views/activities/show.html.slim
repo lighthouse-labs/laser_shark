@@ -31,3 +31,8 @@ section.activity-details
         = link_to 'Previous activity', day_activity_path(@activity.day, @previous_activity), class: 'btn-previous'
       - if @next_activity
         = link_to 'Next activity', day_activity_path(@activity.day, @next_activity), class: 'btn-next'
+
+  - if teacher? && @activity.teacher_notes
+    h3 = "Teacher Notes"
+    .instructions
+      == markdown @activity.teacher_notes
