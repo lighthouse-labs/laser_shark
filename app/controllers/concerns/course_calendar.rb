@@ -10,28 +10,28 @@ module CourseCalendar
   private
 
   def day
-    
-    d = params[:number] || params[:day_number]
-    
-    @day ||= case d
-    when nil, 'today'
-      today
-    when 'yesterday'
-      yesterday
-    else
-      
-      week_day_string = params[:number].split("d")
-      week = week_day_string[0].split("w")[1].to_i
-      day = week_day_string[1].to_i
+    @week_day_number = params[:number]
+    return today if !day?
+    return today if @week_day_number == 'today'
+    return yesterday if @week_day_number == 'yesterday'
+    return "w8d5" if end_of_bootcamp?
+    return @week_day_number if !end_of_bootcamp?
+  end
 
-      if (week < 8) || (week == 8 && day <= 5)
-        d
-      else 
-        d = "w8d5"
-        redirect_to day_path(d)
-      end
+  def day?
+    @week_day_number.nil?
+  end
 
-    end
+  def end_of_bootcamp?
+    week_number < 8 || (week_number == 8 && day_number <= 5)
+  end
+
+  def week_number
+    params[:number].split("d")[0].split("w")[1].to_i
+  end
+
+  def day_number
+    params[:number].split("d")[1].to_i
   end
 
   def today
