@@ -7,5 +7,4 @@ class ActivitiesController < ApplicationController
     @next_activity = @activity.next
     @previous_activity = @activity.previous
   end
-
 end

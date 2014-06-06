@@ -24,3 +24,21 @@ section.activity-details {
     }
   }
 }
+
+.btn-activity {
+  color: white;
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+.btn-activity-incomplete-status {
+  @extend .btn;
+  @extend .btn-danger;
+  @extend .btn-activity;
+}
+
+.btn-activity-complete-status {
+  @extend .btn;
+  @extend .btn-success;
+  @extend .btn-activity;
+}

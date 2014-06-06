@@ -5,6 +5,9 @@ class User < ActiveRecord::Base
   validates :uid,   presence: true
   validates :token, presence: true
 
+  has_many :activity_submissions
+  has_many :submitted_activities, through: :activity_submissions, source: :activity
+
   def can_access_day?(day)
     return true if day == 'w1d1'
     return false unless cohort
@@ -15,6 +18,10 @@ class User < ActiveRecord::Base
     else
       false
     end
+  end
+
+  def completed_activity?(activity)
+    submitted_activities.include?(activity)
   end
 
   class << self

@@ -6,17 +6,26 @@ section.activity-details
   h1 = @activity.name
   .actions
     .form-group
-      .input-group.col-md-3
-        span.input-group-addon
-          i.fa.fa-clock-o
-          | &nbsp;Time
-        span.form-control
-          = integer_time_to_s(@activity.start_time)
-          | &nbsp;to&nbsp;
-          = integer_time_to_s(@activity.end_time)
-          | &nbsp;(
-          = duration_in_hours(@activity.duration)
-          | h)
+      .form-inline
+        .input-group
+          .input-group-addon
+            i.fa.fa-clock-o
+            | &nbsp;Time
+          .form-control
+            = integer_time_to_s(@activity.start_time)
+            | &nbsp;to&nbsp;
+            = integer_time_to_s(@activity.end_time)
+            | &nbsp;(
+            = duration_in_hours(@activity.duration)
+            | h)
+        - if current_user.completed_activity?(@activity)
+          = link_to activity_activity_submission_path(@activity), method: :delete, class:'btn-activity-incomplete-status'
+            i.fa.fa-times
+            | &nbsp;Mark as incomplete
+        - else
+          = link_to activity_activity_submission_path(@activity), method: :post, class:'btn-activity-complete-status'
+            i.fa.fa-check-square-o
+            | &nbsp;Mark as complete
 
   - if @activity.gist_url?
     .actions
