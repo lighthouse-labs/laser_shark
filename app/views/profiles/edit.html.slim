@@ -17,7 +17,7 @@ div
     .form-group
       .col-sm-offset-3.col-sm-9
         div.avatar-format
-          = image_tag current_user.avatar, size: '180x140' if current_user.avatar
+          = image_tag current_user.avatar if current_user.avatar
         div.col-sm-2.upload-button
           button.btn.btn-default.btn-file.btn-block
             | Upload  

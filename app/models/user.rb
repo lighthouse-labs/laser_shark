@@ -9,11 +9,14 @@ class User < ActiveRecord::Base
 
   def avatar
     if custom_avatar.url
-      custom_avatar.url
+      custom_avatar.url(:thumb)
     else
       avatar_url
     end
   end
+
+  # def get_thumb_url
+  #   custom_avatar.url(:thumb)
 
 
   def can_access_day?(day)
