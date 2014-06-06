@@ -1,0 +1,2 @@
+module Activities::SearchHelper
+end

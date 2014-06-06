@@ -2,6 +2,11 @@ LaserShark::Application.routes.draw do
 
   root to: 'home#show'
 
+  # SEARCH
+  resources :activities, only: [] do
+    get :search, on: :collection
+  end
+
   # STUDENT / TEACHER AUTH
   get '/auth/:provider/callback', to: 'sessions#create'
   get '/auth/github', as: 'github_session'
@@ -14,10 +19,6 @@ LaserShark::Application.routes.draw do
     resources :activities, only: [:show]
   end
 
-  # SEARCH
-  namespace :search do
-    resources :activities
-  end
 
   resources :cohorts, only: [] do
     put :switch_to, on: :member
