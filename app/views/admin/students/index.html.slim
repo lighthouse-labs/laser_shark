@@ -1,4 +1,4 @@
-h1 Student
+h1= @cohort.name
 table.table
   thead
     tr
@@ -13,7 +13,7 @@ table.table
   tbody
     - @students.each do |student|
       tr
-        td = image_tag(student.avatar, {size:'100x100'})
+        td = image_tag(avatar_for(student), {size:'100x100'})
         td = student.full_name
         td = student.email
         td = student.phone_number
