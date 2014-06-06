@@ -29,9 +29,6 @@ gem 'redcarpet'
 gem 'omniauth'
 gem 'omniauth-github'
 
-gem 'pry'
-gem 'pry-nav'
-
 group :development do
   gem 'spring'
   gem 'quiet_assets'

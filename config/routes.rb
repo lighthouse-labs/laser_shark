@@ -11,13 +11,11 @@ LaserShark::Application.routes.draw do
 
   # CONTENT BROWSING
   resources :days, param: :number, only: [:show] do
-    resources :activities, only: [:show] do
-    end
+    resources :activities, only: [:show]
   end
 
   resources :activities do 
-    resources :comments do 
-    end
+    resources :comments
   end
 
   resources :cohorts, only: [] do

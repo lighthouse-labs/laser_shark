@@ -6,7 +6,7 @@ class CommentsController < ApplicationController
 
     @activity = Activity.find(params[:activity_id])
     @comment = @commentable.comments.build(comment_params)
-    @comment.user_id = current_user.id
+    @comment.user = current_user
     
     if @comment.save
       redirect_to day_activity_path(@activity.day, @activity), notice: "Comment created."
@@ -19,8 +19,7 @@ class CommentsController < ApplicationController
 private
 
   def load_commentable
-    resource, id = request.path.split('/')[1,2]
-    @commentable = resource.singularize.classify.constantize.find(id)
+    @commentable = Activity.find(params[:activity_id])
   end
 
   def comment_params
