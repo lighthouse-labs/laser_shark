@@ -1,0 +1,5 @@
+div.comments
+  - @comments.each do |comment|
+    div.comment
+      simple_format 
+        = comment.content

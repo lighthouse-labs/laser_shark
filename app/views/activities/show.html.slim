@@ -25,3 +25,8 @@ section.activity-details
   - if @activity.instructions?
     .instructions
       == markdown @activity.instructions
+
+h2 Comments
+
+= render 'comments/comments'
+= render 'comments/form'

@@ -11,12 +11,19 @@ LaserShark::Application.routes.draw do
 
   # CONTENT BROWSING
   resources :days, param: :number, only: [:show] do
-    resources :activities, only: [:show]
+    resources :activities do 
+      resources :comments
+    end
   end
 
   resources :cohorts, only: [] do
     put :switch_to, on: :member
   end
+
+  # ACTIVITY COMMENTING
+  # resources :activities do 
+  #   resources :comments
+  # end
 
   # ADMIN
   namespace :admin do
