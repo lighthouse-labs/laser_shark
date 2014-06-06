@@ -1,14 +1,6 @@
 require "spec_helper"
 
 describe NotificationMailer do
-  # describe ".signup" do
-  #   let(:recipient) { random_email }
-  #   let(:email) { NotificationMailer.signup(recipient) }
-
-  #   it { email.from.should == [ "sender@domain.com" ] }
-  #   it { email.to.should == [ recipient ] }
-  #   it { email.subject.should == "Welcome" }
-  # end
 
   before(:each) do
     ActionMailer::Base.delivery_method = :test
@@ -26,7 +18,7 @@ describe NotificationMailer do
     ActionMailer::Base.deliveries.count.should == 1
   end
 
-  it 'renders the receiver email' do
+  it "sends to the user's email" do
     ActionMailer::Base.deliveries.first.to.should == [@user.email]
   end
 
