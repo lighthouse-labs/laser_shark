@@ -1,0 +1,6 @@
+div.comment
+  strong = comment.user.full_name 
+  |&nbsp;
+  em = comment.created_at.strftime("%b %e, %I:%M %p")
+  br
+  em = comment.content
