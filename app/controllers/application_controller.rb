@@ -24,7 +24,7 @@ class ApplicationController < ActionController::Base
     @cohort ||= current_user.try(:cohort)
     # Teachers can switch to any cohort
     if teacher?
-      @cohort ||= Cohort.find session[:cohort_id] if session[:cohort_id]
+      @cohort ||= Cohort.find_by(id: session[:cohort_id]) if session[:cohort_id]
     end
     @cohort ||= Cohort.most_recent.first
   end
