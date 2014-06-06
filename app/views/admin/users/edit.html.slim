@@ -1,0 +1,21 @@
+h1 All Users
+= form_for [:admin, @user] do |f|
+  table.table.table-hover
+    thead
+      tr
+        th 
+        th Name
+        th Email
+        th Phone
+        th Completed Registration
+        th User Type
+        th
+    tbody
+      tr
+        td = image_tag(@user.avatar_url, {size:'100x100'})
+        td = @user.full_name
+        td = @user.email
+        td = @user.phone_number
+        td = completed_registration?(@user)
+        td = f.select :type, options_for_select(["Student", "Teacher"], @user.type), {}, {class: 'form-control', style: "width: 90px"}
+        td = f.submit "Submit", class: 'btn btn-primary'

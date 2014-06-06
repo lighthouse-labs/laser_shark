@@ -1,0 +1,21 @@
+h1 All Users
+table.table.table-hover
+  thead
+    tr
+      th 
+      th Name
+      th Email
+      th Phone
+      th Completed Registration
+      th User Type
+      th
+  tbody
+    - @users.each do |user|
+      tr
+        td = image_tag(user.avatar_url, {size:'100x100'})
+        td = user.full_name
+        td = user.email
+        td = user.phone_number
+        td = completed_registration?(user)
+        td = user.type
+        td = link_to "Edit", edit_admin_user_path(user), class: 'btn btn-primary'
