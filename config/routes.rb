@@ -12,7 +12,7 @@ LaserShark::Application.routes.draw do
   # CONTENT BROWSING
   resources :days, param: :number, only: [:show] do
     resources :activities do 
-      resources :comments do 
+      resources :comments, only: [:create] do 
       end
     end
   end

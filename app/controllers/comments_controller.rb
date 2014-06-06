@@ -12,11 +12,12 @@ class CommentsController < ApplicationController
 
   def create
 
-    @activity = Activity.chronological.for_day(day).find(params[:id])
-
-    @comment = @commentable.comments.new(comment_params)
+    @activity = Activity.find(params[:activity_id])
+    @comment = @commentable.comments.build(comment_params)
+    @comment.user_id = current_user.id
+    
     if @comment.save
-      redirect_to day_activity_path(@day, @activity), notice: "Comment created."
+      redirect_to day_activity_path(@activity.day, @activity), notice: "Comment created."
     else
       render :new
     end
@@ -31,7 +32,7 @@ private
   end
 
   def comment_params
-    params.require(:comment).permit(:content)
+    params.require(:comment).permit(:content, :user_id)
   end
 
 end

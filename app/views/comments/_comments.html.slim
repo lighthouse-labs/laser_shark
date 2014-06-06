@@ -1,5 +1,9 @@
 div.comments
   - @comments.each do |comment|
     div.comment
-      simple_format 
-        = comment.content
+      simple_format
+        strong = comment.content
+        br
+        em = comment.user.full_name
+        br
+        em = comment.created_at.strftime("%b %e, %I:%M %p")
