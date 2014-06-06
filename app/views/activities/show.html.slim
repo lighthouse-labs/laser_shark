@@ -6,15 +6,17 @@ section.activity-details
   h1 = @activity.name
   .actions
     .form-group
-      .input-group
+      .input-group.col-md-3
         span.input-group-addon
           i.fa.fa-clock-o
-          | &nbsp;Start time
-        input.form-control type="text" value=integer_time_to_s(@activity.start_time)
-        span.input-group-addon
-          i.fa.fa-clock-o
-          | &nbsp;End time
-        input.form-control type="text" value=integer_time_to_s(@activity.end_time)
+          | &nbsp;Time
+        span.form-control
+          = integer_time_to_s(@activity.start_time)
+          | &nbsp;to&nbsp;
+          = integer_time_to_s(@activity.end_time)
+          | &nbsp;(
+          = @activity.duration_in_hours.round(2)
+          | &nbsp;hours)
 
   - if @activity.gist_url?
     .actions

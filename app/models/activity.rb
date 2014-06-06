@@ -36,6 +36,10 @@ class Activity < ActiveRecord::Base
     end
   end
 
+  def duration_in_hours
+    duration.to_f / 60
+  end
+
   protected
 
   def gist_id
