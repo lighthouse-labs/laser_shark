@@ -35,7 +35,7 @@ nav.navbar.navbar-inverse.navbar-embossed.navbar-fixed-top role="navigation"
             li
               = link_to "Edit profile", edit_profile_path
             li
-              = link_to "Classmates", students_path
+              = link_to "Classmates", cohort_students_path(current_user.cohort)
             li
               = link_to 'Sign Out', session_path, :method => :delete
       - else
