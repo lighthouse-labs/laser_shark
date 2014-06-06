@@ -18,7 +18,5 @@ nav.calendar
   
   .search
     = form_tag search_activities_path, :method => :get do
-      input type="text" name="query"
-      input type="submit" value="Search"
-
-
+      = text_field_tag :query, params[:query]
+      = submit_tag 'Search'
