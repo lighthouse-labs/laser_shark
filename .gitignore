@@ -5,6 +5,7 @@
 
 # Project specific
 db/activities_seed.rb
+public/uploads/user/custom_avatar/
 
 # minimal Rails specific artifacts
 db/*.sqlite3
