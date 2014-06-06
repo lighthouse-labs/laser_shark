@@ -1,10 +1,10 @@
 
 - content_for :side_nav do
-  h1.day = day.upcase
+  h1.day
+  	| Results
   == render 'layouts/calendar'
 
-section.activity-details
-  h3 Activities Search Results
+section.search-results
 
   - @activities.each do |activity|
   	= render activity if current_user.can_access_day?(activity.day)
