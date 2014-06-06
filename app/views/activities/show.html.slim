@@ -7,7 +7,7 @@ section.activity-details
 
   p
     | Last updated at: 
-    time = @activity.last_updated_at
+    time = format_date_time(@activity.updated_at)
 
   - if @activity.gist_url?
     .actions
