@@ -9,4 +9,11 @@
     = integer_time_to_s lecture.end_time
   .pull-left.name
     = link_to lecture.name, day_activity_path(day, lecture)
+  .pull-right.icon
+    - if current_user.completed_activity?(lecture)
+      = link_to activity_activity_submission_path(lecture), method: :delete
+        i.fa.fa-check-square-o
+    - else
+      = link_to activity_activity_submission_path(lecture), method: :post
+        i.fa.fa-times
   .clearfix
