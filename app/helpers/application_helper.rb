@@ -7,4 +7,15 @@ module ApplicationHelper
     minutes = "00" if minutes == 0
     return "#{hours}:#{minutes}"
   end
+
+  def avatar_for(user)
+    if user.custom_avatar.url
+      user.custom_avatar.url(:thumb)
+    else
+      user.avatar_url
+    end
+  end
+
+
+
 end
