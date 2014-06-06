@@ -26,8 +26,8 @@ section.activity-details
     .instructions
       == markdown @activity.instructions
 
-  - if @previous_activity
-    = link_to 'Previous activity', day_activity_path(@activity.day, @previous_activity), class: 'btn btn-primary'
-
-  - if @next_activity
-    = link_to 'Next activity', day_activity_path(@activity.day, @next_activity), class: 'pull-right btn btn-primary'
+    .nav-buttons
+      - if @previous_activity
+        = link_to 'Previous activity', day_activity_path(@activity.day, @previous_activity), class: 'btn-previous'
+      - if @next_activity
+        = link_to 'Next activity', day_activity_path(@activity.day, @next_activity), class: 'btn-next'
