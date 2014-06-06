@@ -17,7 +17,7 @@ Topics:
 * Lighthouse Curriculum
 TEXT
 
-Activity.create! day: d, start_time: 1100, duration: 60, type: 'Assignment', name: 'Vagrant Setup', gist_url: 'https://gist.github.com/kvirani/4d0c09da873c26e55477'
+Activity.create! day: 'w2d2', start_time: 1100, duration: 60, type: 'Assignment', name: 'Vagrant Setup', gist_url: 'https://gist.github.com/kvirani/4d0c09da873c26e55477'
 
 Activity.create! day: d, start_time: 1200, duration: 60, type: 'Assignment', name: 'Git Setup (in Vagrant)', gist_url: 'https://gist.github.com/kvirani/2af0ccab06b9dcfe194c'
 
