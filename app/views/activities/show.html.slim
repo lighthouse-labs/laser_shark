@@ -22,9 +22,9 @@ section.activity-details
     .actions
       .form-group
         .input-group
-          span.input-group-addon
+          = link_to @activity.gist_url, { target: "blank", class: "input-group-addon" }
             i.fa.fa-github
-            | &nbsp;Original
+            | &nbsp;Original 
           span.form-control
             = @activity.gist_url
 
@@ -40,3 +40,14 @@ section.activity-details
   - if @activity.instructions?
     .instructions
       == markdown @activity.instructions
+
+    .nav-buttons
+      - if @previous_activity
+        = link_to 'Previous activity', day_activity_path(@activity.day, @previous_activity), class: 'btn-previous'
+      - if @next_activity
+        = link_to 'Next activity', day_activity_path(@activity.day, @next_activity), class: 'btn-next'
+
+  - if teacher? && @activity.teacher_notes
+    h3 = "Teacher Notes"
+    .instructions
+      == markdown @activity.teacher_notes
