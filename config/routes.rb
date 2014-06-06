@@ -18,6 +18,8 @@ LaserShark::Application.routes.draw do
     put :switch_to, on: :member
   end
 
+  resources :students, only: [:index] 
+
   # ADMIN
   namespace :admin do
     root to: 'dashboard#show'

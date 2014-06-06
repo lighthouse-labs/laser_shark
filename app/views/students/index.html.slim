@@ -1,0 +1,19 @@
+h1 Fellow Students
+table.table
+  thead
+    tr
+      th
+      th Name
+      th Email
+      th Phone
+      th GitHub Username
+      
+  tbody
+    - @students.each do |student|
+      tr
+        td = image_tag(student.avatar, {size:'140x140'})
+        td = student.full_name
+        td = student.email
+        td = student.phone_number
+        td = student.github_username
+       
