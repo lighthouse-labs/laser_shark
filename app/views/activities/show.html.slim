@@ -18,6 +18,10 @@ section.activity-details
           = duration_in_hours(@activity.duration)
           | h)
 
+  p
+    | Last updated at: 
+    time = format_date_time(@activity.updated_at)
+
   - if @activity.gist_url?
     .actions
       .form-group
