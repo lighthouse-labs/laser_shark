@@ -8,6 +8,21 @@ section.activity-details {
       max-width: 100%;
     }
   }
+  
+  .nav-buttons{
+    margin-bottom: 50px;
+    margin-top: 75px;
+
+    .btn-previous{
+        @extend .btn;
+        @extend .btn-primary;
+    }
+    .btn-next{
+      @extend .btn;
+      @extend .btn-primary;
+      @extend .pull-right;
+    }
+  }
 }
 
 div.comment {
