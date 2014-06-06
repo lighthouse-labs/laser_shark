@@ -6,7 +6,7 @@ module ActivitiesHelper
       space_after_headers: true,
       fenced_code_blocks: true
     }
-    @markdown ||= Redcarpet::Markdown.new(Redcarpet::Render::HTML, options)
+    @markdown ||= Redcarpet::Markdown.new(TargetBlankRenderer, options)
     @markdown.render(content)
   end
 
@@ -16,3 +16,4 @@ module ActivitiesHelper
 
 
 end
+
