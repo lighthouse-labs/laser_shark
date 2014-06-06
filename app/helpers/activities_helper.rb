@@ -6,8 +6,14 @@ module ActivitiesHelper
       space_after_headers: true,
       fenced_code_blocks: true
     }
-    @markdown ||= Redcarpet::Markdown.new(Redcarpet::Render::HTML, options)
+    @markdown ||= Redcarpet::Markdown.new(TargetBlankRenderer, options)
     @markdown.render(content)
   end
 
+  def duration_in_hours(duration)
+    number_with_precision (duration.to_f / 60), precision: 2, strip_insignificant_zeros: true
+  end
+
+
 end
+
