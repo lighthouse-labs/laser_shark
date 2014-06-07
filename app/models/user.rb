@@ -43,12 +43,4 @@ class User < ActiveRecord::Base
     "#{self.first_name} #{self.last_name}"
   end
 
-  def avatar
-    if custom_avatar.url
-      custom_avatar.url(:thumb)
-    else
-      avatar_url
-    end
-  end
-
 end
