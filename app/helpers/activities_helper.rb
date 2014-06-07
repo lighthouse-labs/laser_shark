@@ -16,7 +16,7 @@ module ActivitiesHelper
 
   def duration activity
     duration = activity.duration
-    duration < 60 ? duration.to_s << 'min' : duration_in_hours(duration) << "h"
+    duration < 60 ? duration.to_s << 'm' : duration_in_hours(duration) << "h"
   end
 
   def weekend?
