@@ -7,4 +7,8 @@ module ApplicationHelper
     minutes = "00" if minutes == 0
     return "#{hours}:#{minutes}"
   end
+
+  def format_date_time(time)
+    time.strftime("%b %e, %l:%M %p")
+  end
 end
