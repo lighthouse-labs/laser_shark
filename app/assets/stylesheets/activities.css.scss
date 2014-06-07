@@ -7,7 +7,16 @@ section.activity-details {
     img {
       max-width: 100%;
     }
+
+      div.comment {
+    margin-bottom: 2px;
+    padding: 3px;
+    font-size: 14px;
+    color: #34495e;
+    float: right;
   }
+
+}
   
   .nav-buttons{
     margin-bottom: 50px;
@@ -23,15 +32,11 @@ section.activity-details {
       @extend .pull-right;
     }
   }
-
-  div.comment {
-    margin-bottom: 2px;
-    padding: 3px;
-    font-size: 14px;
-    color: #34495e;
-    float: right;
-
+  .fa-1 {
+    font-size: 1.7em;
+    line-height: 0.75em;
+    vertical-align: -15%;
   }
-
 }
+
 
