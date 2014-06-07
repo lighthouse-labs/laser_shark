@@ -13,3 +13,11 @@ nav.calendar
     = link_to 'Yesterday', day_path('yesterday'), class: 'btn-yesterday'
     | &nbsp;
   = link_to 'Today', day_path('today'), class: 'btn-today'
+
+  section.search-box
+    = form_tag search_activities_path, method: :get, class: 'search' do
+      div.form-group
+
+          - unless request.env['PATH_INFO'] == '/activities/search'
+              = text_field_tag :query, params[:query], class: 'small-search-field', placeholder: 'Search'
+              = submit_tag 'Search', class: 'search-btn', :style => "display:none"

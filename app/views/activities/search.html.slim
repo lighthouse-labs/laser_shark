@@ -1,8 +1,12 @@
+- hide_small_search_field = true
+
 
 - content_for :side_nav do
   h1.day
   	| Results
-  == render 'layouts/calendar'
+  == render 'layouts/calendar'  
+
+
 
 section.search-box
 	= form_tag search_activities_path, method: :get, class: 'search' do
@@ -12,7 +16,11 @@ section.search-box
 
 section.search-results
   - @activities.each do |activity|
-  	= render activity if current_user.can_access_day?(activity.day)
+  	= render activity if activity.present? && current_user.can_access_day?(activity.day)
+
+
+
+	
 
 
 

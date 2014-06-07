@@ -10,6 +10,10 @@ class ActivitiesController < ApplicationController
 
   def search
     @activities = Activity.search(params[:query])
+    if @activities.nil?
+    	flash[:alert] = "No results for your search request."
+    	redirect_to :back
+    end
   end
 
 end
