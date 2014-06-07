@@ -1,15 +1,5 @@
 nav.calendar {
 
-  .btn-yesterday {
-    @extend .btn;
-    @extend .btn-primary;
-  }
-
-  .btn-today {
-    @extend .btn;
-    @extend .btn-warning;
-  }
-
   .week {
     @extend .pagination;
     @extend .pagination-minimal; //flatUI
@@ -65,4 +55,29 @@ nav.calendar {
       }
     }
   }
+}
+.btn-yesterday {
+  @extend .btn;
+  @extend .btn-primary;
+  @extend .btn-block;
+}
+
+.btn-today {
+  @extend .btn;
+  @extend .btn-warning;
+  @extend .btn-block;
+}
+
+.btn-row{
+  width: 230px;
+  padding-left: 15px;
+  // width: 213px;
+    @media (max-width: 768px) {
+    width: auto;
+    padding-right: 15px;
+  }
+}
+.btn-container{
+  padding: 2px !important;
+  @include make-xs-column(6);
 }

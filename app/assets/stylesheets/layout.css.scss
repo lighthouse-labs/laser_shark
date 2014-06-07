@@ -28,16 +28,18 @@ nav {
 main {
   @include make-row;
 
-  width: 1100px;
+  max-width: 1100px;
 
   aside.primary {
-    @include make-xs-column(5);
+    @include make-xs-column(12);
+    @include make-sm-column(4);
     @include make-md-column(3);
     @import "layout/aside.primary";
   }
 
   .content {
-    @include make-xs-column(7);
+    @include make-xs-column(12);
+    @include make-sm-column(8);
     @include make-md-column(9);
 
     .jumbotron {
