@@ -4,8 +4,13 @@
   	| Results
   == render 'layouts/calendar'
 
-section.search-results
+section.search-box
+	= form_tag search_activities_path, method: :get, class: 'search' do
+	  div.form-group
+	    = text_field_tag :query, params[:query], class: 'search-field', placeholder: 'Search'
+	    = submit_tag 'Search', class: 'search-btn'
 
+section.search-results
   - @activities.each do |activity|
   	= render activity if current_user.can_access_day?(activity.day)
 

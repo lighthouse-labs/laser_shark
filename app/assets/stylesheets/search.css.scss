@@ -1,4 +1,25 @@
-section.search-results {
+section.search-results {	
+	margin-top: 26px;
+}
+
+section.search-box {
+	margin-top: 42px;
 	
-	margin-top: 114px;
+	form.search {
+	  @extend .form-inline;
+	  margin-top: 20px;
+	
+	  .search-btn {
+	  	@extend .btn;
+	  	@extend .btn-primary;
+	  }
+	
+	  .search-field {
+	  	@extend .form-control;
+	  	@extend .input-lg;
+	  	// Note: this is bad but it's okay for now since the entire site needs work in terms of responsive
+	  	width: 300px;
+	  	margin-right: 10px;
+	  }
+	}  	
 }
