@@ -21,7 +21,7 @@ class Activity < ActiveRecord::Base
       duration_minutes = 0
     end
 
-    return (hours + duration_hours) * 100 + (minutes + duration_minutes)
+    (hours + duration_hours) * 100 + (minutes + duration_minutes)
   end
 
   def update_instructions_from_gist
