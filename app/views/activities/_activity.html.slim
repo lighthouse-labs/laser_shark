@@ -1,2 +1,12 @@
-div.activity
-  = activity.name
+div class=("#{activity.type.downcase} " + 'activity')
+  .pull-left.icon
+    i class=(icon_for(activity))
+  .pull-left.time
+    = integer_time_to_s activity.start_time
+    br
+    | to
+    br
+    = integer_time_to_s activity.end_time
+  .pull-left.name
+    = link_to activity.name, day_activity_path(day, activity)
+  .clearfix
