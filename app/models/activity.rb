@@ -1,5 +1,7 @@
 class Activity < ActiveRecord::Base
 
+  has_many :comments, as: :commentable, dependent: :destroy
+
   validates :name, presence: true, length: { maximum: 56 }
   validates :day, format: { with: /\A(w\dd\d)|(w\de)\z/ }
 
@@ -7,6 +9,7 @@ class Activity < ActiveRecord::Base
   scope :for_day, -> (day) { where(day: day) }
 
   after_create :update_instructions_from_gist
+
 
   # Given the start_time and duration, return the end_time
   def end_time
