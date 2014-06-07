@@ -7,8 +7,10 @@ class RegistrationForm < Reform::Form
   property :phone_number, on: :user
   property :twitter,  		on: :user
   property :skype,  			on: :user
+  property :custom_avatar, on: :user
 
   property :completed_registration, on: :user
+
 
   validates :first_name,   presence: true
   validates :last_name,    presence: true
