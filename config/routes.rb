@@ -1,7 +1,6 @@
 LaserShark::Application.routes.draw do
 
-  root to: 'home#show'
-  get '/welcome', to: 'welcome#show'
+  root to: 'welcome#show'
 
   # STUDENT / TEACHER AUTH
   get '/auth/:provider/callback', to: 'sessions#create'
