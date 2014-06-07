@@ -30,6 +30,7 @@ gem 'omniauth'
 gem 'omniauth-github'
 
 group :development do
+  gem 'letter_opener'
   gem 'spring'
   gem 'quiet_assets'
   gem 'rails_layout'
@@ -48,7 +49,6 @@ group :development, :test do
   gem 'dotenv'
   gem 'faker'
 end
-
 
 group :test do
   gem 'capybara'
