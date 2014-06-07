@@ -9,17 +9,24 @@ section.activity-details
       .input-group.col-md-3
         span.input-group-addon
           i.fa.fa-clock-o
-          | &nbsp;Time
+          - if weekend?
+            | &nbsp;Duration
+          - else
+            | &nbsp;Time
         span.form-control
-          = integer_time_to_s(@activity.start_time)
-          | &nbsp;to&nbsp;
-          = integer_time_to_s(@activity.end_time)
-          | &nbsp;(
-          = duration_in_hours(@activity.duration)
-          | h)
+          - unless weekend?
+            = integer_time_to_s(@activity.start_time)
+            | &nbsp;to&nbsp;
+            = integer_time_to_s(@activity.end_time)
+            | &nbsp;(
+            = duration_in_hours(@activity.duration)
+            | h)
+          - else
+            = duration_in_hours(@activity.duration)
+            | h
 
   p
-    | Last updated at: 
+    | Last updated at:
     time = format_date_time(@activity.updated_at)
 
   - if @activity.gist_url?
