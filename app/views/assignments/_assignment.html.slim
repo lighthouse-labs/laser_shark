@@ -2,11 +2,14 @@
   .pull-left.icon
     i.fa.fa-edit
   .pull-left.time
-    = integer_time_to_s assignment.start_time
+    = integer_time_to_s assignment.start_time unless params[:number].chars.last == 'e'
     br
-    | to
+    - unless params[:number].chars.last == 'e'
+      | to
+    - else
+      = time_estimate assignment.start_time, assignment.end_time
     br
-    = integer_time_to_s assignment.end_time
+    = integer_time_to_s assignment.end_time unless params[:number].chars.last == 'e'
   .pull-left.name
     = link_to assignment.name, day_activity_path(day, assignment)
   .clearfix

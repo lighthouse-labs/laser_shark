@@ -2,11 +2,14 @@
   .pull-left.icon
     i.fa.fa-moon-o
   .pull-left.time
-    = integer_time_to_s homework.start_time
+    = integer_time_to_s homework.start_time  unless params[:number].chars.last == 'e'
     br
-    | to
+    - unless params[:number].chars.last == 'e'
+      | to
+    - else
+      = time_estimate homework.start_time, homework.end_time
     br
-    = integer_time_to_s homework.end_time
+    = integer_time_to_s homework.end_time unless params[:number].chars.last == 'e'
   .pull-left.name
     = link_to homework.name, day_activity_path(day, homework)
   .clearfix
