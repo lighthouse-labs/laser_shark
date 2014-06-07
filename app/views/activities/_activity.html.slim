@@ -2,11 +2,14 @@ div class=("#{activity.type.downcase} " + 'activity')
   .pull-left.icon
     i class=(icon_for(activity))
   .pull-left.time
-    = integer_time_to_s activity.start_time
+    = integer_time_to_s activity.start_time unless weekend?
     br
-    | to
+    - unless weekend?
+      | to
+    - else
+     = duration activity 
     br
-    = integer_time_to_s activity.end_time
+    = integer_time_to_s activity.end_time unless weekend?
   .pull-left.name
     = link_to activity.name, day_activity_path(day, activity)
   .clearfix

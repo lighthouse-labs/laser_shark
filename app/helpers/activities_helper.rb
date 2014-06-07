@@ -14,6 +14,15 @@ module ActivitiesHelper
     number_with_precision (duration.to_f / 60), precision: 2, strip_insignificant_zeros: true
   end
 
+  def duration activity
+    duration = activity.duration
+    duration < 60 ? duration.to_s << 'min' : duration_in_hours(duration) << "h"
+  end
+
+  def weekend?
+    !!(day =~ /(?<=w\d)e$/)
+  end
+
   def icon_for(activity)
     case activity.type.downcase
     when "assignment"
@@ -30,4 +39,3 @@ module ActivitiesHelper
   end
 
 end
-
