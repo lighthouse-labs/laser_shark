@@ -15,5 +15,6 @@ table.table
         td = student.full_name
         td = student.email
         td = student.phone_number
-        td = student.github_username
+        td  
+          a href=("https://github.com/#{student.github_username}") = student.github_username
        
