@@ -5,6 +5,9 @@ class User < ActiveRecord::Base
   validates :uid,   presence: true
   validates :token, presence: true
 
+  mount_uploader :custom_avatar, CustomAvatarUploader
+
+
   def can_access_day?(day)
     return true if day == 'w1d1'
     return false unless cohort
@@ -38,6 +41,14 @@ class User < ActiveRecord::Base
 
   def full_name
     "#{self.first_name} #{self.last_name}"
+  end
+
+  def avatar
+    if custom_avatar.url
+      custom_avatar.url(:thumb)
+    else
+      avatar_url
+    end
   end
 
 end

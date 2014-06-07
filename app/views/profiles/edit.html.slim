@@ -16,7 +16,12 @@ div
 
     .form-group
       .col-sm-offset-3.col-sm-9
-        = image_tag current_user.avatar_url, size: '100x100' if current_user.avatar_url?
+        div.avatar-format
+          = image_tag avatar_for(current_user) if avatar_for(current_user)
+        div.col-sm-2.upload-button
+          button.btn.btn-default.btn-file.btn-block
+            | Upload  
+            = f.file_field :custom_avatar
 
     = f.input :first_name
     = f.input :last_name
@@ -24,6 +29,7 @@ div
     = f.input :phone_number
     = f.input :twitter
     = f.input :skype
+ 
 
     .form-group
       .col-sm-offset-3.col-sm-9
