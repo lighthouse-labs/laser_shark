@@ -1,5 +1,5 @@
 h1 All Users
-= form_for [:admin, @user] do |f|
+= form_for [:admin, @user], url: admin_user_path, as: :user do |f|
   table.table.table-hover
     thead
       tr
