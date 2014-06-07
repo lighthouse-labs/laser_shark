@@ -10,20 +10,47 @@ module CourseCalendar
   private
 
   def day
-    @week_day_number = params[:number]
-    return today if !day?
-    return today if @week_day_number == 'today'
-    return yesterday if @week_day_number == 'yesterday'
-    return "w8d5" if end_of_bootcamp?
-    return @week_day_number if !end_of_bootcamp?
+    @week_day = params[:number]
+    @day ||= case @week_day
+    when nil, 'today'
+      today
+    when 'yesterday'
+      yesterday
+    else
+      date_accesibility_check
+    end
   end
 
-  def day?
-    @week_day_number.nil?
+  def date_accesibility_check
+    if !day_accessible?
+      today
+    elsif day_accessible? || !end_of_bootcamp?
+      @week_day
+    else
+      "w8d5"
+    end
   end
+
+  def day_accessible?
+    (week_number <= today_week_number) && (day_number <= today_day_number)
+  end
+
+
+  def today_is_after_end_of_bootcamp?
+    (today_week_number) > 8 || (today_week_number == 8 && today_day_number > 5)
+  end
+
+  def today_week_number
+    today.split("d")[0].split("w")[1].to_i
+  end
+
+  def today_day_number
+    today.split("d")[1].to_i
+  end
+
 
   def end_of_bootcamp?
-    week_number < 8 || (week_number == 8 && day_number <= 5)
+    (week_number) > 8 || (week_number == 8 && day_number > 5)
   end
 
   def week_number
@@ -34,8 +61,14 @@ module CourseCalendar
     params[:number].split("d")[1].to_i
   end
 
+
   def today
     @today ||= CurriculumDay.new(Time.zone.now.to_date, cohort).to_s
+    # if !end_of_bootcamp?
+      # @today ||= CurriculumDay.new(Time.zone.now.to_date, cohort).to_s
+    # else
+    #   @today = "w8d5"
+    # end
   end
 
   def yesterday
