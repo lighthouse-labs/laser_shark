@@ -14,16 +14,16 @@ section.activity-details
           - else
             | &nbsp;Time
         span.form-control
-          - unless weekend?
+          - if weekend?
+            = duration_in_hours(@activity.duration)
+            | h
+          - else
             = integer_time_to_s(@activity.start_time)
             | &nbsp;to&nbsp;
             = integer_time_to_s(@activity.end_time)
             | &nbsp;(
             = duration_in_hours(@activity.duration)
             | h)
-          - else
-            = duration_in_hours(@activity.duration)
-            | h
 
   p
     | Last updated at:
