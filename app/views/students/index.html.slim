@@ -11,7 +11,7 @@ table.table
   tbody
     - @students.each do |student|
       tr
-        td = image_tag(avatar_for(student), {size:'100x100'})
+        td = image_tag(avatar_for(student), size: '100x100')
         td = student.full_name
         td = student.email
         td = student.phone_number
