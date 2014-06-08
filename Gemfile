@@ -31,6 +31,7 @@ gem 'omniauth-github'
 
 gem 'carrierwave'
 gem 'mini_magick'
+gem 'fog'
 
 group :development do
   gem 'spring'
