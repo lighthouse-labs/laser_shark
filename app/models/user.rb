@@ -8,6 +8,8 @@ class User < ActiveRecord::Base
   has_many :activity_submissions
   has_many :submitted_activities, through: :activity_submissions, source: :activity
 
+  mount_uploader :custom_avatar, CustomAvatarUploader
+
   def can_access_day?(day)
     return true if day == 'w1d1'
     return false unless cohort

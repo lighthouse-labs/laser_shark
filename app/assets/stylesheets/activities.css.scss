@@ -41,4 +41,10 @@ section.activity-details {
     @extend .btn-success;
     @extend .btn-activity;
   }
+  
+  .fa-1 {
+    font-size: 1.7em;
+    line-height: 0.75em;
+    vertical-align: -15%;
+  }
 }

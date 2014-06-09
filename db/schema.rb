@@ -59,6 +59,7 @@ ActiveRecord::Schema.define(version: 20140605224448) do
     t.string  "avatar_url"
     t.integer "cohort_id"
     t.string  "type"
+    t.string  "custom_avatar"
   end
 
   add_index "users", ["cohort_id"], name: "index_users_on_cohort_id", using: :btree

@@ -31,6 +31,10 @@ gem 'omniauth-github'
 
 gem 'default_value_for'
 
+gem 'carrierwave'
+gem 'mini_magick'
+gem 'fog'
+
 group :development do
   gem 'spring'
   gem 'quiet_assets'
