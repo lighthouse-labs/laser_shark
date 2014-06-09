@@ -3,6 +3,11 @@ LaserShark::Application.routes.draw do
   root to: 'home#show'
   get '/welcome', to: 'welcome#show'
 
+  # SEARCH
+  resources :activities, only: [] do
+    get :search, on: :collection
+  end
+
   # STUDENT / TEACHER AUTH
   get '/auth/:provider/callback', to: 'sessions#create'
   get '/auth/github', as: 'github_session'
@@ -14,6 +19,7 @@ LaserShark::Application.routes.draw do
   resources :days, param: :number, only: [:show] do
     resources :activities, only: [:show]
   end
+
 
   resources :cohorts, only: [] do
     resources :students, only: [:index]    # cohort_students_path(@cohort)

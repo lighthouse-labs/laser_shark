@@ -13,5 +13,5 @@ div class=("#{activity.type.downcase} " + 'activity')
       br
       = integer_time_to_s activity.end_time
   .pull-left.name
-    = link_to activity.name, day_activity_path(day, activity)
+    = link_to activity.name, day_activity_path(activity.day, activity)
   .clearfix
