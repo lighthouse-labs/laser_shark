@@ -11,6 +11,16 @@ nav.navbar.navbar-inverse.navbar-embossed.navbar-fixed-top role="navigation"
         = link_to day_path('today') do
           i.fa.fa-calendar
           |  Schedule
+
+      li.dropdown.student
+        = link_to "#", :class => "dropdown-toggle", :"data-toggle" => "dropdown" do
+          |  Classmates
+          b.caret
+        span.dropdown-arrow
+        ul.dropdown-menu
+          - cohorts.each do |cohort|
+            li
+              = link_to cohort.name, cohort_students_path(cohort) 
     ul.nav.navbar-nav.navbar-right
       - if teacher?
         li.dropdown.cohort
