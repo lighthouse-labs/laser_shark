@@ -40,8 +40,6 @@ class Activity < ActiveRecord::Base
     unless query.blank?
       words = query.to_s.strip.split
       words.inject(Activity.all) { |chain, word| chain.where("activities.name ILIKE ?", "%#{word}%") }
-    else
-      nil
     end
   end
 

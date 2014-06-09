@@ -9,11 +9,8 @@ class ActivitiesController < ApplicationController
   end
 
   def search
+    @hide_side_search = true
     @activities = Activity.search(params[:query])
-    if @activities.nil?
-    	flash[:alert] = "No results for your search request."
-    	redirect_to :back
-    end
   end
 
 end
