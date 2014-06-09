@@ -29,8 +29,10 @@ gem 'redcarpet'
 gem 'omniauth'
 gem 'omniauth-github'
 
-gem 'pry'
-gem 'pry-nav'
+
+gem 'carrierwave'
+gem 'mini_magick'
+gem 'fog'
 
 group :development do
   gem 'spring'

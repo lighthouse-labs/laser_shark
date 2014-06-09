@@ -23,8 +23,10 @@ LaserShark::Application.routes.draw do
 
 
   resources :cohorts, only: [] do
+    resources :students, only: [:index]    # cohort_students_path(@cohort)
     put :switch_to, on: :member
   end
+
 
   # ADMIN
   namespace :admin do

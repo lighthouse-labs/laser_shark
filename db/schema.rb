@@ -11,9 +11,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
+<<<<<<< HEAD
 
 ActiveRecord::Schema.define(version: 20140606154141) do
 
+=======
+ActiveRecord::Schema.define(version: 20140605221411) do
+>>>>>>> f36b8a8e1f6e260489392b2afe135a00b3c80cb1
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -63,6 +67,7 @@ ActiveRecord::Schema.define(version: 20140606154141) do
     t.string  "avatar_url"
     t.integer "cohort_id"
     t.string  "type"
+    t.string  "custom_avatar"
   end
 
   add_index "users", ["cohort_id"], name: "index_users_on_cohort_id", using: :btree
