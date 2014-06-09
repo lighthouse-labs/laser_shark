@@ -2,5 +2,10 @@ class ActivitySubmission < ActiveRecord::Base
   belongs_to :user
   belongs_to :activity
 
-  validates_uniqueness_of :user_id, scope: :activity_id
+  default_value_for :completed_at, allows_nil: false do
+    Time.now
+  end
+
+  validates :user_id, uniqueness: { scope: :activity_id,
+    message: "only one submission per activity" }
 end

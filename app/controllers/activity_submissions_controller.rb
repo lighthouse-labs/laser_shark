@@ -6,8 +6,7 @@ class ActivitySubmissionsController < ApplicationController
 
   def create
     @activity.activity_submissions.create(
-      user: current_user,
-      completed_at: Time.now
+      user: current_user
       )
     redirect_to :back
   end

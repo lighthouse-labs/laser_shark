@@ -29,6 +29,8 @@ gem 'redcarpet'
 gem 'omniauth'
 gem 'omniauth-github'
 
+gem 'default_value_for'
+
 group :development do
   gem 'spring'
   gem 'quiet_assets'
