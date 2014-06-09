@@ -17,8 +17,7 @@ section.search-results
     - if @activities.blank?
         div.no-results
           == "No results here...try other keywords!" 
-    - @activities.each do |activity|
-      = render activity if activity.present? && current_user.can_access_day?(activity.day)
+    = render partial: 'activities/activity', collection: @activities
   - if @activities.nil?
       div.no-results
       == "Forgot your search keywords?  ;)"
