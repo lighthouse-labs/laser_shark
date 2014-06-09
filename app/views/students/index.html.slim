@@ -6,18 +6,15 @@ table.table
       th Name
       th Email
       th Phone
-      th Twitter
-      th Skype
       th GitHub Username
-      th Completed Registration
+      
   tbody
     - @students.each do |student|
       tr
-        td = image_tag(avatar_for(student), {size:'100x100'})
+        td = image_tag(avatar_for(student), size: '100x100')
         td = student.full_name
         td = student.email
         td = student.phone_number
-        td = student.twitter
-        td = student.skype
-        td = student.github_username
-        td = completed_registration?(student)
+        td  
+          a href=("https://github.com/#{student.github_username}") = student.github_username
+       

@@ -8,7 +8,17 @@ module ApplicationHelper
     return "#{hours}:#{minutes}"
   end
 
+
+  def avatar_for(user)
+    if user.custom_avatar.url
+      user.custom_avatar.url(:thumb)
+    else
+      user.avatar_url
+    end
+  end
+
   def format_date_time(time)
     time.strftime("%b %e, %l:%M %p")
   end
+
 end

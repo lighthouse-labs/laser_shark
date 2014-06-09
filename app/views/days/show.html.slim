@@ -3,4 +3,4 @@
   == render 'layouts/calendar'
 
 h1 Schedule
-= render @activities
+= render partial: 'activities/activity', collection: @activities
