@@ -11,7 +11,9 @@ class ActivitiesController < ApplicationController
   def search
     @hide_side_search = true
     @activities = Activity.search(params[:query])
-    @activities = @activities.select { |activity| current_user.can_access_day?(activity.day) }
+    unless @activities.nil?
+      @activities = @activities.select { |activity| current_user.can_access_day?(activity.day) }
+    end
   end
 
 end
