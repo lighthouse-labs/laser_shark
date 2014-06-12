@@ -29,6 +29,10 @@ gem 'redcarpet'
 gem 'omniauth'
 gem 'omniauth-github'
 
+gem 'carrierwave'
+gem 'mini_magick'
+gem 'fog'
+
 group :development do
   gem 'spring'
   gem 'quiet_assets'
