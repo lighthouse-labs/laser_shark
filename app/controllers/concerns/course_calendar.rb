@@ -19,6 +19,21 @@ module CourseCalendar
     else
       d
     end
+    @day = last_day if completed_course?
+    @day
+  end
+
+  def completed_course?
+    week >= WEEKS
+  end
+
+  # The last day of the program is the final weekend (w8e for us)
+  def last_day
+    "w#{WEEKS}e"
+  end
+
+  def week
+    @day.match(/^w(\d+)/)[1].to_i
   end
 
   def today

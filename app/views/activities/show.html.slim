@@ -4,16 +4,39 @@
 
 section.activity-details
   h1 = @activity.name
+  .actions
+    .form-group
+      .input-group.col-md-3
+        span.input-group-addon
+          i.fa.fa-clock-o
+          - if weekend?
+            | &nbsp;Duration
+          - else
+            | &nbsp;Time
+        span.form-control
+          - if weekend?
+            = duration_in_hours(@activity.duration)
+            | h
+          - else
+            = integer_time_to_s(@activity.start_time)
+            | &nbsp;to&nbsp;
+            = integer_time_to_s(@activity.end_time)
+            | &nbsp;(
+            = duration_in_hours(@activity.duration)
+            | h)
+
+  p
+    | Last updated at:
+    time = format_date_time(@activity.updated_at)
 
   - if @activity.gist_url?
     .actions
       .form-group
         .input-group
-          span.input-group-addon
-		  	a<> [href="#{@activity.gist_url}" target="_blank"] 
-			    ' Original
-          i.fa.fa-github
-          input.form-control type="text" value=@activity.gist_url
+          = link_to @activity.gist_url, { target: "blank", class: "input-group-addon" }
+            i.fa.fa-github.fa-1
+          span.form-control
+            = @activity.gist_url
 
         / br
         / .input-group
@@ -21,8 +44,20 @@ section.activity-details
         /     | Your
         /     i.fa.fa-github
         /   input.form-control type="text" value=@activity.gist_url
-    hr
+
+  hr
 
   - if @activity.instructions?
     .instructions
       == markdown @activity.instructions
+
+    .nav-buttons
+      - if @previous_activity
+        = link_to 'Previous activity', day_activity_path(@activity.day, @previous_activity), class: 'btn-previous'
+      - if @next_activity
+        = link_to 'Next activity', day_activity_path(@activity.day, @next_activity), class: 'btn-next'
+
+  - if teacher? && @activity.teacher_notes
+    h3 = "Teacher Notes"
+    .instructions
+      == markdown @activity.teacher_notes

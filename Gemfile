@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 ruby '2.1.1'
 
-gem 'rails', '4.1.0.rc2'
+gem 'rails', '4.1.1'
 gem 'sass-rails', '~> 4.0.2'
 gem 'uglifier', '>= 1.3.0'
 gem 'coffee-rails', '~> 4.0.0'
@@ -29,6 +29,10 @@ gem 'redcarpet'
 gem 'omniauth'
 gem 'omniauth-github'
 
+gem 'carrierwave'
+gem 'mini_magick'
+gem 'fog'
+
 group :development do
   gem 'spring'
   gem 'quiet_assets'
@@ -44,7 +48,7 @@ group :development, :test do
   gem 'guard-rails'
   gem 'guard-rspec'
   gem 'factory_girl_rails'
-  gem 'rspec-rails'
+  gem 'rspec-rails', '2.14.2'
   gem 'dotenv'
   gem 'faker'
 end
