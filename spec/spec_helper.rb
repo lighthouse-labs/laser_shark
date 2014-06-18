@@ -21,8 +21,9 @@ Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}
 
 
 RSpec.configure do |config|
-
+  config.color_enabled = true
   # For now, we don't test views separately.
+
   config.render_views
   config.include FactoryGirl::Syntax::Methods
   config.include(EmailSpec::Helpers)

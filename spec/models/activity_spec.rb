@@ -32,4 +32,24 @@ describe Activity do
     activity.end_time.should eql 1210 
   end
 
+  describe "#search activities" do
+    it "should not perform a search if the query is empty (user forgot keywords)" do
+    # @activities.nil?
+    end
+
+    it "Should return empty if no matches for keyword were found" do
+      # @activities.blank?
+    end
+
+    it "should return activities for dates in the past" do
+
+    end
+
+    it "should NOT return activities for dates in the future" do
+
+    end
+
+
+  end
+
 end
