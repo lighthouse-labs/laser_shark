@@ -32,22 +32,31 @@ describe Activity do
     activity.end_time.should eql 1210 
   end
 
-  describe "#search activities" do
-    it "should not perform a search if the query is empty (user forgot keywords)" do
-    # @activities.nil?
+  describe "#search" do
+    it "does not perform a search if the query is empty" do
+      activities = Activity.search("")
+      activities.should be_nil
     end
 
-    it "Should return empty if no matches for keyword were found" do
-      # @activities.blank?
+    it "returns blank if no matches for the given keyword were found" do
+      activities = Activity.search("x1y2z3")
+      activities.should be_blank
     end
 
-    it "should return activities for dates in the past" do
+    it "returns all activities where activity.name contains at least one of the keywords" do
+      activity = create(:activity, name: "Git 101")
+      activity = create(:activity, name: "Forgit it")
+      activity = create(:activity, name: "Command Line Basics")
+      Activity.search("git").length.should eql 2
+      Activity.search("basic").length.should eql 1
+    end
+  end
+
+  describe "#search" do
+    it "only returns activities that the current user can access" do
 
     end
 
-    it "should NOT return activities for dates in the future" do
-
-    end
 
 
   end
