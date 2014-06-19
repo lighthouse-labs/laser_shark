@@ -8,4 +8,12 @@ class ActivitiesController < ApplicationController
     @previous_activity = @activity.previous
   end
 
+  def search
+    @hide_side_search = true
+    @activities = Activity.search(params[:query])
+    unless @activities.nil?
+      @activities = @activities.select { |activity| current_user.can_access_day?(activity.day) }
+    end
+  end
+
 end

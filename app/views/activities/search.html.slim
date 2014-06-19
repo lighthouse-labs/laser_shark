@@ -1,0 +1,23 @@
+- hide_small_search_field = true
+
+
+- content_for :side_nav do
+  h1.day
+    | Results
+  == render 'layouts/calendar'  
+
+section.search-box
+  = form_tag search_activities_path, method: :get, class: 'search' do
+    div.form-group
+      = text_field_tag :query, params[:query], class: 'search-field', placeholder: 'Search'
+      = submit_tag 'Search', class: 'search-btn'
+
+section.search-results
+  - unless @activities.nil?
+    - if @activities.blank?
+        div.no-results
+          == "No results here...try other keywords!" 
+    = render partial: 'activities/activity', collection: @activities
+  - if @activities.nil?
+      div.no-results
+      == "Forgot your search keywords?  ;)"

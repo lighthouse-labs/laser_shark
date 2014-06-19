@@ -36,6 +36,14 @@ class Activity < ActiveRecord::Base
     end
   end
 
+  def self.search(query)
+    unless query.blank?
+      words = query.to_s.strip.split
+      words.inject(Activity.all) { |chain, word| chain.where("activities.name ILIKE ?", "%#{word}%") }
+    end
+
+  end
+
   def next
     Activity.where('start_time > ? AND day = ?', self.start_time, self.day).order(start_time: :asc).first
   end
