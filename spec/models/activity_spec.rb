@@ -33,6 +33,11 @@ describe Activity do
   end
 
   describe "#search" do
+    before(:all) do
+      activity = create(:activity, name: "Git 101")
+      activity = create(:activity, name: "Forgit it")
+      activity = create(:activity, name: "Command Line Basics")
+    end
     it "does not perform a search if the query is empty" do
       activities = Activity.search("")
       activities.should be_nil
@@ -44,9 +49,6 @@ describe Activity do
     end
 
     it "returns all activities where activity.name contains at least one of the keywords" do
-      activity = create(:activity, name: "Git 101")
-      activity = create(:activity, name: "Forgit it")
-      activity = create(:activity, name: "Command Line Basics")
       Activity.search("git").length.should eql 2
       Activity.search("basic").length.should eql 1
     end
