@@ -38,28 +38,23 @@ describe Activity do
       activity = create(:activity, name: "Forgit it")
       activity = create(:activity, name: "Command Line Basics")
     end
+
     it "does not perform a search if the query is empty" do
-      activities = Activity.search("")
-      activities.should be_nil
+      Activity.search("").should be_nil
     end
 
     it "returns blank if no matches for the given keyword were found" do
-      activities = Activity.search("x1y2z3")
-      activities.should be_blank
+      Activity.search("x1y2z3").should be_blank
     end
 
     it "returns all activities where activity.name contains at least one of the keywords" do
       Activity.search("git").length.should eql 2
       Activity.search("basic").length.should eql 1
     end
-  end
 
-  describe "#search" do
     it "only returns activities that the current user can access" do
-
+      # need to mock/play around with day & session; will implement later
     end
-
-
 
   end
 
