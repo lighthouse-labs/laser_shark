@@ -7,6 +7,9 @@ class User < ActiveRecord::Base
 
   mount_uploader :custom_avatar, CustomAvatarUploader
 
+  def prepping?
+    true
+  end
 
   def can_access_day?(day)
     return true if day == 'w1d1'

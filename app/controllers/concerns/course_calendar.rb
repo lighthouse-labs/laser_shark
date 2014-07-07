@@ -30,8 +30,11 @@ module CourseCalendar
   end
 
   def allowed_day?
-    # raise day.inspect
-    redirect_to(day_path('today'), alert: 'Access not allowed yet!') unless current_user.can_access_day?(day)
+    if current_user.prepping?
+      redirect_to prep_path
+    elsif !current_user.can_access_day?(day)
+      redirect_to(day_path('today'), alert: 'Access not allowed yet!')
+    end
   end
 
 end

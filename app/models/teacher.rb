@@ -4,4 +4,8 @@ class Teacher < User
     true
   end
 
+  def prepping?
+    false
+  end
+
 end

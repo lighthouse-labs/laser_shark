@@ -1,5 +1,7 @@
 LaserShark::Application.routes.draw do
 
+  get 'prep' => 'prep#show'
+
   root to: 'home#show'
   get '/welcome', to: 'welcome#show'
 
