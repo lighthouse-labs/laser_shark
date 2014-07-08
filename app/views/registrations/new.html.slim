@@ -16,9 +16,9 @@ div
       .col-sm-offset-3.col-sm-9
         div
           = image_tag avatar_for(current_user) if avatar_for(current_user)
-        div.col-sm-2.upload-button
+        div.col-sm-4.upload-button
           button.btn.btn-default.btn-file.btn-block
-            | Upload  
+            | Change Avatar
             = f.file_field :custom_avatar
 
     = f.input :first_name
