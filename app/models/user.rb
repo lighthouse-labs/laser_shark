@@ -11,9 +11,16 @@ class User < ActiveRecord::Base
     true
   end
 
+  def unlocked?(day)
+    unlocked_until_day? && day <= unlocked_until_day
+  end
+
   def can_access_day?(day)
     return true if day == 'w1d1'
     return false unless cohort
+
+    # for special students we can unlock future material using this field
+    return true if unlocked?(day)
 
     today = CurriculumDay.new(Time.zone.now.to_date, cohort).to_s
     if day <= today
