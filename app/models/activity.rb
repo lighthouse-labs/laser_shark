@@ -25,15 +25,10 @@ class Activity < ActiveRecord::Base
   end
 
   def update_instructions_from_gist
-    if self.gist_url?
-      github = Github.new
-      gist = github.gists.get gist_id
-      file = gist.files['README.md'] || gist.files.detect { |f| f.first.ends_with?('.md') }.try(:last)
-      if readme = file.try(:content)
-        self.instructions = readme
-        self.save
-      end
-    end
+    return if !self.gist_url?
+    gist = ActivityGist.new(self.gist_url)
+    self.instructions = gist.activity_content
+    self.save
   end
 
   def next
@@ -42,12 +37,6 @@ class Activity < ActiveRecord::Base
 
   def previous
     Activity.where('start_time < ? AND day = ?', self.start_time, self.day).order(start_time: :desc).first
-  end
-
-  protected
-
-  def gist_id
-    self.gist_url.split('/').last
   end
 
 end

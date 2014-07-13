@@ -29,7 +29,8 @@ module LaserShark
 
     # Form objects are in app/forms
     config.autoload_paths += Dir[Rails.root.join('app', 'forms', '{**}')]
-
+    # Load classes in lib
+    config.autoload_paths << Rails.root.join('lib')
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
