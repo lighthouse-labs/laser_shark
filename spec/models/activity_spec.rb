@@ -32,4 +32,17 @@ describe Activity do
     activity.end_time.should eql 1210 
   end
 
+  it "can update the instruction notes" do
+    ActivityGist.any_instance.stub(:initialize)
+    ActivityGist.any_instance.stub(:activity_content).and_return("Here are the instructions")
+    activity = create(:activity, gist_url: "http://gist.github.com/fakej39f3")
+    activity.update_instructions_from_gist
+    expect(activity.instructions).to eq("Here are the instructions")
+  end
+
+  it "should update the teacher notes when the activity is created" do
+    activity = build(:activity, teacher_notes_gist_url: "http://gist.github.com/fakej39f3")
+    activity.should_receive(:update_instructions_from_gist)
+    activity.save!
+  end
 end
