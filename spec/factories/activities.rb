@@ -6,5 +6,9 @@ FactoryGirl.define do
     day { "w#{rand(1..8)}d#{rand(1..5)}" }
     start_time { [900, 1100, 1500, 1900, 2200].sample }
     duration { rand(60..180) }
+
+    factory :lecture, class: Lecture, parent: :activity do
+      type "Lecture"
+    end
   end
 end
