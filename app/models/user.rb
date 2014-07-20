@@ -8,7 +8,12 @@ class User < ActiveRecord::Base
   mount_uploader :custom_avatar, CustomAvatarUploader
 
   def prepping?
-    true
+    # if self.cohort 
+    #   false
+    # else
+    #   true
+    # end
+    false
   end
 
   def unlocked?(day)
@@ -19,11 +24,14 @@ class User < ActiveRecord::Base
     return true if day == 'w1d1'
     return false unless cohort
 
+    day_to_numbers = day.match(/w(\d+)d(\d+)/)
+    today_to_numbers = today.match(/w(\d+)d(\d+)/)
+
     # for special students we can unlock future material using this field
     return true if unlocked?(day)
 
     today = CurriculumDay.new(Time.zone.now.to_date, cohort).to_s
-    if day <= today
+    if day_to_numbers[1].to_i <= today_to_numbers[1].to_i && day_to_numbers[2].to_i <= today_to_numbers[2].to_i
       true
     else
       false
