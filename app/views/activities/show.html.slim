@@ -24,10 +24,14 @@ section.activity-details
             | &nbsp;(
             = duration_in_hours(@activity.duration)
             | h)
+  .well
+    - if @previous_activity
+      = link_to '&laquo; Previous activity'.html_safe, day_activity_path(@activity.day, @previous_activity), class: 'btn-previous'
+    - if @next_activity
+      = link_to 'Next activity &raquo;'.html_safe, day_activity_path(@activity.day, @next_activity), class: 'btn-next'
+    - if teacher?
+      = link_to 'Edit', edit_day_activity_path(@day, @activity), class: 'btn-edit'
 
-  p
-    | Last updated at:
-    time = format_date_time(@activity.updated_at)
 
   - if @activity.gist_url?
     .actions
@@ -38,12 +42,7 @@ section.activity-details
           span.form-control
             = @activity.gist_url
 
-        / br
-        / .input-group
-        /   span.input-group-addon
-        /     | Your
-        /     i.fa.fa-github
-        /   input.form-control type="text" value=@activity.gist_url
+
 
   hr
 
@@ -51,13 +50,8 @@ section.activity-details
     .instructions
       == markdown @activity.instructions
 
-    .nav-buttons
-      - if @previous_activity
-        = link_to 'Previous activity', day_activity_path(@activity.day, @previous_activity), class: 'btn-previous'
-      - if @next_activity
-        = link_to 'Next activity', day_activity_path(@activity.day, @next_activity), class: 'btn-next'
-
   - if teacher? && @activity.teacher_notes
+    hr
     h3 = "Teacher Notes"
     .instructions
       == markdown @activity.teacher_notes

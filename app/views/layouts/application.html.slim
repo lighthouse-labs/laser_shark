@@ -9,6 +9,7 @@ html
     == javascript_include_tag 'application', 'data-turbolinks-track' => true
     == csrf_meta_tags
     == favicon_link_tag 'compass_favicon.ico'
+    == yield :head
   body
     header
       == render 'layouts/navigation'
@@ -20,3 +21,5 @@ html
 
       .content
         == yield
+
+    == yield :end_of_body

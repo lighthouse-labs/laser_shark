@@ -15,4 +15,5 @@
 //= require turbolinks
 //= require bootstrap.min
 //= require flat-ui-pro
+//= require ace
 //= require_tree .
