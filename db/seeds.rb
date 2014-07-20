@@ -17,4 +17,6 @@ activities_file = ENV['FILE'] || File.join(Rails.root, "db", "activities_seed.rb
 if File.exists?(activities_file)
   puts "Loading Activities seed file"
   require(activities_file)
+else
+  puts "File #{activities_file} not found!"
 end
