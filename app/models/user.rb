@@ -19,7 +19,7 @@ class User < ActiveRecord::Base
     return true if day == 'w1d1'
     return false unless cohort
 
-    today = CurriculumDay.new(Time.zone.now.to_date, cohort)
+    today = CurriculumDay.new(Time.zone.now.to_date, cohort).to_s
 
     # for special students we can unlock future material using this field
     unlocked?(day) || (day <= today)
