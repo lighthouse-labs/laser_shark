@@ -1,4 +1,4 @@
-zip_url = ENV['ZIP_URL']
+zip_url = ARGV[0]
 
 require 'open-uri'
 require 'zip'
