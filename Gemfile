@@ -33,6 +33,8 @@ gem 'carrierwave'
 gem 'mini_magick'
 gem 'fog'
 
+gem 'rubyzip', '>= 1.0.0'
+
 group :development do
   gem 'spring'
   gem 'quiet_assets'
