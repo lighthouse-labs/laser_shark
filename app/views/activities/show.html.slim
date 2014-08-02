@@ -28,23 +28,8 @@ section.activity-details
   p
     | Last updated at:
     time = format_date_time(@activity.updated_at)
-
-  - if @activity.gist_url?
-    .actions
-      .form-group
-        .input-group
-          = link_to @activity.gist_url, { target: "blank", class: "input-group-addon" }
-            i.fa.fa-github.fa-1
-          span.form-control
-            = @activity.gist_url
-
-        / br
-        / .input-group
-        /   span.input-group-addon
-        /     | Your
-        /     i.fa.fa-github
-        /   input.form-control type="text" value=@activity.gist_url
-
+  - if @activity.gist_url
+    == render 'gist_url_box', :url => @activity.gist_url
   hr
 
   - if @activity.instructions?
@@ -59,5 +44,6 @@ section.activity-details
 
   - if teacher? && @activity.teacher_notes
     h3 = "Teacher Notes"
+    == render 'gist_url_box', url: @activity.teacher_notes_gist_url, refresh_url: "#"
     .instructions
       == markdown @activity.teacher_notes
