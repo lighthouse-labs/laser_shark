@@ -20,6 +20,12 @@ class ApplicationController < ActionController::Base
   end
   helper_method :teacher?
 
+  def require_teacher
+    if !teacher?
+      redirect_to(day_path('today'), alert: 'Access not allowed yet!')
+    end
+  end
+
   def cohort
     @cohort ||= current_user.try(:cohort)
     # Teachers can switch to any cohort

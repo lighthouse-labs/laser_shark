@@ -44,6 +44,6 @@ section.activity-details
 
   - if teacher? && @activity.teacher_notes
     h3 = "Teacher Notes"
-    == render 'gist_url_box', url: @activity.teacher_notes_gist_url, refresh_url: "#"
+    == render 'gist_url_box', url: @activity.teacher_notes_gist_url, refresh_teacher_notes_button: true, activity: @activity
     .instructions
       == markdown @activity.teacher_notes

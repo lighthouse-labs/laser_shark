@@ -4,7 +4,7 @@ module CourseCalendar
   included do
     helper_method :today
     helper_method :day
-    before_filter :allowed_day?
+    before_filter :allowed_day?, only: :show
   end
 
   private

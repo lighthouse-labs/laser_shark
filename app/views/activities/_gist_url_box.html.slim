@@ -5,6 +5,6 @@
         i.fa.fa-github.fa-1
       span.form-control
         = url
-      - if defined? refresh_url
-        = link_to "Refresh", refresh_url, {class: "input-group-addon", method: "post", remote: true}
+      - if defined? refresh_teacher_notes_button
+        = link_to "Refresh", day_activity_path(activity.day, activity, update_gist: 'teacher_notes'), {class: "input-group-addon", method: "put"}
 
