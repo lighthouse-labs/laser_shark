@@ -20,7 +20,9 @@ describe 'Navbar' do
 
     before :each do
       cohort = FactoryGirl.create :cohort
-      FactoryGirl.create :user_for_auth, cohort: cohort
+
+      # We need to create a student logged in
+      FactoryGirl.create :student, cohort: cohort, uid: GITHUB_OAUTH_HASH['uid']
       visit github_session_path
     end
 
