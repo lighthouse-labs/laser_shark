@@ -13,7 +13,7 @@ class CurriculumDay
     if @date.sunday? || @date.saturday?
       "w#{w}e"
     elsif w > 8
-      "w#{8}d#{8}"
+      "w#{8}e"
     else
       "w#{w}d#{@date.wday}"
     end
