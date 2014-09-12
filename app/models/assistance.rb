@@ -1,6 +1,7 @@
 class Assistance < ActiveRecord::Base
   has_one :assistance_request
   belongs_to :assistor, :class => User
+  belongs_to :assistee, :class => User
 
   before_create :set_start_at
 

@@ -7,11 +7,12 @@ class AssistanceRequest < ActiveRecord::Base
   before_create :set_start_at
 
   scope :open_requests, -> { where(:assistance_id => nil) }
-  scope :order_by_start_at, -> { order(:start_at) }
+  scope :oldest_requests_first, -> { order(:start_at) }
+  scope :requested_by, -> (user) { where(:requestor => user) }
 
   def start_assistance(assistor)
     return false if assistor.blank? || !self.assitance.blank?
-    self.assistance = Assistance.new(:assistor => assistor)
+    self.assistance = Assistance.new(:assistor => assistor, :assistee => self.requestor)
     self.assistance.save
   end
 
