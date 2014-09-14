@@ -1,16 +1,26 @@
 class AssistanceRequestsController < ApplicationController
-  
+
   def index
     @requests = AssistanceRequest.open_requests.oldest_requests_first
   end
 
-  #ajax only
-  def new
+  def create
     ar = AssistanceRequest.new(:requestor => current_user)
-    if ar.save
-      render :nothing => true, :status => 200
-    else
-      render :nothing => true, :status => 400
+    status = ar.save ? 200 : 400
+    respond_to do |format|
+      format.json { render(:nothing => true, :status => status) }
+      format.all { redirect_to(assistance_requests_path) }
+    end
+  end
+
+  def cancel
+    ar = AssistanceRequest.oldest_open_request_for_user(current_user)
+    status = ar.cancel ? 200 : 400
+
+    respond_to do |format|
+      format.json { render(:nothing => true, :status => status) }
+      format.all { redirect_to(assistance_requests_path) }
+    end
   end
 
   def start_assistance

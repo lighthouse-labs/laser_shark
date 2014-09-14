@@ -2,13 +2,15 @@ class User < ActiveRecord::Base
 
   belongs_to :cohort
 
+  has_many :assistance_requests, foreign_key: :requestor_id
+
   validates :uid,   presence: true
   validates :token, presence: true
 
   mount_uploader :custom_avatar, CustomAvatarUploader
 
   def prepping?
-    true
+    false
   end
 
   def unlocked?(day)
@@ -23,6 +25,10 @@ class User < ActiveRecord::Base
 
     # for special students we can unlock future material using this field
     unlocked?(day) || (day <= today)
+  end
+
+  def assistance_currently_requested?
+    self.assistance_requests.open_requests.count > 0
   end
 
   class << self

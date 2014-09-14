@@ -6,9 +6,14 @@ class AssistanceRequest < ActiveRecord::Base
 
   before_create :set_start_at
 
-  scope :open_requests, -> { where(:assistance_id => nil) }
+  scope :open_requests, -> { where(:assistance_id => nil).where(:canceled_at => nil) }
   scope :oldest_requests_first, -> { order(:start_at) }
   scope :requested_by, -> (user) { where(:requestor => user) }
+
+  def cancel
+    self.canceled_at = Time.now
+    save
+  end
 
   def start_assistance(assistor)
     return false if assistor.blank? || !self.assitance.blank?
@@ -19,6 +24,10 @@ class AssistanceRequest < ActiveRecord::Base
   def end_assistance(notes)
     return if assistance.blank?
     self.assistance.end(notes)
+  end
+
+  def self.oldest_open_request_for_user(user)
+    AssistanceRequest.open_requests.requested_by(user).oldest_requests_first.first
   end
 
   private

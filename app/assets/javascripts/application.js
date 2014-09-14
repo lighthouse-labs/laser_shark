@@ -16,4 +16,5 @@
 //= require bootstrap.min
 //= require flat-ui-pro
 //= require ace
+//= require assistance_requests
 //= require_tree .
