@@ -1,0 +1,13 @@
+<li class="media">
+  <a class="pull-left" href="#">
+    <%= image_tag assistance_request.requestor.avatar_url, :class => 'media-object' %>
+  </a>
+  <div class="media-body">
+    <h4 class="media-heading"><%= assistance_request.requestor.full_name %></h4>
+    Requested Assistance <abbr class="timeago" title="<%= assistance_request.start_at %>"><%= assistance_request.start_at %></abbr>
+    <br/>
+    <%= link_to("Start Assisting", start_assistance_assistance_request_path(assistance_request), method: :post, :class => "btn btn-primary btn-lg") if assistance_request.is_open? %>  
+  </div>
+</li>
+
+

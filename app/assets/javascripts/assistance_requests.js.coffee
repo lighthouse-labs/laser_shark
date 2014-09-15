@@ -10,3 +10,6 @@ $ ->
     else
       $(@).removeClass('active')
       $(@).parent().children('.delete-request').addClass('active')
+
+  #Enable timeago
+  $('.requests-list .timeago').timeago()

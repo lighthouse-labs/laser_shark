@@ -27,8 +27,8 @@ class User < ActiveRecord::Base
     unlocked?(day) || (day <= today)
   end
 
-  def assistance_currently_requested?
-    self.assistance_requests.open_requests.count > 0
+  def assistance_currently_requested_or_in_progress?
+    self.assistance_requests.open_or_inprogress_requests.count > 0
   end
 
   class << self

@@ -1,0 +1,26 @@
+.media-list.requests-list {
+  img{
+    max-height: 200px;
+  }
+
+  .media-heading{
+    font-size: 48px;
+  }
+
+  .active{
+    background: #cca60c;
+
+    .media-heading{
+      margin-top: 10px;
+    }
+
+    .timeago{
+      font-weight: bold;
+    }
+
+    .modal textarea{
+      width: 100%;
+      min-height: 100px;
+    }
+  }
+}

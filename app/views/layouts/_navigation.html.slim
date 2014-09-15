@@ -52,9 +52,9 @@ nav.navbar.navbar-inverse.navbar-embossed.navbar-fixed-top role="navigation"
 
         - if !teacher?
           li.assistance-request
-            = link_to cancel_assistance_requests_path, method: :delete, remote: true, class: "btn btn-md btn-warning delete-request #{'active' if current_user.assistance_currently_requested?}"
+            = link_to cancel_assistance_requests_path, method: :delete, remote: true, class: "btn btn-md btn-warning delete-request #{'active' if current_user.assistance_currently_requested_or_in_progress?}"
               span Waiting for Assistance
-            = link_to assistance_requests_path, method: :post, remote: true, class: "btn btn-md btn-primary #{'active' unless current_user.assistance_currently_requested?}"
+            = link_to assistance_requests_path, method: :post, remote: true, class: "btn btn-md btn-primary #{'active' unless current_user.assistance_currently_requested_or_in_progress?}"
               span Request Assistance
 
       - else

@@ -7,10 +7,13 @@ class Assistance < ActiveRecord::Base
 
   scope :currently_active, -> { where(:end_at => nil) }
   scope :order_by_start, -> { order(:start_at) }
+  scope :assisted_by, -> (user) { where(:assistor => user) }
+  scope :assisting, -> (user) { where(:assistee => user) }
 
   def end(notes)
     self.notes = notes
     self.end_at = Time.now
+    self.save
   end
 
   private

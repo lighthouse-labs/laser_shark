@@ -1,6 +1,7 @@
 class AssistanceRequestsController < ApplicationController
 
   def index
+    @my_active_assistances = Assistance.currently_active.assisted_by(current_user)
     @requests = AssistanceRequest.open_requests.oldest_requests_first
   end
 
@@ -25,13 +26,23 @@ class AssistanceRequestsController < ApplicationController
 
   def start_assistance
     ar = AssistanceRequest.find(params[:id].to_i)
-    ar.start_assistance(current_user)
+    status = ar.start_assistance(current_user) ? 200 : 400
+
+    respond_to do |format|
+      format.json { render(:nothing => true, :status => status) }
+      format.all { redirect_to(assistance_requests_path) }
+    end
   end
 
   def end_assistance
-    params.permit(:note)
+    params.permit(:assistance).permit(:notes)
 
     ar = AssistanceRequest.find(params[:id].to_i)
-    ar.end_assistance(params[:note])
+    status = ar.end_assistance(params[:assistance][:notes]) ? 200 : 400
+
+    respond_to do |format|
+      format.json { render(:nothing => true, :status => status) }
+      format.all { redirect_to(assistance_requests_path) }
+    end
   end
 end

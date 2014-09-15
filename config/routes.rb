@@ -18,7 +18,11 @@ LaserShark::Application.routes.draw do
     end
     member do
       post :start_assistance
-      post :end_assistance
+    end
+  end
+  resources :assistances, only: [:create] do
+    member do
+      post :end
     end
   end
 

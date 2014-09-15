@@ -1,0 +1,34 @@
+<li class="media active">
+  <a class="pull-left" href="#">
+    <%= image_tag assistance.assistee.avatar_url, :class => 'media-object' %>
+  </a>
+  <div class="media-body">
+    <h4 class="media-heading"><%= assistance.assistee.full_name %></h4>
+    You started assisting <abbr class="timeago" title="<%= assistance.start_at %>"><%= assistance.start_at %></abbr>
+    <br/>
+    <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#assistance_model_<%= assistance.id %>">
+      End Assistance
+    </button>
+  </div>
+
+  <div class="modal fade" id="assistance_model_<%= assistance.id %>">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+          <h4 class="modal-title">Notes</h4>
+        </div>
+        <%= form_for assistance, url: end_assistance_path(assistance), method: :post do |f| %>
+          <div class="modal-body">
+            <%= f.text_area :notes %>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="submit()">End Assistance</button>
+          </div>
+        <% end %>
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+  </div><!-- /.modal -->
+</li>
+

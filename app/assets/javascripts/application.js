@@ -16,5 +16,6 @@
 //= require bootstrap.min
 //= require flat-ui-pro
 //= require ace
+//= require jquery.timeago
 //= require assistance_requests
 //= require_tree .

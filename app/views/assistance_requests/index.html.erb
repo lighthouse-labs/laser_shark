@@ -1,3 +1,10 @@
-<% @requests.each do |r| %>
-  <%= r.inspect %>
-<% end %>
+<ul class="media-list requests-list">
+  <% @my_active_assistances.each do |assistance| %>
+    <%= render 'assistance', :assistance => assistance %>
+  <% end %>
+
+
+  <% @requests.each do |request| %>
+    <%= render request %>
+  <% end %>
+</ul>
