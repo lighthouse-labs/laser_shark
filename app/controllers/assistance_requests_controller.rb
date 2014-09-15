@@ -3,14 +3,14 @@ class AssistanceRequestsController < ApplicationController
   def index
     @my_active_assistances = Assistance.currently_active.assisted_by(current_user)
     @requests = AssistanceRequest.open_requests.oldest_requests_first
-    @unseenStudents = User.order_by_last_assisted_at
+    @allStudents = Student.order_by_last_assisted_at
 
     respond_to do |format|
       format.json {
         @obj = {
           active_assistances: @my_active_assistances.all.to_json(:include => :assistee),
           requests: @requests.all.to_json(:include => :requestor),
-          unseenStudents: @unseenStudents.all.to_json
+          allStudents: @allStudents.all.to_json
         }
         render json: @obj
       }

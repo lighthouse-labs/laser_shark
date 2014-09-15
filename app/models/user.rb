@@ -12,7 +12,7 @@ class User < ActiveRecord::Base
 
   scope :order_by_last_assisted_at, -> {
     order("last_assisted_at ASC NULLS FIRST")
-  } 
+  }
 
   def prepping?
     false
