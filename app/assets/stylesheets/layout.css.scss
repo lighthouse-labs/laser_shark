@@ -41,7 +41,7 @@ nav {
 main {
   @include make-row;
 
-  //width: 1100px;
+  width: 1100px;
 
   aside.primary {
     @include make-xs-column(5);
