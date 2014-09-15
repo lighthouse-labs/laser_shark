@@ -3,9 +3,7 @@
 
 <script id="request_template" type="x-tmpl-mustache">
   <li class="media">
-    <a class="pull-left" href="#">
-      <img src="{{requestor.avatar_url}}" class="media-object" />
-    </a>
+    <img src="{{requestor.avatar_url}}" class="media-object" />
     <div class="media-body">
       <h4 class="media-heading">{{requestor.first_name}} {{requestor.last_name}}</h4>
       Requested assistance <abbr class="timeago" title="{{start_at}}">{{start_at}}</abbr>
@@ -18,6 +16,21 @@
   </li>
 </script>
 
+<script id="unseen_student_template" type="x-tmpl-mustache">
+  <li class="media">
+    <img src="{{avatar_url}}" class="media-object" />
+    <div class="media-body">
+      <h4 class="media-heading">{{first_name}} {{last_name}}</h4>
+      Last received assistance <abbr class="timeago" title="{{last_assisted_at}}">{{last_assisted_at}}</abbr>
+      <br/>
+      <form action="/assistances" method="post">
+        <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
+        <input name="requestor_id" type="hidden" value="{{ id }}">
+        <button type="button" class="btn btn-primary btn-lg" onclick="submit()">Checkin On</button>
+      </form>
+    </div>
+  </li>
+</script>
 
 
 <script id="assitance_template" type="x-tmpl-mustache">

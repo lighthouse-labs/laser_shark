@@ -1,7 +1,7 @@
 class AssistancesController < ApplicationController
 
   def create
-    assistance = Assistance.new(:assistor => current_user, :assistee => self.requestor)
+    assistance = Assistance.new(:assistor => current_user, :assistee_id => params[:requestor_id].to_i)
     status = assistance.save ? 200 : 400
     respond_to do |format|
       format.json { render(:nothing => true, :status => status) }

@@ -14,6 +14,8 @@ class Assistance < ActiveRecord::Base
     self.notes = notes
     self.end_at = Time.now
     self.save
+    self.assistee.last_assisted_at = Time.now
+    self.assistee.save
   end
 
   def to_json

@@ -42,4 +42,13 @@ getRequestData = () ->
       rendered = Mustache.render(request_template, request)
       $('.media-list.requests-list').append(rendered)
 
+    $('.media-list.requests-list').append('<hr />')
+
+    unseen_student_template = $('#unseen_student_template').html()
+    Mustache.parse(unseen_student_template)
+    unseen_students = JSON.parse(data['unseenStudents'])
+    for unseen_student in unseen_students
+      rendered = Mustache.render(unseen_student_template, unseen_student)
+      $('.media-list.requests-list').append(rendered)
+
     $('.requests-list .timeago').timeago()

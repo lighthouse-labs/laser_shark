@@ -3,11 +3,16 @@ class User < ActiveRecord::Base
   belongs_to :cohort
 
   has_many :assistance_requests, foreign_key: :requestor_id
+  has_many :assistances, foreign_key: :assistee_id
 
   validates :uid,   presence: true
   validates :token, presence: true
 
   mount_uploader :custom_avatar, CustomAvatarUploader
+
+  scope :order_by_last_assisted_at, -> {
+    order("last_assisted_at ASC NULLS FIRST")
+  } 
 
   def prepping?
     false
@@ -29,6 +34,9 @@ class User < ActiveRecord::Base
 
   def assistance_currently_requested_or_in_progress?
     self.assistance_requests.open_or_inprogress_requests.count > 0
+  end
+
+  def assistance_not_currently_requested_or_in_progress
   end
 
   class << self

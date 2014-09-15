@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140914193841) do
+ActiveRecord::Schema.define(version: 20140915222907) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -69,21 +69,22 @@ ActiveRecord::Schema.define(version: 20140914193841) do
   add_index "comments", ["user_id"], name: "index_comments_on_user_id", using: :btree
 
   create_table "users", force: true do |t|
-    t.string  "first_name"
-    t.string  "last_name"
-    t.string  "email"
-    t.string  "phone_number"
-    t.string  "twitter"
-    t.string  "skype"
-    t.string  "uid"
-    t.string  "token"
-    t.boolean "completed_registration"
-    t.string  "github_username"
-    t.string  "avatar_url"
-    t.integer "cohort_id"
-    t.string  "type"
-    t.string  "custom_avatar"
-    t.string  "unlocked_until_day"
+    t.string   "first_name"
+    t.string   "last_name"
+    t.string   "email"
+    t.string   "phone_number"
+    t.string   "twitter"
+    t.string   "skype"
+    t.string   "uid"
+    t.string   "token"
+    t.boolean  "completed_registration"
+    t.string   "github_username"
+    t.string   "avatar_url"
+    t.integer  "cohort_id"
+    t.string   "type"
+    t.string   "custom_avatar"
+    t.string   "unlocked_until_day"
+    t.datetime "last_assisted_at"
   end
 
   add_index "users", ["cohort_id"], name: "index_users_on_cohort_id", using: :btree
