@@ -17,5 +17,6 @@
 //= require flat-ui-pro
 //= require ace
 //= require jquery.timeago
+//= require mustache
 //= require assistance_requests
 //= require_tree .

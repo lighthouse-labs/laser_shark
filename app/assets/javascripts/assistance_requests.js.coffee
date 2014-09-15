@@ -13,3 +13,33 @@ $ ->
 
   #Enable timeago
   $('.requests-list .timeago').timeago()
+
+  if $('.requests-list').length > 0
+    #We are on the requests page
+
+    setInterval(getRequestData, 1000*30)
+    getRequestData()
+
+
+getRequestData = () ->
+  $.getJSON '/assistance_requests', (data) ->
+    #don't do anything if modal is open
+    return if $('.media-list.requests-list .modal.in').length > 0
+
+    $('.media-list.requests-list').html('')
+
+    assistance_template = $('#assitance_template').html()
+    Mustache.parse(assistance_template)
+    assistances = JSON.parse(data['active_assistances'])
+    for assistance in assistances
+      rendered = Mustache.render(assistance_template, assistance)
+      $('.media-list.requests-list').append(rendered)
+
+    request_template = $('#request_template').html()
+    Mustache.parse(request_template)
+    requests = JSON.parse(data['requests'])
+    for request in requests
+      rendered = Mustache.render(request_template, request)
+      $('.media-list.requests-list').append(rendered)
+
+    $('.requests-list .timeago').timeago()

@@ -16,6 +16,17 @@ class Assistance < ActiveRecord::Base
     self.save
   end
 
+  def to_json
+    return {
+      start_time: start_at,
+      id: id,
+      assistee: {
+        avatar_url: assistee.avatar_url,
+        full_name: assistee.full_name
+      }
+    }
+  end
+
   private
 
   def set_start_at
