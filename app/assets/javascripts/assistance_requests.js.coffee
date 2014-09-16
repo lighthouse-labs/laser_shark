@@ -28,27 +28,34 @@ getRequestData = () ->
 
     $('.media-list.requests-list').html('')
 
-    assistance_template = $('#assitance_template').html()
-    Mustache.parse(assistance_template)
+
     assistances = JSON.parse(data['active_assistances'])
-    for assistance in assistances
-      rendered = Mustache.render(assistance_template, assistance)
-      $('.media-list.requests-list').append(rendered)
+    if(assistances.length > 0)
+      $('.media-list.requests-list').append('<h4>Currently Assisting</h4><hr />')
+      assistance_template = $('#assitance_template').html()
+      Mustache.parse(assistance_template)
+      for assistance in assistances
+        rendered = Mustache.render(assistance_template, assistance)
+        $('.media-list.requests-list').append(rendered)
 
-    request_template = $('#request_template').html()
-    Mustache.parse(request_template)
+
     requests = JSON.parse(data['requests'])
-    for request in requests
-      rendered = Mustache.render(request_template, request)
-      $('.media-list.requests-list').append(rendered)
+    if(requests.length > 0)
+      $('.media-list.requests-list').append('<h4>Awaiting Assistance</h4><hr />')
+      request_template = $('#request_template').html()
+      Mustache.parse(request_template)
+      for request in requests
+        rendered = Mustache.render(request_template, request)
+        $('.media-list.requests-list').append(rendered)
 
-    $('.media-list.requests-list').append('<hr />')
+    all_students = JSON.parse(data['all_students'])
+    if(all_students.length > 0)
+      $('.media-list.requests-list').append('<h4>All Students</h4><hr />')
+      all_student_template = $('#all_student_template').html()
+      Mustache.parse(all_student_template)
+      for student in all_students
+        rendered = Mustache.render(all_student_template, student)
+        $('.media-list.requests-list').append(rendered)
 
-    all_student_template = $('#all_student_template').html()
-    Mustache.parse(all_student_template)
-    all_students = JSON.parse(data['allStudents'])
-    for all_student in all_students
-      rendered = Mustache.render(all_student_template, all_student)
-      $('.media-list.requests-list').append(rendered)
 
     $('.requests-list .timeago').timeago()

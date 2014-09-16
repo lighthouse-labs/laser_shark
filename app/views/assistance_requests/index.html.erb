@@ -25,7 +25,7 @@
       <br/>
       <form action="/assistances" method="post">
         <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
-        <input name="requestor_id" type="hidden" value="{{ id }}">
+        <input name="requestor_id" type="hidden" value="{{id}}">
         <button type="button" class="btn btn-primary btn-lg" onclick="submit()">Checkin On</button>
       </form>
     </div>
@@ -59,7 +59,6 @@
               <textarea id="assistance_notes" name="assistance[notes]"></textarea>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
               <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="submit()">End Assistance</button>
             </div>
           </form>
