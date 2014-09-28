@@ -6,4 +6,6 @@ class Cohort < ActiveRecord::Base
 
   scope :most_recent, -> { order(start_date: :desc) }
 
+  scope :is_active, -> { where("cohorts.start_date >= ?", Date.current - 8.weeks) }
+
 end
