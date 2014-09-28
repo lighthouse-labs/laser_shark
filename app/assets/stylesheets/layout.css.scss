@@ -23,6 +23,19 @@ nav {
       margin-left: 4px;
     }
   }
+
+  .navbar-nav > .assistance-request {
+    & > a:not(.active){
+      display: none;
+    }
+    & > a:hover{
+      background-color: #1abc9c;
+      color: white;
+    }
+    & > a.delete-request:hover{
+      background-color: #cca60c;
+    }
+  }
 }
 
 main {
