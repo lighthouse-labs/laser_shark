@@ -1,0 +1,70 @@
+.media-list.requests-list {
+  .media{
+    margin-bottom: 50px;
+
+    @media (max-width: $screen-xs-max) {
+      text-align: center;
+      height: 250px;
+      position: relative;
+      margin-bottom: 0px;
+    }
+  }
+
+  img{
+    max-height: 200px;
+    max-width: 30%;
+    float: left;
+    margin-right: 10px;
+
+    @media (max-width: $screen-xs-max) {
+      float: none;
+      margin: 0 auto;
+      max-width: none;
+    }
+  }
+
+  @media (max-width: $screen-xs-max) {
+    .media-body{
+      position: absolute;
+      top: 100px;
+      background: rgba(255,255,255,0.5);
+      font-size: 14px;
+      width: 100%;
+    }
+  }
+
+  .timeago{
+    font-weight: bold;
+  }
+
+  .media-heading{
+    font-size: 48px;
+
+    @media (max-width: $screen-xs-max) {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      font-size: 36px;
+    }
+  }
+
+  .active{
+//    background: #cca60c;
+
+    @media (max-width: $screen-xs-max) {
+//      background: none;
+    }
+
+
+
+    .media-heading{
+      margin-top: 10px;
+    }
+
+    .modal textarea{
+      width: 100%;
+      min-height: 100px;
+    }
+  }
+}
+

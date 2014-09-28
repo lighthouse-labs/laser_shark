@@ -12,6 +12,20 @@ LaserShark::Application.routes.draw do
   resource :registration, only: [:new, :create]
   resource :profile, only: [:edit, :update]
 
+  resources :assistance_requests, only: [:index, :create] do
+    collection do
+      delete :cancel
+    end
+    member do
+      post :start_assistance
+    end
+  end
+  resources :assistances, only: [:create] do
+    member do
+      post :end
+    end
+  end
+
   # CONTENT BROWSING
   resources :days, param: :number, only: [:show] do
     resources :activities, only: [:show, :edit, :update]
