@@ -38,7 +38,7 @@ class Assistance < ActiveRecord::Base
   end
 
   def send_notes_to_slack
-    return if self.notes.blank?
+    return unless ENV["SLACK_TOKEN"]
 
     options = {
       :username => self.assistee.github_username,
@@ -47,7 +47,6 @@ class Assistance < ActiveRecord::Base
     }
 
     poster = Slack::Poster.new("lighthouse", ENV["SLACK_TOKEN"], options)
-    poster.send_message(self.notes)
-
+    poster.send_message("*Assisted #{self.assistor.full_name} for #{ ((self.end_at - self.start_at)/60).to_i } minutes*: #{self.notes}")
   end
 end
