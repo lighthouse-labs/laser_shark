@@ -16,6 +16,8 @@ class Assistance < ActiveRecord::Base
     self.save
     self.assistee.last_assisted_at = Time.now
     self.assistee.save
+
+    send_notes_to_slack
   end
 
   def to_json
@@ -35,4 +37,17 @@ class Assistance < ActiveRecord::Base
     self.start_at = Time.now
   end
 
+  def send_notes_to_slack
+    return if self.notes.blank?
+
+    options = {
+      :username => self.assistee.github_username,
+      :icon_url => self.assistee.avatar_url,
+      :channel => 'web-instructors'
+    }
+
+    poster = Slack::Poster.new("lighthouse", ENV["SLACK_TOKEN"], options)
+    poster.send_message(self.notes)
+
+  end
 end
