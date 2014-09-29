@@ -3,7 +3,7 @@ class AssistanceRequestsController < ApplicationController
   def index
     @my_active_assistances = Assistance.currently_active.assisted_by(current_user)
     @requests = AssistanceRequest.open_requests.oldest_requests_first
-    @allStudents = User.order_by_last_assisted_at
+    @allStudents = Student.in_active_cohort.order_by_last_assisted_at
 
     respond_to do |format|
       format.json {
