@@ -41,12 +41,12 @@ class Assistance < ActiveRecord::Base
     return unless ENV["SLACK_TOKEN"]
 
     options = {
-      :username => self.assistee.github_username,
-      :icon_url => self.assistee.avatar_url,
+      :username => self.assistor.github_username,
+      :icon_url => self.assistor.avatar_url,
       :channel => 'web-instructors'
     }
 
     poster = Slack::Poster.new("lighthouse", ENV["SLACK_TOKEN"], options)
-    poster.send_message("*Assisted #{self.assistor.full_name} for #{ ((self.end_at - self.start_at)/60).to_i } minutes*: #{self.notes}")
+    poster.send_message("*Assisted #{self.assistee.full_name} for #{ ((self.end_at - self.start_at)/60).to_i } minutes*:\n #{self.notes}")
   end
 end
