@@ -22,10 +22,14 @@ table.table
         - if teacher?
           td
             .btn-group
-              button.btn.btn-default.dropdown-toggle[data-toggle="dropdown"] Change Cohort
+              button.btn.btn-primary.dropdown-toggle[data-toggle="dropdown"] 
+                |Change Cohort
+                b.caret
+              span.dropdown-arrow
               ul.dropdown-menu
                 - cohorts.each do |cohort|
                   li
-                    = link_to cohort.name, ''
-
+                    = link_to cohort.name,'', method: :put
+                li
+                  = link_to 'Remove from all', '', method: :put
        
