@@ -29,7 +29,7 @@ table.table
               ul.dropdown-menu
                 - cohorts.each do |cohort|
                   li
-                    = link_to cohort.name,'', method: :put
+                    = link_to cohort.name, admin_student_change_cohort(student), method: :put
                 li
-                  = link_to 'Remove from all', '', method: :put
+                  = link_to 'Remove from all', admin_student_remove_from_cohort(student), method: :put
        
