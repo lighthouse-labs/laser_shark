@@ -30,7 +30,7 @@ table.table
                 - cohorts.each do |cohort|
                   - unless cohort == @cohort
                     li
-                      = link_to cohort.name, admin_student_change_cohort_path(student), method: :put
+                      = link_to cohort.name, admin_cohort_student_change_cohort_path(cohort, student), method: :put
                 li
-                  = link_to 'Remove from all', admin_student_remove_from_cohort_path(student), method: :put
+                  = link_to 'Remove from all', admin_cohort_student_remove_from_cohort_path(cohort, student), method: :put
        
