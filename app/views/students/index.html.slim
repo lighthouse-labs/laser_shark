@@ -7,6 +7,8 @@ table.table
       th Email
       th Phone
       th GitHub Username
+      - if teacher?
+        th Teacher Actions
       
   tbody
     - @students.each do |student|
@@ -17,4 +19,13 @@ table.table
         td = student.phone_number
         td  
           a href=("https://github.com/#{student.github_username}") = student.github_username
+        - if teacher?
+          td
+            .btn-group
+              button.btn.btn-default.dropdown-toggle[data-toggle="dropdown"] Change Cohort
+              ul.dropdown-menu
+                - cohorts.each do |cohort|
+                  li
+                    = link_to cohort.name, ''
+
        
