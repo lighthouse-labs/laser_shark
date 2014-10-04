@@ -40,7 +40,10 @@ LaserShark::Application.routes.draw do
   # ADMIN
   namespace :admin do
     root to: 'dashboard#show'
-    resources :students, only: [:index]
+    resources :students, only: [:index] do
+      put    :change_cohort
+      delete :remove_from_cohort
+    end
     resources :cohorts, only: [:index]
   end
 
