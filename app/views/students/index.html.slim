@@ -28,8 +28,9 @@ table.table
               span.dropdown-arrow
               ul.dropdown-menu
                 - cohorts.each do |cohort|
-                  li
-                    = link_to cohort.name, admin_student_change_cohort_path(student), method: :put
+                  - unless cohort == @cohort
+                    li
+                      = link_to cohort.name, admin_student_change_cohort_path(student), method: :put
                 li
                   = link_to 'Remove from all', admin_student_remove_from_cohort_path(student), method: :put
        
