@@ -7,10 +7,9 @@ table.table
       th Name
       th Email
       th Phone
-      th Twitter
-      th Skype
-      th GitHub Username
       th Completed Registration
+      th Cohort
+      th Cohort Actions
   tbody
     - @students.each do |student|
       tr
@@ -18,7 +17,19 @@ table.table
         td = student.full_name
         td = student.email
         td = student.phone_number
-        td = student.twitter
-        td = student.skype
-        td = student.github_username
         td = completed_registration?(student)
+        td = student.cohort.name if student.cohort
+        td
+            .btn-group
+              button.btn.btn-primary.dropdown-toggle[data-toggle="dropdown"] 
+                |Change Cohort
+                b.caret
+              span.dropdown-arrow
+              ul.dropdown-menu
+                - cohorts.each do |cohort|
+                  - unless cohort == student.cohort
+                    li
+                      = link_to cohort.name, admin_cohort_student_change_cohort_path(cohort, student), method: :put
+                - if student.cohort
+                  li
+                    = link_to 'Remove from cohort', admin_cohort_student_remove_from_cohort_path(cohort, student), method: :put
