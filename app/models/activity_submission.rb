@@ -9,6 +9,6 @@ class ActivitySubmission < ActiveRecord::Base
   validates :user_id, uniqueness: { scope: :activity_id,
     message: "only one submission per activity" }
 
-  validates :git_url, presence: :true
+  validates :github_url, presence: :true
 
 end

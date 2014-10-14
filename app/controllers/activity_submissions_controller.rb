@@ -7,7 +7,7 @@ class ActivitySubmissionsController < ApplicationController
   def create
     @activity = ActivitySubmission.new(
       user: current_user,
-      git_url: params[:git_url]
+      github_url: params[:github_url]
       )
 
     if @activity.save

@@ -38,7 +38,7 @@ section.activity-details
                     strong Please correct the following errors:
                     - @activity_submission.errors.full_messages.each do |msg|
                       li = msg
-                = f.text_field :git_url, { class: "form-control", placeholder: "Enter your Github repo or gist url" }
+                = f.text_field :github_url, { class: "form-control", placeholder: "Enter your Github repo or gist url" }
                 button.btn-activity-complete-status name="button" type="submit"
                   i.fa.fa-check
                   | &nbsp;Mark as complete

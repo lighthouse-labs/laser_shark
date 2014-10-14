@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141014002103) do
+ActiveRecord::Schema.define(version: 20141014154230) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -34,7 +34,7 @@ ActiveRecord::Schema.define(version: 20141014002103) do
     t.integer  "user_id"
     t.integer  "activity_id"
     t.datetime "completed_at"
-    t.string   "git_url"
+    t.string   "github_url"
   end
 
   add_index "activity_submissions", ["activity_id"], name: "index_activity_submissions_on_activity_id", using: :btree
