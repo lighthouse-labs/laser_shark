@@ -28,6 +28,8 @@ section.activity-details
         .input-group
           - if teacher?
             - if current_user.completed_activity?(@activity)
+              .form-control#activity_view
+                = @activity_submission.github_url
               = link_to activity_activity_submission_path(@activity), method: :delete, class:'btn-activity-incomplete-status'
                 i.fa.fa-times
                 | &nbsp;Mark as incomplete
@@ -38,7 +40,7 @@ section.activity-details
                     strong Please correct the following errors:
                     - @activity_submission.errors.full_messages.each do |msg|
                       li = msg
-                = f.text_field :github_url, { class: "form-control", placeholder: "Enter your Github repo or gist url" }
+                input.form-control id="activity_submission_github_url" class="activity_submission_url" name="github_url" placeholder="Enter your Github repo or gist url" type="text"
                 button.btn-activity-complete-status name="button" type="submit"
                   i.fa.fa-check
                   | &nbsp;Mark as complete

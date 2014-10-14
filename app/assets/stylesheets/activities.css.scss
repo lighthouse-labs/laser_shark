@@ -23,31 +23,36 @@ section.activity-details {
       @extend .pull-right;
     }
   }
-  
-  .new_activity_submission {
-    #activity_submission_github_url {
-      margin-left: 5px;
-      border-radius: 6px;
-      width: 358px;
-    }
 
-    .btn-activity {
+  .activity_url {
+    margin-left: 5px;
+    border-radius: 6px;
+  }
+  .form-control#activity_submission_github_url {
+    @extend .activity_url;
+    width: 358px;
+  }
+
+  .form-control#activity_view {
+    @extend .activity_url;
+    width: 354px;
+  }
+
+  .btn-activity {
       color: white;
       margin-left: 5px;
-      margin-right: 5px;
-    }
+  }
 
-    .btn-activity-incomplete-status {
+  .btn-activity-complete-status {
+    @extend .btn;
+    @extend .btn-success;
+    @extend .btn-activity;
+  }
+
+  .btn-activity-incomplete-status {
       @extend .btn;
       @extend .btn-danger;
       @extend .btn-activity;
-    }
-
-    .btn-activity-complete-status {
-      @extend .btn;
-      @extend .btn-success;
-      @extend .btn-activity;
-    }
   }
   
   .fa-1 {
