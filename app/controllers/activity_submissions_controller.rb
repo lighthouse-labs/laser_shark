@@ -5,10 +5,16 @@ class ActivitySubmissionsController < ApplicationController
   before_filter :retrieve_activity
 
   def create
-    @activity.activity_submissions.create(
-      user: current_user
+    @activity = ActivitySubmission.new(
+      user: current_user,
+      git_url: params[:git_url]
       )
-    redirect_to :back
+
+    if @activity.save
+      redirect_to :back
+    else
+      redirect_to :back, notice: "Errors: #{@activity.errors.full_messages[0]}"
+    end
   end
 
   def destroy
