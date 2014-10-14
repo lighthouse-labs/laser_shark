@@ -26,7 +26,7 @@ section.activity-details
               = duration_in_hours(@activity.duration)
               | h)
         .input-group
-          - if teacher?
+          - if !teacher?
             - if current_user.completed_activity?(@activity)
               .form-control#activity_view
                 = @activity_submission.github_url
