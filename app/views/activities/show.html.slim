@@ -25,14 +25,23 @@ section.activity-details
               | &nbsp;(
               = duration_in_hours(@activity.duration)
               | h)
-        - if current_user.completed_activity?(@activity)
-          = link_to activity_activity_submission_path(@activity), method: :delete, class:'btn-activity-incomplete-status'
-            i.fa.fa-times
-            | &nbsp;Mark as incomplete
-        - else
-          = link_to activity_activity_submission_path(@activity), method: :post, class:'btn-activity-complete-status'
-            i.fa.fa-check-square-o
-            | &nbsp;Mark as complete
+        .input-group
+          - if teacher?
+            - if current_user.completed_activity?(@activity)
+              = link_to activity_activity_submission_path(@activity), method: :delete, class:'btn-activity-incomplete-status'
+                i.fa.fa-times
+                | &nbsp;Mark as incomplete
+            - else
+              = form_for @activity_submission, url: activity_activity_submission_path(@activity), method: :post do |f|
+                - if @activity_submission.errors.full_messages.any?
+                  .alert.alert-error
+                    strong Please correct the following errors:
+                    - @activity_submission.errors.full_messages.each do |msg|
+                      li = msg
+                = f.text_field :git_url, { class: "form-control", placeholder: "Enter your Github repo or gist url" }
+                button.btn-activity-complete-status name="button" type="submit"
+                  i.fa.fa-check
+                  | &nbsp;Mark as complete
 
   p
     | Last updated at:
