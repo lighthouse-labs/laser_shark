@@ -26,7 +26,10 @@ section.activity-details
               = duration_in_hours(@activity.duration)
               | h)
         .input-group
-          - if !teacher?
+          - if teacher?
+            button.btn.btn-activity.btn-primary data-toggle="collapse" data-target="#student-progress"
+              | Toggle student progress
+          - else
             - if current_user.completed_activity?(@activity)
               .form-control#activity_view
                 = @activity_submission.github_url
@@ -66,6 +69,20 @@ section.activity-details
         /   input.form-control type="text" value=@activity.gist_url
 
   hr
+  - if teacher?
+    .collapse#student-progress
+      table.table
+        thead
+          th Student
+          th Github URL
+          th Completed
+        tbody
+          - cohort.students.each do |student|
+            tr
+              td = "#{student.first_name} #{student.last_name}"
+              td = link_to student.github_url(@activity), student.github_url(@activity) if student.completed_activity?(@activity)
+              td = student.completed_activity?(@activity) ? "Yes" : "No"
+
 
   - if @activity.instructions?
     .instructions

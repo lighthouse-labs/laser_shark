@@ -26,6 +26,10 @@ class User < ActiveRecord::Base
     submitted_activities.include?(activity)
   end
 
+  def github_url(activity)
+    activity_submissions.where(activity: activity).first.github_url if completed_activity?(activity)
+  end
+
   class << self
     def authenticate_via_github(auth)
       where(uid: auth["uid"]).first_or_create(attributes_from_oauth(auth))
