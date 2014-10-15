@@ -16,9 +16,7 @@ div class=("#{activity.type.downcase} " + 'activity')
     = link_to activity.name, day_activity_path(day, activity)
   .pull-right.icon
     - if current_user.completed_activity?(activity)
-      = link_to activity_activity_submission_path(activity), method: :delete
         i.fa.fa-check-square-o
     - else
-      = link_to activity_activity_submission_path(activity), method: :post
         i.fa.fa-times
   .clearfix

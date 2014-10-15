@@ -13,7 +13,7 @@ class ActivitySubmissionsController < ApplicationController
     if @activity_submission.save
       redirect_to :back
     else
-      redirect_to :back, notice: "Errors: #{@activity.errors.full_messages[0]}"
+      redirect_to :back, notice: "Errors: #{@activity_submission.errors.full_messages[0]}"
     end
   end
 
