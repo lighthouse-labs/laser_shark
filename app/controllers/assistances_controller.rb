@@ -1,5 +1,7 @@
 class AssistancesController < ApplicationController
 
+  before_filter :teacher_required
+
   def create
     @student = Student.find params[:student_id]
     assistance = Assistance.new(:assistor => current_user, :assistee => @student)
@@ -19,4 +21,11 @@ class AssistancesController < ApplicationController
       format.all { redirect_to(assistance_requests_path) }
     end
   end
+
+  private
+
+  def teacher_required
+    redirect_to(:root, alert: 'Not allowed') unless teacher?
+  end
+
 end

@@ -1,5 +1,7 @@
 class AssistanceRequestsController < ApplicationController
 
+  before_filter :teacher_required, only: [:index, :destroy, :start_assistance, :end_assistance]
+
   def index
     @my_active_assistances = Assistance.currently_active.assisted_by(current_user)
     @requests = AssistanceRequest.open_requests.oldest_requests_first
@@ -67,6 +69,12 @@ class AssistanceRequestsController < ApplicationController
       format.json { render(:nothing => true, :status => status) }
       format.all { redirect_to(assistance_requests_path) }
     end
+  end
+
+  private
+
+  def teacher_required
+    redirect_to(:root, alert: 'Not allowed') unless teacher?
   end
 
 end
