@@ -17,8 +17,11 @@ $ ->
   if $('.requests-list').length > 0
     #We are on the requests page
 
-    setInterval(getRequestData, 1000*30)
-    getRequestData()
+    poll = ->
+      getRequestData()
+      setTimeout(poll, 1000 * 3)
+
+    poll()
 
 
 getRequestData = () ->

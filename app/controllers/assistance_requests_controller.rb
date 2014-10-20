@@ -16,7 +16,6 @@ class AssistanceRequestsController < ApplicationController
       }
       format.all { render :index, layout: "assistance" }
     end
-
   end
 
   def create
@@ -30,7 +29,17 @@ class AssistanceRequestsController < ApplicationController
 
   def cancel
     ar = AssistanceRequest.oldest_open_request_for_user(current_user)
-    status = ar.cancel ? 200 : 400
+    status = ar.try(:cancel) ? 200 : 400
+
+    respond_to do |format|
+      format.json { render(:nothing => true, :status => status) }
+      format.all { redirect_to(assistance_requests_path) }
+    end
+  end
+
+  def destroy
+    ar = AssistanceRequest.find params[:id]
+    status = ar.try(:cancel) ? 200 : 400
 
     respond_to do |format|
       format.json { render(:nothing => true, :status => status) }
@@ -59,4 +68,5 @@ class AssistanceRequestsController < ApplicationController
       format.all { redirect_to(assistance_requests_path) }
     end
   end
+
 end

@@ -1,7 +1,8 @@
 class AssistancesController < ApplicationController
 
   def create
-    assistance = Assistance.new(:assistor => current_user, :assistee_id => params[:requestor_id].to_i)
+    @student = Student.find params[:student_id]
+    assistance = Assistance.new(:assistor => current_user, :assistee => @student)
     status = assistance.save ? 200 : 400
     respond_to do |format|
       format.json { render(:nothing => true, :status => status) }
@@ -10,7 +11,7 @@ class AssistancesController < ApplicationController
   end
 
   def end
-    assistance = Assistance.find(params[:id].to_i)    
+    assistance = Assistance.find(params[:id].to_i)
     status = assistance.end(params[:assistance][:notes]) ? 200 : 400
 
     respond_to do |format|

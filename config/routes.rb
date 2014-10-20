@@ -12,7 +12,7 @@ LaserShark::Application.routes.draw do
   resource :registration, only: [:new, :create]
   resource :profile, only: [:edit, :update]
 
-  resources :assistance_requests, only: [:index, :create] do
+  resources :assistance_requests, only: [:index, :create, :destroy] do
     collection do
       delete :cancel
     end
@@ -20,7 +20,12 @@ LaserShark::Application.routes.draw do
       post :start_assistance
     end
   end
-  resources :assistances, only: [:create] do
+
+  resources :students, only: [] do
+    resources :assistances, only: [:create]
+  end
+
+  resources :assistances, only: [] do
     member do
       post :end
     end

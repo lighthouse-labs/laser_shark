@@ -8,10 +8,8 @@
       <h4 class="media-heading">{{requestor.first_name}} {{requestor.last_name}}</h4>
       Requested assistance <abbr class="timeago" title="{{start_at}}">{{start_at}}</abbr>
       <br/>
-      <form action="/assistance_requests/{{id}}/start_assistance" method="post">
-        <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
-        <button type="button" class="btn btn-primary btn-lg" onclick="submit()">Start Assisting</button>
-      </form>
+      <a href="/assistance_requests/{{id}}/start_assistance" class="btn btn-primary btn-lg" data-method="post">Start Assisting</a>
+      <a href="/assistance_requests/{{id}}" class="btn btn-danger btn-lg" data-method="delete">X</a>
     </div>
   </li>
 </script>
@@ -23,11 +21,7 @@
       <h4 class="media-heading">{{first_name}} {{last_name}}</h4>
       Last received assistance <abbr class="timeago" title="{{last_assisted_at}}">{{last_assisted_at}}</abbr>
       <br/>
-      <form action="/assistances" method="post">
-        <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
-        <input name="requestor_id" type="hidden" value="{{id}}">
-        <button type="button" class="btn btn-primary btn-lg" onclick="submit()">Checkin On</button>
-      </form>
+      <a href="students/{{id}}/assistances" class="btn btn-primary btn-lg" data-method="post">Checkin On</a>
     </div>
   </li>
 </script>

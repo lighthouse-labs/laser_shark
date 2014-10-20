@@ -32,7 +32,10 @@ ActiveRecord::Schema.define(version: 20140915222907) do
 
   create_table "assistance_requests", force: true do |t|
     t.integer  "requestor_id"
+    t.integer  "assistor_id"
     t.datetime "start_at"
+    t.datetime "assistance_start_at"
+    t.datetime "assistance_end_at"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "assistance_id"
