@@ -67,6 +67,7 @@ section.activity-details
                   - @activity_submission.errors.full_messages.each do |msg|
                     li = msg
             input.form-control id="activity_submission_github_url" class="activity_submission_url" name="github_url" placeholder="Enter your Github repo or gist url" type="text"
+            | &nbsp;
             button.btn-activity-complete-status name="button" type="submit"
               i.fa.fa-check
               | &nbsp;Mark Completed
