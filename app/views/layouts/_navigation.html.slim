@@ -7,12 +7,13 @@ nav.navbar.navbar-inverse.navbar-embossed.navbar-fixed-top role="navigation"
     ul.nav.navbar-nav.navbar-left
       li
         = link_to "Home", :welcome
-      li
-        = link_to day_path('today') do
-          i.fa.fa-calendar
-          |  Schedule
 
       - if current_user && !current_user.prepping?
+        li
+          = link_to day_path('today') do
+            i.fa.fa-calendar
+            |  Schedule
+
         li.dropdown.student
           = link_to "#", :class => "dropdown-toggle", :"data-toggle" => "dropdown" do
             |  Classmates
@@ -50,7 +51,7 @@ nav.navbar.navbar-inverse.navbar-embossed.navbar-fixed-top role="navigation"
             li
               = link_to 'Sign Out', session_path, :method => :delete
 
-        - if !teacher?
+        - if !teacher? && !current_user.prepping?
           li.assistance-request
             = link_to cancel_assistance_requests_path, method: :delete, remote: true, class: "btn btn-md btn-warning delete-request #{'active' if current_user.assistance_currently_requested_or_in_progress?}"
               span Waiting for Assistance
