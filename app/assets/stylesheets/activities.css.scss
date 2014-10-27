@@ -9,12 +9,18 @@ section.activity-details {
     }
   }
 
+  .left-actions {
+    height: 42px;
+    display: inline-block;
+  }
+
 
   .btn-previous{
     @extend .btn;
     @extend .btn-primary;
     margin-right: 10px;
   }
+
   .btn-next{
     @extend .btn;
     @extend .btn-primary;
@@ -25,9 +31,49 @@ section.activity-details {
     @extend .pull-right;
   }
 
+
+  .activity_url {
+    margin-left: 5px;
+    border-radius: 6px;
+  }
+  .form-control#activity_submission_github_url {
+    @extend .activity_url;
+    width: 358px;
+  }
+
+  .form-control#activity_view {
+    @extend .activity_url;
+    width: 354px;
+  }
+
+  // .btn-activity {
+  //   color: white;
+  //   margin-left: 5px;
+  //   @extend .pull-right;
+  // }
+
+  .duration {
+    @extend .pull-right;
+  }
+
+  .btn-activity-complete-status {
+    @extend .btn;
+    @extend .btn-success;
+    @extend .btn-activity;
+  }
+
+  .btn-activity-incomplete-status {
+      @extend .btn;
+      @extend .btn-danger;
+      @extend .btn-activity;
+  }
+
   .fa-1 {
     font-size: 1.7em;
     line-height: 0.75em;
     vertical-align: -15%;
   }
+}
+.activity .pull-right.icon i.fa-check-square-o {
+  color: $green-sea;
 }

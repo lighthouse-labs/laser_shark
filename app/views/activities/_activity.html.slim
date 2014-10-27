@@ -14,4 +14,9 @@ div class=("#{activity.type.downcase} " + 'activity')
       = integer_time_to_s activity.end_time
   .pull-left.name
     = link_to activity.name, day_activity_path(day, activity)
+  .pull-right.icon
+    - if current_user.completed_activity?(activity)
+        i.fa.fa-check-square-o
+    - else
+        i.fa.fa-times
   .clearfix

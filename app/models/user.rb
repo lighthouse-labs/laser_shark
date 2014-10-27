@@ -1,18 +1,21 @@
 class User < ActiveRecord::Base
 
+  mount_uploader :custom_avatar, CustomAvatarUploader
+
   belongs_to :cohort
 
   has_many :assistance_requests, foreign_key: :requestor_id
   has_many :assistances, foreign_key: :assistee_id
 
-  validates :uid,   presence: true
-  validates :token, presence: true
-
-  mount_uploader :custom_avatar, CustomAvatarUploader
+  has_many :activity_submissions
+  has_many :submitted_activities, through: :activity_submissions, source: :activity
 
   scope :order_by_last_assisted_at, -> {
     order("last_assisted_at ASC NULLS FIRST")
   }
+
+  validates :uid,   presence: true
+  validates :token, presence: true
 
   def prepping?
     false
@@ -37,6 +40,14 @@ class User < ActiveRecord::Base
   end
 
   def assistance_not_currently_requested_or_in_progress
+  end
+
+  def completed_activity?(activity)
+    submitted_activities.include?(activity)
+  end
+
+  def github_url(activity)
+    activity_submissions.where(activity: activity).first.github_url if completed_activity?(activity)
   end
 
   class << self

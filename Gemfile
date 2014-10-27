@@ -29,6 +29,8 @@ gem 'redcarpet'
 gem 'omniauth'
 gem 'omniauth-github'
 
+gem 'default_value_for'
+
 gem 'carrierwave'
 gem 'mini_magick'
 gem 'fog'
