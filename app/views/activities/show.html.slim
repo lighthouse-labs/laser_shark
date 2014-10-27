@@ -60,12 +60,6 @@ section.activity-details
             | &nbsp;Cancel Completion
         - else
           = form_for @activity_submission, url: activity_activity_submission_path(@activity), method: :post, html: { class: 'form-inline' }  do |f|
-            - if @activity_submission.errors.full_messages.any?
-              .alert.alert-error
-                strong Please correct the following errors:
-                ul
-                  - @activity_submission.errors.full_messages.each do |msg|
-                    li = msg
             input.form-control id="activity_submission_github_url" class="activity_submission_url" name="github_url" placeholder="Enter your Github repo or gist url" type="text"
             | &nbsp;
             button.btn-activity-complete-status name="button" type="submit"
