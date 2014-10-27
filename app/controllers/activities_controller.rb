@@ -7,6 +7,9 @@ class ActivitiesController < ApplicationController
 
   def show
     @next_activity = @activity.next
+    @previous_activity = @activity.previous    
+    @activity_submission = current_user.activity_submissions.where(activity: @activity).first || ActivitySubmission.new
+    @next_activity = @activity.next
     @previous_activity = @activity.previous
   end
 

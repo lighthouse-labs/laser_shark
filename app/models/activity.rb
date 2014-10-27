@@ -10,6 +10,8 @@ class Activity < ActiveRecord::Base
 
   after_create :update_instructions_from_gist
 
+  has_many :activity_submissions
+
   # Given the start_time and duration, return the end_time
   def end_time
     hours = start_time / 100
