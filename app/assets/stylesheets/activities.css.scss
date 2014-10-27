@@ -9,6 +9,11 @@ section.activity-details {
     }
   }
 
+  .left-actions {
+    height: 42px;
+    display: inline-block;
+  }
+
 
   .btn-previous{
     @extend .btn;
@@ -41,9 +46,14 @@ section.activity-details {
     width: 354px;
   }
 
-  .btn-activity {
-      color: white;
-      margin-left: 5px;
+  // .btn-activity {
+  //   color: white;
+  //   margin-left: 5px;
+  //   @extend .pull-right;
+  // }
+
+  .duration {
+    @extend .pull-right;
   }
 
   .btn-activity-complete-status {
