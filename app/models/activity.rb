@@ -1,5 +1,7 @@
 class Activity < ActiveRecord::Base
 
+  has_many :comments, as: :commentable, dependent: :destroy
+
   validates :name, presence: true, length: { maximum: 56 }
   validates :duration, numericality: { only_integer: true }
   validates :start_time, numericality: { only_integer: true }
@@ -9,6 +11,7 @@ class Activity < ActiveRecord::Base
   scope :for_day, -> (day) { where(day: day) }
 
   after_create :update_instructions_from_gist
+
 
   has_many :activity_submissions
 

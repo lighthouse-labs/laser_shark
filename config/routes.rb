@@ -40,6 +40,10 @@ LaserShark::Application.routes.draw do
     resource :activity_submission, only: [:create, :destroy]
   end
 
+  resources :activities do 
+    resources :comments, only: [:create]
+  end
+
   resources :cohorts, only: [] do
     resources :students, only: [:index]    # cohort_students_path(@cohort)
     put :switch_to, on: :member

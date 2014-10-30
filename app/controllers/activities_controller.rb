@@ -11,6 +11,9 @@ class ActivitiesController < ApplicationController
     @activity_submission = current_user.activity_submissions.where(activity: @activity).first || ActivitySubmission.new
     @next_activity = @activity.next
     @previous_activity = @activity.previous
+    @commentable = @activity
+    @comments = @commentable.comments.order('created_at ASC')
+    @comment = Comment.new
   end
 
   def edit
