@@ -2,5 +2,8 @@
 
 FactoryGirl.define do
   factory :comment do
+    association(:user)
+    association(:commentable)
+    content Faker::Lorem.paragraph
   end
 end
