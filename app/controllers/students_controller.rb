@@ -1,10 +1,16 @@
 class StudentsController < ApplicationController
 
-  def index
+  before_action :disallow_unless_enrolled
 
-    @cohort   = Cohort.find(params[:cohort_id])
+  def index
+    @cohort = Cohort.find(params[:cohort_id])
     @students = @cohort.students
-    
   end
 
-end 
+  private
+
+  def disallow_unless_enrolled
+    redirect_to(:root, alert: 'Not allowed') unless current_user && !current_user.prepping?
+  end
+
+end

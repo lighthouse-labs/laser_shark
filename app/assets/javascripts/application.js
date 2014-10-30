@@ -15,4 +15,8 @@
 //= require turbolinks
 //= require bootstrap.min
 //= require flat-ui-pro
+//= require ace
+//= require jquery.timeago
+//= require mustache
+//= require assistance_requests
 //= require_tree .

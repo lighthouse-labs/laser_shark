@@ -8,6 +8,7 @@ development:
   min_messages: warning
   pool:     5
 
+
 test:
   adapter:  postgresql
   host:     localhost

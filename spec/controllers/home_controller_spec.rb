@@ -7,7 +7,9 @@ describe HomeController do
   describe "GET 'show'" do
     it "returns http success" do
       get 'show'
-      response.should be_success
+
+      # It should redirect to today path if logged in user
+      expect(response).to redirect_to( day_path('today') )
     end
   end
 

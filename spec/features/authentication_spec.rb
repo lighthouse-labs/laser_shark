@@ -36,9 +36,10 @@ describe 'Authentication' do
       expect(User.count).to eq(1) # was already 1 due to FG.create above
     end
 
-    it "redirects to home page (instead of registration page)" do
+    # Should redirect to prep page when completed registration but prepping (not assigned type to Student/Teacher) 
+    it "redirects to prep page (instead of registration page) if prepping" do
       visit github_session_path
-      expect(current_path).to eq(root_path)
+      expect(current_path).to eq(prep_path)
     end
   end
 

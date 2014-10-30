@@ -7,20 +7,23 @@ nav.navbar.navbar-inverse.navbar-embossed.navbar-fixed-top role="navigation"
     ul.nav.navbar-nav.navbar-left
       li
         = link_to "Home", :welcome
-      li
-        = link_to day_path('today') do
-          i.fa.fa-calendar
-          |  Schedule
 
-      li.dropdown.student
-        = link_to "#", :class => "dropdown-toggle", :"data-toggle" => "dropdown" do
-          |  Classmates
-          b.caret
-        span.dropdown-arrow
-        ul.dropdown-menu
-          - cohorts.each do |cohort|
-            li
-              = link_to cohort.name, cohort_students_path(cohort) 
+      - if current_user && !current_user.prepping?
+        li
+          = link_to day_path('today') do
+            i.fa.fa-calendar
+            |  Schedule
+
+        li.dropdown.student
+          = link_to "#", :class => "dropdown-toggle", :"data-toggle" => "dropdown" do
+            |  Classmates
+            b.caret
+          span.dropdown-arrow
+          ul.dropdown-menu
+            - cohorts.each do |cohort|
+              li
+                = link_to cohort.name, cohort_students_path(cohort)
+
     ul.nav.navbar-nav.navbar-right
       - if teacher?
         li.dropdown.cohort
@@ -34,6 +37,7 @@ nav.navbar.navbar-inverse.navbar-embossed.navbar-fixed-top role="navigation"
                 = link_to cohort.name, [:switch_to, cohort], method: :put
 
       - if current_user
+
         li.dropdown.student
           = link_to "#", :class => "dropdown-toggle", :"data-toggle" => "dropdown" do
             = image_tag avatar_for(current_user)
@@ -46,6 +50,14 @@ nav.navbar.navbar-inverse.navbar-embossed.navbar-fixed-top role="navigation"
               = link_to "Edit profile", edit_profile_path
             li
               = link_to 'Sign Out', session_path, :method => :delete
+
+        - if !teacher? && !current_user.prepping?
+          li.assistance-request
+            = link_to cancel_assistance_requests_path, method: :delete, remote: true, class: "btn btn-md btn-warning delete-request #{'active' if current_user.assistance_currently_requested_or_in_progress?}"
+              span Waiting for Assistance
+            = link_to assistance_requests_path, method: :post, remote: true, class: "btn btn-md btn-primary #{'active' unless current_user.assistance_currently_requested_or_in_progress?}"
+              span Request Assistance
+
       - else
         li
           = link_to "Sign In", new_session_path

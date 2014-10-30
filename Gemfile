@@ -29,9 +29,15 @@ gem 'redcarpet'
 gem 'omniauth'
 gem 'omniauth-github'
 
+gem 'default_value_for'
+
 gem 'carrierwave'
 gem 'mini_magick'
 gem 'fog'
+
+gem 'rubyzip', '>= 1.0.0'
+
+gem 'slack-poster'
 
 group :development do
   gem 'spring'

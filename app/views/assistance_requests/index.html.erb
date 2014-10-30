@@ -1,0 +1,64 @@
+<ul class="media-list requests-list">
+</ul>
+
+<script id="request_template" type="x-tmpl-mustache">
+  <li class="media">
+    <img src="{{requestor.avatar_url}}" class="media-object" />
+    <div class="media-body">
+      <h4 class="media-heading">{{requestor.first_name}} {{requestor.last_name}}</h4>
+      Requested assistance <abbr class="timeago" title="{{start_at}}">{{start_at}}</abbr>
+      <br/>
+      <a href="/assistance_requests/{{id}}/start_assistance" class="btn btn-primary btn-lg" data-method="post">Start Assisting</a>
+      <a href="/assistance_requests/{{id}}" class="btn btn-danger btn-lg" data-method="delete">X</a>
+    </div>
+  </li>
+</script>
+
+<script id="all_student_template" type="x-tmpl-mustache">
+  <li class="media">
+    <img src="{{avatar_url}}" class="media-object" />
+    <div class="media-body">
+      <h4 class="media-heading">{{first_name}} {{last_name}}</h4>
+      Last received assistance <abbr class="timeago" title="{{last_assisted_at}}">{{last_assisted_at}}</abbr>
+      <br/>
+      <a href="students/{{id}}/assistances" class="btn btn-primary btn-lg" data-method="post">Checkin On</a>
+    </div>
+  </li>
+</script>
+
+
+<script id="assitance_template" type="x-tmpl-mustache">
+  <li class="media active">
+    <img src="{{assistee.avatar_url}}" class="media-object" />
+    <div class="media-body">
+      <h4 class="media-heading">{{assistee.first_name}} {{assistee.last_name}}</h4>
+      You started assisting <abbr class="timeago" title="{{start_at}}">{{start_at}}</abbr>
+      <br/>
+      <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#assistance_model_{{id}}">
+        End Assistance
+      </button>
+    </div>
+
+    <div class="modal fade" id="assistance_model_{{id}}">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            <h4 class="modal-title">Notes</h4>
+          </div>
+          <form action="/assistances/{{id}}/end" method="post">
+            <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
+
+            <div class="modal-body">
+              <textarea id="assistance_notes" name="assistance[notes]"></textarea>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="submit()">End Assistance</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </li>
+
+</script>
