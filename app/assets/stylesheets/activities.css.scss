@@ -31,6 +31,10 @@ section.activity-details {
     @extend .pull-right;
   }
 
+  .activity_status{
+    float: right;
+  }
+
 
   .activity_url {
     margin-left: 5px;

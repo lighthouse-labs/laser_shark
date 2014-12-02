@@ -5,6 +5,7 @@ class Activity < ActiveRecord::Base
   validates :start_time, numericality: { only_integer: true }
   validates :day, presence: true, format: { with: /\A(w\dd\d)|(w\de)\z/, allow_blank: true }
 
+  scope :active, -> {where('deactivate_activity = ?', false)}
   scope :chronological, -> { order(:start_time) }
   scope :for_day, -> (day) { where(day: day) }
 

@@ -5,7 +5,12 @@
 
 
 section.activity-details
-  h1 = @activity.name
+  - if @activity.deactivate_activity == false
+    p.activity_status Status: Active
+  - else
+    p.activity_status Status: Deactivated
+
+  h1 = @activity.name 
 
   .well
     .actions
@@ -79,7 +84,6 @@ section.activity-details
               td = "#{student.first_name} #{student.last_name}"
               td = link_to student.github_url(@activity), student.github_url(@activity) if student.completed_activity?(@activity)
               td = student.completed_activity?(@activity) ? "Yes" : "No"
-
 
   - if @activity.instructions?
     .instructions

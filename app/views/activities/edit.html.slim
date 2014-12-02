@@ -16,9 +16,9 @@ hr
   = f.input :duration, as: :string
   = f.hidden_field :instructions, id: 'activity-instructions'
   = f.hidden_field :teacher_notes, id: 'activity-notes'
+  = f.input :deactivate_activity, as: :boolean
 
-
-  h3 Instructions
+  h3 Instructions  
   #instructions-editor.editor = @activity.instructions
 
   h3 Teacher Notes

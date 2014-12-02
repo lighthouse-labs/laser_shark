@@ -11,6 +11,7 @@ class ActivitiesController < ApplicationController
     @activity_submission = current_user.activity_submissions.where(activity: @activity).first || ActivitySubmission.new
     @next_activity = @activity.next
     @previous_activity = @activity.previous
+    redirect_to day_path(@activity.day) if @activity.deactivate_activity == true
   end
 
   def edit
@@ -28,7 +29,7 @@ class ActivitiesController < ApplicationController
   private
 
   def activity_params
-    params.require(:activity).permit(:name, :duration, :start_time, :instructions, :teacher_notes)
+    params.require(:activity).permit(:name, :duration, :start_time, :instructions, :teacher_notes, :deactivate_activity)
   end
 
   def teacher_required
