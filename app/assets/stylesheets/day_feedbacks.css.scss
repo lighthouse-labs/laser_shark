@@ -1,0 +1,26 @@
+// Place all the styles related to the day_feedbacks controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+.hide-radio-button {
+  position: absolute;
+  left: -9999px;
+}
+
+#feedback-form {
+  margin-bottom: 30px;
+  input[type=radio] + label{
+    margin-right: 10px;
+  }
+  input[type=radio] + label:hover {
+    background-color: #efefef;
+    display: inline-block;
+    cursor: pointer;
+  }
+  input[type=radio]:checked + label[for=day_feedback_mood_happy]>i {
+    color: green;
+  }
+  input[type=radio]:checked + label[for=day_feedback_mood_sad]>i {
+    color: red;
+  }
+
+}

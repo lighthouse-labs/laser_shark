@@ -1,0 +1,31 @@
+= form_tag(day_feedbacks_path, id: "feedback-form", html: {class: "form-horizontal" }) do 
+  fieldset
+    legend Use this form to provide feedback about the curriculum, help you recieved or about your experience so far.
+    - if @day_feedback
+      #error_explanation
+        h2 = "#{pluralize(@day_feedback.errors.count, "error")} prohibited this feedback from being saved:"
+        ul
+          - @day_feedback.errors.full_messages.each do |message|
+            li = message
+
+    .form-group
+      = radio_button_tag 'day_feedback[mood]', "happy", nil, class: "hide-radio-button"
+      = label_tag "day_feedback_mood_happy"
+        i class='fa fa-smile-o fa-5x'
+      = radio_button_tag 'day_feedback[mood]', "sad", nil, class: "hide-radio-button"
+      = label_tag "day_feedback_mood_sad"
+        i class='fa fa-frown-o fa-5x'
+
+    .form-group
+      = label_tag 'Subject'
+      = text_field_tag 'day_feedback[title]', nil, placeholder: "Subject", class: "form-control"
+
+    .form-group
+      = label_tag 'Comment'
+      / text_area_tag(:message, "Hi, nice site", size: "24x6")
+      = text_area_tag 'day_feedback[text]', nil, placeholder: "Your feedback comments here",size: "24x6", class: "form-control"
+
+    = hidden_field_tag "day_feedback[day]", day
+
+    div align="left"
+      .actions = submit_tag 'Save', class: "btn btn-danger btn-lg"

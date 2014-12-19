@@ -20,6 +20,11 @@ class ApplicationController < ActionController::Base
   end
   helper_method :teacher?
 
+  def student?
+    current_user && current_user.is_a?(Student)
+  end
+  helper_method :student?
+
   def cohort
     @cohort ||= current_user.try(:cohort)
     # Teachers can switch to any cohort

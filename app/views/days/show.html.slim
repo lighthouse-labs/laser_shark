@@ -4,3 +4,10 @@
 
 h1 Schedule
 = render partial: 'activities/activity', collection: @activities
+
+- if student?
+  - if feedback_submitted?
+    render "Thank you for your feedback"
+  - else
+    h2 Daily Feedback
+    = render partial: 'day_feedbacks/form'

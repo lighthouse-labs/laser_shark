@@ -1,5 +1,7 @@
 LaserShark::Application.routes.draw do
 
+  resources :day_feedbacks, only: [:create, :new]
+
   get 'prep' => 'prep#show'
 
   root to: 'home#show'
