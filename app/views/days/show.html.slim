@@ -6,8 +6,13 @@ h1 Schedule
 = render partial: 'activities/activity', collection: @activities
 
 - if student?
-  - if feedback_submitted?
-    render "Thank you for your feedback"
-  - else
-    h2 Daily Feedback
-    = render partial: 'day_feedbacks/form'
+  hr
+  h2 Daily Feedback
+  .row
+    .col-md-10.col-md-offset-1    
+      .well
+        - if feedback_submitted?
+          p
+            | Thank you for your feedback
+        - else
+          = render partial: 'day_feedbacks/form'

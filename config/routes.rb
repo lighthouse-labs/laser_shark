@@ -1,7 +1,5 @@
 LaserShark::Application.routes.draw do
 
-  resources :day_feedbacks, only: [:create, :new]
-
   get 'prep' => 'prep#show'
 
   root to: 'home#show'
@@ -36,6 +34,7 @@ LaserShark::Application.routes.draw do
   # CONTENT BROWSING
   resources :days, param: :number, only: [:show] do
     resources :activities, only: [:show, :edit, :update]
+    resources :feedbacks, only: [:create, :new], controller: :day_feedbacks
   end
 
   resources :activities, only: [] do
