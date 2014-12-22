@@ -46,9 +46,10 @@ section.activity-details
 
 
     div.clearfix
-      - if teacher? && @activity.allow_submissions?
-        button.btn.btn-activity.btn-primary data-toggle="collapse" data-target="#student-progress"
-          | Submissions
+      - if teacher?
+        - if @activity.allow_submissions?
+          button.btn.btn-activity.btn-primary data-toggle="collapse" data-target="#student-progress"
+            | Submissions
         = link_to 'Edit', edit_day_activity_path(@day, @activity), class: 'btn-edit'
       - elsif @activity.allow_submissions?
         - if current_user.completed_activity?(@activity)

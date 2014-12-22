@@ -12,9 +12,13 @@ hr
     hr
 
   = f.input :name
+  = f.input :day
   = f.input :start_time, as: :string
   = f.input :duration, as: :string
+  = f.input :gist_url, as: :string
   = f.input :allow_submissions
+  hr
+
   = f.hidden_field :instructions, id: 'activity-instructions'
   = f.hidden_field :teacher_notes, id: 'activity-notes'
 
