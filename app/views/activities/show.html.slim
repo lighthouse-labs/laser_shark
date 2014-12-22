@@ -1,8 +1,7 @@
-- content_for :side_nav do
-  h1.day = day.upcase
-  == render 'layouts/calendar'
-
-
+- unless current_user.prepping? || current_user.prospect?
+  - content_for :side_nav do
+    h1.day = day.upcase
+    == render 'layouts/calendar'
 
 section.activity-details
   h1 = @activity.name
@@ -47,11 +46,11 @@ section.activity-details
 
 
     div.clearfix
-      - if teacher?
+      - if teacher? && @activity.allow_submissions?
         button.btn.btn-activity.btn-primary data-toggle="collapse" data-target="#student-progress"
           | Submissions
         = link_to 'Edit', edit_day_activity_path(@day, @activity), class: 'btn-edit'
-      - else
+      - elsif @activity.allow_submissions?
         - if current_user.completed_activity?(@activity)
           .form-control#activity_view
             = @activity_submission.github_url
@@ -66,7 +65,7 @@ section.activity-details
               i.fa.fa-check
               | &nbsp;Mark Completed
 
-  - if teacher?
+  - if teacher? && @activity.allow_submissions?
     .collapse#student-progress
       table.table
         thead

@@ -6,16 +6,23 @@ nav.navbar.navbar-inverse.navbar-embossed.navbar-fixed-top role="navigation"
   .collapse.navbar-collapse
     ul.nav.navbar-nav.navbar-left
       li
-        = link_to "Home", :welcome
+        = link_to :welcome
+          i.fa.fa-home
+          |  Home
+      li
+          = link_to prep_path
+            i.fa.fa-paper-plane-o
+            |  Prep
 
-      - if current_user && !current_user.prepping?
+      - if current_user && !(current_user.prepping? || current_user.prospect?)
         li
-          = link_to day_path('today') do
+          = link_to day_path('today')
             i.fa.fa-calendar
             |  Schedule
 
         li.dropdown.student
-          = link_to "#", :class => "dropdown-toggle", :"data-toggle" => "dropdown" do
+          = link_to "#", :class => "dropdown-toggle", :"data-toggle" => "dropdown"
+            i.fa.fa-group
             |  Classmates
             b.caret
           span.dropdown-arrow
@@ -23,6 +30,7 @@ nav.navbar.navbar-inverse.navbar-embossed.navbar-fixed-top role="navigation"
             - cohorts.each do |cohort|
               li
                 = link_to cohort.name, cohort_students_path(cohort)
+
 
     ul.nav.navbar-nav.navbar-right
       - if teacher?
@@ -51,7 +59,7 @@ nav.navbar.navbar-inverse.navbar-embossed.navbar-fixed-top role="navigation"
             li
               = link_to 'Sign Out', session_path, :method => :delete
 
-        - if !teacher? && !current_user.prepping?
+        - if !teacher? && !current_user.prepping? && !current_user.prospect?
           li.assistance-request
             = link_to cancel_assistance_requests_path, method: :delete, remote: true, class: "btn btn-md btn-warning delete-request #{'active' if current_user.assistance_currently_requested_or_in_progress?}"
               span Waiting for Assistance

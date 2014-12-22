@@ -3,7 +3,7 @@ class Activity < ActiveRecord::Base
   validates :name, presence: true, length: { maximum: 56 }
   validates :duration, numericality: { only_integer: true }
   validates :start_time, numericality: { only_integer: true }
-  validates :day, presence: true, format: { with: /\A(w\dd\d)|(w\de)\z/, allow_blank: true }
+  validates :day, presence: true, format: { with: /\A(w\dd\d)|(w\de)|(prep)\z/, allow_blank: true }
 
   scope :chronological, -> { order(:start_time) }
   scope :for_day, -> (day) { where(day: day) }

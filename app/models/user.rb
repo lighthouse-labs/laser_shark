@@ -17,6 +17,10 @@ class User < ActiveRecord::Base
   validates :uid,   presence: true
   validates :token, presence: true
 
+  def prospect?
+    true
+  end
+
   def prepping?
     false
   end

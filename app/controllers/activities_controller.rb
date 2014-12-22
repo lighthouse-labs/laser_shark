@@ -28,7 +28,7 @@ class ActivitiesController < ApplicationController
   private
 
   def activity_params
-    params.require(:activity).permit(:name, :duration, :start_time, :instructions, :teacher_notes)
+    params.require(:activity).permit(:name, :duration, :start_time, :instructions, :teacher_notes, :allow_submissions)
   end
 
   def teacher_required
