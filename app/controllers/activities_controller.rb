@@ -19,7 +19,7 @@ class ActivitiesController < ApplicationController
 
   def update
     if @activity.update(activity_params)
-      redirect_to day_activity_path(@day, @activity), notice: 'Updated!'
+      redirect_to day_activity_path(@activity.day, @activity), notice: 'Updated!'
     else
       render :edit
     end
