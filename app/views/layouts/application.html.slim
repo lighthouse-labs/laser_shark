@@ -6,6 +6,8 @@ html
       = content_for?(:title) ? yield(:title) : 'Compass'
     meta name="description" content="#{content_for?(:description) ? yield(:description) : 'LaserShark'}"
     == stylesheet_link_tag "application", :media => 'all', 'data-turbolinks-track' => true
+    link href="//vjs.zencdn.net/4.11/video-js.css" rel="stylesheet"
+    script src="//vjs.zencdn.net/4.11/video.js"
     == javascript_include_tag 'application', 'data-turbolinks-track' => true
     == csrf_meta_tags
     == favicon_link_tag 'compass_favicon.ico'

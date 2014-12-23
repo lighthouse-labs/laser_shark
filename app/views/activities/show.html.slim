@@ -80,6 +80,10 @@ section.activity-details
               td = link_to student.github_url(@activity), student.github_url(@activity) if student.completed_activity?(@activity)
               td = student.completed_activity?(@activity) ? "Yes" : "No"
 
+  - if @activity.is_a?(Video)
+    video class="video-js vjs-default-skin" controls="true" preload="auto" width="100%" height="300px"
+      source src="#{Video::HOST}#{@activity.media_filename}.mp4" type='video/mp4'
+      source src="#{Video::HOST}#{@activity.media_filename}.ogv" type='video/ogg'
 
   - if @activity.instructions?
     .instructions

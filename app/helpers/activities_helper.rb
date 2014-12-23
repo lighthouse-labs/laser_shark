@@ -33,6 +33,8 @@ module ActivitiesHelper
       'fa fa-moon-o'
     when "survey"
       'fa fa-list-alt'
+    when "video"
+      'fa fa-video-camera'
     when "test"
       'fa fa-gavel'
     end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141222065333) do
+ActiveRecord::Schema.define(version: 20141222195444) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -29,6 +29,7 @@ ActiveRecord::Schema.define(version: 20141222065333) do
     t.text     "teacher_notes"
     t.string   "file_name"
     t.boolean  "allow_submissions", default: true
+    t.string   "media_filename"
   end
 
   create_table "activity_submissions", force: true do |t|
