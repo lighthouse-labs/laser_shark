@@ -1,22 +1,23 @@
-div class=("#{activity.type.downcase} " + 'activity')
-  .pull-left.icon
-    i class=(icon_for(activity))
-  .pull-left.time
-    - if weekend?
-      br
-      = duration activity
-      br
-    - else
-      = integer_time_to_s activity.start_time
-      br
-      | to
-      br
-      = integer_time_to_s activity.end_time
-  .pull-left.name
-    = link_to activity.name, day_activity_path(activity.day, activity)
-  .pull-right.icon
-    - if current_user.completed_activity?(activity)
-        i.fa.fa-check-square-o
-    - else
-        i.fa.fa-times
-  .clearfix
+= link_to day_activity_path(activity.day, activity)
+  div class=("#{activity.type.downcase} " + 'activity')
+    .pull-left.icon
+      i class=(icon_for(activity))
+    .pull-left.time
+      - if weekend?
+        br
+        = duration activity
+        br
+      - else
+        = integer_time_to_s activity.start_time
+        br
+        | to
+        br
+        = integer_time_to_s activity.end_time
+    .pull-left.name
+      = activity.name
+    .pull-right.icon
+      - if current_user.completed_activity?(activity)
+          i.fa.fa-check-square-o
+      - else
+          i.fa.fa-square-o
+    .clearfix
