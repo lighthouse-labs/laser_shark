@@ -30,7 +30,7 @@ class User < ActiveRecord::Base
   end
 
   def can_access_day?(day)
-    return true if day == 'w1d1'
+    return true if day == 'prep'
     return false unless cohort
 
     today = CurriculumDay.new(Time.zone.now.to_date, cohort).to_s
