@@ -1,0 +1,3 @@
+class Task < Activity
+  
+end
