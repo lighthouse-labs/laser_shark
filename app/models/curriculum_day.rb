@@ -10,10 +10,10 @@ class CurriculumDay
   def to_s
     days = (@date.to_date - @cohort.start_date).to_i
     w = (days / 7) + 1
-    if @date.sunday? || @date.saturday?
+    if w > 8
+      "w8e"
+    elsif @date.sunday? || @date.saturday?
       "w#{w}e"
-    elsif w > 8
-      "w#{8}e"
     else
       "w#{w}d#{@date.wday}"
     end
