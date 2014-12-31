@@ -54,4 +54,7 @@ LaserShark::Application.routes.draw do
     resources :cohorts, only: [:index]
   end
 
+  # To test 500 error notifications on production
+  get 'error-test' => 'test_errors#create'
+
 end

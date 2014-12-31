@@ -26,16 +26,31 @@ module ActivitiesHelper
   def icon_for(activity)
     case activity.type.downcase
     when "assignment"
-      'fa fa-edit'
+      'fa fa-code'
+    when "task"
+      'fa fa-flash'
     when "lecture"
       'fa fa-group'
     when "homework"
       'fa fa-moon-o'
     when "survey"
       'fa fa-list-alt'
+    when "video"
+      'fa fa-video-camera'
     when "test"
       'fa fa-gavel'
     end
+  end
+
+  def activity_type_options
+    [
+      'Assignment', 
+      'Task',
+      'Lecture',
+      'Homework',
+      'Video',
+      'Test'
+    ]
   end
 
 end

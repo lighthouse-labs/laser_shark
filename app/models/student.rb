@@ -9,4 +9,8 @@ class Student < User
     self.cohort.nil?
   end
 
+  def prospect?
+    false
+  end
+
 end

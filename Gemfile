@@ -35,6 +35,8 @@ gem 'carrierwave'
 gem 'mini_magick'
 gem 'fog'
 
+gem 'airbrake' # errors going to errbit actually. See errbit.rb
+
 gem 'rubyzip', '>= 1.0.0'
 
 gem 'slack-poster'

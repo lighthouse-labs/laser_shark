@@ -19,7 +19,7 @@ class ActivitiesController < ApplicationController
 
   def update
     if @activity.update(activity_params)
-      redirect_to day_activity_path(@day, @activity), notice: 'Updated!'
+      redirect_to day_activity_path(@activity.day, @activity), notice: 'Updated!'
     else
       render :edit
     end
@@ -28,7 +28,7 @@ class ActivitiesController < ApplicationController
   private
 
   def activity_params
-    params.require(:activity).permit(:name, :duration, :start_time, :instructions, :teacher_notes)
+    params.require(:activity).permit(:name, :type, :duration, :start_time, :instructions, :teacher_notes, :allow_submissions, :day, :gist_url, :media_filename)
   end
 
   def teacher_required

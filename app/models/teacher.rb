@@ -8,4 +8,8 @@ class Teacher < User
     false
   end
 
+  def prospect?
+    false
+  end
+
 end
