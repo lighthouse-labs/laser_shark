@@ -11,6 +11,10 @@ class SessionsController < ApplicationController
     @current_user = User.authenticate_via_github auth_hash_params
     session[:user_id] = @current_user.id
     if @current_user.completed_registration?
+      if session[:invitation_code]
+        assign_cohort(session[:invitation_code])
+        session[:invitation_code] = nil
+      end
       redirect_to :root
     else
       redirect_to [:new, :registration]
