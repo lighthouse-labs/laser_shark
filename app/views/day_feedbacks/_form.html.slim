@@ -8,11 +8,11 @@
           = @day_feedback.errors.full_messages.first
 
     .form-group
-      = f.radio_button :mood, "happy", class: "hide-radio-button"
-      = f.label :mood, "day_feedback_mood_happy"
+      = f.label :mood_happy
+        = f.radio_button :mood, "happy"
         i class='fa fa-smile-o fa-5x'
-      = f.radio_button :mood, "sad", class: "hide-radio-button"
-      = f.label :mood, "day_feedback_mood_sad"
+      = f.label :mood_sad
+        = f.radio_button :mood, "sad"
         i class='fa fa-frown-o fa-5x'
 
     .form-group
