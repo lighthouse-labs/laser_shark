@@ -21,4 +21,8 @@ module ApplicationHelper
     time.strftime("%b %e, %l:%M %p")
   end
 
+  def it_is_6pm_already?
+    Time.zone.now.hour >= 18
+  end
+
 end

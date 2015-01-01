@@ -5,7 +5,7 @@
 h1 Schedule
 = render partial: 'activities/activity', collection: @activities
 
-- if student?
+- if student? && it_is_6pm_already?
   hr
   h2 Daily Feedback
   .row
