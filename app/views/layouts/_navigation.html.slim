@@ -13,7 +13,11 @@ nav.navbar.navbar-inverse.navbar-embossed.navbar-fixed-top role="navigation"
           = link_to prep_path
             i.fa.fa-paper-plane-o
             |  Prep
-
+      - if current_user && !current_user.completed_registration?
+        li
+          = link_to new_registration_path
+            i.fa.fa-sign-in
+            |  Complete Signup
       - if current_user && !(current_user.prepping? || current_user.prospect?)
         li
           = link_to day_path('today')
