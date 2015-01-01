@@ -35,4 +35,11 @@ class ApplicationController < ActionController::Base
   end
   helper_method :cohorts
 
+  def assign_cohort(invitation_code)
+    current_user.cohort = Cohort.find_by(code: invitation_code)
+    current_user.type = "Student"
+    current_user.save
+  end
+  helper_method :assign_cohort
+
 end
