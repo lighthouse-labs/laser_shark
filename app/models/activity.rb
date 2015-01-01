@@ -1,4 +1,4 @@
-class Activity < ActiveRecord::Base
+  class Activity < ActiveRecord::Base
 
   validates :name, presence: true, length: { maximum: 56 }
   validates :duration, numericality: { only_integer: true }

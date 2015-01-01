@@ -9,4 +9,7 @@ module DaysHelper
     classes
   end
 
+  def feedback_submitted?
+    student? && current_user.day_feedbacks.find_by(day: @day)
+  end
 end

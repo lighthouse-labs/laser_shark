@@ -4,3 +4,15 @@
 
 h1 Schedule
 = render partial: 'activities/activity', collection: @activities
+
+- if student? && it_is_6pm_already?
+  hr
+  h2 Daily Feedback
+  .row
+    .col-md-10.col-md-offset-1    
+      .well
+        - if feedback_submitted?
+          p
+            | Thank you for your feedback
+        - else
+          = render partial: 'day_feedbacks/form'
