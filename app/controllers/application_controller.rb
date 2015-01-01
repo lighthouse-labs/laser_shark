@@ -40,6 +40,5 @@ class ApplicationController < ActionController::Base
     current_user.type = "Student"
     current_user.save
   end
-  helper_method :assign_cohort
 
 end
