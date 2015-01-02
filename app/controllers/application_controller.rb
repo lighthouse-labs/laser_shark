@@ -25,6 +25,16 @@ class ApplicationController < ActionController::Base
   end
   helper_method :student?
 
+  def active_student?
+    student? && current_user.active_student?
+  end
+  helper_method :active_student?
+
+  def alumni?
+    student? && current_user.alumni?
+  end
+  helper_method :alumni?
+
   def cohort
     @cohort ||= current_user.try(:cohort)
     # Teachers can switch to any cohort
@@ -36,7 +46,7 @@ class ApplicationController < ActionController::Base
   helper_method :cohort
 
   def cohorts
-    @cohorts ||= Cohort.all
+    @cohorts ||= Cohort.order(start_date: :asc)
   end
   helper_method :cohorts
 

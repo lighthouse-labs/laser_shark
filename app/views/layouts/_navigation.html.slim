@@ -18,7 +18,8 @@ nav.navbar.navbar-inverse.navbar-embossed.navbar-fixed-top role="navigation"
           = link_to new_registration_path
             i.fa.fa-sign-in
             |  Complete Signup
-      - if current_user && !(current_user.prepping? || current_user.prospect?)
+      
+      - if teacher? || active_student? || alumni?
         li
           = link_to day_path('today')
             i.fa.fa-calendar
@@ -33,7 +34,7 @@ nav.navbar.navbar-inverse.navbar-embossed.navbar-fixed-top role="navigation"
           ul.dropdown-menu
             - cohorts.each do |cohort|
               li
-                = link_to cohort.name, cohort_students_path(cohort)
+                = link_to cohort_link(cohort), cohort_students_path(cohort)
 
 
     ul.nav.navbar-nav.navbar-right
@@ -63,7 +64,7 @@ nav.navbar.navbar-inverse.navbar-embossed.navbar-fixed-top role="navigation"
             li
               = link_to 'Sign Out', session_path, :method => :delete
 
-        - if !teacher? && !current_user.prepping? && !current_user.prospect?
+        - if current_user.active_student?
           li.assistance-request
             = link_to cancel_assistance_requests_path, method: :delete, remote: true, class: "btn btn-md btn-warning delete-request #{'active' if current_user.assistance_currently_requested_or_in_progress?}"
               span Waiting for Assistance

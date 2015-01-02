@@ -13,4 +13,12 @@ class Student < User
     false
   end
 
+  def active_student?
+    !prepping? && cohort.active?
+  end
+
+  def alumni?
+    !prepping? && cohort.finished?
+  end
+
 end

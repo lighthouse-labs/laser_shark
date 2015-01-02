@@ -25,6 +25,14 @@ class User < ActiveRecord::Base
     false
   end
 
+  def active_student?
+    false
+  end
+
+  def alumni?
+    false
+  end
+
   def unlocked?(day)
     unlocked_until_day? && day <= unlocked_until_day
   end
