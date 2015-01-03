@@ -5,26 +5,26 @@
 #new_day_feedback{
   margin-bottom: 30px;
 
-  label{
+  label.face {
+    
     margin-right: 10px;
-  }
+    
+    input { /* HIDE RADIO */
+      &[type="radio"] {
+        display:none;
+      }
+      &#day_feedback_mood_happy:checked + i {
+        color: green;
+      }
+      
+      &#day_feedback_mood_sad:checked + i {
+        color: red;
+      }
+    }
 
-  label > input{ /* HIDE RADIO */
-    display:none;
-  }
+    i {
+      cursor:pointer;
+    }
 
-  label > input + i{
-    cursor:pointer;
-  }
-
-  label:hover > input + i{ 
-    background-color: #efefef;
-  }
-
-  label> input#day_feedback_mood_happy:checked + i{
-    color: green;
-  }
-  label > input#day_feedback_mood_sad:checked + i{
-    color: red;
   }
 }

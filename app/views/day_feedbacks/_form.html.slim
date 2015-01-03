@@ -1,4 +1,4 @@
-= form_for(@day_feedback, url: day_feedbacks_path(@day), id: "feedback-form", html: {class: "form-horizontal" }) do |f|
+= form_for(@day_feedback, url: day_feedbacks_path(@day), id: "feedback-form", html: {class: "" }) do |f|
   fieldset
     legend Use this form to provide feedback about the curriculum, help you recieved or about your experience so far.
     - if @day_feedback && @day_feedback.errors.any?
@@ -8,15 +8,15 @@
           = @day_feedback.errors.full_messages.first
 
     .form-group
-      = f.label :mood_happy
+      = f.label :mood_happy, class: 'face'
         = f.radio_button :mood, "happy"
         i class='fa fa-smile-o fa-5x'
-      = f.label :mood_sad
+      = f.label :mood_sad, class: 'face'
         = f.radio_button :mood, "sad"
         i class='fa fa-frown-o fa-5x'
 
     .form-group
-      = f.label :subject
+      = f.label :title
       = f.text_field :title, placeholder: "Subject", class: "form-control"
 
     .form-group
