@@ -4,10 +4,15 @@ module CourseCalendar
   included do
     helper_method :today
     helper_method :day
+    helper_method :weekend?
     before_filter :allowed_day?
   end
 
   private
+
+  def weekend?
+    !!(day =~ /(?<=w\d)e$/)
+  end
 
   def day
     d = params[:number] || params[:day_number]
