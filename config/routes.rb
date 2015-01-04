@@ -1,6 +1,8 @@
 LaserShark::Application.routes.draw do
 
   get '/invitations/:code', to: 'invitations#show'
+  get '/i/:code', to: 'invitations#show' # alias for above
+
   get 'prep' => 'prep#show'
 
   root to: 'home#show'
