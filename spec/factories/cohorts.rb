@@ -3,6 +3,6 @@
 FactoryGirl.define do
   factory :cohort do
     name { Faker::Name.name }
-    start_date   { Date.today }
+    start_date   { Date.current }
   end
 end

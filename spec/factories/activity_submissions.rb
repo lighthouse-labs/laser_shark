@@ -4,6 +4,6 @@ FactoryGirl.define do
   factory :activity_submission do
     association(:user)
     association(:activity)
-    completed_at { Date.today }
+    completed_at { Date.current }
   end
 end
