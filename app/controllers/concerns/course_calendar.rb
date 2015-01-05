@@ -35,9 +35,9 @@ module CourseCalendar
   end
 
   def allowed_day?
-    # return true if day == 'prep' # prep always allowed, for now - KV
+    # return true if day == 'setup' # setup always allowed, for now - KV
     unless current_user.can_access_day?(day)
-      redirect_to(prep_path, alert: 'Access not allowed yet.')
+      redirect_to(setup_path, alert: 'Access not allowed yet.')
     end
   end
 

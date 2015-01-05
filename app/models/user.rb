@@ -38,7 +38,7 @@ class User < ActiveRecord::Base
   end
 
   def can_access_day?(day)
-    return true if day == 'prep'
+    return true if day == 'setup'
     return false unless cohort
     return false if cohort.start_date > Date.current
     
