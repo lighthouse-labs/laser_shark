@@ -1,0 +1,3 @@
+class CodeReviewRequest < AssistanceRequest
+  
+end

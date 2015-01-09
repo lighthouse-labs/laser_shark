@@ -30,6 +30,7 @@ getRequestData = () ->
     return if $('.media-list.requests-list .modal.in').length > 0
 
     $('.media-list.requests-list').html('')
+    $('.media-list.code-reviews-list').html('')
 
 
     assistances = JSON.parse(data['active_assistances'])
@@ -51,6 +52,15 @@ getRequestData = () ->
         rendered = Mustache.render(request_template, request)
         $('.media-list.requests-list').append(rendered)
 
+    code_review_requests = JSON.parse(data['code_reviews'])
+    if(code_review_requests.length > 0)
+      $('.media-list.code-reviews-list').append('<h4>Awaiting Code Review</h4><hr />')
+      code_reviews_template = $('#code_reviews_template').html()
+      Mustache.parse(code_reviews_template)
+      for request in code_review_requests
+        rendered = Mustache.render(code_reviews_template, request)
+        $('.media-list.code-reviews-list').append(rendered)
+
     all_students = JSON.parse(data['all_students'])
     if(all_students.length > 0)
       $('.media-list.requests-list').append('<h4>All Students</h4><hr />')
@@ -61,4 +71,4 @@ getRequestData = () ->
         $('.media-list.requests-list').append(rendered)
 
 
-    $('.requests-list .timeago').timeago()
+    $('.timeago').timeago()

@@ -1,5 +1,7 @@
 <ul class="media-list requests-list">
 </ul>
+<ul class="media-list code-reviews-list">
+</ul>
 
 <script id="request_template" type="x-tmpl-mustache">
   <li class="media">
@@ -7,6 +9,19 @@
     <div class="media-body">
       <h4 class="media-heading">{{requestor.first_name}} {{requestor.last_name}}</h4>
       Requested assistance <abbr class="timeago" title="{{start_at}}">{{start_at}}</abbr>
+      <br/>
+      <a href="/assistance_requests/{{id}}/start_assistance" class="btn btn-primary btn-lg" data-method="post">Start Assisting</a>
+      <a href="/assistance_requests/{{id}}" class="btn btn-danger btn-lg" data-method="delete">X</a>
+    </div>
+  </li>
+</script>
+
+<script id="code_reviews_template" type="x-tmpl-mustache">
+  <li class="media">
+    <img src="{{requestor.avatar_url}}" class="media-object" />
+    <div class="media-body">
+      <h4 class="media-heading">{{requestor.first_name}} {{requestor.last_name}}</h4>
+      Requested Code Review <abbr class="timeago" title="{{start_at}}">{{start_at}}</abbr>
       <br/>
       <a href="/assistance_requests/{{id}}/start_assistance" class="btn btn-primary btn-lg" data-method="post">Start Assisting</a>
       <a href="/assistance_requests/{{id}}" class="btn btn-danger btn-lg" data-method="delete">X</a>

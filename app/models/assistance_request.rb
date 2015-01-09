@@ -13,6 +13,7 @@ class AssistanceRequest < ActiveRecord::Base
   }
   scope :oldest_requests_first, -> { order(:start_at) }
   scope :requested_by, -> (user) { where(:requestor => user) }
+  scope :code_reviews, -> {where(:type => 'CodeReviewRequest')}
 
   def cancel
     self.canceled_at = Time.now

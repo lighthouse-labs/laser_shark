@@ -4,7 +4,8 @@ class AssistanceRequestsController < ApplicationController
 
   def index
     @my_active_assistances = Assistance.currently_active.assisted_by(current_user)
-    @requests = AssistanceRequest.open_requests.oldest_requests_first
+    @requests = AssistanceRequest.where(type: nil).open_requests.oldest_requests_first
+    @code_reviews = AssistanceRequest.code_reviews.open_requests.oldest_requests_first
     @allStudents = Student.in_active_cohort.order_by_last_assisted_at
 
     respond_to do |format|
@@ -12,6 +13,7 @@ class AssistanceRequestsController < ApplicationController
         @obj = {
           active_assistances: @my_active_assistances.all.to_json(:include => :assistee),
           requests: @requests.all.to_json(:include => :requestor),
+          code_reviews: @code_reviews.all.to_json(:include => :requestor),
           all_students: @allStudents.all.to_json
         }
         render json: @obj
