@@ -1,6 +1,8 @@
 class ActivitySubmission < ActiveRecord::Base
   belongs_to :user
   belongs_to :activity
+  has_one :code_review_request
+  
   after_save :request_code_review
 
   default_value_for :completed_at, allows_nil: false do
