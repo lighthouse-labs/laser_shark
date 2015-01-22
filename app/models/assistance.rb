@@ -43,7 +43,7 @@ class Assistance < ActiveRecord::Base
     options = {
       :username => self.assistor.github_username,
       :icon_url => self.assistor.avatar_url,
-      :channel => 'web-instructors'
+      :channel => ENV['SLACK_CHANNEL']
     }
 
     poster = Slack::Poster.new("lighthouse", ENV["SLACK_TOKEN"], options)
