@@ -42,7 +42,6 @@ getRequestData = () ->
         rendered = Mustache.render(assistance_template, assistance)
         $('.media-list.requests-list').append(rendered)
 
-
     requests = JSON.parse(data['requests'])
     if(requests.length > 0)
       $('.media-list.requests-list').append('<h4>Awaiting Assistance</h4><hr />')
