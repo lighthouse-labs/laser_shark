@@ -7,7 +7,10 @@ class ApplicationController < ActionController::Base
   private
 
   def authenticate_user
-    redirect_to new_session_path, alert: 'Please login first!' unless current_user
+    unless current_user
+      session[:attempted_url] = request.url
+      redirect_to new_session_path, alert: 'Please login first!' 
+    end
   end
 
   def current_user

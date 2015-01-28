@@ -15,7 +15,13 @@ class SessionsController < ApplicationController
         assign_cohort(session[:invitation_code])
         session[:invitation_code] = nil
       end
-      redirect_to :root
+      # Ok they are ready to go and fully registered
+      if destination_url = session[:attempted_url]
+        session[:attempted_url] = nil
+        redirect_to destination_url
+      else
+        redirect_to :root
+      end
     else
       redirect_to [:new, :registration]
     end
