@@ -5,14 +5,15 @@
 h1 Schedule
 = render partial: 'activities/activity', collection: @activities
 
-- if !weekend? && student? && it_is_6pm_already?
+- if student? && !weekend?
   hr
   .row
     .col-md-12
       .well
         h2 Daily Feedback
         - if feedback_submitted?
-          p
-            | Thank you for your feedback
-        - else
+          p Thank you for your feedback
+        - elsif previous_day? || it_is_6pm_already?
           = render partial: 'day_feedbacks/form'
+        - elsif today?
+          p Feedback opens later tonight (at 6pm). Please remember to come back and give it at some point thereafter.

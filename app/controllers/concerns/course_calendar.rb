@@ -3,6 +3,8 @@ module CourseCalendar
 
   included do
     helper_method :today
+    helper_method :today?
+    helper_method :previous_day?
     helper_method :day
     helper_method :weekend?
     before_filter :allowed_day?
@@ -28,6 +30,14 @@ module CourseCalendar
 
   def today
     @today ||= CurriculumDay.new(Time.zone.now.to_date, cohort).to_s
+  end
+
+  def today?
+    day == today
+  end
+
+  def previous_day?
+    day < today
   end
 
   def yesterday
