@@ -7,9 +7,12 @@ class ApplicationController < ActionController::Base
   private
 
   def authenticate_user
-    unless current_user
+    if !current_user
       session[:attempted_url] = request.url
       redirect_to new_session_path, alert: 'Please login first!' 
+    elsif current_user.deactivated?
+      session[:user_id] = nil
+      redirect_to :root, alert: 'Your account has been deactivated. Please contact the admin if this is in error.'
     end
   end
 
