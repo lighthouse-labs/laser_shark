@@ -14,6 +14,10 @@ class User < ActiveRecord::Base
     order("last_assisted_at ASC NULLS FIRST")
   }
 
+  scope :active, -> {
+    where(deactivated_at: nil, completed_registration: true)
+  }
+
   validates :uid,   presence: true
   validates :token, presence: true
 
@@ -31,6 +35,18 @@ class User < ActiveRecord::Base
 
   def alumni?
     false
+  end
+
+  def deactivate
+    self.deactivated_at = Time.now
+  end
+
+  def deactivated?
+    self.deactivated_at?
+  end
+
+  def reactivate
+    self.deactivated_at = nil
   end
 
   def unlocked?(day)

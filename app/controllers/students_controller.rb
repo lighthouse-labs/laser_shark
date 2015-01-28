@@ -4,7 +4,7 @@ class StudentsController < ApplicationController
 
   def index
     @cohort = Cohort.find(params[:cohort_id])
-    @students = @cohort.students
+    @students = @cohort.students.active
   end
 
   private
