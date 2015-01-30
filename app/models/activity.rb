@@ -6,7 +6,7 @@
   validates :day, presence: true, format: { with: /\A(w\dd\d)|(w\de)|(setup)\z/, allow_blank: true }
 
   scope :chronological, -> { order(:start_time) }
-  scope :for_day, -> (day) { where(day: day) }
+  scope :for_day, -> (day) { where(day: day.to_s) }
 
   # after_create :update_instructions_from_gist
 

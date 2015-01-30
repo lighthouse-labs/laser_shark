@@ -1,5 +1,7 @@
 - content_for :side_nav do
-  h1.day = day.upcase
+  h1.day = day.to_s.upcase
+  h3.date = "#{day.date.strftime("%a %b #{day.date.day}")}"
+
   == render 'layouts/calendar'
 
 h1 Schedule
@@ -11,7 +13,7 @@ h1 Schedule
     .col-md-12
       .well
         h2 Daily Feedback
-        - if feedback_submitted?
+        - if feedback_submitted?(day)
           p Thank you for your feedback
         - elsif previous_day? || it_is_6pm_already?
           = render partial: 'day_feedbacks/form'

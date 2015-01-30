@@ -1,4 +1,4 @@
-h1 = "#{@day.upcase}: #{@activity.name}"
+h1 = "#{day.to_s.upcase}: #{@activity.name}"
 hr
 
 = simple_form_for @activity, as: :activity, url: day_activity_path(@day, @activity),

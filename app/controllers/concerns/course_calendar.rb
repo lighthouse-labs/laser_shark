@@ -17,8 +17,9 @@ module CourseCalendar
   end
 
   def day
+    return @day if @day
     d = params[:number] || params[:day_number]
-    @day ||= case d
+    @day = case d
     when nil, 'today'
       today
     when 'yesterday'
@@ -26,10 +27,12 @@ module CourseCalendar
     else
       d
     end
+    @day = CurriculumDay.new(@day, cohort) if @day.is_a?(String)
+    @day
   end
 
   def today
-    @today ||= CurriculumDay.new(Time.zone.now.to_date, cohort).to_s
+    @today ||= CurriculumDay.new(Date.current, cohort)
   end
 
   def today?
@@ -37,11 +40,11 @@ module CourseCalendar
   end
 
   def previous_day?
-    day < today
+    day.to_s < today.to_s
   end
 
   def yesterday
-    @yesterday ||= CurriculumDay.new((Time.zone.now.to_date - 1).to_date, cohort).to_s
+    @yesterday ||= CurriculumDay.new(Date.current.yesterday, cohort)
   end
 
   def allowed_day?
