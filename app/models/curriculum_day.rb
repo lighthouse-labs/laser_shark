@@ -17,6 +17,7 @@ class CurriculumDay
   end
 
   def to_s
+    return "setup" if @date == "setup"
     return @to_s if @to_s
     days = (@date.to_date - @cohort.start_date).to_i
     w = (days / 7) + 1
@@ -35,7 +36,7 @@ class CurriculumDay
   end
 
   def unlocked?
-    return true if @day == 'setup'
+    return true if @date == 'setup'
     return false unless @cohort
     return false if @cohort.start_date > Date.current
     if CURRICULUM_UNLOCKING == 'weekly'
