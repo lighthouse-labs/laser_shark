@@ -50,18 +50,12 @@ class User < ActiveRecord::Base
   end
 
   def unlocked?(day)
-    unlocked_until_day? && day <= unlocked_until_day
+    # for special students we can unlock future material using `unlocked_until_day` field
+    (unlocked_until_day? && day.to_s <= unlocked_until_day) || day.unlocked?
   end
 
   def can_access_day?(day)
-    return true if day == 'setup'
-    return false unless cohort
-    return false if cohort.start_date > Date.current
-    
-    today = CurriculumDay.new(Time.zone.today, cohort).to_s
-
-    # for special students we can unlock future material using this field
-    unlocked?(day) || (day <= today)
+    unlocked? CurriculumDay.new(day, cohort)
   end
 
   def assistance_currently_requested_or_in_progress?
