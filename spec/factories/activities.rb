@@ -6,5 +6,7 @@ FactoryGirl.define do
     day { "w#{rand(1..8)}d#{rand(1..5)}" }
     start_time { [900, 1100, 1500, 1900, 2200].sample }
     duration { rand(60..180) }
+    instructions { Faker::Lorem::paragraph(4)}
+    type { %w(Assignment Homework Survey Task Test Video).sample }
   end
 end
