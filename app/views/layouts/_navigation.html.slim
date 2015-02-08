@@ -58,7 +58,7 @@ nav.navbar.navbar-inverse.navbar-embossed.navbar-fixed-top role="navigation"
           = link_to "#", :class => "dropdown-toggle", :"data-toggle" => "dropdown" do
             = image_tag avatar_for(current_user)
             = current_user.first_name
-            = " (#{current_user.type}" if current_user.type?
+            = " (#{current_user.type})" if current_user.type?
             b.caret
           span.dropdown-arrow
           ul.dropdown-menu
