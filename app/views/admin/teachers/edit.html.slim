@@ -1,19 +1,19 @@
-h1= "edit #{@student.full_name}"
+h1= "edit #{@teacher.full_name}"
 
 div
-  = simple_form_for [:admin, @student], as: :user, url: admin_student_path, method: :put, html: {class: 'form-horizontal' }, wrapper: :horizontal_form do |f|
+  = simple_form_for [:admin, @teacher], as: :user, url: admin_teacher_path, method: :put, html: {class: 'form-horizontal' }, wrapper: :horizontal_form do |f|
 
-    - if @student.errors.full_messages.any?
+    - if @teacher.errors.full_messages.any?
       .alert.alert-error
         strong Please correct the following errors:
-        - @student.errors.full_messages.each do |msg|
+        - @teacher.errors.full_messages.each do |msg|
           li = msg
       hr
 
     .form-group
       .col-sm-offset-3.col-sm-9
         div
-          = image_tag avatar_for(@student) if avatar_for(@student)
+          = image_tag avatar_for(@teacher) if avatar_for(@teacher)
         div.col-sm-4.upload-button
           button.btn.btn-default.btn-file.btn-block
             | Change Avatar

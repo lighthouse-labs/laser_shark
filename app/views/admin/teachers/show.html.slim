@@ -1,0 +1,12 @@
+h1=  "#{@teacher.first_name} #{@teacher.last_name}"
+
+p= link_to "edit", edit_admin_teacher_path(@teacher.id)
+
+table 
+	p= "Email:"
+	p="#{@teacher.email}"
+	p= "Phone Number: #{@teacher.phone_number}"
+	p= "Twitter: #{@teacher.twitter}"
+	p= "Registration Status #{@teacher.completed_registration}"
+	p= "Github: #{@teacher.github_username}"
+	p= "Type: #{@teacher.type}"

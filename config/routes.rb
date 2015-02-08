@@ -54,8 +54,9 @@ LaserShark::Application.routes.draw do
   # ADMIN
   namespace :admin do
     root to: 'dashboard#show'
-    resources :students, only: [:index, :create, :edit, :update, :destroy, :show]
+    resources :students, only: [:index, :create, :edit, :update, :show]
     resources :cohorts, only: [:index]
+    resources :teachers, only: [:index, :create, :edit, :update, :show]
   end
 
   # To test 500 error notifications on production
