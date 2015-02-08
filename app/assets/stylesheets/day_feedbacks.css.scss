@@ -6,6 +6,15 @@
   margin-bottom: 30px;
 
   label.face {
+
+    opacity: 0.7;
+
+    &:hover {
+      opacity: 1.0;
+    }
+
+    -webkit-transition: all 0.2s;
+    transition: all 0.2s;
     
     margin-right: 10px;
     
@@ -14,11 +23,15 @@
         display:none;
       }
       &#day_feedback_mood_happy:checked + i {
-        color: green;
+        color: $brand-secondary;
       }
       
       &#day_feedback_mood_sad:checked + i {
-        color: red;
+        color: $brand-danger;
+      }
+      
+      &#day_feedback_mood_ok:checked + i {
+        color: $brand-warning;
       }
     }
 
