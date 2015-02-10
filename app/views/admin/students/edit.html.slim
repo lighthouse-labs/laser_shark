@@ -1,0 +1,36 @@
+h1= "edit #{@student.full_name}"
+
+div
+  = simple_form_for [:admin, @student], as: :user, url: admin_student_path, method: :put, html: {class: 'form-horizontal' }, wrapper: :horizontal_form do |f|
+
+    - if @student.errors.full_messages.any?
+      .alert.alert-error
+        strong Please correct the following errors:
+        - @student.errors.full_messages.each do |msg|
+          li = msg
+      hr
+
+    .form-group
+      .col-sm-offset-3.col-sm-9
+        div
+          = image_tag avatar_for(@student) if avatar_for(@student)
+        div.col-sm-4.upload-button
+          button.btn.btn-default.btn-file.btn-block
+            | Change Avatar
+            = f.file_field :custom_avatar
+
+    = f.input :first_name
+    = f.input :last_name
+    = f.input :email
+    = f.input :phone_number
+    = f.input :twitter
+    = f.input :skype
+    = f.input :github_username
+    = f.input :cohort_id
+    = f.input :type, as: :select, collection: ['Teacher', 'Student']
+        / = f.select :type, options_for_select([['Teacher', 'Teacher'], ['Student', 'Student']]), class: 'form-control'
+    
+
+    .form-group
+      .col-sm-offset-3.col-sm-9
+        = f.submit 'Submit Changes', class: 'btn btn-primary'

@@ -1,0 +1,15 @@
+- if !@cohort.nil?
+    h1 = Teachers
+table.table
+  thead
+    tr
+      th
+      th Name
+      th Email
+      th GitHub Username
+  tbody
+    - @teachers.each do |teacher|
+      tr
+        td = image_tag(avatar_for(teacher), {size:'100x100'})
+        td = link_to teacher.full_name, admin_teacher_path(teacher.id)
+        td = teacher.github_username

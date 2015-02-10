@@ -1,0 +1,29 @@
+h1=  "#{@teacher.first_name} #{@teacher.last_name}"
+ 
+p= link_to "edit", edit_admin_teacher_path(@teacher.id), class: "btn btn-default btn-large active", role: "button"
+
+table class="table table-hover table-border"
+	tr
+		td
+			strong= "Email"
+		td= mail_to @teacher.email
+	tr 
+		td
+			strong= "Phone Number"
+		td= @teacher.phone_number
+	tr 
+		td
+			strong= "Twitter"
+		td= @teacher.twitter
+	tr 
+		td
+			strong= "Registration Status"
+		td= @teacher.completed_registration
+	tr 
+		td
+			strong= "Github"
+		td= link_to @teacher.github_username, "https://github.com/#{@teacher.github_username}", target: "_blank"
+	tr 
+		td
+			strong="Type"
+		td= @teacher.type
