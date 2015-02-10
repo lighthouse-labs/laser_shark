@@ -25,9 +25,11 @@ div
     = f.input :phone_number
     = f.input :twitter
     = f.input :skype
-    = f.input :type
     = f.input :github_username
     = f.input :cohort_id
+    = f.input :type, as: :select, collection: ['Teacher', 'Student']
+        / = f.select :type, options_for_select([['Teacher', 'Teacher'], ['Student', 'Student']]), class: 'form-control'
+    
 
     .form-group
       .col-sm-offset-3.col-sm-9

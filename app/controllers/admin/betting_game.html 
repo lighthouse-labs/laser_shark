@@ -1,0 +1,24 @@
+<html>
+	<head>
+ 		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+		<script type="text/javascript" src="betting_game.js"></script>
+	</head>
+	<body>
+  	<h1>Place your bets!</h1>
+  	<p> Can you pick a number between one and ten?</p>
+  	<h3> Rules: </h3>
+  	<p>If you guess correctly, your money is doubled. </p>
+  	<p> If you guess incorrectly, you lose your bet. BUT if you're off by one, we'll let you keep your cash and try again. </p>
+  	<button>
+  		End Game
+  	</button>
+
+  	<form>
+  		Bet: <br>
+  		<input type="text" name="Bet Amount" placeholder:"Guess">
+  		Guess: <br>
+  		<input type="text" name="Guess" placeholder: "Guess">
+  	</form>
+  	<p class="money"> Current Balance:  <p>
+  </body>
+</html>

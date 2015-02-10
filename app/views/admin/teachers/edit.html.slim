@@ -1,4 +1,5 @@
-h1= "edit #{@teacher.full_name}"
+h1= "Edit" 
+h3= "#{@teacher.full_name}"
 
 div
   = simple_form_for [:admin, @teacher], as: :user, url: admin_teacher_path, method: :put, html: {class: 'form-horizontal' }, wrapper: :horizontal_form do |f|
@@ -25,10 +26,9 @@ div
     = f.input :phone_number
     = f.input :twitter
     = f.input :skype
-    = f.input :type
     = f.input :github_username
     = f.input :cohort_id
-
+    = f.input :type, as: :select, collection: ['Teacher', 'Student']
     .form-group
       .col-sm-offset-3.col-sm-9
         = f.submit 'Submit Changes', class: 'btn btn-primary'

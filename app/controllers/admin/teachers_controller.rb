@@ -21,7 +21,7 @@ class Admin::TeachersController < Admin::BaseController
 		if @teacher.save && @teacher.type == "Teacher"
 			redirect_to admin_teacher_path
 		elsif @teacher.save 
-			redirect_to admin_teacher_path
+			redirect_to admin_teachers_path
 		else 
 			redirect_to edit_admin_teacher_path
 		end

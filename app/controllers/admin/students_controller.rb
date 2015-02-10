@@ -13,6 +13,7 @@ class Admin::StudentsController < Admin::BaseController
 	end 
 
 	def update 
+		binding.pry
 		@student = User.find(params[:id])
 		# @model_name.attributes = params[:model_name]
 		# @student.update_attributes(params[:user])

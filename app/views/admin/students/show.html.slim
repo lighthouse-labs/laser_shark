@@ -1,18 +1,32 @@
 h1=  "#{@student.first_name} #{@student.last_name}"
+ 
+p= link_to "edit", edit_admin_student_path(@student.id), class: "btn btn-default btn-large active", role: "button"
 
-p= link_to "edit", edit_admin_student_path(@student.id)
-
-table 
-	p= "Email:"
-	p="#{@student.email}"
-	p= "Phone Number: #{@student.phone_number}"
-	p= "Twitter: #{@student.twitter}"
-	p= "Registration Status #{@student.completed_registration}"
-	p= "Github: #{@student.github_username}"
-	p= "Cohort ID: #{@student.cohort_id}"
-	p= "Type: #{@student.type}"
-	p= "Last Assisted At: #{@student.last_assisted_at}"
-	p= "Deactivated at: #{@student.deactivated_at}"
+table class="table table-hover table-border"
+	tr
+		td
+			strong= "Email"
+		td= mail_to @student.email
+	tr 
+		td
+			strong= "Phone Number"
+		td= @student.phone_number
+	tr 
+		td
+			strong= "Twitter"
+		td= @student.twitter
+	tr 
+		td
+			strong= "Registration Status"
+		td= @student.completed_registration
+	tr 
+		td
+			strong= "Github"
+		td= @student.github_username
+	tr 
+		td
+			strong="Type"
+		td= @student.type
 
 
 
