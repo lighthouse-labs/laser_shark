@@ -35,6 +35,7 @@ class ApplicationController < ActionController::Base
     current_user && current_user.is_a?(Admin)
   end
   helper_method :admin?
+  
   def active_student?
     student? && current_user.active_student?
   end
