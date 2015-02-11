@@ -6,19 +6,14 @@ table.table
       th
       th Name
       th Email
-      th Phone
-      th Twitter
-      th Skype
       th GitHub Username
       th Completed Registration
+      th Cohort
   tbody
     - @students.each do |student|
       tr
         td = image_tag(avatar_for(student), {size:'100x100'})
-        td = student.full_name
-        td = student.email
-        td = student.phone_number
-        td = student.twitter
-        td = student.skype
+        td = link_to student.full_name, admin_student_path(student.id)
         td = student.github_username
         td = completed_registration?(student)
+        td = student.cohort
