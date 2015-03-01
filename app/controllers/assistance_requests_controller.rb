@@ -14,7 +14,7 @@ class AssistanceRequestsController < ApplicationController
           active_assistances: @my_active_assistances.all.to_json(:include => {:assistee => {}, :assistance_request => {:include => :activity_submission}}),
           requests: @requests.all.to_json(:include => :requestor),
           code_reviews: @code_reviews.all.to_json(:include => [:requestor, :activity_submission]),
-          all_students: @allStudents.all.to_json
+          all_students: @all_students.all.to_json
         }
         render json: @obj
       }
