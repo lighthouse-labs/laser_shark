@@ -24,7 +24,16 @@ class ActivitySubmission < ActiveRecord::Base
   end
 
   def request_code_review
-    CodeReviewRequest.create(requestor_id: self.user.id)
+    if self.activity.allow_submissions? && should_code_review?
+      CodeReviewRequest.create(activity_submission: self, requestor_id: self.user.id)
+    end
+  end
+
+  def should_code_review?
+    # TODO Vary these probabilities
+    student_probablitiy = 0.8
+    assignment_probability = 0.6
+    student_probablitiy * assignment_probability >= rand
   end
 
 end

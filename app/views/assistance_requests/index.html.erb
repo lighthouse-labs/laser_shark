@@ -1,17 +1,15 @@
-<ul class="media-list requests-list">
-</ul>
-<ul class="media-list code-reviews-list">
-</ul>
+<ul class="media-list requests-list"></ul>
 
 <script id="request_template" type="x-tmpl-mustache">
   <li class="media">
     <img src="{{requestor.avatar_url}}" class="media-object" />
     <div class="media-body">
       <h4 class="media-heading">{{requestor.first_name}} {{requestor.last_name}}</h4>
-      Requested assistance <abbr class="timeago" title="{{start_at}}">{{start_at}}</abbr>
-      <br/>
-      <a href="/assistance_requests/{{id}}/start_assistance" class="btn btn-primary btn-lg" data-method="post">Start Assisting</a>
-      <a href="/assistance_requests/{{id}}" class="btn btn-danger btn-lg" data-method="delete">X</a>
+      <p>Requested assistance <abbr class="timeago" title="{{start_at}}">{{start_at}}</abbr></p>
+      <p>
+        <a href="/assistance_requests/{{id}}/start_assistance" class="btn btn-primary btn-lg" data-method="post">Start Assisting</a>
+        <a href="/assistance_requests/{{id}}" class="btn btn-danger btn-lg" data-method="delete">X</a>
+      </p>
     </div>
   </li>
 </script>
@@ -21,10 +19,14 @@
     <img src="{{requestor.avatar_url}}" class="media-object" />
     <div class="media-body">
       <h4 class="media-heading">{{requestor.first_name}} {{requestor.last_name}}</h4>
-      Requested Code Review <abbr class="timeago" title="{{start_at}}">{{start_at}}</abbr>
-      <br/>
-      <a href="/assistance_requests/{{id}}/start_assistance" class="btn btn-primary btn-lg" data-method="post">Start Assisting</a>
-      <a href="/assistance_requests/{{id}}" class="btn btn-danger btn-lg" data-method="delete">X</a>
+      <p>Requested Code Review <abbr class="timeago" title="{{start_at}}">{{start_at}}</abbr></p>
+      {{#activity_submission}}
+      <p><a target="_blank" href="{{activity_submission.github_url}}" class="btn btn-lg btn-warning"><i class="fa fa-github"></i> {{activity_submission.github_url}}</a></p>
+      {{/activity_submission}}
+      <p>
+        <a href="/assistance_requests/{{id}}/start_assistance" class="btn btn-primary btn-lg" data-method="post">Start Assisting</a>
+        <a href="/assistance_requests/{{id}}" class="btn btn-danger btn-lg" data-method="delete">X</a>
+      </p>
     </div>
   </li>
 </script>
@@ -34,26 +36,27 @@
     <img src="{{avatar_url}}" class="media-object" />
     <div class="media-body">
       <h4 class="media-heading">{{first_name}} {{last_name}}</h4>
-      Last received assistance <abbr class="timeago" title="{{last_assisted_at}}">{{last_assisted_at}}</abbr>
-      <br/>
-      <a href="students/{{id}}/assistances" class="btn btn-primary btn-lg" data-method="post">Checkin On</a>
+      <p>Last received assistance <abbr class="timeago" title="{{last_assisted_at}}">{{last_assisted_at}}</abbr></p>
+      <p><a href="students/{{id}}/assistances" class="btn btn-primary btn-lg" data-method="post">Checkin On</a></p>
     </div>
   </li>
 </script>
-
 
 <script id="assitance_template" type="x-tmpl-mustache">
   <li class="media active">
     <img src="{{assistee.avatar_url}}" class="media-object" />
     <div class="media-body">
       <h4 class="media-heading">{{assistee.first_name}} {{assistee.last_name}}</h4>
-      You started assisting <abbr class="timeago" title="{{start_at}}">{{start_at}}</abbr>
-      <br/>
-      <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#assistance_model_{{id}}">
-        End Assistance
-      </button>
+      <p>You started assisting <abbr class="timeago" title="{{start_at}}">{{start_at}}</abbr></p>
+      {{#assistance_request.activity_submission}}
+      <p><a target="_blank" href="{{assistance_request.activity_submission.github_url}}" class="btn btn-lg btn-warning"><i class="fa fa-github"></i> {{assistance_request.activity_submission.github_url}}</a></p>
+      {{/assistance_request.activity_submission}}
+      <p>
+        <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#assistance_model_{{id}}">
+          End Assistance
+        </button>
+      </p>
     </div>
-
     <div class="modal fade" id="assistance_model_{{id}}">
       <div class="modal-dialog">
         <div class="modal-content">
@@ -86,5 +89,4 @@
       </div>
     </div>
   </li>
-
 </script>

@@ -12,7 +12,7 @@ class Assistance < ActiveRecord::Base
   scope :assisted_by, -> (user) { where(:assistor => user) }
   scope :assisting, -> (user) { where(:assistee => user) }
 
-  def end(notes, rating)
+  def end(notes, rating = nil)
     self.notes = notes
     self.rating = rating
     self.end_at = Time.now
