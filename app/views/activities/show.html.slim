@@ -1,6 +1,6 @@
 - unless current_user.prepping? || current_user.prospect?
   - content_for :side_nav do
-    h1.day = day.upcase
+    h1.day = day.to_s.upcase
     == render 'layouts/calendar'
 
 section.activity-details

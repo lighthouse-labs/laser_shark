@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150109182332) do
+ActiveRecord::Schema.define(version: 20150128034138) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -115,6 +115,7 @@ ActiveRecord::Schema.define(version: 20150109182332) do
     t.string   "custom_avatar"
     t.string   "unlocked_until_day"
     t.datetime "last_assisted_at"
+    t.datetime "deactivated_at"
   end
 
   add_index "users", ["cohort_id"], name: "index_users_on_cohort_id", using: :btree

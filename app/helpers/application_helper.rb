@@ -22,7 +22,7 @@ module ApplicationHelper
   end
 
   def it_is_6pm_already?
-    Time.zone.now.hour >= 18
+    Time.current.seconds_since_midnight >= DAY_FEEDBACK_AFTER
   end
 
 end

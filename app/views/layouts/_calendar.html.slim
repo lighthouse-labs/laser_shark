@@ -6,9 +6,10 @@ nav.calendar
           a href="#"
             | W
             = w
-        - (1..5).each do |d|
+        - (1..DAYS_PER_WEEK).each do |d|
           li.day-number class=day_status_css("w#{w}d#{d}") = link_to(d, day_path("w#{w}d#{d}"))
-        li.day-number class=day_status_css("w#{w}e") = link_to("e", day_path("w#{w}e"))
+        - if WEEKENDS
+          li.day-number class=day_status_css("w#{w}e") = link_to("e", day_path("w#{w}e"))
   - unless today == 'w1d1'
     = link_to 'Yesterday', day_path('yesterday'), class: 'btn-yesterday'
     | &nbsp;

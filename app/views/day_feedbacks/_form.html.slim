@@ -13,17 +13,17 @@
       = f.label :mood_happy, class: 'face'
         = f.radio_button :mood, "happy"
         i class='fa fa-smile-o fa-5x'
+      = f.label :mood_ok, class: 'face'
+        = f.radio_button :mood, "ok"
+        i class='fa fa-circle-thin fa-5x'
       = f.label :mood_sad, class: 'face'
         = f.radio_button :mood, "sad"
         i class='fa fa-frown-o fa-5x'
 
     .form-group
-      = f.label :title
       = f.text_field :title, placeholder: "Subject", class: "form-control"
 
     .form-group
-      = f.label :text, "Comment"
-      / text_area_tag(:message, "Hi, nice site", size: "24x6")
       = f.text_area :text, placeholder: "Your feedback comments here", size: "24x6", class: "form-control"
 
     div align="left"
