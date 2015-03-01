@@ -65,7 +65,18 @@
             <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
 
             <div class="modal-body">
-              <textarea id="assistance_notes" name="assistance[notes]"></textarea>
+              <div class="form-group">
+                <textarea id="assistance_notes" name="assistance[notes]" class="form-control"></textarea>
+              </div>
+              <div class="form-group">
+                <label for="assistance_rating">Rating</label>
+                <select id="assistance_rating" name="assistance[rating]" class="form-control">
+                  <option value="1">1 - Needs improvement</option>
+                  <option value="2">2 - Fair</option>
+                  <option value="3" selected="selected">3 - Good</option>
+                  <option value="4">4 - Excellent</option>
+                </select>
+              </div>
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="submit()">End Assistance</button>

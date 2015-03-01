@@ -14,7 +14,7 @@ class AssistancesController < ApplicationController
 
   def end
     assistance = Assistance.find(params[:id].to_i)
-    status = assistance.end(params[:assistance][:notes]) ? 200 : 400
+    status = assistance.end(params[:assistance][:notes], params[:assistance][:rating].to_i) ? 200 : 400
 
     respond_to do |format|
       format.json { render(:nothing => true, :status => status) }
