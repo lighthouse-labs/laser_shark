@@ -12,7 +12,8 @@ class AssistanceRequest < ActiveRecord::Base
     joins("LEFT OUTER JOIN assistances ON assistances.id = assistance_requests.assistance_id").
     where("assistance_requests.canceled_at IS NULL AND (assistances.id IS NULL OR assistances.end_at IS NULL)")
   }
-  scope :oldest_requests_first, -> { order(:start_at) }
+  scope :oldest_requests_first, -> { order(start_at: :asc) }
+  scope :newest_requests_first, -> { order(start_at: :desc) }
   scope :requested_by, -> (user) { where(:requestor => user) }
   scope :code_reviews, -> {where(:type => 'CodeReviewRequest')}
 
@@ -32,8 +33,8 @@ class AssistanceRequest < ActiveRecord::Base
     self.assistance.end(notes)
   end
 
-  def self.oldest_open_request_for_user(user)
-    AssistanceRequest.open_requests.requested_by(user).oldest_requests_first.first
+  def self.recent_open_request_for_user(user)
+    self.open_requests.where(type: nil).requested_by(user).newest_requests_first.first
   end
 
   def is_open?

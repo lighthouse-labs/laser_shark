@@ -32,7 +32,7 @@ class AssistanceRequestsController < ApplicationController
   end
 
   def cancel
-    ar = AssistanceRequest.oldest_open_request_for_user(current_user)
+    ar = AssistanceRequest.recent_open_request_for_user(current_user)
     status = ar.try(:cancel) ? 200 : 400
 
     respond_to do |format|
