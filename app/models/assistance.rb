@@ -3,6 +3,8 @@ class Assistance < ActiveRecord::Base
   belongs_to :assistor, :class => User
   belongs_to :assistee, :class => User
 
+  validates :rating, numericality: { only_integer: true, greater_than_or_equal_to: 1, less_than_or_equal_to: 4, allow_nil: true }
+
   before_create :set_start_at
 
   scope :currently_active, -> { where(:end_at => nil) }
@@ -10,8 +12,9 @@ class Assistance < ActiveRecord::Base
   scope :assisted_by, -> (user) { where(:assistor => user) }
   scope :assisting, -> (user) { where(:assistee => user) }
 
-  def end(notes)
+  def end(notes, rating = nil)
     self.notes = notes
+    self.rating = rating
     self.end_at = Time.now
     self.save
     self.assistee.last_assisted_at = Time.now
