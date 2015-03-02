@@ -33,8 +33,8 @@ class ActivitySubmission < ActiveRecord::Base
 
   def should_code_review?
     # TODO Vary these probabilities
-    student_probablitiy = 1.0
-    assignment_probability = 1.0
+    student_probablitiy = 0.8
+    assignment_probability = 0.6
     student_probablitiy * assignment_probability >= rand
   end
 
