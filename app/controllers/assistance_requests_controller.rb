@@ -5,7 +5,7 @@ class AssistanceRequestsController < ApplicationController
   def index
     @my_active_assistances = Assistance.currently_active.assisted_by(current_user)
     @requests = AssistanceRequest.where(type: nil).open_requests.oldest_requests_first
-    @code_reviews = AssistanceRequest.code_reviews.open_requests.oldest_requests_first
+    @code_reviews = CodeReviewRequest.open_requests.oldest_requests_first
     @all_students = Student.in_active_cohort.active.order_by_last_assisted_at
 
     respond_to do |format|

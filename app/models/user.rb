@@ -59,7 +59,8 @@ class User < ActiveRecord::Base
   end
 
   def assistance_currently_requested_or_in_progress?
-    self.assistance_requests.open_or_inprogress_requests.count > 0
+    # using type: nil assumes that child ones are not for the student to cancel
+    self.assistance_requests.where(type: nil).open_or_inprogress_requests.count > 0
   end
 
   def assistance_not_currently_requested_or_in_progress
