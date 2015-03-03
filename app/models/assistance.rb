@@ -15,12 +15,17 @@ class Assistance < ActiveRecord::Base
   scope :assisted_by, -> (user) { where(:assistor => user) }
   scope :assisting, -> (user) { where(:assistee => user) }
 
+  RATING_BASELINE = 3
+
   def end(notes, rating = nil)
     self.notes = notes
     self.rating = rating
     self.end_at = Time.now
     self.save
     self.assistee.last_assisted_at = Time.now
+    if assistance_request.instance_of?(CodeReviewRequest) && !rating.nil?
+      assistee.code_review_percent += Assistance::RATING_BASELINE - rating
+    end
     self.assistee.save
 
     send_notes_to_slack
