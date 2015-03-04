@@ -3,12 +3,6 @@ body {
   padding-top: 70px;
 }
 nav {
-  .navbar-collapse .navbar-nav.navbar-left:first-child {
-    margin-left: 20px;
-  }
-  .navbar-collapse .navbar-nav.navbar-right:last-child {
-    margin-right: 20px;
-  }
   .navbar-nav [class^="fui-"] {
     margin-right: 6px;
   }
@@ -40,18 +34,20 @@ nav {
 
 main {
   @include make-row;
-
-  width: 1100px;
+  max-width: 1100px;
+  width: auto;
 
   aside.primary {
-    @include make-xs-column(5);
-    @include make-md-column(3);
+    @include make-xs-column(3);
+    @include make-md-column(2);
     @import "layout/aside.primary";
+    padding-left: 0;
+    padding-right: 0;
   }
 
   .content {
-    @include make-xs-column(7);
-    @include make-md-column(9);
+    @include make-xs-column(9);
+    @include make-md-column(10);
 
     .jumbotron {
       padding-top: 30px;

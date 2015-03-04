@@ -12,8 +12,8 @@ html
     == csrf_meta_tags
     == favicon_link_tag 'compass_favicon.ico'
     == yield :head
-  body
-    header
+  body class="#{ controller.controller_name }"
+    header#site-header
       == render 'layouts/navigation'
     main.container-fluid[role="main"]
       == render 'layouts/messages'

@@ -39,27 +39,27 @@
 .navbar-collapse {
   box-shadow: none;
   padding-right: 21px;
-  padding-left: 21px;  
+  padding-left: 21px;
 
   @media (min-width: $grid-float-breakpoint) {
     // Account for first and last children spacing
     .navbar-nav.navbar-left:first-child {
       margin-left: -21px;
-      
+
       > li:first-child a {
         @include border-left-radius($navbar-border-radius);
       }
     }
     .navbar-nav.navbar-right:last-child {
       margin-right: -21px;
-      
+
       .navbar > .container & {
         margin-right: -36px;
       }
       > .dropdown:last-child > a {
         border-radius: 0 $navbar-border-radius $navbar-border-radius 0;
-      }      
-    }  
+      }
+    }
     .navbar-form.navbar-right:last-child {
       margin-right: -17px;
 
@@ -67,14 +67,14 @@
       .navbar-fixed-bottom & {
         margin-right: 0;
       }
-    }     
+    }
   }
   @media (max-width: $grid-float-breakpoint-max) {
     .navbar-nav.navbar-right:last-child {
       margin-bottom: 3px;
     }
   }
-}  
+}
 
 // Both navbar header and collapse
 //
@@ -128,13 +128,13 @@
   line-height: 1.042;  // ~25px
   font-weight: 700;
   padding: (($navbar-height-base - 25px) / 2) 21px;
-  
+
   > [class*="fui-"] {
     font-size: floor($component-font-size-base * 1.267); // ~19px
     line-height: 1.263; // ~24px
     vertical-align: top;
   }
-  
+
   @media (min-width: $grid-float-breakpoint) {
     .navbar > .container &,
     .navbar > .container-fluid & {
@@ -169,7 +169,7 @@
   &:hover,
   &:focus {
     outline: none;
-  
+
     &:before {
       color: $link-hover-color;
     }
@@ -177,7 +177,7 @@
   .icon-bar {
     display: none;
   }
-  
+
   @media (min-width: $grid-float-breakpoint) {
     display: none;
   }
@@ -190,14 +190,14 @@
 
 .navbar-nav {
   margin: 0;
-  
+
   > li > a {
     font-size: floor($component-font-size-base * 1.067); // ~16px
     padding: (($navbar-height-base - 23px) / 2) 21px;
     line-height: 23px;
     font-weight: 700;
   }
-  
+
   .dropdown-toggle .caret {
     border-top-color: $link-color;
     border-bottom-color: $link-color;
@@ -209,13 +209,13 @@
   .open > a:focus,
   .open > a:hover {
     background-color: transparent;
-    
+
     .caret {
       border-top-color: $link-hover-color;
       border-bottom-color: $link-hover-color;
     }
   }
-  
+
   [class^="fui-"] {
     line-height: 20px;
     position: relative;
@@ -227,12 +227,12 @@
       margin-left: 12px;
     }
   }
-  
+
   @media (max-width: $grid-float-breakpoint-max) {
     margin: 0 -21px;
-    
+
     // Dropdowns get custom display when collapsed
-    .open .dropdown-menu {      
+    .open .dropdown-menu {
       > li > a,
       .dropdown-header {
         padding: 7px 15px 7px 31px !important;
@@ -270,27 +270,27 @@
       margin-bottom: 5px;
     }
   }
-  
+
   @media (max-width: $grid-float-breakpoint-max) {
     margin: 3px -21px;
     width: auto;
   }
-  
+
   .navbar-nav + &.navbar-left,
   &.navbar-right:last-child { // Width fix for Webkit and IE11
     @media (min-width: $grid-float-breakpoint) {
-      width: 260px; 
+      width: 260px;
     }
   }
-  
+
   // Controls sizing
   .form-control,
   .input-group-addon,
   .btn { @extend .navbar-input; }
-  
+
   // Reset rounded corners
   @include form-controls-corners-reset();
-  
+
   .form-control {
     font-size: $component-font-size-base;
     border-radius: 5px;
@@ -305,7 +305,7 @@
   @media (max-width: $grid-float-breakpoint-max) {
     .form-group {
       margin-bottom: 0;
-      
+
       & + .btn {
         margin-top: 9px;
         margin-left: 0;
@@ -320,8 +320,8 @@
 .navbar-nav > li {
   > .dropdown-menu {
     min-width: 100%;
-    border-radius: $border-radius-base;   
-    
+    border-radius: $border-radius-base;
+
     @media (max-width: $grid-float-breakpoint-max) {
       @include transition(all 0s);
       display: none;
@@ -331,9 +331,9 @@
     @media (max-width: $grid-float-breakpoint-max) {
       margin-top: 0 !important;
       display: block;
-    }   
+    }
   }
-} 
+}
 
 // Menu position and menu caret support for dropups via extra dropup class
 .navbar-fixed-bottom .navbar-nav > li > .dropdown-menu {
@@ -356,7 +356,7 @@
   color: $brand-primary;
   margin-top: 0;
   margin-bottom: 0;
-  
+
   @include navbar-vertical-align(23px, $navbar-height-base);
 
   @media (min-width: $grid-float-breakpoint) {
@@ -406,7 +406,7 @@
   top: 35%;
   width: 6px;
   z-index: 10;
-  
+
   @media (max-width: $grid-float-breakpoint) {
     position: static;
     float: right;
@@ -437,7 +437,7 @@
 // Default navbar
 .navbar-default {
   background-color: $navbar-default-bg;
-  
+
   .navbar-brand {
     color: $navbar-default-brand-color;
     &:hover,
@@ -446,27 +446,27 @@
       background-color: $navbar-default-brand-hover-bg;
     }
   }
-  
+
   .navbar-toggle {
     &:before {
       color: $navbar-default-toggle-color;
-    }   
+    }
     &:hover,
     &:focus {
       background-color: transparent;
-      
+
       &:before {
         color: $navbar-default-toggle-hover-color;
       }
     }
   }
-  
+
   .navbar-collapse,
   .navbar-form {
     border-color: $navbar-default-form-border;
     border-width: 2px;
   }
-  
+
   .navbar-nav {
     > li > a {
       color: $navbar-default-link-color;
@@ -494,7 +494,7 @@
       }
     }
   }
-  
+
   // Dropdown menu items and carets
   .navbar-nav {
     // Caret text color
@@ -512,8 +512,8 @@
     > .dropdown > a:focus .caret {
       border-top-color: $navbar-default-caret-hover-color;
       border-bottom-color: $navbar-default-caret-hover-color;
-    }    
-    
+    }
+
     // Remove background color from open dropdown
     > .open > a {
       &,
@@ -526,7 +526,7 @@
           border-bottom-color: $navbar-default-caret-active-color;
         }
       }
-    } 
+    }
 
 
     @media (max-width: $grid-float-breakpoint-max) {
@@ -559,12 +559,12 @@
       }
     }
   }
-  
+
   .navbar-form {
     .form-control {
       border-color: transparent;
       @include placeholder($navbar-default-form-placeholder);
-      
+
       &:focus {
         border-color: $brand-secondary;
          color: $brand-secondary;
@@ -579,16 +579,16 @@
       .input-group-btn .btn {
          border-color: $brand-secondary;
          color: $brand-secondary;
-      }     
+      }
     }
   }
-  
+
   .navbar-text {
     color: $brand-primary;
-    
+
     a {
       color: $navbar-default-link-color;
-      
+
       &:hover,
       &:focus {
         color: $navbar-default-link-hover-color;
@@ -600,35 +600,35 @@
 // Inverse navbar
 .navbar-inverse {
   background-color: $navbar-inverse-bg;
-  
+
   .navbar-brand {
-    color: $navbar-inverse-brand-color;   
+    color: $navbar-inverse-brand-color;
     &:hover,
     &:focus {
       color: $navbar-inverse-brand-hover-color;
       background-color: $navbar-inverse-brand-hover-bg;
     }
   }
-  
+
   .navbar-toggle {
     &:before {
       color: $navbar-inverse-toggle-color;
-    }   
+    }
     &:hover,
     &:focus {
       background-color: transparent;
-      
+
       &:before {
         color: $navbar-inverse-toggle-hover-color;
       }
     }
   }
-  
+
   .navbar-collapse {
     border-color: $navbar-inverse-form-border;
     border-width: 2px;
   }
-  
+
   .navbar-nav {
     > li > a {
       color: $navbar-inverse-link-color;
@@ -656,7 +656,7 @@
       }
     }
   }
-  
+
   // Dropdown menu items and carets
   .navbar-nav {
     // Caret should match text color on hover
@@ -673,7 +673,7 @@
       &:focus {
         background-color: $navbar-inverse-link-active-bg;
         color: $navbar-inverse-link-active-color;
-        border-left-color: transparent;        
+        border-left-color: transparent;
         .caret {
           border-top-color: $navbar-inverse-link-active-color;
           border-bottom-color: $navbar-inverse-link-active-color;
@@ -683,8 +683,8 @@
     > .dropdown > a .caret {
       border-top-color: $navbar-inverse-caret-color;
       border-bottom-color: $navbar-inverse-caret-color;
-    }    
-    
+    }
+
     > .open {
       > .dropdown-arrow {
         border-top-color: $navbar-inverse-dropdown-arrow;
@@ -693,18 +693,18 @@
       > .dropdown-menu {
         background-color: $navbar-inverse-dropdown-bg;
         padding: 3px 4px;
-        
+
         > li > a {
           color: $navbar-inverse-dropdown-link-color;
           border-radius: $border-radius-base;
           padding: 6px 9px;
-          
+
           &:hover,
           &:focus {
             color: $navbar-inverse-dropdown-link-hover-color;
             background-color: $navbar-inverse-dropdown-link-hover-bg;
           }
-        }   
+        }
         > .divider {
           background-color: $navbar-inverse-divider;
           height: 2px;
@@ -751,14 +751,14 @@
       }
     }
   }
-  
-  .navbar-form {    
+
+  .navbar-form {
     .form-control {
       color: $navbar-inverse-form-placeholder;
       border-color: transparent;
       background-color: $navbar-inverse-form-bg;
       @include placeholder($navbar-inverse-form-placeholder);
-      
+
       &:focus {
         border-color: $brand-secondary;
          color: $brand-secondary;
@@ -777,28 +777,28 @@
       .input-group-btn .btn {
          border-color: $brand-secondary;
          color: $brand-secondary;
-      }     
+      }
     }
-    
+
     @media (max-width: $grid-float-breakpoint-max) {
       border-color: $navbar-inverse-form-border;
       border-width: 2px 0;
     }
   }
-  
+
   .navbar-text {
     color: $inverse;
-    
+
     a {
       color: $navbar-inverse-link-color;
-      
+
       &:hover,
       &:focus {
         color: $navbar-inverse-link-hover-color;
       }
     }
   }
-  
+
   .navbar-btn {
     @include button-variant($btn-default-color, $brand-secondary, $btn-primary-hover-bg, $btn-primary-active-bg);
   }
@@ -823,47 +823,47 @@
 // Large navbar
 .navbar-lg {
   min-height: $navbar-height-large;
-  
+
   .navbar-brand {
     line-height: 1;
     padding-top: (($navbar-height-large - 24px) / 2);
     padding-bottom: (($navbar-height-large - 24px) / 2);
-  
+
     > [class*="fui-"] {
       font-size: floor($component-font-size-base * 1.6); // ~24px
-      line-height: 1; 
+      line-height: 1;
     }
   }
-  
+
   .navbar-nav {
     > li > a {
       font-size: $component-font-size-base;
       line-height: 1.6;
-      
+
       @media (min-width: $grid-float-breakpoint) {
         padding-top: (($navbar-height-large - 24px) / 2);
         padding-bottom: (($navbar-height-large - 24px) / 2);
       }
-    }   
+    }
   }
-  
+
   .navbar-toggle {
     height: $navbar-height-large;
     line-height: $navbar-height-large;
   }
-  
+
   .navbar-form {
     @include navbar-vertical-align($input-height-small, $navbar-height-large);
   }
-  
+
   .navbar-text {
     @include navbar-vertical-align(23px, $navbar-height-large);
   }
-  
+
   .navbar-btn {
     margin-top: (($navbar-height-large - $input-height-base) / 2);
     margin-bottom: (($navbar-height-large - $input-height-base) / 2);
-    
+
     &.btn-sm {
       margin-top: (($navbar-height-large - $input-height-small) / 2);
       margin-bottom: (($navbar-height-large - $input-height-small) / 2);
@@ -872,5 +872,193 @@
       margin-top: (($navbar-height-large - 25px) / 2);
       margin-bottom: (($navbar-height-large - 25px) / 2);
     }
+  }
+}
+
+@import 'compass';
+$nav-color: #34495e;
+$teal: #1abc9c;
+
+@include keyframes(pulse) {
+  10% {
+    background-color: #cca60c;
+  }
+  30% {
+    background-color: #d58825;
+  }
+  60% {
+    background-color: #e0b43b;
+  }
+  90% {
+    background-color: #cca60c;
+  }
+}
+
+@include keyframes(spin) {
+  0% {
+    @include transform(rotate(0deg))
+  }
+  75% {
+    @include transform(rotate(360deg))
+  }
+  85% {
+    @include transform(rotate(20deg))
+  }
+  100% {
+    @include transform(rotate(0deg))
+  }
+
+}
+
+body.teacher #site-header {
+  .navbar-left
+    li {
+      a span {
+        display: none;
+      }
+
+      &:last-child {
+        a span {
+          display: inline-block
+        }
+      }
+    }
+}
+
+#site-header {
+  a.compass-logo {
+    font-size: 22px;
+    font-weight: 400;
+
+    &:hover i.fa.fa-compass {
+      // Note: Add animation support cause version of Compass (v.12) support sucks.
+      $animation-support: webkit, moz, o, ms, not khtml;
+      @include experimental('animation-name', spin, $animation-support...);
+      @include experimental('animation-duration', 375ms, $animation-support...);
+      @include experimental('animation-timing-fuction', ease-in-out, $animation-support...);
+      @include experimental('animation-iteration-count', 2, $animation-support...);
+      @include transform-origin(50% 50%);
+    }
+
+    i.fa.fa-compass {
+      padding-left: 1px;
+      margin-right: 1px;
+      font-size: 74%;
+    }
+  }
+
+  a {
+    border-radius: 0;
+    font-weight: normal;
+    font-size: 1.1em;
+    letter-spacing: 0.03em;
+    padding: 15px 14px;
+    transition: color 100ms, background-color 90ms, padding 100ms ease-in-out;
+
+    &.btn {
+      border-radius: 0;
+    }
+    &:hover {
+      background: adjust_lightness($nav-color, 3);
+    }
+    &.btn-warning.delete-request {
+      &.active {
+        @include animation(pulse 6.75s ease-in-out 1s infinite alternate-reverse both);
+      }
+    }
+    &.btn-primary {
+      &:hover {
+        background: adjust_lightness($teal, -10);
+      }
+    }
+  }
+  .dropdown-menu {
+    padding: 0;
+    a {
+      border-radius: none;
+      padding: 5px 10px;
+      color: white;
+    }
+  }
+  .dropdown.open {
+    .dropdown-arrow {
+      margin-top: 0;
+    }
+    .dropdown-menu {
+      margin-top: 7px !important;
+      // HACK Need !important to override !important
+    }
+  }
+  .navbar-nav {
+    &.navbar-left {
+      margin-left: 0;
+    }
+    &.navbar-right {
+      margin-right: 0;
+    }
+    i.fa {
+      margin-right: 5px;
+      font-size: 115%;
+      opacity: 0.9;
+    }
+    .user-profile {
+      .user-profile-link {
+        position: relative;
+        padding-left: 55px;
+      }
+    }
+    .user-profile-photo {
+      border-radius: 100%;
+      width: 35px;
+      height: 35px;
+      position: absolute;
+      left: 12px;
+      top: 8px;
+      margin: 0;
+    }
+
+    .user-profile-name {
+      body.teacher & {
+        display: none
+      }
+    }
+
+    .user-profile-type {
+      display: none;
+    }
+    .caret {
+      margin-left: 5px;
+    }
+  }
+}
+
+@media (min-width: 480px) and (max-width: 951px) {
+  #site-header {
+    li a span {
+      display: none;
+    }
+
+    a.compass-logo {
+      @include squish-text;
+      width: 53px;
+      height: 53px;
+
+      i.fa.fa-compass {
+        text-indent: 0;
+        color: white;
+        font-size: 31px;
+        position: relative;
+        top: -3px;
+        left: -3px;
+      }
+    }
+
+  }
+}
+
+@media (min-width: 910px) {
+  #site-header .navbar-collapse {
+    max-width: 1070px;
+    margin: 0 auto;
   }
 }

@@ -217,7 +217,7 @@ $input-line-height-small:   1.462 !default; // ~19px
 $input-line-height-large:   1.235 !default; // ~21px
 $input-line-height-huge:    1.318 !default; // ~29px
 
-$input-icon-font-size:      ceil($component-font-size-base * 1.333) !default;  // ~20px       
+$input-icon-font-size:      ceil($component-font-size-base * 1.333) !default;  // ~20px
 
 $input-bg:                  $inverse !default;
 $input-bg-disabled:         mix($gray, white, 10%) !default;
@@ -590,7 +590,7 @@ $grid-columns:                12 !default;
 $grid-gutter-width:           30px !default;
 // Navbar collapse
 //** Point at which the navbar becomes uncollapsed.
-$grid-float-breakpoint:       $screen-sm-min !default;
+$grid-float-breakpoint:       $screen-xs-min !default;
 //** Point at which the navbar begins collapsing.
 $grid-float-breakpoint-max:   ($grid-float-breakpoint - 1) !default;
 
