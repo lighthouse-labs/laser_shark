@@ -1,3 +1,33 @@
 // Place all the styles related to the home controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+body.welcome {
+  .content {
+    width: 100%;
+    padding: 0;
+
+    .jumbotron {
+      background: none;
+    }
+
+    h1 {
+      margin-top: 0;
+      position: relative;
+      height: 1.5em;
+
+      .compass-logo {
+        @include squish-text;
+        background-image: url(image_path("compass_logo.png"));
+        background-repeat: none;
+        width: image-width("compass_logo.png");
+        height: image-height("compass_logo.png");
+        display: inline-block;
+        top: -53px;
+        left: 3px;
+        position: relative;
+
+      }
+    }
+  }
+}

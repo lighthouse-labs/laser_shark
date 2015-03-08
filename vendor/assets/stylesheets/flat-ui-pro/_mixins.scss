@@ -298,6 +298,22 @@
   filter: #{alpha(opacity=$opacity-ie)};
 }
 
+// Keyframes
+@mixin keyframes($name) {
+  @-webkit-keyframes #{$name} {
+    @content;
+  }
+  @-moz-keyframes #{$name} {
+    @content;
+  }
+  @-ms-keyframes #{$name} {
+    @content;
+  }
+  @keyframes #{$name} {
+    @content;
+  }
+}
+
 
 
 // GRADIENTS
@@ -742,10 +758,10 @@
 @mixin label-variant($color, $hover-color, $text-color: $inverse) {
   background-color: $color;
   color: $text-color;
-  
+
   &[href] {
     color: $text-color;
-    
+
     &:hover,
     &:focus {
       color: $text-color;
@@ -808,7 +824,7 @@
     border-color: $border-color;
     @include box-shadow(none);
     @include placeholder($text-color);
-    
+
     &:focus {
       border-color: $border-color;
       @include box-shadow(none);

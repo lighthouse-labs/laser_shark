@@ -6,40 +6,47 @@ nav.navbar.navbar-inverse.navbar-embossed.navbar-fixed-top role="navigation"
   .collapse.navbar-collapse
     ul.nav.navbar-nav.navbar-left
       li
-        = link_to :welcome
-          i.fa.fa-home
-          |  Home
+        = link_to :welcome, :class => "compass-logo" do
+
+          | C
+          i.fa.fa-compass
+          | mpass
       li
-          = link_to setup_path
-            i.fa.fa-paper-plane-o
+        = link_to setup_path
+          i.fa.fa-paper-plane-o
+          span
             |  Setup
       - if current_user && !current_user.completed_registration?
         li
           = link_to new_registration_path
             i.fa.fa-sign-in
-            |  Complete Signup
-      
+            span
+              |  Complete Signup
+
       - if teacher? || active_student? || alumni?
         li
           = link_to day_path('today')
             i.fa.fa-calendar
-            |  Schedule
+            span
+              |  Schedule
 
         li.dropdown.student
           = link_to "#", :class => "dropdown-toggle", :"data-toggle" => "dropdown"
             i.fa.fa-group
-            |  Classmates
+            span
+              |  Classmates
             b.caret
           span.dropdown-arrow
           ul.dropdown-menu
             - cohorts.each do |cohort|
               li
                 = link_to cohort_link(cohort), cohort_students_path(cohort)
-      - if teacher? 
-        li
+      - if teacher?
+        li.request-queue
           = link_to :assistance_requests, data: { 'no-turbolink' => true }
             i.fa.fa-list-ol
-            |  Request Queue
+            span
+              |  Request Queue
 
     ul.nav.navbar-nav.navbar-right
       - if teacher?
@@ -55,11 +62,13 @@ nav.navbar.navbar-inverse.navbar-embossed.navbar-fixed-top role="navigation"
 
       - if current_user
 
-        li.dropdown.student
-          = link_to "#", :class => "dropdown-toggle", :"data-toggle" => "dropdown" do
-            = image_tag avatar_for(current_user)
-            = current_user.first_name
-            = " (#{current_user.type})" if current_user.type?
+        li.dropdown.student.user-profile
+          = link_to "#", :class => "dropdown-toggle user-profile-link", :"data-toggle" => "dropdown" do
+            = image_tag avatar_for(current_user), :class => "user-profile-photo"
+            span.user-profile-name
+              = current_user.first_name
+            span.user-profile-type
+              = " (#{current_user.type})" if current_user.type?
             b.caret
           span.dropdown-arrow
           ul.dropdown-menu
