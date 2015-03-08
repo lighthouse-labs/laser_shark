@@ -9,8 +9,8 @@
 
 if Rails.env.development?
   Cohort.destroy_all
-  Cohort.create! name: "May, 2014", start_date: "May 05, 2014"
-  Cohort.create! name: "June, 2014", start_date: "June 02, 2014"
+  Cohort.create! name: "May, 2014", start_date: "May 05, 2014", code: "may2014"
+  Cohort.create! name: "June, 2014", start_date: "June 02, 2014", code: "jun2014"
 end
 
 activities_file = ENV['FILE'] || File.join(Rails.root, "db", "activities_seed.rb")
