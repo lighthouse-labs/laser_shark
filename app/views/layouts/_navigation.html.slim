@@ -24,6 +24,11 @@ nav.navbar.navbar-inverse.navbar-embossed.navbar-fixed-top role="navigation"
           = link_to day_path('today')
             i.fa.fa-calendar
             |  Schedule
+      - if teacher? || active_student? || alumni?
+        li
+          = link_to teachers_path
+            i.fa.fa-group
+            |  Teachers
 
         li.dropdown.student
           = link_to "#", :class => "dropdown-toggle", :"data-toggle" => "dropdown"

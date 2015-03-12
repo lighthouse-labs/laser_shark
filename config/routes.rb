@@ -5,7 +5,7 @@ LaserShark::Application.routes.draw do
 
   get 'prep'  => 'setup#show' # temporary
   get 'setup' => 'setup#show' # temporary
-
+  get '/teachers', to: 'teachers#index'
   root to: 'home#show'
   get '/welcome', to: 'welcome#show'
 
@@ -15,6 +15,7 @@ LaserShark::Application.routes.draw do
   resource :session, :only => [:new, :destroy]
   resource :registration, only: [:new, :create]
   resource :profile, only: [:edit, :update]
+  
 
   resources :assistance_requests, only: [:index, :create, :destroy] do
     collection do
