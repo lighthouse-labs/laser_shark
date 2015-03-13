@@ -13,10 +13,10 @@ if Rails.env.development?
   Cohort.create! name: "June, 2014", start_date: "June 02, 2014", code: "jun2014"
 end
 
-#activities_file = ENV['FILE'] || File.join(Rails.root, "db", "activities_seed.rb")
-# if File.exists?(activities_file)
-#   puts "Loading Activities seed file"
-#   require(activities_file)
-# else
-#   puts "File #{activities_file} not found!"
-# end
+activities_file = ENV['FILE'] || File.join(Rails.root, "db", "activities_seed.rb")
+if File.exists?(activities_file)
+  puts "Loading Activities seed file"
+  require(activities_file)
+else
+  puts "File #{activities_file} not found!"
+end
