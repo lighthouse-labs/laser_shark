@@ -8,7 +8,9 @@
   scope :chronological, -> { order(:start_time) }
   scope :for_day, -> (day) { where(day: day.to_s) }
 
-  # after_create :update_instructions_from_gist
+  # Below hook should really be after_save (create and update)
+  # However, when seeding/mass-creating activties, github API will return error
+  after_update :add_revision_to_gist
 
   has_many :activity_submissions
 
@@ -28,18 +30,6 @@
     return (hours + duration_hours) * 100 + (minutes + duration_minutes)
   end
 
-  def update_instructions_from_gist
-    if self.gist_url?
-      github = Github.new
-      gist = github.gists.get gist_id
-      file = gist.files['README.md'] || gist.files.detect { |f| f.first.ends_with?('.md') }.try(:last)
-      if readme = file.try(:content)
-        self.instructions = readme
-        self.save
-      end
-    end
-  end
-
   def next
     Activity.where('start_time > ? AND day = ?', self.start_time, self.day).order(start_time: :asc).first
   end
@@ -49,6 +39,11 @@
   end
 
   protected
+
+  def add_revision_to_gist
+    g = ActivityRevision.new(self)
+    g.commit
+  end
 
   def gist_id
     self.gist_url.split('/').last

@@ -51,6 +51,13 @@ section.activity-details
           = @activity.allow_submissions? ? "Submissions" : "Completions"
 
         = link_to 'Edit', edit_day_activity_path(@day, @activity), class: 'btn-edit'
+
+        - if @activity.revisions_gistid?
+          = link_to "https://gist.github.com/#{@activity.revisions_gistid}/revisions", class: 'btn btn-revisions', target: '_blank'
+            span Revisions
+            | &nbsp;
+            i.fa.fa-external-link
+
       - else
         - if current_user.completed_activity?(@activity)
           - if @activity_submission.github_url?
