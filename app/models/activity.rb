@@ -41,8 +41,7 @@
   protected
 
   def add_revision_to_gist
-    require 'github/activity_gist'
-    g = ActivityGist.new(self)
+    g = ActivityRevision.new(self)
     g.commit
   end
 

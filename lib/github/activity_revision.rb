@@ -1,4 +1,4 @@
-class ActivityGist
+class ActivityRevision
 
   def initialize(activity)
     @activity = activity
