@@ -23,11 +23,12 @@ gem 'compass-rails'
 gem 'email_validator'
 gem 'reform'
 
-gem 'github_api'
 gem 'redcarpet'
 
 gem 'omniauth'
 gem 'omniauth-github'
+
+gem 'octokit'
 
 gem 'default_value_for'
 

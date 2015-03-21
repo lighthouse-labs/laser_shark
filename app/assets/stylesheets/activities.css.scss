@@ -30,6 +30,12 @@ section.activity-details {
     @extend .btn-warning;
     @extend .pull-right;
   }
+  .btn-revisions{
+    @extend .btn;
+    @extend .btn-warning;
+    @extend .pull-right;
+    margin-right: 10px;
+  }
 
 
   .activity_url {
