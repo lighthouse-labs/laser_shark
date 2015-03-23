@@ -25,7 +25,7 @@ LaserShark::Application.routes.draw do
     end
   end
 
-  resources :students, only: [] do
+  resources :students, only: [:index] do
     resources :assistances, only: [:create]
   end
 

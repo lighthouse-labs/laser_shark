@@ -3,7 +3,11 @@ class StudentsController < ApplicationController
   before_action :disallow_unless_enrolled
 
   def index
-    @cohort = Cohort.find(params[:cohort_id])
+    if teacher?
+      @cohort = Cohort.find(params[:cohort_id])
+    else
+      @cohort = current_user.cohort
+    end
     @students = @cohort.students.active
   end
 

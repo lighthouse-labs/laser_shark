@@ -25,16 +25,23 @@ nav.navbar.navbar-inverse.navbar-embossed.navbar-fixed-top role="navigation"
             i.fa.fa-calendar
             |  Schedule
 
-        li.dropdown.student
-          = link_to "#", :class => "dropdown-toggle", :"data-toggle" => "dropdown"
-            i.fa.fa-group
-            |  Classmates
-            b.caret
-          span.dropdown-arrow
-          ul.dropdown-menu
-            - cohorts.each do |cohort|
-              li
-                = link_to cohort_link(cohort), cohort_students_path(cohort)
+        - if teacher?
+          li.dropdown.student
+            = link_to "#", :class => "dropdown-toggle", :"data-toggle" => "dropdown"
+              i.fa.fa-group
+              |  Students
+              b.caret
+            span.dropdown-arrow
+            ul.dropdown-menu
+              - cohorts.each do |cohort|
+                li
+                  = link_to cohort_link(cohort), cohort_students_path(cohort)
+        - else
+          li.dropdown.student
+            = link_to students_path
+              i.fa.fa-group
+              |  Classmates
+            
       - if teacher? 
         li
           = link_to :assistance_requests, data: { 'no-turbolink' => true }
