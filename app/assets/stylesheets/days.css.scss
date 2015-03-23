@@ -2,6 +2,24 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+.schedule-heading {
+  .stats {
+    margin-top: 48px;
+    sup {
+      top: -1.5em;
+    }
+    .happy {
+      color: $brand-secondary;
+    }
+    .ok {
+      color: $brand-warning;
+    }
+    .sad {
+      color: $brand-danger;
+    }
+  }
+}
+
 .activity {
   &:hover {
     box-shadow: 0px 0px 0px 3px $gray;

@@ -7,4 +7,9 @@ class DayFeedback < ActiveRecord::Base
   validates :day,   presence: true
   validates :mood,  presence: true
 
+  scope :for_day, -> (day) { where(day: day.to_s) }
+  scope :happy,   -> { where(mood: 'happy') }
+  scope :ok,      -> { where(mood: 'ok') }
+  scope :sad,     -> { where(mood: 'sad') }
+
 end
