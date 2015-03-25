@@ -8,12 +8,21 @@
   h1.pull-left Schedule
   - if teacher?
     .pull-right.stats
-      i class='happy fa fa-smile-o fa-2x'
-      sup.happy = @feedback[:happy]
-      i class='ok fa fa-circle-thin fa-2x'
-      sup.ok = @feedback[:ok]
-      i class='sad fa fa-frown-o fa-2x'
-      sup.sad = @feedback[:sad]
+      i class='happy fa fa-smile-o fa-2x' title="Happy feedback"
+      sup.happy title="Happy total"
+        = @feedback[:happy]
+      sub.happy title="Happy this cohort"
+        = @cohort_feedback[:happy]
+      i class='ok fa fa-circle-thin fa-2x' title="OK feedback"
+      sup.ok title="OK total"
+        = @feedback[:ok]
+      sub.ok title="OK this cohort"
+        = @cohort_feedback[:ok]
+      i class='sad fa fa-frown-o fa-2x' title="Sad feedback"
+      sup.sad title="Unhappy total" 
+        = @feedback[:sad]
+      sub.sad title="Unhappy this cohort"
+        = @cohort_feedback[:sad]
 
 = render partial: 'activities/activity', collection: @activities
 

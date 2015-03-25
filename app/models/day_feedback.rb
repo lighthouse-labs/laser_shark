@@ -12,4 +12,6 @@ class DayFeedback < ActiveRecord::Base
   scope :ok,      -> { where(mood: 'ok') }
   scope :sad,     -> { where(mood: 'sad') }
 
+  scope :from_cohort, -> (cohort) { joins(:student).where('users.cohort_id =? ', cohort.id) }
+
 end
