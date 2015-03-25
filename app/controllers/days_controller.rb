@@ -16,8 +16,8 @@ class DaysController < ApplicationController
       }
       @cohort_feedback = {
         happy: feedback.from_cohort(cohort).happy.count,
-        ok:    feedback.ok.count,
-        sad:   feedback.sad.count
+        ok:    feedback.from_cohort(cohort).ok.count,
+        sad:   feedback.from_cohort(cohort).sad.count
       }
     end
   end
