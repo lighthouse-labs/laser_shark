@@ -3,6 +3,7 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
   before_action :authenticate_user
+  before_action :set_timezone
 
   private
 
@@ -42,11 +43,11 @@ class ApplicationController < ActionController::Base
   helper_method :alumni?
 
   def cohort
-    @cohort ||= current_user.try(:cohort)
     # Teachers can switch to any cohort
     if teacher?
       @cohort ||= Cohort.find_by(id: session[:cohort_id]) if session[:cohort_id]
     end
+    @cohort ||= current_user.try(:cohort) # Students have a cohort
     @cohort ||= Cohort.most_recent.first
   end
   helper_method :cohort
@@ -60,6 +61,19 @@ class ApplicationController < ActionController::Base
     current_user.cohort = Cohort.find_by(code: invitation_code)
     current_user.type = "Student"
     current_user.save
+  end
+
+  def set_timezone
+    if cohort && cohort.location?
+      case cohort.location
+      when 'Vancouver'
+        Time.zone = 'Pacific Time (US & Canada)'
+      when 'Toronto'
+        Time.zone = 'Eastern Time (US & Canada)'
+      when 'Calgary'
+        Time.zone = 'Mountain Time (US & Canada)'
+      end
+    end
   end
 
 end

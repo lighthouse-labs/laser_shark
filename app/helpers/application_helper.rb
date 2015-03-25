@@ -22,6 +22,7 @@ module ApplicationHelper
   end
 
   def it_is_6pm_already?
+    raise Time.current.inspect
     Time.current.seconds_since_midnight >= DAY_FEEDBACK_AFTER
   end
 
