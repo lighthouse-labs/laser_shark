@@ -1,7 +1,6 @@
 LaserShark::Application.routes.draw do
 
-  get '/invitations/:code', to: 'invitations#show'
-  get '/i/:code', to: 'invitations#show' # alias for above
+  get '/i/:code', to: 'invitations#show' # student/teacher invitation handler
 
   get 'prep'  => 'setup#show' # temporary
   get 'setup' => 'setup#show' # temporary

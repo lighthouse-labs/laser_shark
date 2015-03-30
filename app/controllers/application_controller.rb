@@ -57,10 +57,28 @@ class ApplicationController < ActionController::Base
   end
   helper_method :cohorts
 
-  def assign_cohort(invitation_code)
-    current_user.cohort = Cohort.find_by(code: invitation_code)
+  def assign_as_student_to_cohort(cohort)
+    current_user.cohort = cohort
     current_user.type = "Student"
-    current_user.save
+    current_user.save!
+    flash[:notice] = "Welcome, you have student access to #{cohort.name}!"
+  end
+
+  def apply_invitation_code(code)
+    if ENV['TEACHER_INVITE_CODE'] == code
+      make_teacher
+    elsif cohort = Cohort.find_by(code: code)
+      assign_as_student_to_cohort(cohort)
+    else
+      flash[:alert] = "Sorry, invalid code"
+    end
+  end
+
+  def make_teacher
+    current_user.type = 'Teacher'
+    current_user.save!
+    AdminMailer.new_teacher_joined(current_user).deliver
+    flash[:notice] = "Welcome, you have teacher access!"
   end
 
   def set_timezone

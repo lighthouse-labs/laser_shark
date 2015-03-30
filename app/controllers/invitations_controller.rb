@@ -3,7 +3,7 @@ class InvitationsController < ApplicationController
 
   def show
     if current_user
-      assign_cohort(params[:code])
+      apply_invitation_code(params[:code])
     else
       session[:invitation_code] = params[:code]
     end

@@ -46,6 +46,8 @@ group :development do
   gem 'spring'
   gem 'quiet_assets'
   gem 'rails_layout'
+  gem 'letter_opener'
+  gem 'letter_opener_web'
   gem 'rb-fchange', :require=>false
   gem 'rb-fsevent', :require=>false
   gem 'rb-inotify', :require=>false

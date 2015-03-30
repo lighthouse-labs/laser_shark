@@ -11,7 +11,7 @@ class RegistrationsController < ApplicationController
     @form.completed_registration = true
     if @form.validate(params[:user]) && @form.save
       if session[:invitation_code]
-        assign_cohort(session[:invitation_code])
+        apply_invitation_code(session[:invitation_code])
         session[:invitation_code] = nil
       end
       redirect_to root_url

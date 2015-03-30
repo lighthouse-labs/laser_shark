@@ -12,7 +12,7 @@ class SessionsController < ApplicationController
     session[:user_id] = @current_user.id
     if @current_user.completed_registration?
       if session[:invitation_code]
-        assign_cohort(session[:invitation_code])
+        apply_invitation_code(session[:invitation_code])
         session[:invitation_code] = nil
       end
       # Ok they are ready to go and fully registered
