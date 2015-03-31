@@ -2,6 +2,7 @@ class ActivitySubmission < ActiveRecord::Base
   
   belongs_to :user
   belongs_to :activity
+  before_save :format_url
   
   has_one :code_review_request, dependent: :destroy
   
@@ -20,6 +21,15 @@ class ActivitySubmission < ActiveRecord::Base
     if: :github_url_required?
 
   private
+
+  # prefixes the URL with http:// if it doesn't already exist
+  def format_url
+    self.github_url = "http://#{self.github_url}" unless self.github_url =~ /^http/
+  end
+
+  def github_url
+    @github_url
+  end
 
   def github_url_required?
     activity && activity.allow_submissions?
