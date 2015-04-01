@@ -1,4 +1,8 @@
 module ApplicationHelper
+
+  def fools?
+    Date.current.month == 4 && Date.current.day == 1
+  end
   # Display an integer time as a string
   # Ex: integer_time_to_s(930) # => "9:30"
   def integer_time_to_s(int_time)
