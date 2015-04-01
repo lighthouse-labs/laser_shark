@@ -87,5 +87,5 @@ nav.navbar.navbar-inverse.navbar-embossed.navbar-fixed-top role="navigation"
           = link_to "Sign In", new_session_path
       - if fools?
         li
-          = link_to "Retina Mode", '#', class: 'btn btn-warning', id: 'a1-retina-mode'
+          = link_to "Retina Mode", '#', class: 'btn btn-warning', id: 'a1-retina-mode', data: { 'no-turbolink' => true }
 /! /.navbar-collapse

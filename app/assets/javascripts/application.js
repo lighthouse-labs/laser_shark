@@ -12,7 +12,6 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require turbolinks
 //= require bootstrap.min
 //= require flat-ui-pro
 //= require ace
@@ -21,12 +20,4 @@
 //= require assistance_requests
 //= require_tree .
 
-$(function() {
-  $('#a1-retina-mode').click(function() {
-    console.log('yo!');
-    classes = ['april1-comic', 'april1-flip', 'april1-rainbow'];
-    var c = classes[Math.floor(Math.random() * classes.length)];
-    $('body').addClass(c);
-    return false;
-  });
-});
+

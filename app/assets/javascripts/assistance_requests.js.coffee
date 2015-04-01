@@ -69,7 +69,8 @@ $ ->
     #We are on the requests page
 
     poll = ->
-      getRequestData()
-      setTimeout(poll, 1000 * 3)
+      if $('.requests-list').length > 0
+        getRequestData()
+        setTimeout(poll, 1000 * 3)
 
     poll()
