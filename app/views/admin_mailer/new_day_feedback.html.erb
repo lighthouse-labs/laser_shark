@@ -1,0 +1,19 @@
+<h1><%= @feedback.mood.upcase %></h1>
+
+<p>
+  HOST: <%= link_to @host, @host %>  
+  <br>
+  FROM: <%= @feedback.student.full_name %>
+  <br>
+  COHORT: <%= @feedback.student.cohort.name %> (<%= @feedback.student.cohort.location %>)
+  <br>
+  DAY: <%= @feedback.day %>
+</p>
+
+<p>
+  <strong><%= @feedback.title %></strong>
+</p>
+
+<hr>
+
+<%= simple_format @feedback.text %>

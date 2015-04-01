@@ -14,4 +14,12 @@ class DayFeedback < ActiveRecord::Base
 
   scope :from_cohort, -> (cohort) { joins(:student).where('users.cohort_id =? ', cohort.id) }
 
+  after_create :notify_admin
+
+  private
+
+  def notify_admin
+    AdminMailer.new_day_feedback(self).deliver
+  end
+
 end
