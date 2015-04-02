@@ -8,6 +8,7 @@ class RegistrationForm < Reform::Form
   property :twitter,  		on: :user
   property :skype,  			on: :user
   property :custom_avatar, on: :user
+  property :bio, on: :user
 
   property :completed_registration, on: :user
 
