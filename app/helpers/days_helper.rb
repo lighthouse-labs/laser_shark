@@ -1,5 +1,9 @@
 module DaysHelper
 
+  def setup?
+    @setup
+  end
+
   def day_status_css(d)
     classes = []
     classes.push('disabled') unless current_user.can_access_day?(d)

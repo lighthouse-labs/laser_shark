@@ -3,7 +3,7 @@
     .pull-left.icon title=activity.type
       i class=(icon_for(activity))
     .pull-left.time
-      - if weekend?
+      - if weekend? || setup?
         br
         = duration activity
         br
