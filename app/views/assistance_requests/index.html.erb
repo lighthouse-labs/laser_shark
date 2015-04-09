@@ -6,7 +6,7 @@
     </div>
     <div class="student-description">
       <h4 class="student-heading">{{requestor.first_name}} {{requestor.last_name}}</h4>
-      <h6 class="student-cohort">{{requestor.cohort.name}} ({{requestor.cohort.location}})</h6>
+      <p class="student-cohort"><span class="cohort-name">{{requestor.cohort.name}}</span> <span class="cohort-location">{{requestor.cohort.location}}</span></p>
       <p class="assistance-timestamp">Requested assistance <abbr class="timeago" title="{{start_at}}">{{start_at}}</abbr></p>
       <p>
         <a href="/assistance_requests/{{id}}/start_assistance" class="btn btn-primary btn-lg" data-method="post">Start Assisting</a>
@@ -23,7 +23,7 @@
     </div>
     <div class="student-description">
       <h4 class="student-heading">{{requestor.first_name}} {{requestor.last_name}}</h4>
-      <h6 class="student-cohort">{{requestor.cohort.name}} ({{requestor.cohort.location}})</h6>
+      <p class="student-cohort"><span class="cohort-name">{{requestor.cohort.name}}</span> <span class="cohort-location">{{requestor.cohort.location}}</span></p>
       <p class="assistance-timestamp">Requested code review <abbr class="timeago" title="{{start_at}}">{{start_at}}</abbr></p>
       {{#activity_submission}}
       <p><b>Submission URL:</b> <a target="_blank" href="{{activity_submission.github_url}}">{{activity_submission.github_url}}</a></p>
@@ -43,7 +43,7 @@
     </div>
     <div class="student-description">
       <h4 class="student-heading">{{first_name}} {{last_name}}</h4>
-      <h6 class="student-cohort">{{requestor.cohort.name}} ({{requestor.cohort.location}})</h6>
+      <p class="student-cohort"><span class="cohort-name">{{cohort.name}}</span> <span class="cohort-location">{{cohort.location}}</span></p>
       <p class="assistance-timestamp">Last received assistance <abbr class="timeago" title="{{last_assisted_at}}">{{last_assisted_at}}</abbr></p>
       <p><a href="students/{{id}}/assistances" class="btn btn-primary btn-lg" data-method="post">Checkin On</a></p>
     </div>
@@ -57,7 +57,7 @@
     </div>
     <div class="student-description">
       <h4 class="student-heading">{{assistee.first_name}} {{assistee.last_name}}</h4>
-      <h6 class="student-cohort">{{requestor.cohort.name}} ({{requestor.cohort.location}})</h6>
+      <p class="student-cohort"><span class="cohort-name">{{assistee.cohort.name}}</span> <span class="cohort-location">{{assistee.cohort.location}}</span></p>
       <p class="assistance-timestamp">You started assisting <abbr class="timeago" title="{{start_at}}">{{start_at}}</abbr></p>
       {{#assistance_request.activity_submission}}
       <p><b>Submission URL:</b> <a target="_blank" href="{{assistance_request.activity_submission.github_url}}">{{assistance_request.activity_submission.github_url}}</a></p>
