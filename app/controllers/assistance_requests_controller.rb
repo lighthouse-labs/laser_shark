@@ -11,10 +11,10 @@ class AssistanceRequestsController < ApplicationController
     respond_to do |format|
       format.json {
         @obj = {
-          active_assistances: @my_active_assistances.all.to_json(:include => {:assistee => {}, :assistance_request => {:include => :activity_submission}}),
-          requests: @requests.all.to_json(:include => :requestor),
-          code_reviews: @code_reviews.all.to_json(:include => [:requestor, :activity_submission]),
-          all_students: @all_students.all.to_json
+          active_assistances: @my_active_assistances.all.to_json(:include => {:assistee => { :include => [:cohort] }, :assistance_request => {:include => :activity_submission}}),
+          requests: @requests.all.to_json(:include => { requestor: { :include => [:cohort] } }),
+          code_reviews: @code_reviews.all.to_json(:include => { :requestor => { :include => [:cohort] }, :activity_submission => {} }),
+          all_students: @all_students.all.to_json(:include => [:cohort])
         }
         render json: @obj
       }
