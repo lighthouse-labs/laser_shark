@@ -19,9 +19,13 @@ describe User do
     expect(user).to be_invalid
   end
 
+  it "is able to have the bio field be empty" do
+    user = build(:user, bio: nil)
+    expect(user).to be_valid
+  end
+
   describe "#full_name" do
     it "returns a concatenation of first_name and last_name" do
-      user = create(:user)
       expect(user.full_name).to eq "#{user.first_name} #{user.last_name}"
     end
   end
