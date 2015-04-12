@@ -10,9 +10,9 @@ nav.navbar.navbar-inverse.navbar-embossed.navbar-fixed-top role="navigation"
           i.fa.fa-home
           |  Home
       li
-          = link_to setup_path
-            i.fa.fa-paper-plane-o
-            |  Setup
+        = link_to setup_path
+          i.fa.fa-paper-plane-o
+          |  Setup
       - if current_user && !current_user.completed_registration?
         li
           = link_to new_registration_path
@@ -74,14 +74,11 @@ nav.navbar.navbar-inverse.navbar-embossed.navbar-fixed-top role="navigation"
               = link_to "Edit profile", edit_profile_path
             li
               = link_to 'Sign Out', session_path, :method => :delete
-
         - if current_user.active_student?
-          li.assistance-request
-            = link_to cancel_assistance_requests_path, method: :delete, remote: true, class: "btn btn-md btn-warning delete-request #{'active' if current_user.assistance_currently_requested_or_in_progress?}"
-              span Waiting for Assistance
-            = link_to assistance_requests_path, method: :post, remote: true, class: "btn btn-md btn-primary #{'active' unless current_user.assistance_currently_requested_or_in_progress?}"
-              span Request Assistance
-
+          li#assistance-request-module
+            = link_to 'Waiting for Assistance', cancel_assistance_requests_path, method: :delete, remote: true, id: 'assistance-request-cancel-button', class: "btn btn-warning #{'hidden' unless current_user.assistance_currently_requested_or_in_progress?}"
+            = link_to 'Request Assistance', assistance_requests_path, method: :post, remote: true, id: 'assistance-request-create-button', class: "btn btn-primary #{'hidden' if current_user.assistance_currently_requested_or_in_progress?}"
+            span#assistance-request-current-assistor.navbar-text.hidden
       - else
         li
           = link_to "Sign In", new_session_path

@@ -5,6 +5,7 @@ class AssistanceRequest < ActiveRecord::Base
 
   validates :requestor, :presence => true
 
+  before_create :limit_one_per_user
   before_create :set_start_at
 
   scope :open_requests, -> { where(:canceled_at => nil).where(:assistance_id => nil) }
@@ -41,10 +42,22 @@ class AssistanceRequest < ActiveRecord::Base
     assistance.nil? && canceled_at.nil?
   end
 
+  def is_claimed?
+    canceled_at.nil? && assistance && assistance.end_at.nil?
+  end
+
+  def position_in_queue
+    self.class.open_requests.where(type: nil).where('id > ?', id).count + 1
+  end
+
   private
 
   def set_start_at
     self.start_at = Time.now
+  end
+
+  def limit_one_per_user
+    raise 'Limit one open/in progress request per user' if type.nil? && requestor.assistance_currently_requested_or_in_progress?
   end
 
 end

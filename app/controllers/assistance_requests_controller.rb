@@ -22,6 +22,33 @@ class AssistanceRequestsController < ApplicationController
     end
   end
 
+  def status
+    respond_to do |format|
+      format.json {
+        # Fetch most recent student initiated request
+        ar = AssistanceRequest.where(type: nil).requested_by(current_user).newest_requests_first.first
+        res = {}
+        if ar && (ar.is_open? || ar.is_claimed?)
+          if ar.assistance
+            res[:state] = :active
+            res[:assistor] = {
+              id: ar.assistance.assistor.id,
+              first_name: ar.assistance.assistor.first_name,
+              last_name: ar.assistance.assistor.last_name
+            }
+          else
+            res[:state] = :waiting
+            res[:position_in_queue] = ar.position_in_queue
+          end
+        else
+          res[:state] = :inactive
+        end
+        render json: res
+      }
+      format.all { redirect_to(assistance_requests_path) }
+    end
+  end
+
   def create
     ar = AssistanceRequest.new(:requestor => current_user)
     status = ar.save ? 200 : 400
