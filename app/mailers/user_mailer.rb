@@ -6,7 +6,7 @@ class UserMailer < ActionMailer::Base
     @message = message
     students = @message.cohort.students.active
     mail  subject: "#{@message.day.upcase} #{@message.kind}: #{@message.subject}", 
-          to: ENV['INSTRUCTOR_EMAIL_GROUP'], 
+          to: @message.cohort.teacher_email_group || ENV['INSTRUCTOR_EMAIL_GROUP'] || ENV['EMAIL_SENDER'], 
           bcc: students.pluck(:email)
   end
   
