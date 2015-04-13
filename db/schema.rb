@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150325185301) do
+ActiveRecord::Schema.define(version: 20150401145006) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -32,6 +32,24 @@ ActiveRecord::Schema.define(version: 20150325185301) do
     t.string   "media_filename"
     t.string   "revisions_gistid"
   end
+
+  create_table "activity_messages", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "cohort_id"
+    t.integer  "activity_id"
+    t.string   "kind",          limit: 50
+    t.string   "day",           limit: 5
+    t.string   "subject",       limit: 1000
+    t.text     "body"
+    t.text     "teacher_notes"
+    t.boolean  "for_students"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "activity_messages", ["activity_id"], name: "index_activity_messages_on_activity_id", using: :btree
+  add_index "activity_messages", ["cohort_id"], name: "index_activity_messages_on_cohort_id", using: :btree
+  add_index "activity_messages", ["user_id"], name: "index_activity_messages_on_user_id", using: :btree
 
   create_table "activity_submissions", force: true do |t|
     t.integer  "user_id"

@@ -11,6 +11,12 @@ class ActivitiesController < ApplicationController
     @activity_submission = current_user.activity_submissions.where(activity: @activity).first || ActivitySubmission.new
     @next_activity = @activity.next
     @previous_activity = @activity.previous
+
+    if teacher?
+      @messages = @activity.messages
+    else
+      @messages = @activity.messages.for_cohort(cohort).where(for_students: true)
+    end
   end
 
   def edit
@@ -32,11 +38,11 @@ class ActivitiesController < ApplicationController
   end
 
   def teacher_required
-    redirect_to(day_activity_path(@day, @activity), alert: 'Not allowed') unless teacher?
+    redirect_to(day_activity_path(@activity.day, @activity), alert: 'Not allowed') unless teacher?
   end
 
   def require_activity
-    @activity = Activity.chronological.for_day(day).find(params[:id])
+    @activity = Activity.find(params[:id])
   end
 
 end

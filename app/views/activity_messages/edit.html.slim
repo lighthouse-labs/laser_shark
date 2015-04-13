@@ -1,0 +1,20 @@
+- content_for :side_nav do
+  == render 'layouts/side_nav'
+
+section.activity-details
+  h1 = @activity.name
+
+  .well
+    .actions
+      .form-group
+        .form-inline
+          .left-actions
+            = link_to day_activity_path(@activity.day, @activity), class: 'btn-previous'
+              | &laquo; Cancel
+
+
+  - url = @message ? activity_message_path(@activity, @message) : activity_messages_path(@activity)
+  = simple_form_for [@activity, @message], url: url do |f|
+    == render f
+
+    = f.submit 'Update', class: 'btn btn-primary'

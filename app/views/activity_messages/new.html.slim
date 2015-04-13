@@ -1,0 +1,19 @@
+- content_for :side_nav do
+  == render 'layouts/side_nav'
+
+section.activity-details
+  h1 = @activity.name
+
+  .well
+    .actions
+      .form-group
+        .form-inline
+          .left-actions
+            = link_to day_activity_path(@activity.day, @activity), class: 'btn-previous'
+              | &laquo; Cancel
+
+
+  = simple_form_for [@activity, @message], url: activity_messages_path(@activity) do |f|
+    == render f
+
+    = f.submit 'Submit', class: 'btn btn-primary'

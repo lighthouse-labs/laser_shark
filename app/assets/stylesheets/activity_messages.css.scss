@@ -1,0 +1,90 @@
+// Place all the styles related to the activity_messages controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+section.activity-details {
+
+  .messages {
+    
+    .message {
+
+      background-color: #ECF0F1;
+      border-radius: 10px;
+      margin-bottom: 20px;
+      position: relative;
+      
+      .heading {
+
+        padding: 20px;
+        background-color: #BDC3C7;
+        border-radius: 10px 10px 0px 0px;
+
+        @include clearfix;
+
+        img {
+          float: left;
+          border-radius: 50%;
+        }
+        h4 {
+          float: left;
+          font-size: 20px;
+          margin-left: 10px;
+          max-width: 440px;
+          margin-top: 6px;
+          margin-bottom: 0px;
+        }
+        .when {
+          float: right;
+          color: #7F8C8D;
+          text-align: right;
+          max-width: 200px;
+        }
+        
+      }
+      .contents {
+
+        padding: 20px;
+
+        .teacher-notes {
+          color: #95A5A6;
+          font-style: italic;
+          padding: 0px 20px 0px 20px;
+          p, h5 {
+            font-size: 0.8em;
+          }
+        }
+      }
+
+      .actions {
+        position: absolute;
+        right: 0px;
+        bottom: 0px;
+        padding: 10px 10px 10px 0px;
+
+        @include clearfix;
+
+        a {
+          color: #ECF0F1;
+          margin-left: 10px;
+          font-size: 1.3em;
+          line-height: 1.3em;
+          float: right;
+          opacity: 0.7;
+          -webkit-transition: all 1s ease-in-out;
+          transition: all 0.2s ease-in-out;
+
+          &:hover {
+            opacity: 1;
+          }
+          
+          &.delete {
+            color: #E74C3C;
+          }
+          &.edit {
+            color: #F1C40F;
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,6 @@
+= form.input :kind, label: false, placeholder: 'Type of update', collection: ActivityMessage::KINDS, prompt: 'Select a type'
+= form.input :subject, label: false, placeholder: "Subject (don't include 'WxDy')"
+= form.input :body, label: false, placeholder: 'Message body (for students and teachers to see)', input_html: { rows: 10 }
+= form.input :teacher_notes, label: false, placeholder: 'Teacher notes (for teachers only). Explain how it went so next teacher can learn from it and adapt and change as necessary. Any and all tips please!', input_html: { rows: 5 }
+= form.input :cohort_id, collection: ([@cohort] + Cohort.most_recent.all).uniq, prompt: 'Select a cohort'
+= form.input :for_students
