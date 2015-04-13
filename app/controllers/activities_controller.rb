@@ -6,6 +6,8 @@ class ActivitiesController < ApplicationController
   before_action :teacher_required, only: [:edit, :update]
 
   def show
+    @setup = day.to_s == 'setup'
+
     @next_activity = @activity.next
     @previous_activity = @activity.previous    
     @activity_submission = current_user.activity_submissions.where(activity: @activity).first || ActivitySubmission.new
