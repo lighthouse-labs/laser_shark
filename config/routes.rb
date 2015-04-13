@@ -42,6 +42,7 @@ LaserShark::Application.routes.draw do
 
   resources :activities, only: [] do
     resource :activity_submission, only: [:create, :destroy]
+    resources :messages, only: [:new, :edit, :update, :create, :index], controller: 'activity_messages'
   end
 
   resources :cohorts, only: [] do

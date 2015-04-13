@@ -20,10 +20,12 @@ module CourseCalendar
     return @day if @day
     d = params[:number] || params[:day_number]
     @day = case d
-    when nil, 'today'
+    when 'today'
       today
     when 'yesterday'
       yesterday
+    when nil
+      Activity.find_by(id: params[:activity_id]).try(:day) || today if params[:activity_id]
     else
       d
     end

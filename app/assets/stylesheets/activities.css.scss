@@ -36,6 +36,12 @@ section.activity-details {
     @extend .pull-right;
     margin-right: 10px;
   }
+  .btn-new-message {
+    @extend .btn;
+    @extend .btn-danger;
+    @extend .pull-right; 
+    margin-right: 10px;
+  }
 
 
   .activity_url {

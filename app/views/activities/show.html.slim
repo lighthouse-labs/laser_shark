@@ -1,7 +1,6 @@
 - unless current_user.prepping? || current_user.prospect?
   - content_for :side_nav do
-    h1.day = day.to_s.upcase
-    == render 'layouts/calendar'
+    == render 'layouts/side_nav'
 
 section.activity-details
   h1 = @activity.name
@@ -51,6 +50,7 @@ section.activity-details
           = @activity.allow_submissions? ? "Submissions" : "Completions"
 
         = link_to 'Edit', edit_day_activity_path(@day, @activity), class: 'btn-edit'
+        = link_to "+ Message", new_activity_message_path(@activity), class: "btn-new-message"
 
         - if @activity.revisions_gistid?
           = link_to "https://gist.github.com/#{@activity.revisions_gistid}/revisions", class: 'btn btn-revisions', target: '_blank'
@@ -105,3 +105,34 @@ section.activity-details
     h3 = "Teacher Notes"
     .instructions
       == markdown @activity.teacher_notes
+
+  - if @messages.any?
+    hr
+    h3 = "Messages"
+    .messages
+      - @messages.each do |msg|
+        .message
+          .heading
+            = image_tag(avatar_for(msg.user), size: '50x50')
+            h4 = msg.subject
+            .when 
+              = msg.created_at.to_formatted_s(:friendly)
+              - if teacher?
+                br
+                = msg.cohort.name
+
+          .contents
+            = simple_format msg.body
+            - if teacher? && msg.teacher_notes?
+              .teacher-notes 
+                h5 Teacher (Internal) Notes
+                = simple_format msg.teacher_notes
+
+          - if teacher? && current_user == msg.user
+            .actions
+              = link_to edit_activity_message_path(@activity, msg), class: 'edit'
+                i.fa.fa-edit
+              = link_to activity_message_path(@activity, msg), method: :delete, confirm: 'Sure ,lad?', class: 'delete'
+                i.fa.fa-times
+
+
