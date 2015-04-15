@@ -1,6 +1,8 @@
 class Cohort < ActiveRecord::Base
 
   has_many :students
+  belongs_to :program
+  
   validates :name, presence: true
   validates :start_date, presence: true
   validates :code, uniqueness: true

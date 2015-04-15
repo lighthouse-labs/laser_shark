@@ -49,6 +49,8 @@ class ApplicationController < ActionController::Base
     end
     @cohort ||= current_user.try(:cohort) # Students have a cohort
     @cohort ||= Cohort.most_recent.first
+    @program = @cohort.program
+    @cohort
   end
   helper_method :cohort
 

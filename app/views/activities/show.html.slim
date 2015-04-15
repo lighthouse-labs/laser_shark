@@ -100,6 +100,11 @@ section.activity-details
     .instructions
       == markdown @activity.instructions
 
+  - if teacher? && @program.lecture_tips? && @activity.is_a?(Lecture)
+    .lecture-tips 
+      h3 = "Lecture Tips / Reminders"
+      == markdown @program.lecture_tips 
+
   - if teacher? && @activity.teacher_notes
     hr
     h3 = "Teacher Notes"
