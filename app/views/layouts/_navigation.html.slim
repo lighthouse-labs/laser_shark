@@ -76,9 +76,9 @@ nav.navbar.navbar-inverse.navbar-embossed.navbar-fixed-top role="navigation"
               = link_to 'Sign Out', session_path, :method => :delete
         - if current_user.active_student?
           li#assistance-request-module
-            = link_to 'Waiting for Assistance', cancel_assistance_requests_path, method: :delete, remote: true, id: 'assistance-request-cancel-button', class: "btn btn-warning #{'hidden' unless current_user.assistance_currently_requested_or_in_progress?}"
-            = link_to 'Request Assistance', assistance_requests_path, method: :post, remote: true, id: 'assistance-request-create-button', class: "btn btn-primary #{'hidden' if current_user.assistance_currently_requested_or_in_progress?}"
-            span#assistance-request-current-assistor.navbar-text.hidden
+            = link_to 'Waiting for Assistance', cancel_assistance_requests_path, method: :delete, remote: true, id: 'assistance-request-cancel-button', class: "btn btn-warning #{'hidden' unless current_user.waiting_for_assistance?}"
+            = link_to 'Request Assistance', assistance_requests_path, method: :post, remote: true, id: 'assistance-request-create-button', class: "btn btn-primary #{'hidden' if current_user.waiting_for_assistance? or current_user.being_assisted?}"
+            = "<span id=\"assistance-request-current-assistor\" class=\"navbar-text #{'hidden' unless current_user.being_assisted?}\">#{current_user.current_assistor.try(:full_name) if current_user.being_assisted?} assisting</span>".html_safe
       - else
         li
           = link_to "Sign In", new_session_path

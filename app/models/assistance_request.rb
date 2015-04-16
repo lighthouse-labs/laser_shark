@@ -9,14 +9,18 @@ class AssistanceRequest < ActiveRecord::Base
   before_create :set_start_at
 
   scope :open_requests, -> { where(:canceled_at => nil).where(:assistance_id => nil) }
-  scope :open_or_inprogress_requests, -> {
+  scope :in_progress_requests, -> {
+    joins("LEFT OUTER JOIN assistances ON assistances.id = assistance_requests.assistance_id").
+    where("assistance_requests.canceled_at IS NULL AND assistances.id IS NOT NULL AND assistances.end_at IS NULL")
+  }
+  scope :open_or_in_progress_requests, -> {
     joins("LEFT OUTER JOIN assistances ON assistances.id = assistance_requests.assistance_id").
     where("assistance_requests.canceled_at IS NULL AND (assistances.id IS NULL OR assistances.end_at IS NULL)")
   }
   scope :oldest_requests_first, -> { order(start_at: :asc) }
   scope :newest_requests_first, -> { order(start_at: :desc) }
   scope :requested_by, -> (user) { where(:requestor => user) }
-  scope :code_reviews, -> {where(:type => 'CodeReviewRequest')}
+  scope :code_reviews, -> { where(:type => 'CodeReviewRequest') }
 
   def cancel
     self.canceled_at = Time.now
@@ -34,15 +38,11 @@ class AssistanceRequest < ActiveRecord::Base
     self.assistance.end(notes)
   end
 
-  def self.recent_open_request_for_user(user)
-    self.open_requests.where(type: nil).requested_by(user).newest_requests_first.first
-  end
-
-  def is_open?
+  def open?
     assistance.nil? && canceled_at.nil?
   end
 
-  def is_claimed?
+  def in_progress?
     canceled_at.nil? && assistance && assistance.end_at.nil?
   end
 

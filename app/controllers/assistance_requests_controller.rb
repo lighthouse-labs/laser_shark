@@ -28,7 +28,7 @@ class AssistanceRequestsController < ApplicationController
         # Fetch most recent student initiated request
         ar = AssistanceRequest.where(type: nil).requested_by(current_user).newest_requests_first.first
         res = {}
-        if ar && (ar.is_open? || ar.is_claimed?)
+        if ar && (ar.open? || ar.in_progress?)
           if ar.assistance
             res[:state] = :active
             res[:assistor] = {
@@ -59,7 +59,7 @@ class AssistanceRequestsController < ApplicationController
   end
 
   def cancel
-    ar = AssistanceRequest.recent_open_request_for_user(current_user)
+    ar = current_user.latest_open_assistance_request
     status = ar.try(:cancel) ? 200 : 400
 
     respond_to do |format|
