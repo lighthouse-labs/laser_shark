@@ -47,7 +47,7 @@ class AssistanceRequest < ActiveRecord::Base
   end
 
   def position_in_queue
-    self.class.open_requests.where(type: nil).where('id > ?', id).count + 1
+    self.class.open_requests.where(type: nil).where('id < ?', id).count + 1
   end
 
   private
