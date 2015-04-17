@@ -28,18 +28,16 @@ class AssistanceRequestsController < ApplicationController
         # Fetch most recent student initiated request
         ar = current_user.assistance_requests.where(type: nil).newest_requests_first.first
         res = {}
-        if ar && (ar.open? || ar.in_progress?)
-          if ar.assistance
-            res[:state] = :active
-            res[:assistor] = {
+        if ar.try(:open?)
+          res[:state] = :waiting
+          res[:position_in_queue] = ar.position_in_queue
+        elsif ar.try(:in_progress?)
+          res[:state] = :active
+          res[:assistor] = {
               id: ar.assistance.assistor.id,
               first_name: ar.assistance.assistor.first_name,
               last_name: ar.assistance.assistor.last_name
-            }
-          else
-            res[:state] = :waiting
-            res[:position_in_queue] = ar.position_in_queue
-          end
+          }
         else
           res[:state] = :inactive
         end

@@ -55,11 +55,11 @@ describe User do
 
   describe '#waiting_for_assistance?' do
     it 'returns true if the user has an open assistance request' do
-      ar = create(:assistance_request, canceled_at: nil, assistance: nil)
+      ar = create(:assistance_request)
       expect(ar.requestor.waiting_for_assistance?).to be_true
     end
     it 'returns false if the user only has canceled assistance requests' do
-      ar = create(:assistance_request, canceled_at: Date.current, assistance: nil)
+      ar = create(:canceled_assistance_request)
       expect(ar.requestor.waiting_for_assistance?).to be_false
     end
     it 'returns false if the user doesn\'t have any in progress assistance requests' do
