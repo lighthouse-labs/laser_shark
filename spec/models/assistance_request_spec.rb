@@ -76,6 +76,15 @@ describe AssistanceRequest do
       expect(ar2.position_in_queue).to eq(2)
       expect(ar3.position_in_queue).to eq(3)
     end
+    it 'returns nil for canceled requests' do
+      expect(create(:assistance_request, canceled_at: Date.current).position_in_queue).to be_nil
+    end
+    it 'returns nil for in progress requests' do
+      expect(create(:assistance_request, canceled_at: nil, assistance: create(:assistance, end_at: nil)).position_in_queue).to be_nil
+    end
+    it 'returns nil for completed requests' do
+      expect(create(:assistance_request, canceled_at: nil, assistance: create(:assistance, end_at: Date.current)).position_in_queue).to be_nil
+    end
   end
 
   describe '.in_progress_requests' do
