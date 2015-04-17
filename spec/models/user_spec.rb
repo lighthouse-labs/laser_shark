@@ -28,38 +28,6 @@ describe User do
     end
   end
 
-  describe '#latest_open_assistance_request' do
-    it 'returns an open assistance request if the user has one' do
-      ar = create(:assistance_request, canceled_at: nil, assistance: nil)
-      expect(ar.requestor.latest_open_assistance_request).to eq(ar)
-    end
-    it 'returns nil if the user doesn\'t have an open assistance request' do
-      expect(create(:user).latest_open_assistance_request).to be_nil
-    end
-  end
-
-  describe '#assistance_currently_requested_or_in_progress?' do
-    it 'returns true if the user has an open assistance request' do
-      ar = create(:assistance_request, canceled_at: nil, assistance: nil)
-      expect(ar.requestor.assistance_currently_requested_or_in_progress?).to be_true
-    end
-    it 'returns true if the user has an in progress assistance request' do
-      ar = create(:assistance_request, canceled_at: nil, assistance: create(:assistance, end_at: nil))
-      expect(ar.requestor.assistance_currently_requested_or_in_progress?).to be_true
-    end
-    it 'returns false if the user doesn\'t have an open or in progress assistance request' do
-      expect(create(:user).assistance_currently_requested_or_in_progress?).to be_false
-    end
-    it 'returns false if the user only has canceled assistance requests' do
-      ar = create(:assistance_request, canceled_at: Date.current, assistance: nil)
-      expect(ar.requestor.assistance_currently_requested_or_in_progress?).to be_false
-    end
-    it 'returns false if the user only has completed assistance requests' do
-      ar = create(:assistance_request, canceled_at: nil, assistance: create(:assistance, end_at: Date.current))
-      expect(ar.requestor.assistance_currently_requested_or_in_progress?).to be_false
-    end
-  end
-
   describe '#being_assisted?' do
     it 'returns true if the user has an in progress assistance request' do
       ar = create(:assistance_request, canceled_at: nil, assistance: create(:assistance, end_at: nil))

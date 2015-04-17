@@ -57,7 +57,7 @@ class AssistanceRequest < ActiveRecord::Base
   end
 
   def limit_one_per_user
-    if type.nil? && requestor.assistance_currently_requested_or_in_progress?
+    if type.nil? && requestor.assistance_requests.where(type: nil).open_or_in_progress_requests.exists?
       errors.add :base, 'Limit one open/in progress request per user'
       false
     end

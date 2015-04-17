@@ -26,7 +26,7 @@ class AssistanceRequestsController < ApplicationController
     respond_to do |format|
       format.json {
         # Fetch most recent student initiated request
-        ar = AssistanceRequest.where(type: nil).requested_by(current_user).newest_requests_first.first
+        ar = current_user.assistance_requests.where(type: nil).newest_requests_first.first
         res = {}
         if ar && (ar.open? || ar.in_progress?)
           if ar.assistance
@@ -59,7 +59,7 @@ class AssistanceRequestsController < ApplicationController
   end
 
   def cancel
-    ar = current_user.latest_open_assistance_request
+    ar = current_user.assistance_requests.where(type: nil).open_requests.newest_requests_first.first
     status = ar.try(:cancel) ? 200 : 400
 
     respond_to do |format|

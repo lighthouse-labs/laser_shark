@@ -58,15 +58,6 @@ class User < ActiveRecord::Base
     unlocked? CurriculumDay.new(day, cohort)
   end
 
-  def latest_open_assistance_request
-    self.assistance_requests.where(type: nil).open_requests.newest_requests_first.first
-  end
-
-  def assistance_currently_requested_or_in_progress?
-    # using type: nil assumes that child ones are not for the student to cancel
-    self.assistance_requests.where(type: nil).open_or_in_progress_requests.exists?
-  end
-
   def being_assisted?
     self.assistance_requests.where(type: nil).in_progress_requests.exists?
   end
