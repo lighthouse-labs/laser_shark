@@ -8,7 +8,9 @@ $ ->
 
     ar_create_button = $('#assistance-request-create-button')
     ar_cancel_button = $('#assistance-request-cancel-button')
+    ar_cancel_buttons = $('.cancel-request')
     ar_current_assistor = $('#assistance-request-current-assistor')
+    ar_current_assistor_name = ar_current_assistor.find('.assistor_name')
 
     default_cancel_button_text = ar_cancel_button.text()
 
@@ -16,10 +18,10 @@ $ ->
       $(@).addClass('hidden')
       ar_cancel_button.removeClass('hidden')
 
-    ar_cancel_button.click (e) ->
-      # Do nothing if assistance is in progress
+    ar_cancel_buttons.click (e) ->
       if confirm("Are you sure you want to cancel your request?")
-        $(@).addClass('hidden')
+        ar_cancel_button.addClass('hidden')
+        ar_current_assistor.addClass('hidden')
         ar_create_button.removeClass('hidden')
       else
         return false
@@ -29,8 +31,8 @@ $ ->
         cancel_button_text = if data.state == 'waiting' then 'No. ' + data.position_in_queue + ' in Request Queue' else default_cancel_button_text
         ar_cancel_button.text(cancel_button_text)
 
-        current_assistor_text = if data.state == 'active' then data.assistor.first_name + ' ' + data.assistor.last_name + ' assisting' else ''
-        ar_current_assistor.text(current_assistor_text)
+        current_assistor_text = if data.state == 'active' then data.assistor.first_name + ' ' + data.assistor.last_name else ''
+        ar_current_assistor_name.text(current_assistor_text)
 
         if data.state == 'active'
           ar_create_button.addClass('hidden')

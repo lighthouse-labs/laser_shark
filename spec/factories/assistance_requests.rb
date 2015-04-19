@@ -19,11 +19,6 @@ FactoryGirl.define do
       association :assistance, end_at: nil
     end
 
-    factory :canceled_in_progress_assistance_request do
-      canceled_at Date.current
-      association :assistance, end_at: nil
-    end
-
     factory :completed_assistance_request do
       canceled_at nil
       association :assistance, end_at: Date.current

@@ -3,7 +3,7 @@ class AssistanceRequestsController < ApplicationController
   before_filter :teacher_required, only: [:index, :destroy, :start_assistance, :end_assistance]
 
   def index
-    @my_active_assistances = Assistance.currently_active.assisted_by(current_user)
+    @my_active_assistances = Assistance.assisted_by(current_user).currently_active
     @requests = AssistanceRequest.where(type: nil).open_requests.oldest_requests_first
     @code_reviews = CodeReviewRequest.open_requests.oldest_requests_first
     @all_students = Student.in_active_cohort.active.order_by_last_assisted_at
@@ -57,8 +57,8 @@ class AssistanceRequestsController < ApplicationController
   end
 
   def cancel
-    ar = current_user.assistance_requests.where(type: nil).open_requests.newest_requests_first.first
-    status = ar.try(:cancel) ? 200 : 400
+    ar = current_user.assistance_requests.where(type: nil).open_or_in_progress_requests.newest_requests_first.first
+    status = ar.try(:cancel) ? 200 : 409
 
     respond_to do |format|
       format.json { render(:nothing => true, :status => status) }
@@ -68,7 +68,7 @@ class AssistanceRequestsController < ApplicationController
 
   def destroy
     ar = AssistanceRequest.find params[:id]
-    status = ar.try(:cancel) ? 200 : 400
+    status = ar.try(:cancel) ? 200 : 409
 
     respond_to do |format|
       format.json { render(:nothing => true, :status => status) }

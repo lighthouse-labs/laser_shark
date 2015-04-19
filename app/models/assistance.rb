@@ -7,7 +7,10 @@ class Assistance < ActiveRecord::Base
 
   before_create :set_start_at
 
-  scope :currently_active, -> { where(:end_at => nil) }
+  scope :currently_active, -> {
+    joins("LEFT OUTER JOIN assistance_requests ON assistance_requests.assistance_id = assistances.id").
+    where("assistance_requests.canceled_at IS NULL AND assistances.end_at IS NULL")
+  }
   scope :order_by_start, -> { order(:start_at) }
   scope :assisted_by, -> (user) { where(:assistor => user) }
   scope :assisting, -> (user) { where(:assistee => user) }
