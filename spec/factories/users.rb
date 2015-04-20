@@ -6,6 +6,7 @@ FactoryGirl.define do
   	phone_number { Faker::PhoneNumber.phone_number }
   	twitter      { Faker::Internet.user_name }
   	skype        { Faker::Internet.user_name }
+  	slack        { Faker::Internet.user_name }
   	sequence(:uid, 1000)
   	sequence(:token, 2000)
     completed_registration true
@@ -19,6 +20,7 @@ FactoryGirl.define do
       phone_number nil
       twitter      nil
       skype        nil
+      slack        nil
       completed_registration nil
     end
   end

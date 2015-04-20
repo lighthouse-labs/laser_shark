@@ -59,9 +59,12 @@
       <h4 class="student-heading">{{assistee.first_name}} {{assistee.last_name}}</h4>
       <p class="student-cohort"><span class="cohort-name">{{assistee.cohort.name}}</span> <span class="cohort-location">{{assistee.cohort.location}}</span></p>
       <p class="assistance-timestamp">You started assisting <abbr class="timeago" title="{{start_at}}">{{start_at}}</abbr></p>
-      {{#assistance_request.activity_submission}}
-      <p><b>Submission URL:</b> <a target="_blank" href="{{assistance_request.activity_submission.github_url}}">{{assistance_request.activity_submission.github_url}}</a></p>
-      {{/assistance_request.activity_submission}}
+      <dl class="well">
+        {{#assistance_request.activity_submission}}<dt>Submission URL</dt><dd><a target="_blank" href="{{assistance_request.activity_submission.github_url}}">{{assistance_request.activity_submission.github_url}}</a></dd>{{/assistance_request.activity_submission}}
+        {{#assistee.email}}<dt>Email/Screenhero</dt><dd>{{assistee.email}}</dd>{{/assistee.email}}
+        {{#assistee.slack}}<dt>Slack</dt><dd>{{assistee.slack}}</dd>{{/assistee.slack}}
+        {{#assistee.skype}}<dt>Skype</dt><dd>{{assistee.skype}}</dd>{{/assistee.skype}}
+      </dl>
       <p>
         <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#assistance_model_{{id}}">
           End Assistance
