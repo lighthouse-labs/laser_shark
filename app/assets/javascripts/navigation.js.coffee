@@ -13,10 +13,15 @@ $ ->
 
     ar_cancel_button.tooltip()
 
-    ar_create_button.click (e) ->
+    ar_form = $('#assistance-request-form')
+    ar_modal = $('#assistance-request-reason-modal')
+
+    ar_form.on('submit', ->
+      ar_modal.modal('hide')
       ar_cancel_button.text('Waiting for Assistance')
       ar_create.addClass('hidden')
       ar_cancel.removeClass('hidden')
+    )
 
     ar_cancel_button.click (e) ->
       if confirm("Are you sure you want to withdraw this assistance request?")

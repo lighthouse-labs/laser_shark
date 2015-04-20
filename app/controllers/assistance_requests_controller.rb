@@ -48,7 +48,7 @@ class AssistanceRequestsController < ApplicationController
   end
 
   def create
-    ar = AssistanceRequest.new(:requestor => current_user)
+    ar = AssistanceRequest.new(:requestor => current_user, :reason => params[:reason])
     status = ar.save ? 200 : 400
     respond_to do |format|
       format.json { render(:nothing => true, :status => status) }
