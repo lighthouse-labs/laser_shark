@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150325185301) do
+ActiveRecord::Schema.define(version: 20150420184454) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -55,6 +55,7 @@ ActiveRecord::Schema.define(version: 20150325185301) do
     t.datetime "canceled_at"
     t.string   "type"
     t.integer  "activity_submission_id"
+    t.string   "reason"
   end
 
   add_index "assistance_requests", ["activity_submission_id"], name: "index_assistance_requests_on_activity_submission_id", using: :btree
@@ -119,6 +120,7 @@ ActiveRecord::Schema.define(version: 20150325185301) do
     t.string   "unlocked_until_day"
     t.datetime "last_assisted_at"
     t.datetime "deactivated_at"
+    t.string   "slack"
   end
 
   add_index "users", ["cohort_id"], name: "index_users_on_cohort_id", using: :btree
