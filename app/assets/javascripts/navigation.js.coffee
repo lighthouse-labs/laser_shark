@@ -6,46 +6,38 @@ $ ->
 
   if haveAssistanceUI()
 
-    ar_create_button = $('#assistance-request-create-button')
-    ar_cancel_button = $('#assistance-request-cancel-button')
-    ar_cancel_buttons = $('.cancel-request')
-    ar_current_assistor = $('#assistance-request-current-assistor')
-    ar_current_assistor_name = ar_current_assistor.find('.assistor_name')
+    ar_create = $('#create-assistance-request')
+    ar_create_button = ar_create.find('a')
+    ar_cancel = $('#cancel-assistance-request')
+    ar_cancel_button = ar_cancel.find('a')
 
-    default_cancel_button_text = ar_cancel_button.text()
+    ar_cancel_button.tooltip()
 
     ar_create_button.click (e) ->
-      $(@).addClass('hidden')
-      ar_cancel_button.removeClass('hidden')
+      ar_cancel_button.text('Waiting for Assistance')
+      ar_create.addClass('hidden')
+      ar_cancel.removeClass('hidden')
 
-    ar_cancel_buttons.click (e) ->
-      if confirm("Are you sure you want to cancel your request?")
-        ar_cancel_button.addClass('hidden')
-        ar_current_assistor.addClass('hidden')
-        ar_create_button.removeClass('hidden')
+    ar_cancel_button.click (e) ->
+      if confirm("Are you sure you want to withdraw this assistance request?")
+        ar_cancel.addClass('hidden')
+        ar_create.removeClass('hidden')
       else
         return false
 
     updateAssistanceUI = ->
       $.getJSON '/assistance_requests/status', (data) ->
-        cancel_button_text = if data.state == 'waiting' then 'No. ' + data.position_in_queue + ' in Request Queue' else default_cancel_button_text
-        ar_cancel_button.text(cancel_button_text)
-
-        current_assistor_text = if data.state == 'active' then data.assistor.first_name + ' ' + data.assistor.last_name else ''
-        ar_current_assistor_name.text(current_assistor_text)
-
-        if data.state == 'active'
-          ar_create_button.addClass('hidden')
-          ar_cancel_button.addClass('hidden')
-          ar_current_assistor.removeClass('hidden')
-        else if data.state == 'waiting'
-          ar_create_button.addClass('hidden')
-          ar_cancel_button.removeClass('hidden')
-          ar_current_assistor.addClass('hidden')
+        if data.state == 'waiting'
+          ar_cancel_button.text('No. ' + data.position_in_queue + ' in Request Queue')
+          ar_create.addClass('hidden')
+          ar_cancel.removeClass('hidden')
+        else if data.state == 'active'
+          ar_cancel_button.text(data.assistor.first_name + ' ' + data.assistor.last_name + ' assisting')
+          ar_create.addClass('hidden')
+          ar_cancel.removeClass('hidden')
         else
-          ar_create_button.removeClass('hidden')
-          ar_cancel_button.addClass('hidden')
-          ar_current_assistor.addClass('hidden')
+          ar_create.removeClass('hidden')
+          ar_cancel.addClass('hidden')
 
     poll = ->
       updateAssistanceUI()

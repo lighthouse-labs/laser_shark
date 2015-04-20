@@ -76,9 +76,10 @@ nav.navbar.navbar-inverse.navbar-embossed.navbar-fixed-top role="navigation"
               = link_to 'Sign Out', session_path, :method => :delete
         - if current_user.active_student?
           li#assistance-request-module
-            = link_to 'Waiting for Assistance', cancel_assistance_requests_path, method: :delete, remote: true, id: 'assistance-request-cancel-button', class: "btn btn-warning cancel-request #{'hidden' unless current_user.waiting_for_assistance?}"
-            = link_to 'Request Assistance', assistance_requests_path, method: :post, remote: true, id: 'assistance-request-create-button', class: "btn btn-primary #{'hidden' if current_user.waiting_for_assistance? or current_user.being_assisted?}"
-            = link_to "<span class='assistor-name'>#{current_user.current_assistor.try(:full_name) if current_user.being_assisted?}</span> assisting".html_safe, cancel_assistance_requests_path, method: :delete, remote: true, id: 'assistance-request-current-assistor', class: "cancel-request  #{'hidden' unless current_user.being_assisted?}"
+            span#cancel-assistance-request class="#{'hidden' unless current_user.waiting_for_assistance? || current_user.being_assisted?}"
+              = link_to (current_user.being_assisted? ? ("#{current_user.current_assistor.try(:full_name) || 'TA'} assisting") : current_user.waiting_for_assistance? ? "No. #{current_user.position_in_queue || 1} in Request Queue" : 'Waiting for Assistance'), cancel_assistance_requests_path, method: :delete, remote: true, class: "navbar-btn btn btn-warning", 'data-toggle' => 'tooltip', 'data-placement' => 'bottom', 'title' => 'Cancel this Assistance Request'
+            span#create-assistance-request class="#{'hidden' if current_user.waiting_for_assistance? || current_user.being_assisted?}"
+              = link_to 'Request Assistance', assistance_requests_path, method: :post, remote: true, class: "navbar-btn btn btn-primary"
       - else
         li
           = link_to "Sign In", new_session_path

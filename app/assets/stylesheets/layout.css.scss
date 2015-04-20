@@ -24,23 +24,20 @@ nav {
     }
   }
 
-  #assistance-request-module {
-    & > a.btn:hover,
-    & > a.btn:focus {
-      color: white;
-    }
-    & > a.btn-primary:hover,
-    & > a.btn-primary:focus {
-      background-color: #1abc9c;
-    }
-    & > a.btn-warning:hover,
-    & > a.btn-warning:focus {
-      background-color: #cca60c;
-    }
-    #assistance-request-current-assistor {
-      color: $brand-secondary;
+  .navbar-btn {
+    &.btn-warning {
+      background-color: $brand-warning;
+      &:hover,
+      &:focus {
+        background-color: #dab10d;
+      }
     }
   }
+
+  #assistance-request-module {
+    margin-left: 6px;
+  }
+
 }
 
 main {

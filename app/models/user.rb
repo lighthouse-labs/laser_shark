@@ -62,6 +62,10 @@ class User < ActiveRecord::Base
     self.assistance_requests.where(type: nil).in_progress_requests.exists?
   end
 
+  def position_in_queue
+    self.assistance_requests.where(type: nil).open_requests.newest_requests_first.first.try(:position_in_queue)
+  end
+
   def current_assistor
     self.assistance_requests.where(type: nil).in_progress_requests.newest_requests_first.first.try(:assistance).try(:assistor)
   end
