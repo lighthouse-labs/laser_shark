@@ -33,6 +33,24 @@ ActiveRecord::Schema.define(version: 20150420184454) do
     t.string   "revisions_gistid"
   end
 
+  create_table "activity_messages", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "cohort_id"
+    t.integer  "activity_id"
+    t.string   "kind",          limit: 50
+    t.string   "day",           limit: 5
+    t.string   "subject",       limit: 1000
+    t.text     "body"
+    t.text     "teacher_notes"
+    t.boolean  "for_students"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "activity_messages", ["activity_id"], name: "index_activity_messages_on_activity_id", using: :btree
+  add_index "activity_messages", ["cohort_id"], name: "index_activity_messages_on_cohort_id", using: :btree
+  add_index "activity_messages", ["user_id"], name: "index_activity_messages_on_user_id", using: :btree
+
   create_table "activity_submissions", force: true do |t|
     t.integer  "user_id"
     t.integer  "activity_id"
@@ -77,8 +95,12 @@ ActiveRecord::Schema.define(version: 20150420184454) do
     t.datetime "updated_at"
     t.date     "start_date"
     t.string   "code"
-    t.string   "location",   default: "Vancouver"
+    t.string   "location",            default: "Vancouver"
+    t.string   "teacher_email_group"
+    t.integer  "program_id"
   end
+
+  add_index "cohorts", ["program_id"], name: "index_cohorts_on_program_id", using: :btree
 
   create_table "comments", force: true do |t|
     t.text     "content"
@@ -100,6 +122,13 @@ ActiveRecord::Schema.define(version: 20150420184454) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "day"
+  end
+
+  create_table "programs", force: true do |t|
+    t.string   "name"
+    t.text     "lecture_tips"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "users", force: true do |t|
