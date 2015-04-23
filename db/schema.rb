@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150415221510) do
+ActiveRecord::Schema.define(version: 20150420184454) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -32,24 +32,6 @@ ActiveRecord::Schema.define(version: 20150415221510) do
     t.string   "media_filename"
     t.string   "revisions_gistid"
   end
-
-  create_table "activity_messages", force: true do |t|
-    t.integer  "user_id"
-    t.integer  "cohort_id"
-    t.integer  "activity_id"
-    t.string   "kind",          limit: 50
-    t.string   "day",           limit: 5
-    t.string   "subject",       limit: 1000
-    t.text     "body"
-    t.text     "teacher_notes"
-    t.boolean  "for_students"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "activity_messages", ["activity_id"], name: "index_activity_messages_on_activity_id", using: :btree
-  add_index "activity_messages", ["cohort_id"], name: "index_activity_messages_on_cohort_id", using: :btree
-  add_index "activity_messages", ["user_id"], name: "index_activity_messages_on_user_id", using: :btree
 
   create_table "activity_submissions", force: true do |t|
     t.integer  "user_id"
@@ -73,6 +55,7 @@ ActiveRecord::Schema.define(version: 20150415221510) do
     t.datetime "canceled_at"
     t.string   "type"
     t.integer  "activity_submission_id"
+    t.string   "reason"
   end
 
   add_index "assistance_requests", ["activity_submission_id"], name: "index_assistance_requests_on_activity_submission_id", using: :btree
@@ -94,12 +77,8 @@ ActiveRecord::Schema.define(version: 20150415221510) do
     t.datetime "updated_at"
     t.date     "start_date"
     t.string   "code"
-    t.string   "location",            default: "Vancouver"
-    t.string   "teacher_email_group"
-    t.integer  "program_id"
+    t.string   "location",   default: "Vancouver"
   end
-
-  add_index "cohorts", ["program_id"], name: "index_cohorts_on_program_id", using: :btree
 
   create_table "comments", force: true do |t|
     t.text     "content"
@@ -123,13 +102,6 @@ ActiveRecord::Schema.define(version: 20150415221510) do
     t.string   "day"
   end
 
-  create_table "programs", force: true do |t|
-    t.string   "name"
-    t.text     "lecture_tips"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "users", force: true do |t|
     t.string   "first_name"
     t.string   "last_name"
@@ -148,6 +120,7 @@ ActiveRecord::Schema.define(version: 20150415221510) do
     t.string   "unlocked_until_day"
     t.datetime "last_assisted_at"
     t.datetime "deactivated_at"
+    t.string   "slack"
   end
 
   add_index "users", ["cohort_id"], name: "index_users_on_cohort_id", using: :btree

@@ -6,5 +6,6 @@ FactoryGirl.define do
   	phone_number { Faker::PhoneNumber.phone_number }
   	twitter      { Faker::Internet.user_name }
   	skype        { Faker::Internet.user_name }
+  	slack        { Faker::Internet.user_name }
   end
 end

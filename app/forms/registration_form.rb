@@ -7,6 +7,7 @@ class RegistrationForm < Reform::Form
   property :phone_number, on: :user
   property :twitter,  		on: :user
   property :skype,  			on: :user
+  property :slack,  			on: :user
   property :custom_avatar, on: :user
 
   property :completed_registration, on: :user

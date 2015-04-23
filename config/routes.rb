@@ -18,6 +18,7 @@ LaserShark::Application.routes.draw do
   resources :assistance_requests, only: [:index, :create, :destroy] do
     collection do
       delete :cancel
+      get :status
     end
     member do
       post :start_assistance

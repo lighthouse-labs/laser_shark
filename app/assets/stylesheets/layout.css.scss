@@ -24,18 +24,20 @@ nav {
     }
   }
 
-  .navbar-nav > .assistance-request {
-    & > a:not(.active){
-      display: none;
-    }
-    & > a:hover{
-      background-color: #1abc9c;
-      color: white;
-    }
-    & > a.delete-request:hover{
-      background-color: #cca60c;
+  .navbar-btn {
+    &.btn-warning {
+      background-color: $brand-warning;
+      &:hover,
+      &:focus {
+        background-color: #dab10d;
+      }
     }
   }
+
+  #assistance-request-module {
+    margin-left: 6px;
+  }
+
 }
 
 main {

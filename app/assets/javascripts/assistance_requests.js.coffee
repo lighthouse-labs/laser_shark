@@ -50,27 +50,15 @@ $ ->
 
       $('.timeago').timeago()
 
-  $('.assistance-request > .btn').click (e) ->
-    if $(@).hasClass('delete-request')
-      if !confirm("Are you sure you want to cancel your request?")
-        e.stopPropagation()
-        e.preventDefault()
-      else
-        $(@).removeClass('active')
-        $(@).parent().children().not('.delete-request').addClass('active')
-    else
-      $(@).removeClass('active')
-      $(@).parent().children('.delete-request').addClass('active')
-
   #Enable timeago
   $('.requests-list .timeago').timeago()
 
-  if $('.requests-list').length > 0
-    #We are on the requests page
+  onRequestsPage = ->
+    return $('.requests-list').length > 0
 
+  if onRequestsPage()
     poll = ->
-      if $('.requests-list').length > 0
-        getRequestData()
-        setTimeout(poll, 1000 * 3)
+      getRequestData()
+      setTimeout(poll, 3000)
 
     poll()

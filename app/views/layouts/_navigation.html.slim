@@ -10,9 +10,9 @@ nav.navbar.navbar-inverse.navbar-embossed.navbar-fixed-top role="navigation"
           i.fa.fa-home
           |  Home
       li
-          = link_to setup_path
-            i.fa.fa-paper-plane-o
-            |  Setup
+        = link_to setup_path
+          i.fa.fa-paper-plane-o
+          |  Setup
       - if current_user && !current_user.completed_registration?
         li
           = link_to new_registration_path
@@ -74,14 +74,13 @@ nav.navbar.navbar-inverse.navbar-embossed.navbar-fixed-top role="navigation"
               = link_to "Edit profile", edit_profile_path
             li
               = link_to 'Sign Out', session_path, :method => :delete
-
         - if current_user.active_student?
-          li.assistance-request
-            = link_to cancel_assistance_requests_path, method: :delete, remote: true, class: "btn btn-md btn-warning delete-request #{'active' if current_user.assistance_currently_requested_or_in_progress?}"
-              span Waiting for Assistance
-            = link_to assistance_requests_path, method: :post, remote: true, class: "btn btn-md btn-primary #{'active' unless current_user.assistance_currently_requested_or_in_progress?}"
-              span Request Assistance
-
+          li#assistance-request-module
+            span#cancel-assistance-request class="#{'hidden' unless current_user.waiting_for_assistance? || current_user.being_assisted?}"
+              = link_to (current_user.being_assisted? ? ("#{current_user.current_assistor.try(:full_name) || 'TA'} assisting") : current_user.waiting_for_assistance? ? "No. #{current_user.position_in_queue || 1} in Request Queue" : 'Waiting for Assistance'), cancel_assistance_requests_path, method: :delete, remote: true, class: "navbar-btn btn btn-warning", 'data-toggle' => 'tooltip', 'data-placement' => 'bottom', 'title' => 'Cancel this Assistance Request'
+            span#create-assistance-request class="#{'hidden' if current_user.waiting_for_assistance? || current_user.being_assisted?}"
+              button.btn.navbar-btn.btn-primary data-toggle="modal" data-target="#assistance-request-reason-modal"
+                | Request Assistance
       - else
         li
           = link_to "Sign In", new_session_path
@@ -89,3 +88,23 @@ nav.navbar.navbar-inverse.navbar-embossed.navbar-fixed-top role="navigation"
         li
           = link_to "Retina Mode", '#', class: 'btn btn-warning', id: 'a1-retina-mode', data: { 'no-turbolink' => true }
 /! /.navbar-collapse
+- if current_user && current_user.active_student?
+  .modal.fade#assistance-request-reason-modal
+    .modal-dialog
+      .modal-content
+        .modal-header
+          button.close type='button' data-dismiss='modal'
+            span aria-hidden='true'
+              | &times;
+            span.sr-only
+              | Close
+          h4.modal-title
+            | Reason for Assistance
+        = form_tag '/assistance_requests', method: 'post', remote: true, id: 'assistance-request-form'
+          .modal-body
+            .form-group
+              = text_area_tag(:reason, nil, placeholder: 'What do you need assistance with?', class: 'form-control')
+          .modal-footer
+            button.btn.btn-default type='button' data-dismiss='modal'
+              | Cancel
+            = submit_tag 'Request Assistance', class: 'btn btn-primary'

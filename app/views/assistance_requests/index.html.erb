@@ -8,6 +8,9 @@
       <h4 class="student-heading">{{requestor.first_name}} {{requestor.last_name}}</h4>
       <p class="student-cohort"><span class="cohort-name">{{requestor.cohort.name}}</span> <span class="cohort-location">{{requestor.cohort.location}}</span></p>
       <p class="assistance-timestamp">Requested assistance <abbr class="timeago" title="{{start_at}}">{{start_at}}</abbr></p>
+      {{#reason}}
+      <p><b>Reason:</b> {{reason}}</p>
+      {{/reason}}
       <p>
         <a href="/assistance_requests/{{id}}/start_assistance" class="btn btn-primary btn-lg" data-method="post">Start Assisting</a>
         <a href="/assistance_requests/{{id}}" class="btn btn-danger btn-lg" data-method="delete">&times;</a>
@@ -24,7 +27,7 @@
     <div class="student-description">
       <h4 class="student-heading">{{requestor.first_name}} {{requestor.last_name}}</h4>
       <p class="student-cohort"><span class="cohort-name">{{requestor.cohort.name}}</span> <span class="cohort-location">{{requestor.cohort.location}}</span></p>
-      <p class="assistance-timestamp">Requested code review <abbr class="timeago" title="{{start_at}}">{{start_at}}</abbr></p>
+      <p class="assistance-timestamp">Generated code review <abbr class="timeago" title="{{start_at}}">{{start_at}}</abbr></p>
       {{#activity_submission}}
       <p><b>Submission URL:</b> <a target="_blank" href="{{activity_submission.github_url}}">{{activity_submission.github_url}}</a></p>
       {{/activity_submission}}
@@ -58,13 +61,34 @@
     <div class="student-description">
       <h4 class="student-heading">{{assistee.first_name}} {{assistee.last_name}}</h4>
       <p class="student-cohort"><span class="cohort-name">{{assistee.cohort.name}}</span> <span class="cohort-location">{{assistee.cohort.location}}</span></p>
-      <p class="assistance-timestamp">You started assisting <abbr class="timeago" title="{{start_at}}">{{start_at}}</abbr></p>
+      <p class="assistance-timestamp">You started
+        {{#assistance_request.activity_submission}}
+          reviewing
+        {{/assistance_request.activity_submission}}
+        {{^assistance_request.activity_submission}}
+          assisting
+        {{/assistance_request.activity_submission}}
+        <abbr class="timeago" title="{{start_at}}">{{start_at}}</abbr>
+      </p>
+      {{#assistance_request.reason}}
+      <p><b>Reason:</b> {{assistance_request.reason}}</p>
+      {{/assistance_request.reason}}
       {{#assistance_request.activity_submission}}
       <p><b>Submission URL:</b> <a target="_blank" href="{{assistance_request.activity_submission.github_url}}">{{assistance_request.activity_submission.github_url}}</a></p>
       {{/assistance_request.activity_submission}}
+      <dl class="well">
+        {{#assistee.email}}<dt>Email/Screenhero</dt><dd>{{assistee.email}}</dd>{{/assistee.email}}
+        {{#assistee.slack}}<dt>Slack</dt><dd>{{assistee.slack}}</dd>{{/assistee.slack}}
+        {{#assistee.skype}}<dt>Skype</dt><dd>{{assistee.skype}}</dd>{{/assistee.skype}}
+      </dl>
       <p>
         <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#assistance_model_{{id}}">
-          End Assistance
+          {{#assistance_request.activity_submission}}
+            End Code Review
+          {{/assistance_request.activity_submission}}
+          {{^assistance_request.activity_submission}}
+            End Assistance
+          {{/assistance_request.activity_submission}}
         </button>
       </p>
     </div>
@@ -77,10 +101,12 @@
           </div>
           <form action="/assistances/{{id}}/end" method="post">
             <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
-
             <div class="modal-body">
+              {{#assistance_request.reason}}
+              <div class="form-group"><b>Original reason:</b> {{assistance_request.reason}}</div>
+              {{/assistance_request.reason}}
               <div class="form-group">
-                <textarea id="assistance_notes" name="assistance[notes]" class="form-control"></textarea>
+                <textarea id="assistance_notes" name="assistance[notes]" class="form-control" placeholder="How did the assistance go?"></textarea>
               </div>
               <div class="form-group">
                 <label for="assistance_rating">Rating</label>
@@ -93,6 +119,7 @@
               </div>
             </div>
             <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
               <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="submit()">End Assistance</button>
             </div>
           </form>

@@ -58,12 +58,20 @@ class User < ActiveRecord::Base
     unlocked? CurriculumDay.new(day, cohort)
   end
 
-  def assistance_currently_requested_or_in_progress?
-    # using type: nil assumes that child ones are not for the student to cancel
-    self.assistance_requests.where(type: nil).open_or_inprogress_requests.count > 0
+  def being_assisted?
+    self.assistance_requests.where(type: nil).in_progress_requests.exists?
   end
 
-  def assistance_not_currently_requested_or_in_progress
+  def position_in_queue
+    self.assistance_requests.where(type: nil).open_requests.newest_requests_first.first.try(:position_in_queue)
+  end
+
+  def current_assistor
+    self.assistance_requests.where(type: nil).in_progress_requests.newest_requests_first.first.try(:assistance).try(:assistor)
+  end
+
+  def waiting_for_assistance?
+    self.assistance_requests.where(type: nil).open_requests.exists?
   end
 
   def completed_activity?(activity)
@@ -72,6 +80,10 @@ class User < ActiveRecord::Base
 
   def github_url(activity)
     activity_submissions.where(activity: activity).first.github_url if completed_activity?(activity)
+  end
+
+  def full_name
+    "#{self.first_name} #{self.last_name}"
   end
 
   class << self
@@ -91,10 +103,6 @@ class User < ActiveRecord::Base
         email: auth["info"]["email"]
       }
     end
-  end
-
-  def full_name
-    "#{self.first_name} #{self.last_name}"
   end
 
 end

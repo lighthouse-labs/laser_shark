@@ -18,6 +18,7 @@
 //= require jquery.timeago
 //= require mustache
 //= require assistance_requests
+//= require navigation
 //= require_tree .
 
 
