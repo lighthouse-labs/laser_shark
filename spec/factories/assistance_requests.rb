@@ -2,7 +2,7 @@
 
 FactoryGirl.define do
   factory :assistance_request do
-    association :requestor, factory: :user
+    association :requestor, factory: :student
 
     factory :open_assistance_request do
       canceled_at nil
