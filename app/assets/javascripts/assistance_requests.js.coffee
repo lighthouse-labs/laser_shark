@@ -72,5 +72,4 @@ $ ->
     document.cookie = 'cohort_locations=' + locations_string + '; expires=' + expiry_string + '; path=/'
     getRequestData()
   cohorts_locations_checkboxes.on 'change', updateCohortLocationsCookie
-  updateCohortLocationsCookie()
 
