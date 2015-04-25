@@ -1,3 +1,9 @@
+<div id="cohort-locations">
+  Cohort locations:
+  <% @all_locations.each do |location| %>
+    <label><%= check_box_tag "location_#{location}", location, @selected_locations.include?(location) %> <%= location %></label>
+  <% end %>
+</div>
 <div class="requests-list"></div>
 <script id="request_template" type="x-tmpl-mustache">
   <li>

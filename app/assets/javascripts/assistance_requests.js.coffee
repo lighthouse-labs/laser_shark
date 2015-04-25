@@ -60,5 +60,17 @@ $ ->
     poll = ->
       getRequestData()
       setTimeout(poll, 3000)
-
     poll()
+
+  cohorts_locations_checkboxes = $('#cohort-locations').find('input[type=checkbox]')
+  updateCohortLocationsCookie = ->
+    selected_locations = cohorts_locations_checkboxes.filter(':checked').map(-> $(this).val()).get()
+    locations_string = encodeURIComponent(JSON.stringify(selected_locations))
+    expires = new Date()
+    expires.setFullYear(expires.getFullYear() + 1)
+    expiry_string = expires.toUTCString()
+    document.cookie = 'cohort_locations=' + locations_string + '; expires=' + expiry_string + '; path=/'
+    getRequestData()
+  cohorts_locations_checkboxes.on 'change', updateCohortLocationsCookie
+  updateCohortLocationsCookie()
+
