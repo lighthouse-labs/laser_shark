@@ -54,7 +54,7 @@ class AssistanceRequest < ActiveRecord::Base
   end
 
   def position_in_queue
-    self.class.open_requests.where(type: nil).where('id < ?', id).count + 1 if open?
+    self.class.open_requests.where(type: nil).requestor_cohort_in_locations([requestor.cohort.location]).where('assistance_requests.id < ?', id).count + 1 if open?
   end
 
   private
