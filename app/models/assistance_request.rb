@@ -17,6 +17,13 @@ class AssistanceRequest < ActiveRecord::Base
     joins("LEFT OUTER JOIN assistances ON assistances.id = assistance_requests.assistance_id").
     where("assistance_requests.canceled_at IS NULL AND (assistances.id IS NULL OR assistances.end_at IS NULL)")
   }
+  scope :requestor_cohort_in_locations, -> (locations) {
+    if locations.is_a?(Array) && locations.length > 0
+      joins('LEFT OUTER JOIN users AS requestors ON assistance_requests.requestor_id = requestors.id').
+      joins('LEFT OUTER JOIN cohorts AS requestors_cohorts ON requestors.cohort_id = requestors_cohorts.id').
+      where('requestors_cohorts.location' => locations)
+    end
+  }
   scope :oldest_requests_first, -> { order(start_at: :asc) }
   scope :newest_requests_first, -> { order(start_at: :desc) }
   scope :requested_by, -> (user) { where(:requestor => user) }
