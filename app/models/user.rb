@@ -13,7 +13,12 @@ class User < ActiveRecord::Base
   scope :order_by_last_assisted_at, -> {
     order("last_assisted_at ASC NULLS FIRST")
   }
-
+  scope :cohort_in_locations, -> (locations) {
+    if locations.is_a?(Array) && locations.length > 0
+      joins('LEFT OUTER JOIN cohorts AS cohorts_locations ON users.cohort_id = cohorts_locations.id').
+      where('cohorts_locations.location' => locations)
+    end
+  }
   scope :active, -> {
     where(deactivated_at: nil, completed_registration: true)
   }
