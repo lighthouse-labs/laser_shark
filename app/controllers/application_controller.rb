@@ -48,8 +48,8 @@ class ApplicationController < ActionController::Base
       @cohort ||= Cohort.find_by(id: session[:cohort_id]) if session[:cohort_id]
     end
     @cohort ||= current_user.try(:cohort) # Students have a cohort
-    @cohort ||= Cohort.most_recent.first
-    @program = @cohort.program
+    @cohort ||= Cohort.most_recent.first # If any cohorts exist, use the latest
+    @program = @cohort.try(:program)
     @cohort
   end
   helper_method :cohort

@@ -1,3 +1,9 @@
+#cohort-locations {
+  label {
+    display: inline-block;
+    margin: 0 .25em;
+  }
+}
 .requests-list {
   img {
     height: auto;
@@ -25,6 +31,15 @@
     .student-heading {
       font-size: 250%;
       margin: .125em 0;
+    }
+    .student-remote {
+      background: $brand-danger;
+      color: white;
+      display: block;
+      font-size: 85%;
+      font-weight: bold;
+      text-align: center;
+      text-transform: uppercase;
     }
     .student-cohort {
       margin-top: -.25em;

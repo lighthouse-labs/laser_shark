@@ -2,8 +2,8 @@
 
 FactoryGirl.define do
   factory :assistance do
-    association :assistor, factory: :user
-    association :assistee, factory: :user
+    association :assistor, factory: :teacher
+    association :assistee, factory: :student
     association :assistance_request
   end
 end

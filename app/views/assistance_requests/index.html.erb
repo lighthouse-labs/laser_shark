@@ -1,8 +1,17 @@
+<div id="cohort-locations">
+  Cohort locations:
+  <% @all_locations.each do |location| %>
+    <label><%= check_box_tag "location_#{location}", location, @selected_locations.include?(location) %> <%= location %></label>
+  <% end %>
+</div>
 <div class="requests-list"></div>
 <script id="request_template" type="x-tmpl-mustache">
   <li>
     <div class="student-avatar">
       <img src="{{requestor.custom_avatar.thumb.url}}{{^requestor.custom_avatar.thumb.url}}{{requestor.avatar_url}}{{/requestor.custom_avatar.thumb.url}}" />
+      {{#requestor.remote}}
+      <span class="student-remote">Remote</span>
+      {{/requestor.remote}}
     </div>
     <div class="student-description">
       <h4 class="student-heading">{{requestor.first_name}} {{requestor.last_name}}</h4>
@@ -23,6 +32,9 @@
   <li>
     <div class="student-avatar">
       <img src="{{requestor.custom_avatar.thumb.url}}{{^requestor.custom_avatar.thumb.url}}{{requestor.avatar_url}}{{/requestor.custom_avatar.thumb.url}}" />
+      {{#requestor.remote}}
+      <span class="student-remote">Remote</span>
+      {{/requestor.remote}}
     </div>
     <div class="student-description">
       <h4 class="student-heading">{{requestor.first_name}} {{requestor.last_name}}</h4>
@@ -43,6 +55,9 @@
   <li>
     <div class="student-avatar">
       <img src="{{custom_avatar.thumb.url}}{{^custom_avatar.thumb.url}}{{avatar_url}}{{/custom_avatar.thumb.url}}" />
+      {{#remote}}
+      <span class="student-remote">Remote</span>
+      {{/remote}}
     </div>
     <div class="student-description">
       <h4 class="student-heading">{{first_name}} {{last_name}}</h4>
@@ -57,6 +72,9 @@
   <li class="active">
     <div class="student-avatar">
       <img src="{{assistee.custom_avatar.thumb.url}}{{^assistee.custom_avatar.thumb.url}}{{assistee.avatar_url}}{{/assistee.custom_avatar.thumb.url}}" />
+      {{#assistee.remote}}
+      <span class="student-remote">Remote</span>
+      {{/assistee.remote}}
     </div>
     <div class="student-description">
       <h4 class="student-heading">{{assistee.first_name}} {{assistee.last_name}}</h4>
