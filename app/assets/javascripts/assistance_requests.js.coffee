@@ -55,8 +55,10 @@ $ ->
 
   if onRequestsPage()
     poll = ->
-      getRequestData()
-      setTimeout(poll, 10000)
+      getRequestData().always(->
+        setTimeout(poll, 10000)
+      )
+
     poll()
 
   cohorts_locations_checkboxes = $('#cohort-locations').find('input[type=checkbox]')

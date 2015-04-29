@@ -45,7 +45,8 @@ $ ->
           ar_cancel.addClass('hidden')
 
     poll = ->
-      updateAssistanceUI()
-      setTimeout(poll, 30000)
+      updateAssistanceUI().always(->
+        setTimeout(poll, 30000)
+      )
 
     poll()
