@@ -1,6 +1,7 @@
 class Cohort < ActiveRecord::Base
 
   has_many :students
+  has_many :recordings
   belongs_to :program
   
   validates :name, presence: true
