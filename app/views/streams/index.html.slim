@@ -1,0 +1,9 @@
+h1
+  | Streams
+- streams.each do |stream|
+  h2
+    = link_to stream.title, stream_path(stream)
+  p
+    = stream.description
+  p
+    = link_to 'Watch now &raquo;'.html_safe, stream_path(stream)
