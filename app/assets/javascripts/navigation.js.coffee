@@ -46,6 +46,6 @@ $ ->
 
     poll = ->
       updateAssistanceUI()
-      setTimeout(poll, 6000)
+      setTimeout(poll, 30000)
 
     poll()

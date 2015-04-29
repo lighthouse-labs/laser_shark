@@ -50,16 +50,13 @@ $ ->
 
       $('.timeago').timeago()
 
-  #Enable timeago
-  $('.requests-list .timeago').timeago()
-
   onRequestsPage = ->
     return $('.requests-list').length > 0
 
   if onRequestsPage()
     poll = ->
       getRequestData()
-      setTimeout(poll, 3000)
+      setTimeout(poll, 10000)
     poll()
 
   cohorts_locations_checkboxes = $('#cohort-locations').find('input[type=checkbox]')
