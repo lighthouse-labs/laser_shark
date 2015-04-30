@@ -115,8 +115,9 @@ section.activity-details
             div
               = "Presented by: #{recording.presenter.full_name}"
             div
-              a href="TODO"
-                | Download file
+              a href=recording.s3_url title="Right click > Save Link As..."
+                span.fa.fa-file-video-o
+                |  Download file
               = ' | '
               = link_to 'Watch now &raquo;'.html_safe, recording
 
