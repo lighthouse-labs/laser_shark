@@ -61,7 +61,16 @@ nav.navbar.navbar-inverse.navbar-embossed.navbar-fixed-top role="navigation"
                 = link_to cohort.name, [:switch_to, cohort], method: :put
 
       - if current_user
-
+        - if current_user.active_student? && current_user.remote?
+          li.dropdown
+            = link_to "#", :class => "dropdown-toggle", :"data-toggle" => "dropdown" do
+              | Streams
+              b.caret
+            span.dropdown-arrow
+            ul.dropdown-menu
+              - streams.each do |stream|
+                li
+                  = link_to stream.title, stream_path(stream)
         li.dropdown.student
           = link_to "#", :class => "dropdown-toggle", :"data-toggle" => "dropdown" do
             = image_tag avatar_for(current_user)

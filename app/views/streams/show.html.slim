@@ -1,0 +1,9 @@
+h1
+  = @stream.title
+p
+  = @stream.description
+- if @stream.wowza_id
+  #wowza_player_content
+    #wowza_player
+      | Loading...
+  script src="https://player.cloud.wowza.com/hosted/#{@stream.wowza_id}/wowza.js"
