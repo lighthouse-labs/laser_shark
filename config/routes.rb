@@ -51,6 +51,7 @@ LaserShark::Application.routes.draw do
     put :switch_to, on: :member
   end
 
+  resources :recordings, only: [:show]
 
   # ADMIN
   namespace :admin do
