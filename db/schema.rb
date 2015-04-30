@@ -144,6 +144,14 @@ ActiveRecord::Schema.define(version: 20150430135200) do
     t.integer  "program_id"
   end
 
+  create_table "streams", force: true do |t|
+    t.string   "title"
+    t.string   "description"
+    t.string   "wowza_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "users", force: true do |t|
     t.string   "first_name"
     t.string   "last_name"

@@ -59,6 +59,11 @@ class ApplicationController < ActionController::Base
   end
   helper_method :cohorts
 
+  def streams
+    @streams ||= Stream.order(:title)
+  end
+  helper_method :streams
+
   def assign_as_student_to_cohort(cohort)
     current_user.cohort = cohort
     current_user.type = "Student"
