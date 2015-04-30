@@ -100,6 +100,27 @@ section.activity-details
     .instructions
       == markdown @activity.instructions
 
+  - if @activity.recordings.length > 0
+    .recordings
+      h3
+        | Videos
+      - @activity.recordings.each do |recording|
+        .row
+          .col-sm-2.text-center
+            = link_to recording do
+              span.fa.fa-4x.fa-video-camera
+          .col-sm-10
+            div
+              = link_to "Recorded #{format_date_time(recording.recorded_at)}", recording
+            div
+              = "Presented by: #{recording.presenter.full_name}"
+            div
+              a href=recording.s3_url title="Right click > Save Link As..."
+                span.fa.fa-file-video-o
+                |  Download file
+              = ' | '
+              = link_to 'Watch now &raquo;'.html_safe, recording
+
   - if teacher? && @program.lecture_tips? && @activity.is_a?(Lecture)
     .lecture-tips 
       h3 = "Lecture Tips / Reminders"

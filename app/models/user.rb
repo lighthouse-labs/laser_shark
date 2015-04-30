@@ -4,6 +4,8 @@ class User < ActiveRecord::Base
 
   belongs_to :cohort
 
+  has_many :recordings, foreign_key: :presenter_id
+
   has_many :assistance_requests, foreign_key: :requestor_id
   has_many :assistances, foreign_key: :assistee_id
 

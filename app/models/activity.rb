@@ -14,6 +14,7 @@
 
   has_many :activity_submissions
   has_many :messages, class_name: 'ActivityMessage'
+  has_many :recordings
 
   # Given the start_time and duration, return the end_time
   def end_time

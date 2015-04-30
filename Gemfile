@@ -42,6 +42,8 @@ gem 'rubyzip', '>= 1.0.0'
 
 gem 'slack-poster'
 
+gem 'aws-sdk-core'
+
 group :development do
   gem 'spring'
   gem 'quiet_assets'

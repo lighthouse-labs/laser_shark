@@ -1,0 +1,11 @@
+h1
+  = link_to @recording.activity.name, day_activity_path(@recording.activity.day, @recording.activity)
+p
+  = "Recorded <b>#{format_date_time(@recording.recorded_at)}</b> and presented by <b>#{@recording.presenter.full_name}</b>".html_safe
+p
+  video.video-js.vjs-default-skin controls="true" preload="auto" width="100%" height="434"
+    source type="video/mp4" src=@recording.s3_url
+p
+  a href=@recording.s3_url title="Right click > Save Link As..."
+    span.fa.fa-file-video-o
+    |  Download media file
