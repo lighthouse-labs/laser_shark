@@ -3,14 +3,24 @@ class Recording < ActiveRecord::Base
   belongs_to :presenter, :class => User
   belongs_to :cohort
   belongs_to :activity
+  belongs_to :program
+
+  validates :program, presence: true
+  validate :ensure_program_has_recordings_bucket, if: :program
 
   def s3_url
-    @s3_url ||= Aws::S3::Presigner.new(client: Recording.s3_client).presigned_url(
+    @s3_url ||= Recording.s3_presigner.presigned_url(
         :get_object,
-        bucket: cohort.program.recordings_bucket,
+        bucket: program.recordings_bucket,
         key: s3_object_key,
         # Link expires after an hour
         expires_in: 3600
+    )
+  end
+
+  def self.s3_presigner
+    @@s3_presigner ||= Aws::S3::Presigner.new(
+        client: s3_client
     )
   end
 
@@ -23,6 +33,12 @@ class Recording < ActiveRecord::Base
   end
 
   private
+
+    def ensure_program_has_recordings_bucket
+      unless program.recordings_bucket
+        errors.add :program, 'associated program must specify recordings bucket'
+      end
+    end
 
     def s3_object_key
       f = cohort.program.recordings_folder
