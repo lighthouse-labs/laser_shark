@@ -24,6 +24,7 @@ RSpec.configure do |config|
 
   # For now, we don't test views separately.
   config.render_views
+  config.color = true
   config.include FactoryGirl::Syntax::Methods
   config.include(EmailSpec::Helpers)
   config.include(EmailSpec::Matchers)
