@@ -120,8 +120,9 @@ section.activity-details
                 |  Download file
               = ' | '
               = link_to 'Watch now &raquo;'.html_safe, recording
-
-  - if teacher? && @activity.is_a?(Lecture)
+  
+  / How is program associated with activity?
+  - if teacher? && @activity.is_a?(Lecture) && @program.lecture_tips?
     .lecture-tips 
       h3 = "Lecture Tips / Reminders"
       == markdown @program.lecture_tips 

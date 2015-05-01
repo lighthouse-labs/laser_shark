@@ -1,8 +1,6 @@
 h1.activity-form-title Add New Activity
 hr
 
-/ = render partial: "activities/form"
-
 = simple_form_for @activity, as: :activity, url: activities_path,
   html: { id: 'activity-form', class: 'form-horizontal' }, wrapper: :horizontal_form do |f|
 
@@ -19,7 +17,7 @@ hr
   = f.input :duration, as: :string, placeholder: "Time in minutes (90 = 1.5h)"
   = f.input :gist_url, as: :string
   = f.input :type, collection: activity_type_options
-  = f.input :media_filename, as: :string
+  = f.input :media_filename, as: :string, placeholder: "Only required for videos"
   = f.input :allow_submissions
   hr
 

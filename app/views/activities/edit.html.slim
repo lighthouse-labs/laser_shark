@@ -1,4 +1,66 @@
 h1 = "#{day.to_s.upcase}: #{@activity.name}"
 hr
 
-= render partial: "activities/form"
+
+= simple_form_for @activity, as: :activity, url: day_activity_path(@activity.day, @activity),
+  html: { id: 'activity-form', class: 'form-horizontal' }, wrapper: :horizontal_form do |f|
+
+  - if f.object.errors.full_messages.any?
+    .alert.alert-error
+      strong Please correct the following errors:
+      - f.object.errors.full_messages.each do |msg|
+        li = msg
+    hr
+
+  = f.input :name
+  = f.input :day, placeholder: "Format: w3d4"
+  = f.input :start_time, as: :string, placeholder: "Time in minues (90 = 1.5h)"
+  = f.input :duration, as: :string, placeholder: "Time in minutes (90 = 1.5h)"
+  = f.input :gist_url, as: :string
+  = f.input :type, collection: activity_type_options
+  = f.input :media_filename, as: :string, placeholder: "Only required for videos"
+  = f.input :allow_submissions
+  hr
+
+  = f.hidden_field :instructions, id: 'activity-instructions'
+  = f.hidden_field :teacher_notes, id: 'activity-notes'
+
+
+  h3 Instructions
+  #instructions-editor.editor = @activity.instructions
+
+  h3 Teacher Notes
+  #notes-editor.editor = @activity.teacher_notes
+
+  .actions.well
+    = f.submit 'Submit', class: 'btn btn-primary', style: 'margin-right: 10px;'
+    = link_to '&laquo; Cancel'.html_safe, day_activity_path(@activity.day, @activity)
+
+
+  - content_for :end_of_body do
+    css:
+      .editor {
+        width: 100%;
+        height: 300px;
+        margin-bottom: 10px;
+      }
+    javascript:
+      function initEditors() {
+        console.log('init editor!');
+        var instructionsEditor = ace.edit("instructions-editor");
+        var notesEditor = ace.edit("notes-editor");
+
+        instructionsEditor.setTheme("ace/theme/monokai");
+        notesEditor.setTheme("ace/theme/monokai");
+
+        instructionsEditor.getSession().setMode("ace/mode/markdown");
+        notesEditor.getSession().setMode("ace/mode/markdown");
+
+        $('#activity-form').submit(function(evt) {
+          evt.preventDefault();
+          $('#activity-instructions').val(instructionsEditor.getValue());
+          $('#activity-notes').val(notesEditor.getValue());
+          this.submit();
+        });
+      }
+      $(initEditors); // regular document ready
