@@ -12,7 +12,7 @@ class ActivitiesController < ApplicationController
   def create
     @activity = Activity.new(activity_params)
     if @activity.save
-      redirect_to day_activity_path(@activity.day, @activity), notice: "#{activity.name} has been created!"
+      redirect_to day_activity_path(@activity.day, @activity), notice: "#{@activity.name} has been created!"
     else
       render :new, notice: 'Sorry, something went wrong'
     end
