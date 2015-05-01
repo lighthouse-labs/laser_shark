@@ -21,4 +21,9 @@
             i.fa.fa-check-square-o
         - else
             i.fa.fa-square-o
+      -else
+        div.completed_activities  
+          = cohort.students.select { |student| student.completed_activity?(activity) }.count
+          '/ 
+          =cohort.students.count 
     .clearfix
