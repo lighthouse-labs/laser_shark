@@ -35,6 +35,9 @@ LaserShark::Application.routes.draw do
     end
   end
 
+  #CREATING ACTIVITIES FOR TEACHERS
+  resource :activities, only: [:new, :delete]
+
   # CONTENT BROWSING
   resources :days, param: :number, only: [:show] do
     resources :activities, only: [:show, :edit, :update]
