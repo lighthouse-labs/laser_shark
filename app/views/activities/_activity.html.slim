@@ -16,8 +16,9 @@
     .pull-left.name
       = activity.name
     .pull-right.icon
-      - if current_user.completed_activity?(activity)
-          i.fa.fa-check-square-o
-      - else
-          i.fa.fa-square-o
+      -if current_user.is_a? Student
+        - if current_user.completed_activity?(activity)
+            i.fa.fa-check-square-o
+        - else
+            i.fa.fa-square-o
     .clearfix
