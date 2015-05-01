@@ -2,8 +2,21 @@ class ActivitiesController < ApplicationController
 
   include CourseCalendar # concern
 
-  before_action :require_activity
+  before_action :require_activity, only: [:show, :edit, :update, :destroy]
   before_action :teacher_required, only: [:edit, :update]
+
+  def new
+    @activity = Activity.new
+  end
+
+  def create
+    @activity = Activity.new(activity_params)
+    if @activity.save
+      redirect_to day_activity_path(@activity.day, @activity), notice: "#{@activity.name} has been created!"
+    else
+      render :new, notice: 'Sorry, something went wrong'
+    end
+  end
 
   def show
     @setup = day.to_s == 'setup'
@@ -22,15 +35,21 @@ class ActivitiesController < ApplicationController
   end
 
   def edit
-
   end
 
   def update
     if @activity.update(activity_params)
       redirect_to day_activity_path(@activity.day, @activity), notice: 'Updated!'
     else
-      render :edit
+      render :edit, notice: 'Sorry, something went wrong'
     end
+  end
+
+  def destroy
+    day = @activity.day
+    name = @activity.name
+    @activity.destroy
+    redirect_to day_path(day), notice: "#{name} has been successfully deleted"
   end
 
   private

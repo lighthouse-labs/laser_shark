@@ -45,6 +45,8 @@ gem 'slack-poster'
 gem 'aws-sdk-core'
 
 group :development do
+  gem 'pry-rails'
+  gem 'pry-nav'
   gem 'spring'
   gem 'quiet_assets'
   gem 'rails_layout'

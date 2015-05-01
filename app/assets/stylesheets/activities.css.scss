@@ -44,9 +44,16 @@ section.activity-details {
   }
   .btn-new-message {
     @extend .btn;
-    @extend .btn-danger;
+    @extend .btn-primary;
     @extend .pull-right; 
     margin-right: 10px;
+  }
+
+  .btn-delete {
+    @extend .btn;
+    @extend .btn-danger;
+    @extend .pull-right;
+    margin-left: 10px 
   }
 
 
@@ -94,4 +101,9 @@ section.activity-details {
 }
 .activity .pull-right.icon i.fa-check-square-o {
   color: $green-sea;
+}
+
+.activity-form-title {
+  margin: 1em auto;
+  text-align: center;
 }

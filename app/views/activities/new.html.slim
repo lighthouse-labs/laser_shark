@@ -1,8 +1,7 @@
-h1 = "#{day.to_s.upcase}: #{@activity.name}"
+h1.activity-form-title Add New Activity
 hr
 
-
-= simple_form_for @activity, as: :activity, url: day_activity_path(@activity.day, @activity),
+= simple_form_for @activity, as: :activity, url: activities_path,
   html: { id: 'activity-form', class: 'form-horizontal' }, wrapper: :horizontal_form do |f|
 
   - if f.object.errors.full_messages.any?
@@ -34,7 +33,7 @@ hr
 
   .actions.well
     = f.submit 'Submit', class: 'btn btn-primary', style: 'margin-right: 10px;'
-    = link_to '&laquo; Cancel'.html_safe, day_activity_path(@activity.day, @activity)
+    = link_to '&laquo; Cancel'.html_safe, root_path
 
 
   - content_for :end_of_body do

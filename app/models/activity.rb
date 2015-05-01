@@ -4,6 +4,7 @@
   validates :duration, numericality: { only_integer: true }
   validates :start_time, numericality: { only_integer: true }
   validates :day, presence: true, format: { with: DAY_REGEX, allow_blank: true }
+  validates :media_filename, presence: { message: ": please specify a media file for videos!"}, if: Proc.new { |a| a.type == "Video" }
 
   scope :chronological, -> { order(:start_time) }
   scope :for_day, -> (day) { where(day: day.to_s) }
@@ -15,6 +16,7 @@
   has_many :activity_submissions
   has_many :messages, class_name: 'ActivityMessage'
   has_many :recordings
+  # belongs_to :program
 
   # Given the start_time and duration, return the end_time
   def end_time

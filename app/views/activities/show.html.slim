@@ -46,9 +46,9 @@ section.activity-details
 
     div.clearfix
       - if teacher?
-        button.btn.btn-activity.btn-info data-toggle="collapse" data-target="#student-progress"
+        button.btn.btn-activity.btn-info data-toggle="collapse" data-target=" "
           = @activity.allow_submissions? ? "Submissions" : "Completions"
-
+        = link_to 'Delete', day_activity_path(@day, @activity), method: :delete, data: { confirm: "Delete #{@activity.name}?" }, class: 'btn-delete'
         = link_to 'Edit', edit_day_activity_path(@day, @activity), class: 'btn-edit'
         = link_to "+ Message", new_activity_message_path(@activity), class: "btn-new-message"
 
@@ -120,8 +120,9 @@ section.activity-details
                 |  Download file
               = ' | '
               = link_to 'Watch now &raquo;'.html_safe, recording
-
-  - if teacher? && @program.lecture_tips? && @activity.is_a?(Lecture)
+  
+  / How is program associated with activity?
+  - if teacher? && @activity.is_a?(Lecture) && @program.lecture_tips?
     .lecture-tips 
       h3 = "Lecture Tips / Reminders"
       == markdown @program.lecture_tips 
