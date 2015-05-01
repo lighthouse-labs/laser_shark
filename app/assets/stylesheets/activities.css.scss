@@ -44,9 +44,16 @@ section.activity-details {
   }
   .btn-new-message {
     @extend .btn;
-    @extend .btn-danger;
+    @extend .btn-primary;
     @extend .pull-right; 
     margin-right: 10px;
+  }
+
+  .btn-delete {
+    @extend .btn;
+    @extend .btn-danger;
+    @extend .pull-right;
+    margin-left: 10px 
   }
 
 

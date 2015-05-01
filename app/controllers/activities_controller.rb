@@ -2,7 +2,7 @@ class ActivitiesController < ApplicationController
 
   include CourseCalendar # concern
 
-  before_action :require_activity, only: [:show, :edit, :update]
+  before_action :require_activity, only: [:show, :edit, :update, :delete, :destroy]
   before_action :teacher_required, only: [:edit, :update]
 
   def new
@@ -43,6 +43,16 @@ class ActivitiesController < ApplicationController
     else
       render :edit, notice: 'Sorry, something went wrong'
     end
+  end
+
+  def delete
+  end
+
+  def destroy
+    day = @activity.day
+    name = @activity.name
+    @activity.destroy
+    redirect_to day_path(day), notice: "#{name} has been successfully deleted"
   end
 
   private
