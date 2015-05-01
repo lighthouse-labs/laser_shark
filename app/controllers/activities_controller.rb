@@ -2,7 +2,7 @@ class ActivitiesController < ApplicationController
 
   include CourseCalendar # concern
 
-  before_action :require_activity, only: [:show, :edit, :update, :delete, :destroy]
+  before_action :require_activity, only: [:show, :edit, :update, :destroy]
   before_action :teacher_required, only: [:edit, :update]
 
   def new
@@ -43,9 +43,6 @@ class ActivitiesController < ApplicationController
     else
       render :edit, notice: 'Sorry, something went wrong'
     end
-  end
-
-  def delete
   end
 
   def destroy
