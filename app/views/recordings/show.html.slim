@@ -1,7 +1,22 @@
 h1
+  = recording_title(@recording)
+p
+  = 'Day: '
+  = link_to @recording.activity.day.upcase, day_path(@recording.activity.day)
+  = ' &bull; '.html_safe
+  = 'Activity: '
   = link_to @recording.activity.name, day_activity_path(@recording.activity.day, @recording.activity)
 p
-  = "Recorded <b>#{format_date_time(@recording.recorded_at)}</b> and presented by <b>#{@recording.presenter.full_name}</b>".html_safe
+  - if @recording.presenter
+    = "Presented by: #{@recording.presenter.full_name}"
+    = ' &bull; '.html_safe
+  - if @recording.presenter_name
+    = "Guest presenter: #{@recording.presenter_name}"
+    = ' &bull; '.html_safe
+  - if @recording.recorded_at
+    = "Recorded: #{format_date_time(@recording.recorded_at)}"
+    = ' &bull; '.html_safe
+  = "Added: #{format_date_time(@recording.created_at)}"
 p
   video.video-js.vjs-default-skin controls="true" preload="auto" width="100%" height="434"
     source type="video/mp4" src=@recording.s3_url
