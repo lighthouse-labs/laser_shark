@@ -50,7 +50,8 @@ section.activity-details
           = @activity.allow_submissions? ? "Submissions" : "Completions"
 
         = link_to 'Edit', edit_day_activity_path(@day, @activity), class: 'btn-edit'
-        = link_to "+ Message", new_activity_message_path(@activity), class: "btn-new-message"
+        = link_to '+ Video', new_activity_recording_path(@activity), class: 'btn-new-recording'
+        = link_to '+ Message', new_activity_message_path(@activity), class: 'btn-new-message'
 
         - if @activity.revisions_gistid?
           = link_to "https://gist.github.com/#{@activity.revisions_gistid}/revisions", class: 'btn btn-revisions', target: '_blank'
@@ -123,7 +124,7 @@ section.activity-details
             - if recording.presenter
               div
                 = "Presented by: #{recording.presenter.full_name}"
-            - if recording.presenter_name
+            - if recording.presenter_name && !recording.presenter_name.empty?
               div
                 = "Guest presenter: #{recording.presenter_name}"
             div

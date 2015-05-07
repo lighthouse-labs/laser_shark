@@ -1,0 +1,13 @@
+article.recording {
+
+  .delete-recording-btn {
+    @extend .btn;
+    @extend .btn-danger;
+    @extend .pull-right;
+  }
+  .edit-recording-btn {
+    @extend .btn;
+    @extend .btn-warning;
+  }
+
+}

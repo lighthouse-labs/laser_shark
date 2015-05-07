@@ -1,0 +1,22 @@
+= simple_form_for @recording, html: { id: 'recording-form', class: 'form-horizontal' }, wrapper: :horizontal_form do |f|
+
+  - if f.object.errors.full_messages.any?
+    .alert.alert-error
+      strong Please correct the following errors:
+      - f.object.errors.full_messages.each do |msg|
+        li = msg
+    hr
+
+  = f.input :title
+  = f.input :file_name
+  = f.association :presenter, collection: Teacher.all.order(:last_name, :first_name), label_method: :full_name
+  = f.input :presenter_name, label: 'Guest presenter'
+  = f.input :recorded_at, wrapper_html: { class: 'form-inline' }
+  = f.association :cohort
+  = f.association :program
+
+  = f.hidden_field :activity_id
+
+  .actions.well
+    = f.submit 'Save', class: 'btn btn-primary'
+    = link_to ' &laquo; Cancel'.html_safe, @recording.new_record? ? recording_redirect_path(@recording.activity) : recording_path(@recording)
