@@ -1,17 +1,29 @@
 require 'spec_helper'
 
 describe RecordingsController do
-  describe "GET 'new'" do
-    it "returns http success for a logged in Teacher" do
+  context 'logged in as teacher' do
+    before :each do
       login_as(create(:teacher))
-      get 'new'
-      expect(response).to be_success
     end
 
-    it "returns http redirect for a logged in Student" do
+    describe "GET 'new'" do
+      it "returns http success" do
+        get 'new'
+        expect(response).to be_success
+      end
+    end
+  end
+
+  context 'logged in as student' do
+    before :each do
       login_as(create(:student))
-      get 'new'
-      expect(response).to be_redirect
+    end
+
+    describe "GET 'new'" do
+      it "returns http redirect" do
+        get 'new'
+        expect(response).to be_redirect
+      end
     end
   end
 end
