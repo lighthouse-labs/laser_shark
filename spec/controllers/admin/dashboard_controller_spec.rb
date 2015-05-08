@@ -1,11 +1,8 @@
 require 'spec_helper'
 
 describe Admin::DashboardController do
-
   describe 'GET show' do
-
     describe "security" do
-         
       it "fails with 401 Unauthorized without http auth creds" do 
         get :show        
         expect(response.code).to eq('401')
@@ -25,7 +22,6 @@ describe Admin::DashboardController do
     end
 
     describe "show action" do
-      
       before :each do
         set_valid_auth
       end
@@ -43,7 +39,4 @@ describe Admin::DashboardController do
       end 
     end
   end
-
-  # show action renders within the admin layout
-
 end

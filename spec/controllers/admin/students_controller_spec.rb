@@ -6,7 +6,7 @@ describe Admin::StudentsController do
   end
   
   describe 'GET #index' do
-    xit 'assigns all students to @students' do
+    it 'assigns all students to @students' do
       students = create_list(:student, 5)
       get :index 
       expect(assigns(:students)).to match_array(students)
@@ -17,5 +17,4 @@ describe Admin::StudentsController do
       expect(response).to render_template :index
     end
   end
-
 end
