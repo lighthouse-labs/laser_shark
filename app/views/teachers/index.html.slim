@@ -1,0 +1,19 @@
+h1 Active Teachers
+table.table
+  thead
+    tr
+      th
+      th Name
+      th Email
+      th Phone
+      th GitHub Username
+      
+  tbody
+    - @teachers.each do |teacher|
+      tr
+        td = image_tag(avatar_for(teacher), size: '100x100')
+        td = teacher.full_name
+        td = teacher.email
+        td = teacher.phone_number
+        td  
+          a href=("https://github.com/#{teacher.github_username}") = teacher.github_username
