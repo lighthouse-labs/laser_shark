@@ -3,10 +3,8 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 section.activity-details {
-  .instructions {
-    img {
-      max-width: 100%;
-    }
+  img {
+    max-width: 100%;
   }
 
   .lecture-tips {
@@ -46,6 +44,12 @@ section.activity-details {
     @extend .btn;
     @extend .btn-danger;
     @extend .pull-right; 
+    margin-right: 10px;
+  }
+  .btn-new-recording {
+    @extend .btn;
+    @extend .btn-danger;
+    @extend .pull-right;
     margin-right: 10px;
   }
 
@@ -92,6 +96,17 @@ section.activity-details {
     vertical-align: -15%;
   }
 }
+
+.recording-item {
+  @extend .row;
+  line-height: 1.5;
+  margin-bottom: 1em;
+  .recording-title {
+    font-size: 1.2em;
+    margin: 0;
+  }
+}
+
 .activity .pull-right.icon i.fa-check-square-o {
   color: $green-sea;
 }

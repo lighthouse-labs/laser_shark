@@ -41,7 +41,7 @@ class Recording < ActiveRecord::Base
     end
 
     def s3_object_key
-      f = cohort.program.recordings_folder
+      f = program.recordings_folder
       s = f ? f + '/' : ''
       s + file_name
     end

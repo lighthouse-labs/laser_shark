@@ -44,6 +44,7 @@ LaserShark::Application.routes.draw do
   resources :activities, only: [] do
     resource :activity_submission, only: [:create, :destroy]
     resources :messages, only: [:new, :edit, :update, :create, :index], controller: 'activity_messages'
+    resources :recordings, only: [:new, :create]
   end
 
   resources :cohorts, only: [] do
@@ -51,7 +52,7 @@ LaserShark::Application.routes.draw do
     put :switch_to, on: :member
   end
 
-  resources :recordings, only: [:show]
+  resources :recordings
 
   resources :streams, only: [:index, :show]
 

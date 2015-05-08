@@ -3,6 +3,7 @@ module ApplicationHelper
   def fools?
     Date.current.month == 4 && Date.current.day == 1
   end
+
   # Display an integer time as a string
   # Ex: integer_time_to_s(930) # => "9:30"
   def integer_time_to_s(int_time)
@@ -11,7 +12,6 @@ module ApplicationHelper
     minutes = "00" if minutes == 0
     return "#{hours}:#{minutes}"
   end
-
 
   def avatar_for(user)
     if user.custom_avatar.url
@@ -22,7 +22,7 @@ module ApplicationHelper
   end
 
   def format_date_time(time)
-    time.strftime("%b %e, %l:%M %p")
+    time ? time.strftime("%b %e, %l:%M %p") : ''
   end
 
   def it_is_6pm_already?

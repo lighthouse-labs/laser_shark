@@ -12,9 +12,9 @@
   # However, when seeding/mass-creating activties, github API will return error
   after_update :add_revision_to_gist
 
-  has_many :activity_submissions
-  has_many :messages, class_name: 'ActivityMessage'
-  has_many :recordings
+  has_many :activity_submissions, -> { order(:user_id) }
+  has_many :messages, -> { order(created_at: :desc) }, class_name: 'ActivityMessage'
+  has_many :recordings, -> { order(created_at: :desc) }
 
   # Given the start_time and duration, return the end_time
   def end_time

@@ -1,11 +1,36 @@
-h1
-  = link_to @recording.activity.name, day_activity_path(@recording.activity.day, @recording.activity)
-p
-  = "Recorded <b>#{format_date_time(@recording.recorded_at)}</b> and presented by <b>#{@recording.presenter.full_name}</b>".html_safe
-p
-  video.video-js.vjs-default-skin controls="true" preload="auto" width="100%" height="434"
-    source type="video/mp4" src=@recording.s3_url
-p
-  a href=@recording.s3_url title="Right click > Save Link As..."
-    span.fa.fa-file-video-o
-    |  Download media file
+article.recording
+  h1
+    = recording_title(@recording)
+  - if teacher?
+    .actions.well
+      = link_to 'Edit', edit_recording_path(@recording), class: 'edit-recording-btn'
+      = link_to 'Delete', @recording, method: :delete, class: 'delete-recording-btn'
+  - if @recording.activity
+    p
+      = 'Day: '
+      = link_to @recording.activity.day.upcase, day_path(@recording.activity.day)
+      = ' &bull; '.html_safe
+      = 'Activity: '
+      = link_to @recording.activity.name, day_activity_path(@recording.activity.day, @recording.activity)
+      - if @recording.cohort
+        = ' &bull; '.html_safe
+        = 'Cohort: '
+        = link_to @recording.cohort.name, cohort_students_path(@recording.cohort)
+  p
+    - if @recording.presenter
+      = "Presented by: #{@recording.presenter.full_name}"
+      = ' &bull; '.html_safe
+    - if @recording.presenter_name && !@recording.presenter_name.empty?
+      = "Guest presenter: #{@recording.presenter_name}"
+      = ' &bull; '.html_safe
+    - if @recording.recorded_at
+      = "Recorded: #{format_date_time(@recording.recorded_at)}"
+      = ' &bull; '.html_safe
+    = "Added: #{format_date_time(@recording.created_at)}"
+  p
+    video.video-js.vjs-default-skin controls="true" preload="auto" width="100%" height="434"
+      source type="video/mp4" src=@recording.s3_url
+  p
+    a href=@recording.s3_url title="Right click > Save Link As..."
+      span.fa.fa-file-video-o
+      |  Download media file

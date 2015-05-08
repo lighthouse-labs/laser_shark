@@ -1,0 +1,8 @@
+h1
+  = "Edit Video #{@recording.id}"
+- if @recording.activity
+  p
+    = "For activity #{@recording.activity.id}: "
+    strong
+      = @recording.activity.name
+= render 'form'
