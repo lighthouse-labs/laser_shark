@@ -2,6 +2,7 @@
     position: relative;
     overflow: hidden;
 }
+
 .btn-file input[type=file] {
     position: absolute;
     top: 0;
@@ -19,7 +20,7 @@
 }
 
 .upload-button {
-    padding-left: 0px;
+    padding-left: 0;
     margin-top: 10px;
 }
 

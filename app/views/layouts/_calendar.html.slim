@@ -1,6 +1,6 @@
-nav.calendar
+.nav-calendar
   - (1..WEEKS).each do |w|
-    .week
+    .nav-week
       ul
         li.previous.week-number
           a href="#"
@@ -9,8 +9,9 @@ nav.calendar
         - (1..DAYS_PER_WEEK).each do |d|
           li.day-number class=day_status_css("w#{w}d#{d}") = link_to(d, day_path("w#{w}d#{d}"))
         - if WEEKENDS
-          li.day-number class=day_status_css("w#{w}e") = link_to("e", day_path("w#{w}e"))
-  - unless today == 'w1d1'
-    = link_to 'Yesterday', day_path('yesterday'), class: 'btn-yesterday'
-    | &nbsp;
-  = link_to 'Today', day_path('today'), class: 'btn-today'
+          li.day-number class=day_status_css("w#{w}e") = link_to('e', day_path("w#{w}e"))
+  .day-nav-links
+    - unless today == 'w1d1'
+      = link_to 'Yesterday', day_path('yesterday'), class: 'btn-yesterday'
+      | &nbsp;
+    = link_to 'Today', day_path('today'), class: 'btn-today'

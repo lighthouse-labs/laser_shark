@@ -1,8 +1,8 @@
 = link_to day_activity_path(activity.day, activity)
   div class=("#{activity.type.downcase} " + 'activity')
-    .pull-left.icon title=activity.type
+    .icon.icon-type title=activity.type
       i class=(icon_for(activity))
-    .pull-left.time
+    .time
       - if weekend? || setup?
         br
         = duration activity
@@ -13,11 +13,10 @@
         | to
         br
         = integer_time_to_s activity.end_time
-    .pull-left.name
-      = activity.name
-    .pull-right.icon
+    .icon.icon-completion
       - if current_user.completed_activity?(activity)
-          i.fa.fa-check-square-o
+        i.fa.fa-check-square-o
       - else
-          i.fa.fa-square-o
-    .clearfix
+        i.fa.fa-square-o
+    .name
+      = activity.name

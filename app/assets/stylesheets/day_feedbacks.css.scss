@@ -14,10 +14,13 @@
     
     margin-right: 10px;
     
-    input { /* HIDE RADIO */
+    input {
+
+      /* HIDE RADIO */
       &[type="radio"] {
         display:none;
       }
+
       &#day_feedback_mood_happy:checked + i {
         color: $brand-secondary;
       }
@@ -32,8 +35,7 @@
     }
 
     i {
-      cursor:pointer;
+      cursor: pointer;
     }
-
   }
 }
