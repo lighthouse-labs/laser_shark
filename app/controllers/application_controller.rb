@@ -55,7 +55,7 @@ class ApplicationController < ActionController::Base
   helper_method :cohort
 
   def cohorts
-    @cohorts ||= Cohort.order(start_date: :asc)
+    @cohorts ||= Cohort.order(start_date: :desc)
   end
   helper_method :cohorts
 
@@ -66,7 +66,7 @@ class ApplicationController < ActionController::Base
 
   def assign_as_student_to_cohort(cohort)
     current_user.cohort = cohort
-    current_user.type = "Student"
+    current_user.type = 'Student'
     current_user.save!
     flash[:notice] = "Welcome, you have student access to #{cohort.name}!"
   end
