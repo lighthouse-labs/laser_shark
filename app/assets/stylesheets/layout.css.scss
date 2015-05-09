@@ -50,13 +50,13 @@ main {
   .content {
     @media (min-width: $screen-sm-min) {
       float: left;
-      max-width: $container-sm - $side-nav-width - $grid-gutter-width;
+      width: $container-sm - $side-nav-width - $grid-gutter-width;
     }
     @media (min-width: $screen-md-min) {
-      max-width: $container-md - $side-nav-width - $grid-gutter-width;
+      width: $container-md - $side-nav-width - $grid-gutter-width;
     }
     @media (min-width: $screen-lg-min) {
-      max-width: $container-lg - $side-nav-width - $grid-gutter-width;
+      width: $container-lg - $side-nav-width - $grid-gutter-width;
     }
     .jumbotron {
       padding-top: 30px;
