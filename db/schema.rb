@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150430135200) do
+ActiveRecord::Schema.define(version: 20150509183850) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -56,6 +56,8 @@ ActiveRecord::Schema.define(version: 20150430135200) do
     t.integer  "activity_id"
     t.datetime "completed_at"
     t.string   "github_url"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   add_index "activity_submissions", ["activity_id"], name: "index_activity_submissions_on_activity_id", using: :btree
@@ -142,6 +144,8 @@ ActiveRecord::Schema.define(version: 20150430135200) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "program_id"
+    t.string   "title"
+    t.string   "presenter_name"
   end
 
   create_table "streams", force: true do |t|
@@ -172,6 +176,8 @@ ActiveRecord::Schema.define(version: 20150430135200) do
     t.datetime "deactivated_at"
     t.string   "slack"
     t.boolean  "remote",                 default: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   add_index "users", ["cohort_id"], name: "index_users_on_cohort_id", using: :btree
