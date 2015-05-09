@@ -44,15 +44,18 @@ class Assistance < ActiveRecord::Base
   end
 
   def send_notes_to_slack
-    return unless ENV["SLACK_TOKEN"]
+    return unless ENV['SLACK_TOKEN']
+    post_to_slack(ENV['SLACK_CHANNEL']) if ENV['SLACK_CHANNEL']
+    post_to_slack(ENV['SLACK_CHANNEL_REMOTE']) if self.assistee.remote && ENV['SLACK_CHANNEL_REMOTE']
+  end
 
+  def post_to_slack(channel)
     options = {
-      :username => self.assistor.github_username,
-      :icon_url => self.assistor.avatar_url,
-      :channel => ENV['SLACK_CHANNEL']
+      username: self.assistor.github_username,
+      icon_url: self.assistor.avatar_url,
+      channel: channel
     }
-
-    poster = Slack::Poster.new("lighthouse", ENV["SLACK_TOKEN"], options)
+    poster = Slack::Poster.new('lighthouse', ENV['SLACK_TOKEN'], options)
     poster.send_message("*Assisted #{self.assistee.full_name} for #{ ((self.end_at - self.start_at)/60).to_i } minutes*:\n #{self.notes}")
   end
 end
