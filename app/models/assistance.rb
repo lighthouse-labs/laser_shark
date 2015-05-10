@@ -23,7 +23,7 @@ class Assistance < ActiveRecord::Base
     self.end_at = Time.now
     self.save
     self.assistee.last_assisted_at = Time.now
-    if assistance_request.instance_of?(CodeReviewRequest) && !rating.nil?
+    if assistance_request.instance_of?(CodeReviewRequest) && !rating.nil? && !assistee.code_review_percent.nil?
       assistee.code_review_percent += Assistance::RATING_BASELINE - rating
     end
     self.assistee.save
