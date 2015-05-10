@@ -110,3 +110,12 @@ section.activity-details {
 .activity .pull-right.icon i.fa-check-square-o {
   color: $green-sea;
 }
+
+.pull-right.icon .completed_activities{
+  color: $green-sea;
+  position: absolute;
+  font-size: .6em;
+  margin-top: .6em;
+  height:1em;
+  width: auto;
+}

@@ -16,8 +16,14 @@
     .pull-left.name
       = activity.name
     .pull-right.icon
-      - if current_user.completed_activity?(activity)
-          i.fa.fa-check-square-o
-      - else
-          i.fa.fa-square-o
+      -if current_user.is_a? Student
+        - if current_user.completed_activity?(activity)
+            i.fa.fa-check-square-o
+        - else
+            i.fa.fa-square-o
+      -else
+        div.completed_activities  
+          = cohort.students.select { |student| student.completed_activity?(activity) }.count
+          '/ 
+          =cohort.students.count 
     .clearfix
