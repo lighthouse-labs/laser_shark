@@ -14,9 +14,15 @@
         br
         = integer_time_to_s activity.end_time
     .icon.icon-completion
-      - if current_user.completed_activity?(activity)
-        i.fa.fa-check-square-o
-      - else
-        i.fa.fa-square-o
+      -if student?
+        - if current_user.completed_activity?(activity)
+          i.fa.fa-check-square-o
+        - else
+          i.fa.fa-square-o
+      -else
+        .completed_activities  
+          = cohort.students.select { |student| student.completed_activity?(activity) }.count
+          '/ 
+          =cohort.students.count 
     .name
       = activity.name
