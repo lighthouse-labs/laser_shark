@@ -19,6 +19,7 @@ hr
   = f.input :type, collection: activity_type_options
   = f.input :media_filename, as: :string
   = f.input :allow_submissions
+  = f.input :code_review_percent, as: :string, label: 'Probability (percent) to trigger code review'
   hr
 
   = f.hidden_field :instructions, id: 'activity-instructions'

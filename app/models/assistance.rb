@@ -15,12 +15,17 @@ class Assistance < ActiveRecord::Base
   scope :assisted_by, -> (user) { where(:assistor => user) }
   scope :assisting, -> (user) { where(:assistee => user) }
 
+  RATING_BASELINE = 3
+
   def end(notes, rating = nil)
     self.notes = notes
     self.rating = rating
     self.end_at = Time.now
     self.save
     self.assistee.last_assisted_at = Time.now
+    if assistance_request.instance_of?(CodeReviewRequest) && !rating.nil? && !assistee.code_review_percent.nil?
+      assistee.code_review_percent += Assistance::RATING_BASELINE - rating
+    end
     self.assistee.save
 
     send_notes_to_slack
@@ -44,12 +49,12 @@ class Assistance < ActiveRecord::Base
   end
 
   def send_notes_to_slack
-    return unless ENV['SLACK_TOKEN']
-    post_to_slack(ENV['SLACK_CHANNEL']) if ENV['SLACK_CHANNEL']
-    post_to_slack(ENV['SLACK_CHANNEL_REMOTE']) if self.assistee.remote && ENV['SLACK_CHANNEL_REMOTE']
+    post_to_slack(ENV['SLACK_CHANNEL'])
+    post_to_slack(ENV['SLACK_CHANNEL_REMOTE']) if self.assistee.remote
   end
 
   def post_to_slack(channel)
+    return if ENV['SLACK_TOKEN'].nil? || channel.nil?
     options = {
       username: self.assistor.github_username,
       icon_url: self.assistor.avatar_url,
