@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150509183850) do
+ActiveRecord::Schema.define(version: 20150510075400) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -28,9 +28,10 @@ ActiveRecord::Schema.define(version: 20150509183850) do
     t.text     "instructions"
     t.text     "teacher_notes"
     t.string   "file_name"
-    t.boolean  "allow_submissions", default: true
+    t.boolean  "allow_submissions",   default: true
     t.string   "media_filename"
     t.string   "revisions_gistid"
+    t.integer  "code_review_percent", default: 60
   end
 
   create_table "activity_messages", force: true do |t|
@@ -178,6 +179,7 @@ ActiveRecord::Schema.define(version: 20150509183850) do
     t.boolean  "remote",                 default: false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "code_review_percent",    default: 80
   end
 
   add_index "users", ["cohort_id"], name: "index_users_on_cohort_id", using: :btree
