@@ -19,4 +19,10 @@ module DaysHelper
   def feedback_submitted?(day)
     student? && current_user.day_feedbacks.find_by(day: day.to_s)
   end
+
+  def completed_students(activity)
+    completed = cohort.students.select { |student| student.completed_activity?(activity) }.count
+    total = cohort.students.count 
+    "#{completed}/#{total}"
+  end
 end

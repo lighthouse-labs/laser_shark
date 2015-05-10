@@ -21,8 +21,7 @@
           i.fa.fa-square-o
       -else
         .completed_activities  
-          = cohort.students.select { |student| student.completed_activity?(activity) }.count
-          '/ 
-          =cohort.students.count 
+          = completed_students(activity)
+          
     .name
       = activity.name
