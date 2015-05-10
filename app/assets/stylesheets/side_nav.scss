@@ -17,8 +17,11 @@ h3.date-heading {
 .nav-week {
   @extend .pagination;
   @extend .pagination-minimal;
+  display: inline-block;
   margin: 0 4px 4px 0;
   ul {
+    display: inline-block;
+    padding-right: 6px;
     li.week-number a {
       padding: 12px 8px;
     }
