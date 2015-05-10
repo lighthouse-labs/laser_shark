@@ -5,7 +5,7 @@ html
     title
       = content_for?(:title) ? yield(:title) : 'Compass'
     meta name="description" content="#{content_for?(:description) ? yield(:description) : 'LaserShark'}"
-    == stylesheet_link_tag "application", :media => 'all', 'data-turbolinks-track' => true
+    == stylesheet_link_tag 'application', :media => 'all', 'data-turbolinks-track' => true
     link href="//vjs.zencdn.net/4.11/video-js.css" rel="stylesheet"
     script src="//vjs.zencdn.net/4.11/video.js"
     == javascript_include_tag 'application', 'data-turbolinks-track' => true
@@ -15,10 +15,10 @@ html
   body
     header
       == render 'layouts/navigation'
-    main.container-fluid[role="main"]
+    main.container[role="main"]
       == render 'layouts/messages'
       - if content_for? :side_nav
-        aside.primary
+        aside.side-nav
           == yield :side_nav
 
       .content

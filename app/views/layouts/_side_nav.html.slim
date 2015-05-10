@@ -1,6 +1,6 @@
-h1.day = day.to_s.upcase
+h1.day-heading = day.to_s.upcase
 
 - unless setup?
-  h3.date = "#{day.date.strftime("%a %b #{day.date.day}")}"
+  h3.date-heading = "#{day.date.strftime("%a %b #{day.date.day}")}"
 
 == render 'layouts/calendar'

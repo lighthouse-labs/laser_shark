@@ -1,7 +1,3 @@
-// Place all the styles related to the day_feedbacks controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
-
 #new_day_feedback{
   margin-bottom: 30px;
 
@@ -18,10 +14,13 @@
     
     margin-right: 10px;
     
-    input { /* HIDE RADIO */
+    input {
+
+      /* HIDE RADIO */
       &[type="radio"] {
         display:none;
       }
+
       &#day_feedback_mood_happy:checked + i {
         color: $brand-secondary;
       }
@@ -36,8 +35,7 @@
     }
 
     i {
-      cursor:pointer;
+      cursor: pointer;
     }
-
   }
 }

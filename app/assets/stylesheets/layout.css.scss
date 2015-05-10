@@ -1,29 +1,31 @@
+html,
 body {
-  min-height: 900px;
+  min-height: 100%;
+}
+body {
   padding-top: 70px;
 }
-nav {
-  .navbar-collapse .navbar-nav.navbar-left:first-child {
-    margin-left: 20px;
+.non-tablet-label {
+  @media (min-width: $screen-sm-min) and (max-width: $screen-md-max) {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
   }
-  .navbar-collapse .navbar-nav.navbar-right:last-child {
-    margin-right: 20px;
+}
+header > nav {
+  i,
+  img {
+    margin: 0 4px;
   }
-  .navbar-nav [class^="fui-"] {
-    margin-right: 6px;
+  img {
+    height: 1em;
+    width: 1em;
   }
-
-  .student {
-    img {
-      height: 18px;
-      width: 18px;
-      margin: -1px 7px 0 0;
-    }
-    .caret {
-      margin-left: 4px;
-    }
-  }
-
   .navbar-btn {
     &.btn-warning {
       background-color: $brand-warning;
@@ -33,28 +35,31 @@ nav {
       }
     }
   }
-
   #assistance-request-module {
-    margin-left: 6px;
+    margin-left: 10px;
+    margin-right: 15px;
   }
-
 }
 
 main {
-  @include make-row;
-
-  width: 1100px;
-
-  aside.primary {
-    @include make-xs-column(5);
-    @include make-md-column(3);
-    @import "layout/aside.primary";
+  $side-nav-width: 240px;
+  aside.side-nav {
+    @media (min-width: $screen-sm-min) {
+      float: left;
+      width: $side-nav-width;
+    }
   }
-
   .content {
-    @include make-xs-column(7);
-    @include make-md-column(9);
-
+    @media (min-width: $screen-sm-min) {
+      float: left;
+      width: $container-sm - $side-nav-width - $grid-gutter-width;
+    }
+    @media (min-width: $screen-md-min) {
+      width: $container-md - $side-nav-width - $grid-gutter-width;
+    }
+    @media (min-width: $screen-lg-min) {
+      width: $container-lg - $side-nav-width - $grid-gutter-width;
+    }
     .jumbotron {
       padding-top: 30px;
       padding-bottom: 30px;
