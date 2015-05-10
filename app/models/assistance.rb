@@ -49,12 +49,12 @@ class Assistance < ActiveRecord::Base
   end
 
   def send_notes_to_slack
-    return unless ENV['SLACK_TOKEN']
-    post_to_slack(ENV['SLACK_CHANNEL']) if ENV['SLACK_CHANNEL']
-    post_to_slack(ENV['SLACK_CHANNEL_REMOTE']) if self.assistee.remote && ENV['SLACK_CHANNEL_REMOTE']
+    post_to_slack(ENV['SLACK_CHANNEL'])
+    post_to_slack(ENV['SLACK_CHANNEL_REMOTE']) if self.assistee.remote
   end
 
   def post_to_slack(channel)
+    return if ENV['SLACK_TOKEN'].nil? || channel.nil?
     options = {
       username: self.assistor.github_username,
       icon_url: self.assistor.avatar_url,
