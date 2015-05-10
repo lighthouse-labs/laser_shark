@@ -48,6 +48,10 @@
     .fa-check-square-o {
       color: $green-sea;
     }
+    .completed_activities {
+      color: $green-sea;
+      font-size: .6em;
+    }
   }
   .icon-type {
     left: 0;
@@ -70,3 +74,4 @@
     width: 50px;
   }
 }
+
