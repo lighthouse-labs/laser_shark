@@ -14,10 +14,48 @@ class AssistanceRequestsController < ApplicationController
         all_students = Student.in_active_cohort.active.order_by_last_assisted_at.cohort_in_locations(@selected_locations)
 
         res = {
-          active_assistances: my_active_assistances.all.to_json(:include => {:assistee => { :include => [:cohort] }, :assistance_request => {:include => { :activity_submission => { :include => { :activity => { :only => [:id, :day, :name] } } } } } }),
-          requests: requests.all.to_json(:include => { requestor: { :include => [:cohort] } }),
-          code_reviews: code_reviews.all.to_json(:include => { :requestor => { :include => [:cohort] }, :activity_submission => { :include => { :activity => { :only => [:id, :day, :name] } } } }),
-          all_students: all_students.all.to_json(:include => [:cohort])
+          active_assistances: my_active_assistances.all.to_json(
+            :include => {
+              :assistee => {
+                :include => [:cohort]
+              },
+              :assistance_request => {
+                :include => {
+                  :activity_submission => {
+                    :include => {
+                      :activity => {
+                        :only => [:id, :day, :name]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          ),
+          requests: requests.all.to_json(
+            :include => {
+              requestor: {
+                :include => [:cohort]
+              }
+            }
+          ),
+          code_reviews: code_reviews.all.to_json(
+            :include => {
+              :requestor => {
+                :include => [:cohort]
+              },
+              :activity_submission => {
+                :include => {
+                  :activity => {
+                    :only => [:id, :day, :name]
+                  }
+                }
+              }
+            }
+          ),
+          all_students: all_students.all.to_json(
+            :include => [:cohort]
+          )
         }
         render json: res
       }
