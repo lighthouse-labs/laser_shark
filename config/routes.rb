@@ -19,6 +19,7 @@ LaserShark::Application.routes.draw do
     collection do
       delete :cancel
       get :status
+      get :queue
     end
     member do
       post :start_assistance
