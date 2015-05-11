@@ -15,16 +15,24 @@ class AssistanceRequestsController < ApplicationController
 
         res = {
           active_assistances: my_active_assistances.all.to_json(
-            :include => {
-              :assistee => {
-                :include => [:cohort]
+            only: [:id, :start_at],
+            include: {
+              assistee: {
+                only: [:first_name, :last_name, :remote, :avatar_url, :custom_avatar, :email, :slack, :skype],
+                include: {
+                  cohort: {
+                    only: [:id, :name, :location]
+                  }
+                }
               },
-              :assistance_request => {
-                :include => {
-                  :activity_submission => {
-                    :include => {
-                      :activity => {
-                        :only => [:id, :day, :name]
+              assistance_request: {
+                only: [:reason],
+                include: {
+                  activity_submission: {
+                    only: [:github_url],
+                    include: {
+                      activity: {
+                        only: [:id, :day, :name]
                       }
                     }
                   }
@@ -33,28 +41,46 @@ class AssistanceRequestsController < ApplicationController
             }
           ),
           requests: requests.all.to_json(
-            :include => {
+            only: [:id, :reason, :start_at],
+            include: {
               requestor: {
-                :include => [:cohort]
+                only: [:first_name, :last_name, :remote, :avatar_url, :custom_avatar],
+                include: {
+                  cohort: {
+                    only: [:id, :name, :location]
+                  }
+                }
               }
             }
           ),
           code_reviews: code_reviews.all.to_json(
-            :include => {
-              :requestor => {
-                :include => [:cohort]
+            only: [:id, :start_at],
+            include: {
+              requestor: {
+                only: [:first_name, :last_name, :remote, :avatar_url, :custom_avatar],
+                include: {
+                  cohort: {
+                    only: [:id, :name, :location]
+                  }
+                }
               },
-              :activity_submission => {
-                :include => {
-                  :activity => {
-                    :only => [:id, :day, :name]
+              activity_submission: {
+                only: [:github_url],
+                include: {
+                  activity: {
+                    only: [:id, :day, :name]
                   }
                 }
               }
             }
           ),
           all_students: all_students.all.to_json(
-            :include => [:cohort]
+            only: [:id, :first_name, :last_name, :remote, :avatar_url, :custom_avatar, :last_assisted_at],
+            include: {
+              cohort: {
+                only: [:id, :name, :location]
+              }
+            }
           )
         }
         render json: res
