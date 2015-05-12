@@ -12,6 +12,6 @@
           li.day-number class=day_status_css("w#{w}e") = link_to('e', day_path("w#{w}e"))
   .day-nav-links
     - unless today == 'w1d1'
-      = link_to 'Yesterday', day_path('yesterday'), class: 'btn-yesterday'
+      = link_to 'Yesterday', day_path('yesterday'), class: 'btn btn-yesterday'
       | &nbsp;
-    = link_to 'Today', day_path('today'), class: 'btn-today'
+    = link_to 'Today', day_path('today'), class: 'btn btn-today'

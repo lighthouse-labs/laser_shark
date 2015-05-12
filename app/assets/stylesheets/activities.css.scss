@@ -11,60 +11,52 @@
     height: 42px;
     display: inline-block;
   }
-  .btn-previous{
-    @extend .btn;
-    @extend .btn-primary;
+  .btn-previous {
+    @include button-variant($btn-default-color, $brand-secondary, $btn-primary-hover-bg, $btn-primary-active-bg);
     margin-right: 10px;
   }
-  .btn-next{
-    @extend .btn;
-    @extend .btn-primary;
+  .btn-next {
+    @include button-variant($btn-default-color, $brand-secondary, $btn-primary-hover-bg, $btn-primary-active-bg);
   }
-  .btn-edit{
-    @extend .btn;
-    @extend .btn-warning;
-    @extend .pull-right;
+  .btn-edit {
+    @include button-variant($btn-default-color, $brand-warning, $btn-warning-hover-bg, $btn-warning-active-bg);
   }
-  .btn-revisions{
-    @extend .btn;
-    @extend .btn-warning;
-    @extend .pull-right;
-    margin-right: 10px;
+  .btn-revisions {
+    @include button-variant($btn-default-color, $brand-warning, $btn-warning-hover-bg, $btn-warning-active-bg);
   }
   .btn-new-message {
-    @extend .btn;
-    @extend .btn-danger;
-    @extend .pull-right; 
-    margin-right: 10px;
+    @include button-variant($btn-default-color, $brand-danger, $btn-danger-hover-bg, $btn-danger-active-bg);
   }
   .btn-new-recording {
-    @extend .btn;
-    @extend .btn-danger;
-    @extend .pull-right;
-    margin-right: 10px;
+    @include button-variant($btn-default-color, $brand-danger, $btn-danger-hover-bg, $btn-danger-active-bg);
   }
-  .activity_url {
+  .btn-edit,
+  .btn-revisions,
+  .btn-new-message,
+  .btn-new-recording {
+    float: right;
+    margin-left: 10px;
+  }
+  .activity_url,
+  .form-control#activity_submission_github_url,
+  .form-control#activity_view {
     margin-left: 5px;
     border-radius: 6px;
   }
   .form-control#activity_submission_github_url {
-    @extend .activity_url;
     width: 358px;
   }
   .form-control#activity_view {
-    @extend .activity_url;
     width: 354px;
   }
   .duration {
-    @extend .pull-right;
+    float: right;
   }
   .btn-activity-complete-status {
-    @extend .btn;
-    @extend .btn-success;
+    @include button-variant($btn-default-color, $brand-success, $btn-success-hover-bg, $btn-success-active-bg);
   }
   .btn-activity-incomplete-status {
-      @extend .btn;
-      @extend .btn-danger;
+    @include button-variant($btn-default-color, $brand-danger, $btn-danger-hover-bg, $btn-danger-active-bg);
   }
   .fa-1 {
     font-size: 1.7em;
@@ -74,7 +66,7 @@
 }
 
 .recording-item {
-  @extend .row;
+  @include make-row();
   line-height: 1.5;
   margin-bottom: 1em;
   .recording-title {

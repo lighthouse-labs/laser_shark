@@ -6,12 +6,10 @@ h3.date-heading {
 }
 .nav-calendar {
   .btn-yesterday {
-    @extend .btn;
-    @extend .btn-primary;
+    @include button-variant($btn-default-color, $brand-secondary, $btn-primary-hover-bg, $btn-primary-active-bg);
   }
   .btn-today {
-    @extend .btn;
-    @extend .btn-warning;
+    @include button-variant($btn-default-color, $brand-warning, $btn-warning-hover-bg, $btn-warning-active-bg);
   }
 }
 .nav-week {

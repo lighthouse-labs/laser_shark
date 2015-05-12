@@ -1,12 +1,9 @@
 article.recording {
   .delete-recording-btn {
-    @extend .btn;
-    @extend .btn-danger;
-    @extend .pull-right;
+    @include button-variant($btn-default-color, $brand-danger, $btn-danger-hover-bg, $btn-danger-active-bg);
+    float: right;
   }
-
   .edit-recording-btn {
-    @extend .btn;
-    @extend .btn-warning;
+    @include button-variant($btn-default-color, $brand-warning, $btn-warning-hover-bg, $btn-warning-active-bg);
   }
 }
