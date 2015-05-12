@@ -19,7 +19,7 @@
           i.fa.fa-check-square-o
         - else
           i.fa.fa-square-o
-      -else
+      -if teacher?
         .completed-activities  
           = completed_students(activity)
     .name
