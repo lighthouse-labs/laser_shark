@@ -21,8 +21,8 @@ module DaysHelper
   end
 
   def completed_students(activity)
-    completed = cohort.students.select { |student| student.completed_activity?(activity) }.count
-    total = cohort.students.count 
+    completed = cohort.students.select { |student| student.completed_activity?(activity) }.length
+    total = cohort.students.length 
     "#{completed}/#{total}"
   end
 end
