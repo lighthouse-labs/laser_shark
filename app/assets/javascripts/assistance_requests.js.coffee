@@ -9,14 +9,14 @@ $ ->
   Mustache.parse(all_student_template)
 
   getRequestData = () ->
-    $.getJSON '/assistance_requests', (data) ->
+    $.getJSON '/assistance_requests/queue', (data) ->
       # Don't do anything if modal is open
       return if $('.requests-list .modal.in').length > 0
 
       requests_list = $('.requests-list')
       requests_list.empty()
 
-      assistances = JSON.parse(data['active_assistances'])
+      assistances = data['active_assistances']
       if (assistances.length > 0)
         requests_list.append('<h3 class="section-heading">Currently Assisting</h3>')
         assistances_list = $('<ul class="student-list">')
@@ -24,7 +24,7 @@ $ ->
         for assistance in assistances
           assistances_list.append(Mustache.render(assistance_template, assistance))
 
-      requests = JSON.parse(data['requests'])
+      requests = data['requests']
       if (requests.length > 0)
         requests_list.append('<h3 class="section-heading">Awaiting Assistance</h3>')
         requests_media_list = $('<ul class="student-list">')
@@ -32,7 +32,7 @@ $ ->
         for request in requests
           requests_media_list.append(Mustache.render(request_template, request))
 
-      code_review_requests = JSON.parse(data['code_reviews'])
+      code_review_requests = data['code_reviews']
       if (code_review_requests.length > 0)
         requests_list.append('<h3 class="section-heading">Awaiting Code Review</h3>')
         code_reviews_list = $('<ul class="student-list">')
@@ -40,7 +40,7 @@ $ ->
         for code_review_request in code_review_requests
           code_reviews_list.append(Mustache.render(code_reviews_template, code_review_request))
 
-      all_students = JSON.parse(data['all_students'])
+      all_students = data['all_students']
       if (all_students.length > 0)
         requests_list.append('<h3 class="section-heading">All Students</h3>')
         all_students_list = $('<ul class="student-list">')
