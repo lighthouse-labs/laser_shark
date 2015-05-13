@@ -20,9 +20,14 @@ module DaysHelper
     student? && current_user.day_feedbacks.find_by(day: day.to_s)
   end
 
+  def total_cohort_students
+    @total ||= cohort.students.length
+  end
+
   def completed_students(activity)
-    completed = cohort.students.select { |student| student.completed_activity?(activity) }.length
-    total = cohort.students.length 
-    "#{completed}/#{total}"
+    completed = User.count_by_sql("SELECT count(*) FROM users 
+      JOIN activity_submissions on activity_submissions.user_id = users.id
+      WHERE cohort_id = #{cohort.id} AND activity_submissions.activity_id = #{activity.id}")
+    "#{completed}/#{total_cohort_students}"
   end
 end
