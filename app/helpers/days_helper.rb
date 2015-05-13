@@ -25,7 +25,7 @@ module DaysHelper
   end
 
   def completed_students(activity)
-    completed = User.count_by_sql ["SELECT count(*) FROM users JOIN activity_submissions on activity_submissions.user_id = users.id WHERE cohort_id = ? AND activity_submissions.activity_id = ?", cohort.id, activity.id]
-    "#{completed}/#{total_cohort_students}"
+    completed_students = User.students_completed_activity(activity, cohort)
+    "#{completed_students}/#{total_cohort_students}"
   end
 end

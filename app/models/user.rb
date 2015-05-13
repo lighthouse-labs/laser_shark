@@ -24,6 +24,7 @@ class User < ActiveRecord::Base
   scope :active, -> {
     where(deactivated_at: nil, completed_registration: true)
   }
+  scope :students_completed_activity, -> (activity, cohort){count_by_sql(["SELECT count(*) FROM users JOIN activity_submissions on activity_submissions.user_id = users.id WHERE cohort_id = ? AND activity_submissions.activity_id = ?", cohort.id, activity.id])}
 
   validates :uid,   presence: true
   validates :token, presence: true
