@@ -21,7 +21,7 @@ module DaysHelper
   end
 
   def total_cohort_students
-    @total_cohort_students ||= cohort.students.length
+    @total_cohort_students ||= cohort.students.count
   end
 
   def completed_students(activity)
