@@ -5,7 +5,6 @@ LaserShark::Application.routes.draw do
 
   get 'prep'  => 'setup#show' # temporary
   get 'setup' => 'setup#show' # temporary
-  get '/teachers', to: 'teachers#index'
   root to: 'home#show'
   get '/welcome', to: 'welcome#show'
 
@@ -16,7 +15,6 @@ LaserShark::Application.routes.draw do
   resource :registration, only: [:new, :create]
   resource :profile, only: [:edit, :update]
   
-
   resources :assistance_requests, only: [:index, :create, :destroy] do
     collection do
       delete :cancel
@@ -58,6 +56,7 @@ LaserShark::Application.routes.draw do
     resources :students, only: [:index]
     resources :cohorts, only: [:index]
   end
+  resources :teachers, only: [:index]
 
   # To test 500 error notifications on production
   get 'error-test' => 'test_errors#create'
