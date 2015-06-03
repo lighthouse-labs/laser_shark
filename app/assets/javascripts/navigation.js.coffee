@@ -21,6 +21,7 @@ $ ->
       ar_cancel_button.text('Waiting for Assistance')
       ar_create.addClass('hidden')
       ar_cancel.removeClass('hidden')
+      setTimeout(updateAssistanceUI, 10000)
     )
 
     ar_cancel_button.click (e) ->
@@ -34,19 +35,16 @@ $ ->
       $.getJSON '/assistance_requests/status', (data) ->
         if data.state == 'waiting'
           ar_cancel_button.text('No. ' + data.position_in_queue + ' in Request Queue')
-          ar_create.addClass('hidden')
-          ar_cancel.removeClass('hidden')
-        else if data.state == 'active'
+
+        if data.state == 'active'
           ar_cancel_button.text(data.assistor.first_name + ' ' + data.assistor.last_name + ' assisting')
+
+        if data.state == 'waiting' || data.state == 'active'
           ar_create.addClass('hidden')
           ar_cancel.removeClass('hidden')
+          setTimeout(updateAssistanceUI, 30000)
         else
           ar_create.removeClass('hidden')
           ar_cancel.addClass('hidden')
 
-    poll = ->
-      updateAssistanceUI().always(->
-        setTimeout(poll, 30000)
-      )
-
-    poll()
+    updateAssistanceUI()
