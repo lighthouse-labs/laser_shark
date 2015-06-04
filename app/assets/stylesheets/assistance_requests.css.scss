@@ -21,7 +21,7 @@
     overflow: hidden;
     padding: 0;
     & > li {
-      @extend .clearfix;
+      @include clearfix();
       margin: 2em 0;
     }
     .student-avatar {
