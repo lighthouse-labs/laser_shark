@@ -53,6 +53,7 @@ Alternatively, you could start the server using: `bin/rails s` and run the tests
 
 At the moment, this project is managed via a [Public Trello Board](https://trello.com/b/5jhOVghs/laser-sharks)
 
+
 ## Notes
 
 <https://github.com/wingrunr21/flat-ui-sass> was used to convert FlatUI Pro from LESS to SASS (located in `vendor/assets` )
