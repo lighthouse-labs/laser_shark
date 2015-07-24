@@ -19,6 +19,11 @@ describe AssistanceRequest do
     expect { new_ar.save! }.to_not raise_error
   end
 
+  it 'should save if the assistance request reason is longer than 255 characters' do
+    ar = build(:assistance_request, reason: (0...300).map { (65 + rand(26)).chr }.join)
+    expect { ar.save! }.to_not raise_error
+  end
+
   it 'should not save if the requestor has an in progress assistance request' do
     ar = create(:in_progress_assistance_request)
     new_ar = build(:assistance_request, requestor: ar.requestor)
