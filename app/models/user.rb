@@ -92,6 +92,11 @@ class User < ActiveRecord::Base
     activity_submissions.where(activity: activity).first.github_url if completed_activity?(activity)
   end
 
+  def incomplete_activities
+    @completed_activities = self.submitted_activities.map &:id
+    Activity.where('id NOT IN (?) AND DAY < ?', @completed_activities, CurriculumDay.new(Date.today, self.cohort).to_s )
+  end
+
   def full_name
     "#{self.first_name} #{self.last_name}"
   end
