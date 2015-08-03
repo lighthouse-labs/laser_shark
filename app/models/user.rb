@@ -93,8 +93,7 @@ class User < ActiveRecord::Base
   end
 
   def incomplete_activities
-    @completed_activities = self.submitted_activities.map &:id
-    Activity.where('id NOT IN (?) AND day < ?', @completed_activities, CurriculumDay.new(Date.today, cohort).to_s )
+    Activity.where('id NOT IN (?) AND day < ?', self.submitted_activities.map &:id, CurriculumDay.new(Date.today, cohort).to_s )
   end
 
   def full_name
