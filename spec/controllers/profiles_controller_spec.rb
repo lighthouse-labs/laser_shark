@@ -16,15 +16,6 @@ describe ProfilesController do
     end
   end
 
-  describe "GET #incomplete" do
-    it "gets all incompleted assignments up until today" do
-      current_user.cohort = Cohort.new name: "test_cohort", start_date: Date.today, code: 1
-      current_user.save
-      get :incomplete_activities
-      expect(response).to render_template :incomplete_activities
-    end
-  end
-
   describe "PATCH #update" do
     it "assigns the registration form to @form" do
       patch :update, user: attributes_for(:user)

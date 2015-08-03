@@ -13,8 +13,4 @@ class ProfilesController < ApplicationController
     end
   end
 
-  def incomplete_activities
-    @activities = current_user.incomplete_activities
-  end
-
 end

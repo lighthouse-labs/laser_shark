@@ -12,8 +12,8 @@ LaserShark::Application.routes.draw do
   get '/auth/github', as: 'github_session'
   resource :session, :only => [:new, :destroy]
   resource :registration, only: [:new, :create]
-  get '/profile/incomplete', to: 'profiles#incomplete_activities'
   resource :profile, only: [:edit, :update]
+  resources :incomplete_activities, only: [:index]
 
   resources :assistance_requests, only: [:index, :create, :destroy] do
     collection do
