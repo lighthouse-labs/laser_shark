@@ -93,7 +93,8 @@ class User < ActiveRecord::Base
   end
 
   def incomplete_activities
-    Activity.where('id NOT IN (?) AND day < ?', self.submitted_activities.map &:id, CurriculumDay.new(Date.today, cohort).to_s )
+    Activity.joins("LEFT OUTER JOIN activity_submissions ON activity_submissions.activity_id = activities.id AND activity_submissions.user_id = #{id}")
+            .where("activity_submissions.activity_id IS NULL AND activities.day < ?", CurriculumDay.new(Date.today, cohort).to_s)  
   end
 
   def full_name
