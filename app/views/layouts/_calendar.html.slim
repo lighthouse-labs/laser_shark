@@ -6,12 +6,23 @@
           a href="#"
             | W
             = w
-        - (1..DAYS_PER_WEEK).each do |d|
-          li.day-number class=day_status_css("w#{w}d#{d}") = link_to(d, day_path("w#{w}d#{d}"))
-        - if WEEKENDS
-          li.day-number class=day_status_css("w#{w}e") = link_to('e', day_path("w#{w}e"))
+        - if local_assigns.has_key? (:attendance)
+          - (1..DAYS_PER_WEEK).each do |d|
+            li.day-number class=day_status_css("w#{w}d#{d}") = link_to(d, index_absents_path("w#{w}d#{d}"))
+        - else
+          - (1..DAYS_PER_WEEK).each do |d|
+            li.day-number class=day_status_css("w#{w}d#{d}") = link_to(d, day_path("w#{w}d#{d}"))
+          - if WEEKENDS
+            li.day-number class=day_status_css("w#{w}e") = link_to('e', day_path("w#{w}e"))
   .day-nav-links
     - unless today == 'w1d1'
-      = link_to 'Yesterday', day_path('yesterday'), class: 'btn btn-yesterday'
-      | &nbsp;
-    = link_to 'Today', day_path('today'), class: 'btn btn-today'
+      - if local_assigns.has_key? (:attendance)
+        = link_to 'Yesterday', index_absents_path('yesterday'), class: 'btn btn-yesterday'
+        | &nbsp;
+      - else 
+        = link_to 'Yesterday', day_path('yesterday'), class: 'btn btn-yesterday'
+        | &nbsp;
+    - if local_assigns.has_key? (:attendance)
+      = link_to 'Today', index_absents_path('today'), class: 'btn btn-today'
+    - else
+      = link_to 'Today', day_path('today'), class: 'btn btn-today'
