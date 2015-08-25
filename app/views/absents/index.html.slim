@@ -1,2 +1,20 @@
-h1 Absents#index
-p Find me in app/views/absents/index.html.slim
+- content_for :side_nav do
+  = render :partial => 'layouts/side_nav', :locals => {:attendance => @attendance}
+
+h1= 'Attendance'
+
+= form_tag url: create_absents_path(:day_number), method: :post
+  table.table.absent-form
+    thead
+      tr
+        th Absent
+        th 
+        th Name
+        
+    tbody
+      - @students.zip(@status).each do |student, stat|
+        tr
+          td.absent-td = check_box_tag "student_ids[]", student.id, checked = stat
+          td = image_tag(avatar_for(student), size: '50x50')
+          td.absent-td = student.full_name
+  = submit_tag 'Save', class: "btn btn-danger btn-lg"
