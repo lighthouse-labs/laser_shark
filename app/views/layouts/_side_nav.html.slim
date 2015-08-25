@@ -3,4 +3,7 @@ h1.day-heading = day.to_s.upcase
 - unless setup?
   h3.date-heading = "#{day.date.strftime("%a %b #{day.date.day}")}"
 
-== render 'layouts/calendar'
+- if local_assigns.has_key? :attendance
+  = render :partial => 'layouts/calendar', :locals => {:attendance => @attendance}
+- else
+  == render 'layouts/calendar'

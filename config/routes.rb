@@ -57,6 +57,10 @@ LaserShark::Application.routes.draw do
 
   resources :streams, only: [:index, :show]
 
+  resources :absents, only: [:index, :create]
+  get 'attendance/:day_number' => 'absents#index', as: :index_absents
+  post 'attendance/:day_number' => 'absents#create', as: :create_absents
+
   # ADMIN
   namespace :admin do
     root to: 'dashboard#show'
