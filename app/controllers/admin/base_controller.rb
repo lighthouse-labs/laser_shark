@@ -1,9 +1,18 @@
 class Admin::BaseController < ApplicationController
 
-  http_basic_authenticate_with name: 'admin' , password: ENV['ADMIN_PASSWORD']
+  # skip_before_action :authenticate_user
 
-  skip_before_action :authenticate_user
+  before_filter :admin_required
 
   layout 'admin'
+
+  private
+
+  def admin_required
+    unless admin?
+      flash[:alert] = 'Access Not Allowed'
+      redirect_to :root
+    end
+  end
 
 end

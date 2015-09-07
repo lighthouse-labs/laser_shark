@@ -1,12 +1,21 @@
-h1 Cohort
+h1 Cohorts
+hr
+
+.actions.well
+  = link_to 'New Cohort', [:new, :admin, :cohort], class: 'btn btn-default'
+
+
 table.table
   thead
     tr
-      th
       th Name
       th Start Date
+      th Location
+      th 
+        abbr title="Student Access Code" SAC
+      th Students
+      th Status
+      th 
+
   tbody
-    - @cohorts.each do |cohort|
-      tr
-        td = cohort.name
-        td = cohort.start_date
+    = render @cohorts

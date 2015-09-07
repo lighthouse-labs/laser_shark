@@ -1,12 +1,19 @@
 class Cohort < ActiveRecord::Base
 
+  belongs_to :program
+
   has_many :students
   has_many :recordings
-  belongs_to :program
   
   validates :name, presence: true
   validates :start_date, presence: true
-  validates :code, uniqueness: true
+  validates :program, presence: true
+  validates :location, presence: true
+
+  validates :code,  uniqueness: true, 
+                    presence: true,
+                    format: { with: /\A[-a-z]+\z/, allow_blank: true }, 
+                    length: { minimum: 3, allow_blank: true }
 
   scope :most_recent, -> { order(start_date: :desc) }
 

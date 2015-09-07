@@ -7,4 +7,15 @@ module CohortsHelper
       cohort.name
     end
   end
+
+  def cohort_status(cohort)
+    if cohort.active?
+      content_tag :span,  'Active', class: 'label label-success'
+    elsif cohort.finished?
+      content_tag :span, 'Finished', class: 'label label-danger'
+    else
+      content_tag :span, 'Upcoming', class: 'label label-info'
+    end
+  end
+
 end

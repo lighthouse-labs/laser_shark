@@ -1,0 +1,12 @@
+- if form.object.errors.full_messages.any?
+  .alert.alert-error
+    strong Please correct the following errors:
+    - form.object.errors.full_messages.each do |msg|
+      li = msg
+  hr
+
+= form.input :name
+= form.input :location
+= form.input :code, placeholder: 'All lowercase, no spaces (hyphens encourged!)'
+= form.association :program
+= form.input :start_date

@@ -42,6 +42,11 @@ class ApplicationController < ActionController::Base
   end
   helper_method :alumni?
 
+  def admin?
+    current_user.try :admin?
+  end
+  helper_method :admin?
+
   def cohort
     # Teachers can switch to any cohort
     if teacher?
