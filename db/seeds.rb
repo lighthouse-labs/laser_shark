@@ -8,15 +8,43 @@
 # Environment variables (ENV['...']) can be set in the file .env file.
 
 if Rails.env.development?
-  Cohort.destroy_all
-  Cohort.create! name: "May, 2014", start_date: "May 05, 2014", code: "may2014"
-  Cohort.create! name: "June, 2014", start_date: "June 02, 2014", code: "jun2014"
-end
+  # => Create activities and content for cohort
+  1.upto(8).each do |week|
+    1.upto(5).each do |day|
+      [900, 1100, 1500, 1900, 2200].each do |time|
+        params = {
+          name: Faker::Commerce.product_name,
+          day: "w#{week}d#{day}",
+          start_time: time,
+          duration: rand(60..180),
+          instructions: Faker::Lorem.paragraphs.join("<br/><br/>")
+        }
 
-activities_file = ENV['FILE'] || File.join(Rails.root, "db", "activities_seed.rb")
-if File.exists?(activities_file)
-  puts "Loading Activities seed file"
-  require(activities_file)
-else
-  puts "File #{activities_file} not found!"
+        if time == 900
+          Lecture.create!(params)
+        else
+          Assignment.create!(params)
+        end
+        
+      end
+    end
+  end
+
+  Cohort.destroy_all
+  
+  program = Program.create(name: "Web Immersive")
+  cohort = Cohort.create! name: "Current Cohort", code: "current", start_date: Date.today - 7.days, program: program
+
+  10.times do |i|
+    Student.create!(
+      first_name: Faker::Name.first_name,
+      last_name: Faker::Name.last_name, 
+      email: Faker::Internet.email,
+      cohort: cohort,
+      uid: 1000 + i,
+      token: 2000 + i,
+      completed_registration: true
+    )
+  end
+
 end
