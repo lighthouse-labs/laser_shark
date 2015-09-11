@@ -2,9 +2,12 @@
 
 class CurriculumDay
   attr_reader :date
+  attr_reader :raw_date
+
   include Comparable
 
   def initialize(date, cohort)
+    @raw_date = date
     @date = date
     @cohort = cohort
 
@@ -13,13 +16,13 @@ class CurriculumDay
     if @date.is_a?(String) && @cohort && @date != 'setup'
       @date = calculate_date
     end
-
   end
 
   def to_s
     return "setup" if @date == "setup"
     return @to_s if @to_s
     days = (@date.to_date - @cohort.start_date).to_i
+
     w = (days / 7) + 1
     @to_s = if w > 8
       "w8e"
@@ -48,6 +51,10 @@ class CurriculumDay
 
   def today?
     self.to_s == today.to_s
+  end
+
+  def info
+    DayInfo.where(day: self.to_s).first
   end
 
   private
