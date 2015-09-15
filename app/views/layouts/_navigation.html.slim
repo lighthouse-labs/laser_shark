@@ -49,6 +49,11 @@ nav.navbar.navbar-inverse.navbar-fixed-top role="navigation"
                 i.fa.fa-fw.fa-group
                 span.non-tablet-label
                   | Classmates
+          li.dropdown
+            = link_to teachers_path,title: 'Teachers'
+              i.fa.fa-fw.fa-group
+              span.non-tablet-label
+                | Teachers
         - if teacher?
           li
             = link_to :assistance_requests, data: { 'no-turbolink' => true }, title: 'Request Queue'

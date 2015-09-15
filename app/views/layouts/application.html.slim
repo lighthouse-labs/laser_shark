@@ -18,10 +18,12 @@ html
     main.container[role="main"]
       == render 'layouts/messages'
       - if content_for? :side_nav
-        aside.side-nav
+        aside.side-nav.col-md-3
           == yield :side_nav
-
-      .content
-        == yield
+        .content.col-md-9
+          == yield
+      - else
+        .content.col-md-12
+          == yield
 
     == yield :end_of_body

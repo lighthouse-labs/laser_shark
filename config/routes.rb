@@ -57,6 +57,8 @@ LaserShark::Application.routes.draw do
 
   resources :streams, only: [:index, :show]
 
+  resources :teachers, only: [:index]
+
   # ADMIN
   namespace :admin do
     root to: 'dashboard#show'
