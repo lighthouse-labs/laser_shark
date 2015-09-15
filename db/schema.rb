@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150907194958) do
+ActiveRecord::Schema.define(version: 20150915190703) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -127,6 +127,25 @@ ActiveRecord::Schema.define(version: 20150907194958) do
     t.string   "day"
   end
 
+  create_table "day_infos", force: true do |t|
+    t.string   "day"
+    t.text     "description"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "feedbacks", force: true do |t|
+    t.integer  "student_id"
+    t.integer  "teacher_id"
+    t.integer  "technical_rating"
+    t.integer  "style_rating"
+    t.text     "notes"
+    t.integer  "reviewed_id"
+    t.string   "reviewed_type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "programs", force: true do |t|
     t.string   "name"
     t.text     "lecture_tips"
@@ -181,6 +200,11 @@ ActiveRecord::Schema.define(version: 20150907194958) do
     t.datetime "updated_at"
     t.integer  "code_review_percent",    default: 80
     t.boolean  "admin",                  default: false, null: false
+    t.string   "company_name"
+    t.string   "company_url"
+    t.text     "bio"
+    t.string   "quirky_fact"
+    t.string   "specialties"
   end
 
   add_index "users", ["cohort_id"], name: "index_users_on_cohort_id", using: :btree
