@@ -1,6 +1,5 @@
 LaserShark::Application.routes.draw do
 
-  post '/rate' => 'rater#create', :as => 'rate'
   get '/i/:code', to: 'invitations#show' # student/teacher invitation handler
 
   get 'prep'  => 'setup#show' # temporary
