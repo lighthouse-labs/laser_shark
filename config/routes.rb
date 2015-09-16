@@ -1,5 +1,6 @@
 LaserShark::Application.routes.draw do
 
+  post '/rate' => 'rater#create', :as => 'rate'
   get '/i/:code', to: 'invitations#show' # student/teacher invitation handler
 
   get 'prep'  => 'setup#show' # temporary
@@ -14,6 +15,7 @@ LaserShark::Application.routes.draw do
   resource :session, :only => [:new, :destroy]
   resource :registration, only: [:new, :create]
   resource :profile, only: [:edit, :update]
+  resource :feedback, only: [:show, :update]
 
   resources :assistance_requests, only: [:index, :create, :destroy] do
     collection do

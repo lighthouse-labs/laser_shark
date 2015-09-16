@@ -17,8 +17,11 @@
 //= require ace
 //= require jquery.timeago
 //= require mustache
+//= require jquery.raty
+
 //= require assistance_requests
 //= require navigation
-//= require_tree .
+//= require april1
+//= require feedbacks
 
 

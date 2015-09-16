@@ -140,8 +140,8 @@ ActiveRecord::Schema.define(version: 20150915190703) do
     t.integer  "technical_rating"
     t.integer  "style_rating"
     t.text     "notes"
-    t.integer  "reviewed_id"
-    t.string   "reviewed_type"
+    t.integer  "feedbackable_id"
+    t.string   "feedbackable_type"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

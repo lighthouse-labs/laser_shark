@@ -44,22 +44,22 @@ header > nav {
 main {
   $side-nav-width: 240px;
   aside.side-nav {
-    @media (min-width: $screen-sm-min) {
-      float: left;
-      width: $side-nav-width;
-    }
+    // @media (min-width: $screen-sm-min) {
+    //   float: left;
+    //   width: $side-nav-width;
+    // }
   }
   .content {
-    @media (min-width: $screen-sm-min) {
-      float: left;
-      width: $container-sm - $side-nav-width - $grid-gutter-width;
-    }
-    @media (min-width: $screen-md-min) {
-      width: $container-md - $side-nav-width - $grid-gutter-width;
-    }
-    @media (min-width: $screen-lg-min) {
-      width: $container-lg - $side-nav-width - $grid-gutter-width;
-    }
+    // @media (min-width: $screen-sm-min) {
+    //   float: left;
+    //   width: $container-sm - $side-nav-width - $grid-gutter-width;
+    // }
+    // @media (min-width: $screen-md-min) {
+    //   width: $container-md - $side-nav-width - $grid-gutter-width;
+    // }
+    // @media (min-width: $screen-lg-min) {
+    //   width: $container-lg - $side-nav-width - $grid-gutter-width;
+    // }
     .jumbotron {
       padding-top: 30px;
       padding-bottom: 30px;

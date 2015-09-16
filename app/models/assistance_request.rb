@@ -2,7 +2,7 @@ class AssistanceRequest < ActiveRecord::Base
   belongs_to :requestor, :class => User
   belongs_to :assistance
   belongs_to :activity_submission
-  has_many :feedbacks, as: :reviewed
+  has_many :feedbacks, as: :feedbackable
 
   validates :requestor, :presence => true
 
