@@ -14,6 +14,7 @@ section.activity-details
               = link_to '&laquo; Previous'.html_safe, day_activity_path(@activity.day, @previous_activity), class: 'btn btn-previous'
             - if @next_activity
               = link_to 'Next &raquo;'.html_safe, day_activity_path(@activity.day, @next_activity), class: 'btn btn-next'
+
           .input-group.duration
             .input-group-addon
               i.fa.fa-clock-o
@@ -68,6 +69,10 @@ section.activity-details
           = link_to activity_activity_submission_path(@activity), method: :delete, class:'btn btn-activity-incomplete-status'
             i.fa.fa-times
             | &nbsp;Cancel Completion
+          - if @feedback
+              | &nbsp;
+              button.btn.btn-activity-complete-status data-toggle="modal" data-target="#feedback_modal" data-feedback-id="#{@feedback.id}"
+                | Feedback 
         - else
           = form_for @activity_submission, url: activity_activity_submission_path(@activity), method: :post, html: { class: 'form-inline' }  do |f|
             - if @activity.allow_submissions?
@@ -176,4 +181,7 @@ section.activity-details
               = link_to activity_message_path(@activity, msg), method: :delete, confirm: 'Sure ,lad?', class: 'delete'
                 i.fa.fa-times
 
+.modal.fade id="feedback_modal"
+  .modal-dialog
+    .modal-content
 

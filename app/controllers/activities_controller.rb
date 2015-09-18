@@ -14,6 +14,8 @@ class ActivitiesController < ApplicationController
     @next_activity = @activity.next
     @previous_activity = @activity.previous
 
+    @feedback = pending_feedbacks.find_by_feedbackable_id(@activity.id)
+
     if teacher?
       @messages = @activity.messages
     else

@@ -21,12 +21,17 @@ class ActivityMessage < ActiveRecord::Base
   validates :body, presence: true
 
   after_create :notify_cohort_students, if: :for_students?
+  after_create :create_empty_feedbacks, if: :for_students?
 
   private
 
   def notify_cohort_students
     UserMailer.new_activity_message(self).deliver
   end
-  
 
+  def create_empty_feedbacks
+    cohort.students.each do |student|
+      activity.feedbacks.create(student: student, teacher: user)
+    end
+  end
 end

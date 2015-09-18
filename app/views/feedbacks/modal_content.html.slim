@@ -7,20 +7,20 @@
     h4.modal-title Enter your feedback
 
   .modal-body
-    | Technical Rating: 
+    | *Technical Rating:
     br
-    .raty-editor id="modal-technical-rating" name="feedback[technical_rating]" data-score=f.object.technical_rating value=""
-      = f.hidden_field :technical_rating
+    .raty-editor name="feedback[technical_rating]" data-score=f.object.technical_rating value=""
+      = f.hidden_field :technical_rating, id: "modal-technical-rating"
 
-    | Style Rating:
+    | *Style Rating:
     br
-    .raty-editor id="modal-style-rating" data-score=f.object.style_rating name="feedback[style_rating]" value=""
-      = f.hidden_field :style_rating
+    .raty-editor data-score=f.object.style_rating name="feedback[style_rating]" value=""
+      = f.hidden_field :style_rating, id: "modal-style-rating"
 
-    | Please enter some additional feedback (if any):
+    | Please enter some additional feedback (optional):
     br
     = f.text_area :notes
 
   .modal-footer
     button.btn.btn-default type="button" data-dismiss="modal" Close
-    = f.submit "Save", class: 'btn btn-success'
+    = f.submit "Save", class: "btn btn-success", id: "modal-submit-button"

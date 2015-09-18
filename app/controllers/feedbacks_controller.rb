@@ -6,9 +6,9 @@ class FeedbacksController < ApplicationController
   end
 
   def update
-    @feedback = Feedback.find(params[:id].to_i)
-    @feedback.update(feedback_params)
-    @feedback.save
+    feedback = Feedback.find(params[:id].to_i)
+    feedback.update(feedback_params)
+    feedback.save
     redirect_to :back
   end
 

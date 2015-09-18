@@ -12,9 +12,7 @@ class ActivitySubmissionsController < ApplicationController
 
     if @activity_submission.save
       if @activity.allow_submissions?
-        @feedback = Feedback.create(student_id: current_user.id)
-        @feedback.feedbackable = @activity
-        @feedback.save
+        @activity.feedbacks.create(student: current_user)
       end
       redirect_to :back
     else
@@ -23,7 +21,7 @@ class ActivitySubmissionsController < ApplicationController
   end
 
   def destroy
-    feedback = @activity.feedbacks.find_by_student_id(current_user.id)
+    feedback = @activity.feedbacks.find_by(student: current_user)
     feedback.destroy if feedback
     activity_submission = @activity.activity_submissions.find_by(user: current_user)
     activity_submission.destroy if activity_submission
