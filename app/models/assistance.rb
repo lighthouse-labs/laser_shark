@@ -27,6 +27,9 @@ class Assistance < ActiveRecord::Base
       assistee.code_review_percent += Assistance::RATING_BASELINE - rating
     end
     self.assistee.save
+    @feedback = Feedback.create(student_id: self.assistee_id, teacher_id: self.assistor_id)
+    @feedback.feedbackable = self
+    @feedback.save
 
     send_notes_to_slack
   end

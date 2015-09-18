@@ -45,6 +45,53 @@ table.table
           button.btn.btn-activity-complete-status data-toggle="modal" data-target="#feedback_modal" data-feedback-id="#{feedback.id}"
             | Edit
 
+h3 Completed:
+table.table
+  thead
+    tr
+      th Day
+      th Name
+      th Type
+      th Teacher
+      th Technical Rating
+      th Style Rating
+      th Notes
+      th 
+
+  tbody
+    - @completed_feedbacks.each do |feedback|
+      tr
+        td
+          - if feedback.feedbackable_type == 'Activity'
+            = feedback.feedbackable.day.upcase
+          - else
+            = CurriculumDay.new(feedback.feedbackable.start_at, current_user.cohort).to_s.upcase
+        td
+          - if feedback.feedbackable_type == 'Activity'
+            = feedback.feedbackable.name
+          - else
+            = 'N/A'
+        td
+          - if feedback.feedbackable_type == 'Activity'
+            = feedback.feedbackable.type
+          - else
+            = 'Assistance Request'
+        td
+          - if feedback.teacher
+            = feedback.teacher.first_name + " " + feedback.teacher.last_name
+          - else
+            = "N/A"
+        td
+          .raty-viewer data-score="#{feedback.technical_rating}"
+        td
+          .raty-viewer data-score="#{feedback.style_rating}"
+        / td = rating_for_user feedback, "technical_rating", :cancel => true
+        / td = rating_for feedback, "style_rating", :cancel => true
+        td = feedback.notes
+        td 
+          button.btn.btn-activity-complete-status data-toggle="modal" data-target="#feedback_modal" data-feedback-id="#{feedback.id}"
+            | Edit            
+
 .modal.fade id="feedback_modal"
   .modal-dialog
     .modal-content
