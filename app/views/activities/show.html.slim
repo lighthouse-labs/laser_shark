@@ -26,6 +26,9 @@ section.activity-details
               - if weekend?
                 = duration_in_hours(@activity.duration)
                 | h
+              - elsif @activity.type != 'Lecture'
+                = duration_in_hours(@activity.duration)
+                | &nbsp;hours   
               - else
                 = integer_time_to_s(@activity.start_time)
                 | &nbsp;to&nbsp;

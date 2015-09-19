@@ -7,6 +7,10 @@
         br
         = duration activity
         br
+      - elsif activity.type != 'Lecture'
+        br
+        = duration_in_hours(activity.duration) 
+        | &nbsp;h
       - else
         = integer_time_to_s activity.start_time
         br
