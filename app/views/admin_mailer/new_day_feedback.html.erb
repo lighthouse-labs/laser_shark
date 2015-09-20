@@ -1,13 +1,15 @@
 <h1><%= @feedback.mood.upcase %></h1>
 
 <p>
-  HOST: <%= link_to @host, @host %>  
+  STUDENT: <%= @feedback.student.full_name %>
   <br>
-  FROM: <%= @feedback.student.full_name %>
+  HOST: <%= link_to @host, @host %>
+  <br>
+  PROGRAM: <%= @feedback.student.cohort.program.name %>
   <br>
   COHORT: <%= @feedback.student.cohort.name %> (<%= @feedback.student.cohort.location %>)
   <br>
-  DAY: <%= @feedback.day %>
+  DAY: <%= link_to @feedback.day, day_url(@feedback.day, host: "http://#{ENV['HOST']}") %>
 </p>
 
 <p>
