@@ -22,6 +22,14 @@ class AssistancesController < ApplicationController
     end
   end
 
+  def destroy
+    assistance = Assistance.find(params[:id].to_i)
+    code_review_request = CodeReviewRequest.find_by(assistance: assistance)
+    code_review_request.cancel_assistance
+    assistance.destroy
+    redirect_to assistance_requests_path
+  end
+
   private
 
   def teacher_required

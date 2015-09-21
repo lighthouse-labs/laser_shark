@@ -45,6 +45,11 @@ class AssistanceRequest < ActiveRecord::Base
     self.assistance.end(notes)
   end
 
+  def cancel_assistance
+    self.assistance = nil
+    self.save
+  end
+
   def open?
     assistance.nil? && canceled_at.nil?
   end

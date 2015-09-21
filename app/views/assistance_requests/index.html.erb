@@ -110,6 +110,9 @@
             End Assistance
           {{/assistance_request.activity_submission}}
         </button>
+        {{#assistance_request.activity_submission}}
+          <a href="/assistances/{{id}}" class="btn btn-danger btn-lg" data-method="delete">Cancel Code Review</a>
+        {{/assistance_request.activity_submission}}
       </p>
     </div>
     <div class="modal fade" id="assistance_model_{{id}}">
