@@ -79,4 +79,6 @@ group :test do
   gem "codeclimate-test-reporter", require: nil
 end
 
-gem 'rails_12factor', group: :production
+group :production, :staging do
+  gem 'rails_12factor'
+end
