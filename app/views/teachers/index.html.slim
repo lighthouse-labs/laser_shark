@@ -1,0 +1,26 @@
+h1= 'Teachers'
+table.table
+  thead
+    tr
+      th
+      th Name
+      th Bio
+      th GitHub
+      th Company
+      th Quirky Fact
+      th Specialties
+      
+  tbody
+    - @teachers.each do |teacher|
+      tr
+        td = image_tag(avatar_for(teacher), size: '100x100')
+        td = teacher.full_name
+        td = teacher.bio
+        td 
+          = link_to teacher.github_username, "https://github.com/#{teacher.github_username}"
+        td  
+          = link_to teacher.company_name, "http://#{teacher.company_url}"
+        td = teacher.quirky_fact
+        td = teacher.specialties
+
+       
