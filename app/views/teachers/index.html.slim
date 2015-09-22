@@ -16,10 +16,11 @@ table.table
         td = image_tag(avatar_for(teacher), size: '100x100')
         td = teacher.full_name
         td = teacher.bio
+        td 
+          = link_to teacher.github_username, "https://github.com/#{teacher.github_username}"
         td  
-          a href=("https://github.com/#{teacher.github_username}") = teacher.github_username
-        td  
-          a href=("https://#{teacher.company_url}") = teacher.company_name
+          = link_to teacher.company_name, "http://#{teacher.company_url}"
+
         td = teacher.quirky_fact
         td = teacher.specialties
 
