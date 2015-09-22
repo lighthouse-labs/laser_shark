@@ -6,6 +6,8 @@ class ActivitySubmission < ActiveRecord::Base
   has_one :code_review_request, dependent: :destroy
   
   after_save :request_code_review
+  after_create :create_feedback
+  before_destroy :destroy_feedback
 
   default_value_for :completed_at, allows_nil: false do
     Time.now
@@ -36,6 +38,15 @@ class ActivitySubmission < ActiveRecord::Base
     student_probablitiy = user.code_review_percent / 100.0
     activity_probability = activity.code_review_percent / 100.0
     student_probablitiy * activity_probability >= rand
+  end
+
+  def create_feedback
+    self.activity.feedbacks.create(student: self.user)
+  end
+
+  def destroy_feedback
+    @feedback = self.activity.feedbacks.find_by(student: self.user)
+    @feedback.destroy
   end
 
 end

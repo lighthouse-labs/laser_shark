@@ -1,0 +1,16 @@
+// Place all the styles related to the feedbacks controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+#feedback_notes {
+    width: 350px;
+    height: 100px;
+}
+
+.raty-editor {
+  width: 120px;
+  height: 40px;
+}
+
+.hidden-notes-field {
+  display: none;
+}

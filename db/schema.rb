@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150914172532) do
+ActiveRecord::Schema.define(version: 20150915190703) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -134,6 +134,21 @@ ActiveRecord::Schema.define(version: 20150914172532) do
     t.datetime "updated_at"
   end
 
+<<<<<<< HEAD
+=======
+  create_table "feedbacks", force: true do |t|
+    t.integer  "student_id"
+    t.integer  "teacher_id"
+    t.integer  "technical_rating"
+    t.integer  "style_rating"
+    t.text     "notes"
+    t.integer  "feedbackable_id"
+    t.string   "feedbackable_type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+>>>>>>> feature/3-students-assistance-feedback
   create_table "programs", force: true do |t|
     t.string   "name"
     t.text     "lecture_tips"

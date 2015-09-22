@@ -1,0 +1,26 @@
+= form_for @feedback, html: {method: :put} do |f|
+
+  .modal-header
+    button type="button" class="close" data-dismiss="modal" aria-label="Close"
+      span aria-hidden="true" 
+        | &times;
+    h4.modal-title Enter your feedback
+
+  .modal-body
+    | *Technical Rating:
+    br
+    .raty-editor name="feedback[technical_rating]" data-score=f.object.technical_rating value=""
+      = f.hidden_field :technical_rating, id: "modal-technical-rating"
+
+    | *Style Rating:
+    br
+    .raty-editor data-score=f.object.style_rating name="feedback[style_rating]" value=""
+      = f.hidden_field :style_rating, id: "modal-style-rating"
+
+    | Please enter some additional feedback (optional):
+    br
+    = f.text_area :notes
+
+  .modal-footer
+    button.btn.btn-default type="button" data-dismiss="modal" Close
+    = f.submit "Save", class: "btn btn-success", id: "modal-submit-button"

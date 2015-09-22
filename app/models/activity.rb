@@ -1,4 +1,4 @@
-  class Activity < ActiveRecord::Base
+class Activity < ActiveRecord::Base
 
   validates :name, presence: true, length: { maximum: 56 }
   validates :duration, numericality: { only_integer: true }
@@ -15,6 +15,7 @@
   has_many :activity_submissions, -> { order(:user_id) }
   has_many :messages, -> { order(created_at: :desc) }, class_name: 'ActivityMessage'
   has_many :recordings, -> { order(created_at: :desc) }
+  has_many :feedbacks, as: :feedbackable
 
   # Given the start_time and duration, return the end_time
   def end_time

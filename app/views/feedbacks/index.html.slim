@@ -1,0 +1,79 @@
+h3 Pending:
+table.table
+  thead
+    tr
+      th Day
+      th Name
+      th Type
+      th Teacher
+      th 
+
+  tbody
+    - pending_feedbacks.each do |feedback|
+      tr
+        td
+          = feedback.feedbackable.day.upcase
+        td
+          = feedback.feedbackable.try(:name) || 'N/A'
+        td
+          = feedback.feedbackable.try(:type) || feedback.feedbackable.class.name
+        td
+          - if feedback.teacher
+            = feedback.teacher.first_name + " " + feedback.teacher.last_name
+          - else
+            = "N/A"
+        td 
+          button.btn.btn-xs data-toggle="modal" data-target="#feedback_modal" data-feedback-id="#{feedback.id}"
+            | Edit    
+
+h3 Completed:
+table.table
+  thead
+    tr
+      th Day
+      th Name
+      th Type
+      th Teacher
+      th Technical Rating
+      th Style Rating
+      th    
+
+  tbody
+    - @completed_feedbacks.each do |feedback|
+      tr
+        td
+          = feedback.feedbackable.day.upcase
+        td
+          = feedback.feedbackable.try(:name) || 'N/A'
+        td
+          = feedback.feedbackable.try(:type) || feedback.feedbackable.class.name
+        td
+          - if feedback.teacher
+            = feedback.teacher.first_name + " " + feedback.teacher.last_name
+          - else
+            = "N/A"
+        td
+          .raty-viewer data-score="#{feedback.technical_rating}"
+        td
+          .raty-viewer data-score="#{feedback.style_rating}"
+        td 
+          button.btn.btn-xs data-toggle="modal" data-target="#feedback_modal" data-feedback-id="#{feedback.id}"
+            | Edit    
+
+      - unless feedback.notes.blank?
+        tr
+          td
+          td colspan="5"
+            p 
+              | Notes
+
+            small
+              em 
+                = feedback.notes
+
+          td
+         
+.modal.fade id="feedback_modal"
+  .modal-dialog
+    .modal-content
+

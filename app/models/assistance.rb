@@ -2,6 +2,7 @@ class Assistance < ActiveRecord::Base
   has_one :assistance_request
   belongs_to :assistor, :class => User
   belongs_to :assistee, :class => User
+  has_many :feedbacks, as: :feedbackable
 
   validates :rating, numericality: { only_integer: true, greater_than_or_equal_to: 1, less_than_or_equal_to: 4, allow_nil: true }
 
@@ -27,6 +28,7 @@ class Assistance < ActiveRecord::Base
       assistee.code_review_percent += Assistance::RATING_BASELINE - rating
     end
     self.assistee.save
+    self.feedbacks.create(student: self.assistee, teacher: self.assistor)
 
     send_notes_to_slack
   end
@@ -40,6 +42,10 @@ class Assistance < ActiveRecord::Base
         full_name: assistee.full_name
       }
     }
+  end
+
+  def day
+    CurriculumDay.new(self.start_at, self.assistee.cohort).to_s
   end
 
   private

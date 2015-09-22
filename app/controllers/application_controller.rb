@@ -69,6 +69,11 @@ class ApplicationController < ActionController::Base
   end
   helper_method :streams
 
+  def pending_feedbacks
+    current_user.feedbacks.pending.reverse_chronological_order
+  end
+  helper_method :pending_feedbacks
+
   def assign_as_student_to_cohort(cohort)
     current_user.cohort = cohort
     current_user.type = 'Student'
