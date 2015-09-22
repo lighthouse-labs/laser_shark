@@ -1,5 +1,5 @@
 class Assistance < ActiveRecord::Base
-  has_one :assistance_request
+  has_one :assistance_request, dependent: :nullify
   belongs_to :assistor, :class => User
   belongs_to :assistee, :class => User
   has_many :feedbacks, as: :feedbackable
