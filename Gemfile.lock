@@ -375,6 +375,7 @@ DEPENDENCIES
   omniauth-github
   pg
   poltergeist
+  pry
   puma
   quiet_assets
   rails (= 4.1.1)
