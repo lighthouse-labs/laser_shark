@@ -31,7 +31,10 @@ div
 
     - if teacher?
       = f.input :company_name, label: 'Company Name'
-      = f.input :company_url, label: 'Company URL'
+      = f.input :company_url, wrapper: :horizontal_input_group, label: 'Company URL'
+        span.input-group-addon
+          | http://
+        = f.input_field :company_url, class: "form-control"
       = f.input :bio, as: :text, input_html: { maxlength: 1000 }, label: '*Bio'
       = f.input :quirky_fact, label: '*Quirky Fact'
       = f.input :specialties, label: '*Programming Specialties'

@@ -3,7 +3,7 @@ h1 Edit Your Details
 / Note: most of the markup here will get improved/fixed. Consider it temporary
 
 div
-  = simple_form_for @form, as: :user, url: profile_path, method: :patch, html: {class: 'form-horizontal' }, wrapper: :horizontal_form do |f|
+  = simple_form_for @form, as: :user, url: profile_path, method: :patch, html: {class: 'form-horizontal' }, wrapper: :horizontal_input_group do |f|
 
     - if @form.errors.full_messages.any?
       .alert.alert-error
@@ -23,20 +23,23 @@ div
             | Change Avatar
             = f.file_field :custom_avatar
 
-    = f.input :first_name
-    = f.input :last_name
+    = f.input :first_name, label: 'First Name'
+    = f.input :last_name, label: 'Last Name'
     = f.input :email
-    = f.input :phone_number
+    = f.input :phone_number, label: 'Phone Number'
     = f.input :twitter
     = f.input :skype
     = f.input :slack
 
     - if teacher?
       = f.input :company_name, label: 'Company Name'
-      = f.input :company_url, label: 'Company URL'
-      = f.input :bio, as: :text, input_html: { maxlength: 1000 }, label: 'Bio'
-      = f.input :quirky_fact, label: 'Quirky Fact'
-      = f.input :specialties, label: 'Programming Specialties'
+      = f.input :company_url, wrapper: :horizontal_input_group, label: 'Company URL'
+        span.input-group-addon
+          | http://
+        = f.input_field :company_url, class: "form-control"
+      = f.input :bio, as: :text, input_html: { maxlength: 1000 }, label: '*Bio'
+      = f.input :quirky_fact, label: '*Quirky Fact'
+      = f.input :specialties, label: '*Programming Specialties'
 
     .form-group
       .col-sm-offset-3.col-sm-9
