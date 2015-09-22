@@ -14,7 +14,7 @@ class ActivitiesController < ApplicationController
     @next_activity = @activity.next
     @previous_activity = @activity.previous
 
-    @feedback = pending_feedbacks.find_by_feedbackable_id(@activity.id)
+    @feedback = @activity.feedbacks.find_by(student: current_user)
 
     if teacher?
       @messages = @activity.messages

@@ -63,8 +63,7 @@ section.activity-details
       - else
         - if current_user.completed_activity?(@activity)
           - if @activity_submission.github_url?
-            .form-control.pull-left#activity_view
-              = @activity_submission.github_url
+            input.form-control.pull-left#activity_view value="#{@activity_submission.github_url}" 
             | &nbsp;
           = link_to activity_activity_submission_path(@activity), method: :delete, class:'btn btn-activity-incomplete-status'
             i.fa.fa-times

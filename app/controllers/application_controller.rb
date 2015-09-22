@@ -70,7 +70,7 @@ class ApplicationController < ActionController::Base
   helper_method :streams
 
   def pending_feedbacks
-    current_user.feedbacks.pending
+    current_user.feedbacks.pending.reverse_chronological_order
   end
   helper_method :pending_feedbacks
 

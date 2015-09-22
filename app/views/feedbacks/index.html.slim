@@ -23,7 +23,7 @@ table.table
           - else
             = "N/A"
         td 
-          button.btn.btn-primary data-toggle="modal" data-target="#feedback_modal" data-feedback-id="#{feedback.id}"
+          button.btn.btn-xs data-toggle="modal" data-target="#feedback_modal" data-feedback-id="#{feedback.id}"
             | Edit    
 
 h3 Completed:
@@ -57,7 +57,7 @@ table.table
         td
           .raty-viewer data-score="#{feedback.style_rating}"
         td 
-          button.btn.btn-primary data-toggle="modal" data-target="#feedback_modal" data-feedback-id="#{feedback.id}"
+          button.btn.btn-xs data-toggle="modal" data-target="#feedback_modal" data-feedback-id="#{feedback.id}"
             | Edit    
 
       - unless feedback.notes.blank?
@@ -72,13 +72,6 @@ table.table
                 = feedback.notes
 
           td
-              / button.view-notes-button
-              /   span
-              /   | View
-              / .hidden-notes-field
-              /   = feedback.notes
-              /   button.close-notes-button
-              /     | Close
          
 .modal.fade id="feedback_modal"
   .modal-dialog

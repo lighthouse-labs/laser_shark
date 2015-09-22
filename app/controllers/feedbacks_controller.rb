@@ -1,19 +1,21 @@
 class FeedbacksController < ApplicationController
   before_filter :student_required
+  before_action :load_feedback, only: [:update, :modal_content]
 
   def index
-    @completed_feedbacks = current_user.feedbacks.completed
+    @completed_feedbacks = current_user.feedbacks.completed.reverse_chronological_order
   end
 
   def update
-    feedback = Feedback.find(params[:id].to_i)
-    feedback.update(feedback_params)
-    feedback.save
-    redirect_to :back
+    @feedback.update(feedback_params)
+    if @feedback.save
+      redirect_to :back
+    else    
+      redirect_to(:back, alert: 'Feedback could not be saved')
+    end
   end
 
   def modal_content
-    @feedback = Feedback.find(params[:id].to_i)
     render layout: false
   end
 
@@ -27,5 +29,9 @@ class FeedbacksController < ApplicationController
     params.require(:feedback).permit(
       :technical_rating, :style_rating, :notes
     )
+  end
+
+  def load_feedback
+    @feedback = Feedback.find(params[:id].to_i)
   end
 end

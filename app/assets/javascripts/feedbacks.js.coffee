@@ -20,12 +20,16 @@ $ ->
     $('div.raty-viewer').raty
       readOnly: true,
       hints: ['Terrible', 'Bad', 'OK', 'Good', 'Awesome'],
+      starOn: 'duck-on.png',
+      starOff: 'duck-off.png',
       score: ->
         $(@).data('score')
 
     # Make editable raty divs
     $('div.raty-editor').raty
       hints: ['Terrible', 'Bad', 'OK', 'Good', 'Awesome'],
+      starOn: 'duck-on.png',
+      starOff: 'duck-off.png',
       score: ->
         $(@).data('score')
       click: (score, evt) ->
