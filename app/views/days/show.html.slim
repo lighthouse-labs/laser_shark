@@ -23,6 +23,9 @@
 
 = render partial: 'activities/activity', collection: @activities
 
+h3 Event Calendar
+ul.list-group id="eventlist"
+
 - if student? && !weekend?
   hr
   .row
