@@ -3,6 +3,7 @@ class User < ActiveRecord::Base
   mount_uploader :custom_avatar, CustomAvatarUploader
 
   belongs_to :cohort
+  belongs_to :location
 
   has_many :recordings, foreign_key: :presenter_id
 
@@ -17,8 +18,9 @@ class User < ActiveRecord::Base
   }
   scope :cohort_in_locations, -> (locations) {
     if locations.is_a?(Array) && locations.length > 0
-      joins('LEFT OUTER JOIN cohorts AS cohorts_locations ON users.cohort_id = cohorts_locations.id').
-      where('cohorts_locations.location' => locations)
+      joins('LEFT OUTER JOIN cohorts AS c ON users.cohort_id = c.id').
+      joins('LEFT OUTER JOIN locations AS l ON users.location_id = l.id').
+      where('l.name' => locations)
     end
   }
   scope :active, -> {

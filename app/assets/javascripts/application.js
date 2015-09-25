@@ -23,5 +23,4 @@
 //= require navigation
 //= require april1
 //= require feedbacks
-
-
+//= require teachers

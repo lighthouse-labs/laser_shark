@@ -1,7 +1,7 @@
 tr
   td = cohort.name
   td = cohort.start_date
-  td = cohort.location
+  td = cohort.location.name
   td = cohort.code
   td 
     = link_to cohort.students.active.count, [cohort, :students]

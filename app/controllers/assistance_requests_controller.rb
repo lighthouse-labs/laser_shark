@@ -4,7 +4,7 @@ class AssistanceRequestsController < ApplicationController
   before_filter :teacher_required, only: [:index, :destroy, :start_assistance, :end_assistance, :queue]
 
   def index
-    @all_locations = Cohort.distinct('location').pluck('location')
+    @all_locations = Location.select(:name).map(&:name).uniq
     render :index, layout: 'assistance'
   end
 
@@ -13,7 +13,7 @@ class AssistanceRequestsController < ApplicationController
     requests = AssistanceRequest.where(type: nil).open_requests.oldest_requests_first.requestor_cohort_in_locations(@selected_locations)
     code_reviews = CodeReviewRequest.open_requests.oldest_requests_first.requestor_cohort_in_locations(@selected_locations)
     all_students = Student.in_active_cohort.active.order_by_last_assisted_at.cohort_in_locations(@selected_locations)
-
+    
     active_assistances_json = my_active_assistances.all.to_json(
       only: [:id, :start_at],
       include: {
@@ -21,7 +21,12 @@ class AssistanceRequestsController < ApplicationController
           only: [:first_name, :last_name, :remote, :avatar_url, :custom_avatar, :email, :slack, :skype],
           include: {
             cohort: {
-              only: [:id, :name, :location]
+              only: [:id, :name],
+              include: {
+                location: {
+                  only: [:name]
+                }
+              }
             }
           }
         },
@@ -47,7 +52,12 @@ class AssistanceRequestsController < ApplicationController
           only: [:first_name, :last_name, :remote, :avatar_url, :custom_avatar],
           include: {
             cohort: {
-              only: [:id, :name, :location]
+              only: [:id, :name],
+              include: {
+                location: {
+                  only: [:name]
+                }
+              }
             }
           }
         }
@@ -60,7 +70,12 @@ class AssistanceRequestsController < ApplicationController
           only: [:first_name, :last_name, :remote, :avatar_url, :custom_avatar],
           include: {
             cohort: {
-              only: [:id, :name, :location]
+              only: [:id, :name],
+              include: {
+                location: {
+                  only: [:name]
+                }
+              }
             }
           }
         },
@@ -78,7 +93,12 @@ class AssistanceRequestsController < ApplicationController
       only: [:id, :first_name, :last_name, :remote, :avatar_url, :custom_avatar, :last_assisted_at],
       include: {
         cohort: {
-          only: [:id, :name, :location]
+          only: [:id, :name],
+          include: {
+            location: {
+              only: [:name]
+            }
+          }
         }
       }
     )

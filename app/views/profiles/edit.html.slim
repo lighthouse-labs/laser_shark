@@ -32,6 +32,7 @@ div
     = f.input :slack
 
     - if teacher?
+      = f.input :location_id, collection: Location.all, label: '*Location'
       = f.input :company_name, label: 'Company Name'
       = f.input :company_url, wrapper: :horizontal_input_group, label: 'Company URL'
         span.input-group-addon

@@ -61,7 +61,7 @@ $ ->
 
     poll()
 
-  cohorts_locations_checkboxes = $('#cohort-locations').find('input[type=checkbox]')
+  cohorts_locations_checkboxes = $('#cohort-locations').find('input[type=radio]')
   updateCohortLocationsCookie = ->
     selected_locations = cohorts_locations_checkboxes.filter(':checked').map(-> $(this).val()).get()
     locations_string = encodeURIComponent(JSON.stringify(selected_locations))

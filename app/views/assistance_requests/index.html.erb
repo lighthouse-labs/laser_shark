@@ -1,7 +1,15 @@
 <div id="cohort-locations">
   Cohort locations:
-  <% @all_locations.each do |location| %>
-    <label><%= check_box_tag "location_#{location}", location, @selected_locations.include?(location) %> <%= location %></label>
+  <% if teacher? && !current_user.location %>
+    <% @all_locations.each do |location| %>
+      <label><%= radio_button_tag "location_radio", location, (@selected_locations.include?(location)) %> <%= location %></label>
+    <% end %><br>
+    Looks like your profile doesn't have a location!
+    <button class="btn btn-default"><%= link_to 'Edit Profile', edit_profile_path %></button>
+  <% else %>
+    <% @all_locations.each do |location| %>
+      <label><%= radio_button_tag "location_radio", location, (location == current_user.location.name) %> <%= location %></label>
+    <% end %>
   <% end %>
 </div>
 <div class="requests-list"></div>
@@ -15,7 +23,7 @@
     </div>
     <div class="student-description">
       <h4 class="student-heading">{{requestor.first_name}} {{requestor.last_name}}</h4>
-      <p class="student-cohort"><a href="cohorts/{{requestor.cohort.id}}/students" class="cohort-name">{{requestor.cohort.name}}</span> <span class="cohort-location">{{requestor.cohort.location}}</a></p>
+      <p class="student-cohort"><a href="cohorts/{{requestor.cohort.id}}/students" class="cohort-name">{{requestor.cohort.name}}</span> <span class="cohort-location">{{requestor.cohort.location.name}}</a></p>
       <p class="assistance-timestamp">Requested assistance <abbr class="timeago" title="{{start_at}}">{{start_at}}</abbr></p>
       {{#reason}}
       <p><b>Reason:</b> {{reason}}</p>
@@ -38,7 +46,7 @@
     </div>
     <div class="student-description">
       <h4 class="student-heading">{{requestor.first_name}} {{requestor.last_name}}</h4>
-      <p class="student-cohort"><a href="cohorts/{{requestor.cohort.id}}/students" class="cohort-name">{{requestor.cohort.name}}</span> <span class="cohort-location">{{requestor.cohort.location}}</a></p>
+      <p class="student-cohort"><a href="cohorts/{{requestor.cohort.id}}/students" class="cohort-name">{{requestor.cohort.name}}</span> <span class="cohort-location">{{requestor.cohort.location.name}}</a></p>
       <p class="assistance-timestamp">Generated code review <abbr class="timeago" title="{{start_at}}">{{start_at}}</abbr></p>
       {{#activity_submission}}
       <p><b>Activity:</b> <a href="/days/{{activity_submission.activity.day}}/activities/{{activity_submission.activity.id}}">{{activity_submission.activity.name}}</a></p>
@@ -62,7 +70,7 @@
     </div>
     <div class="student-description">
       <h4 class="student-heading">{{first_name}} {{last_name}}</h4>
-      <p class="student-cohort"><a href="cohorts/{{cohort.id}}/students" class="cohort-name">{{cohort.name}}</span> <span class="cohort-location">{{cohort.location}}</a></p>
+      <p class="student-cohort"><a href="cohorts/{{cohort.id}}/students" class="cohort-name">{{cohort.name}}</span> <span class="cohort-location">{{cohort.location.name}}</a></p>
       <p class="assistance-timestamp">Last received assistance <abbr class="timeago" title="{{last_assisted_at}}">{{last_assisted_at}}</abbr></p>
       <p><a href="students/{{id}}/assistances" class="btn btn-primary btn-lg" data-method="post">Checkin On</a></p>
     </div>
@@ -79,7 +87,7 @@
     </div>
     <div class="student-description">
       <h4 class="student-heading">{{assistee.first_name}} {{assistee.last_name}}</h4>
-      <p class="student-cohort"><a href="cohorts/{{assistee.cohort.id}}/students" class="cohort-name">{{assistee.cohort.name}}</span> <span class="cohort-location">{{assistee.cohort.location}}</a></p>
+      <p class="student-cohort"><a href="cohorts/{{assistee.cohort.id}}/students" class="cohort-name">{{assistee.cohort.name}}</span> <span class="cohort-location">{{assistee.cohort.location.name}}</a></p>
       <p class="assistance-timestamp">You started
         {{#assistance_request.activity_submission}}
           reviewing
