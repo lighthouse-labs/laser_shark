@@ -1,6 +1,6 @@
 class AssistanceRequestsController < ApplicationController
 
-  before_action :selected_cohort_locations, only: [:index, :queue]
+  #before_action :selected_cohort_locations, only: [:index, :queue]
   before_filter :teacher_required, only: [:index, :destroy, :start_assistance, :end_assistance, :queue]
 
   def index
@@ -10,9 +10,9 @@ class AssistanceRequestsController < ApplicationController
 
   def queue
     my_active_assistances = Assistance.assisted_by(current_user).currently_active
-    requests = AssistanceRequest.where(type: nil).open_requests.oldest_requests_first.requestor_cohort_in_locations(@selected_locations)
-    code_reviews = CodeReviewRequest.open_requests.oldest_requests_first.requestor_cohort_in_locations(@selected_locations)
-    all_students = Student.in_active_cohort.active.order_by_last_assisted_at.cohort_in_locations(@selected_locations)
+    requests = AssistanceRequest.where(type: nil).open_requests.oldest_requests_first.requestor_cohort_in_locations([params[:location]])
+    code_reviews = CodeReviewRequest.open_requests.oldest_requests_first.requestor_cohort_in_locations([params[:location]])
+    all_students = Student.in_active_cohort.active.order_by_last_assisted_at.cohort_in_locations([params[:location]])
     
     active_assistances_json = my_active_assistances.all.to_json(
       only: [:id, :start_at],
