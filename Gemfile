@@ -44,6 +44,8 @@ gem 'slack-poster'
 
 gem 'aws-sdk-core'
 
+gem 'faker'
+
 group :development do
   gem 'pry'
   gem 'spring'
@@ -64,7 +66,6 @@ group :development, :test do
   gem 'factory_girl_rails'
   gem 'rspec-rails', '2.14.2'
   gem 'dotenv'
-  gem 'faker'
 end
 
 
