@@ -7,7 +7,7 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 # Environment variables (ENV['...']) can be set in the file .env file.
 
-if Rails.env.development?
+#if Rails.env.development?
   # => Create activities and content for cohort
   1.upto(8).each do |week|
     1.upto(5).each do |day|
@@ -62,4 +62,4 @@ if Rails.env.development?
     )
   end
 
-end
+#end
