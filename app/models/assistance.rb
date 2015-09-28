@@ -2,7 +2,7 @@ class Assistance < ActiveRecord::Base
   has_one :assistance_request, dependent: :nullify
   belongs_to :assistor, :class => User
   belongs_to :assistee, :class => User
-  has_many :feedbacks, as: :feedbackable
+  has_one :feedback, as: :feedbackable
 
   validates :rating, numericality: { only_integer: true, greater_than_or_equal_to: 1, less_than_or_equal_to: 4, allow_nil: true }
 
@@ -28,7 +28,7 @@ class Assistance < ActiveRecord::Base
       assistee.code_review_percent += Assistance::RATING_BASELINE - rating
     end
     self.assistee.save
-    self.feedbacks.create(student: self.assistee, teacher: self.assistor)
+    self.create_feedback(student: self.assistee, teacher: self.assistor)
 
     send_notes_to_slack
   end
