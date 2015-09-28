@@ -1,0 +1,26 @@
+= form_tag admin_feedbacks_path, method: 'get' do 
+  = label_tag "Completed?"
+  | &nbsp;
+  = select_tag :completed?, options_for_select([["True", "true"], ["False", "false"]], params[:completed?]), :include_blank => true
+  | &nbsp;
+  = label_tag "Location:"
+  | &nbsp;
+  = select_tag :location_id, options_from_collection_for_select(Location.all.order('name'), "id", "name", params[:location_id]), :include_blank => true
+  | &nbsp;
+  = label_tag "Cohort:"
+  | &nbsp;
+  = select_tag :cohort_id, options_from_collection_for_select(Cohort.all.order('name'), "id", "name", params[:cohort_id]), :include_blank => true
+  | &nbsp;
+  = label_tag "Student:"
+  | &nbsp;
+  = select_tag :student_id, options_from_collection_for_select(Student.all.order('first_name'), "id", "full_name", params[:student_id]), :include_blank => true
+  | &nbsp;
+  = label_tag "Teacher:"
+  | &nbsp;
+  = select_tag :teacher_id, options_from_collection_for_select(Teacher.all.order('first_name'), "id", "full_name", params[:teacher_id]), :include_blank => true
+  .btn.btn-xs
+    = submit_tag 'Filter'
+
+/ = form_tag admin_feedbacks_path, method: 'get'
+/   .btn.btn-sm
+/     = submit_tag 'Clear Filters'    

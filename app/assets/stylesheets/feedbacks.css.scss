@@ -14,3 +14,20 @@
 .hidden-notes-field {
   display: none;
 }
+
+.table-feedbacks {
+  font-size: 15px;
+}
+
+th .current {
+  padding-right: 12px;
+  background-repeat: no-repeat;
+  background-position: right center;
+}
+th .asc { 
+  background-image: url(up_arrow.gif); 
+}
+
+th .desc { 
+  background-image: url(down_arrow.gif); 
+}

@@ -13,6 +13,7 @@ gem 'sdoc', '~> 0.4.0',          group: :doc
 gem 'pg'
 gem 'bcrypt-ruby'
 gem 'puma'
+gem 'kaminari'
 
 gem 'simple_form', '3.1.0.rc1'
 gem 'slim-rails'
