@@ -2,8 +2,21 @@ class ActivitiesController < ApplicationController
 
   include CourseCalendar # concern
 
-  before_action :require_activity
-  before_action :teacher_required, only: [:edit, :update]
+  before_action :require_activity, only: [:show, :edit, :update]
+  before_action :teacher_required, only: [:new, :create, :edit, :update]
+
+  def new
+    @activity = Activity.new(day: params[:day_number])
+  end
+
+  def create
+    @activity = Activity.new(activity_params)
+    if @activity.save(activity_params)
+      redirect_to day_activity_path(@activity.day, @activity), notice: 'Activity Created!'
+    else
+      render :new
+    end
+  end
 
   def show
     @setup = day.to_s == 'setup'
