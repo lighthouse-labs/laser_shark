@@ -1,9 +1,9 @@
 h1
   | Teachers
 
-- if teacher? && !current_user.location
+- if !current_user.location
   | Looks like your profile does not have a location!&nbsp;
-  button.btn.btn-default = link_to 'Edit Profile', edit_profile_path
+  = link_to 'Edit Profile', edit_profile_path
   div id="teachers-selected-locations"
     | Cohort locations:&nbsp;
     - @locations.each do |location|

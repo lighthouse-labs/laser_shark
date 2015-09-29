@@ -2,6 +2,9 @@ class UpdateExistingDataToUseLocationsAssociation < ActiveRecord::Migration
   def up
     Location.create!(name: 'Vancouver')
     Location.create!(name: 'Toronto')
+    Location.create!(name: 'Kelowna')
+    Location.create!(name: 'Whitehorse')
+    Location.create!(name: 'Calgary')
     add_column :cohorts, :location_id, :integer
     rename_column :cohorts, :location, :location_old
     Student.all.each do |student|

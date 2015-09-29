@@ -4,7 +4,7 @@ class AssistanceRequestsController < ApplicationController
   before_filter :teacher_required, only: [:index, :destroy, :start_assistance, :end_assistance, :queue]
 
   def index
-    @all_locations = Location.select(:name).map(&:name).uniq
+    @all_locations = Location.where("id IN (?)", Cohort.all.map(&:location_id).uniq).map(&:name)
     render :index, layout: 'assistance'
   end
 
