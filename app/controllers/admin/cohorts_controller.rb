@@ -42,7 +42,7 @@ class Admin::CohortsController < Admin::BaseController
       :start_date,
       :code,
       :program_id,
-      :location,
+      :location_id,
       :teacher_email_group
     )
   end

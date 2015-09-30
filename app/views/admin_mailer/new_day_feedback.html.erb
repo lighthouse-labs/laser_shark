@@ -7,7 +7,7 @@
   <br>
   PROGRAM: <%= @feedback.student.cohort.program.name %>
   <br>
-  COHORT: <%= @feedback.student.cohort.name %> (<%= @feedback.student.cohort.location %>)
+  COHORT: <%= @feedback.student.cohort.name %> (<%= @feedback.student.cohort.location.name %>)
   <br>
   DAY: <%= link_to @feedback.day, day_url(@feedback.day, host: "http://#{ENV['HOST']}") %>
 </p>

@@ -1,6 +1,7 @@
 class Cohort < ActiveRecord::Base
 
   belongs_to :program
+  belongs_to :location
 
   has_many :students
   has_many :recordings

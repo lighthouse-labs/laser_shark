@@ -21,7 +21,8 @@ class AssistanceRequest < ActiveRecord::Base
     if locations.is_a?(Array) && locations.length > 0
       joins('LEFT OUTER JOIN users AS requestors ON assistance_requests.requestor_id = requestors.id').
       joins('LEFT OUTER JOIN cohorts AS requestors_cohorts ON requestors.cohort_id = requestors_cohorts.id').
-      where('requestors_cohorts.location' => locations)
+      joins('LEFT OUTER JOIN locations AS requestors_locations ON requestors.location_id = requestors_locations.id').
+      where('requestors_locations.name' => locations)
     end
   }
   scope :oldest_requests_first, -> { order(start_at: :asc) }
@@ -59,7 +60,7 @@ class AssistanceRequest < ActiveRecord::Base
   end
 
   def position_in_queue
-    self.class.open_requests.where(type: nil).requestor_cohort_in_locations([requestor.cohort.location]).where('assistance_requests.id < ?', id).count + 1 if open?
+    self.class.open_requests.where(type: nil).requestor_cohort_in_locations([requestor.cohort.location.name]).where('assistance_requests.id < ?', id).count + 1 if open?
   end
 
   private

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150915190703) do
+ActiveRecord::Schema.define(version: 20150923193134) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -98,9 +98,9 @@ ActiveRecord::Schema.define(version: 20150915190703) do
     t.datetime "updated_at"
     t.date     "start_date"
     t.string   "code"
-    t.string   "location",            default: "Vancouver"
     t.string   "teacher_email_group"
     t.integer  "program_id"
+    t.integer  "location_id"
   end
 
   add_index "cohorts", ["program_id"], name: "index_cohorts_on_program_id", using: :btree
@@ -134,8 +134,6 @@ ActiveRecord::Schema.define(version: 20150915190703) do
     t.datetime "updated_at"
   end
 
-<<<<<<< HEAD
-=======
   create_table "feedbacks", force: true do |t|
     t.integer  "student_id"
     t.integer  "teacher_id"
@@ -148,7 +146,12 @@ ActiveRecord::Schema.define(version: 20150915190703) do
     t.datetime "updated_at"
   end
 
->>>>>>> feature/3-students-assistance-feedback
+  create_table "locations", force: true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "programs", force: true do |t|
     t.string   "name"
     t.text     "lecture_tips"
@@ -208,6 +211,7 @@ ActiveRecord::Schema.define(version: 20150915190703) do
     t.text     "bio"
     t.string   "quirky_fact"
     t.string   "specialties"
+    t.integer  "location_id"
   end
 
   add_index "users", ["cohort_id"], name: "index_users_on_cohort_id", using: :btree

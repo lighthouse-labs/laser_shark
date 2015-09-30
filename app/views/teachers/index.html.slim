@@ -1,4 +1,26 @@
-h1= 'Teachers'
+h1
+  | Teachers
+
+- if !current_user.location
+  | Looks like your profile does not have a location!&nbsp;
+  = link_to 'Edit Profile', edit_profile_path
+  div id="teachers-selected-locations"
+    | Cohort locations:&nbsp;
+    - @locations.each do |location|
+      label
+        = radio_button_tag "location_radio", location, location == 'Vancouver'
+        | &nbsp;
+        | #{location}&nbsp;
+
+- else
+  div id="teachers-selected-locations"
+    | Cohort locations:&nbsp;
+    - @locations.each do |location|
+      label
+        = radio_button_tag "location_radio", location, location == current_user.location.name
+        | &nbsp;
+        | #{location}&nbsp;
+ 
 table.table
   thead
     tr
@@ -12,15 +34,16 @@ table.table
       
   tbody
     - @teachers.each do |teacher|
-      tr
-        td = image_tag(avatar_for(teacher), size: '100x100')
-        td = teacher.full_name
-        td = teacher.bio
-        td 
-          = link_to teacher.github_username, "https://github.com/#{teacher.github_username}"
-        td  
-          = link_to teacher.company_name, "http://#{teacher.company_url}"
-        td = teacher.quirky_fact
-        td = teacher.specialties
+      - if teacher.location
+        tr class="teacher #{teacher.location.name}"
+          td = image_tag(avatar_for(teacher), size: '100x100')
+          td = teacher.full_name
+          td = teacher.bio
+          td 
+            = link_to teacher.github_username, "https://github.com/#{teacher.github_username}"
+          td  
+            = link_to teacher.company_name, "http://#{teacher.company_url}"
+          td = teacher.quirky_fact
+          td = teacher.specialties
 
-       
+         
