@@ -1,6 +1,6 @@
 = form_tag admin_feedbacks_path, method: 'get' do 
   
-  = select_tag :completed?, options_for_select([["True", "true"], ["False", "false"]], params[:completed?]), :prompt => 'All Statuses'
+  = select_tag :completed?, options_for_select([["Complete", "true"], ["Incomplete", "false"]], params[:completed?]), :prompt => 'All Statuses'
   | &nbsp;
   
   = select_tag :location_id, options_from_collection_for_select(Location.all.order('name'), "id", "name", params[:location_id]), :prompt => 'All Locations'
@@ -13,9 +13,6 @@
   | &nbsp;
   
   = select_tag :teacher_id, options_from_collection_for_select(Teacher.all.order('first_name'), "id", "full_name", params[:teacher_id]), :prompt => 'All Teachers'
-  .btn.btn-xs
-    = submit_tag 'Filter'
+  | &nbsp;
 
-/ = form_tag admin_feedbacks_path, method: 'get'
-/   .btn.btn-sm
-/     = submit_tag 'Clear Filters'    
+  = submit_tag 'Filter', class: 'btn btn-success'
