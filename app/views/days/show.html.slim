@@ -24,7 +24,12 @@
 = render partial: 'activities/activity', collection: @activities
 
 - if teacher?
-  = link_to 'New Activity', new_day_activity_path(day)
+  = link_to new_day_activity_path(day)
+    div class="activity"
+      .icon.icon-type
+        i.fa.fa-plus
+      .name
+        | New Activity
 
 - if student? && !weekend?
   hr

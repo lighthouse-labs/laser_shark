@@ -4,27 +4,8 @@ hr
 = simple_form_for @activity, as: :activity, url: day_activities_path(day, @activity),
   html: { id: 'activity-form', class: 'form-horizontal' }, wrapper: :horizontal_form do |f|
 
-  - if f.object.errors.full_messages.any?
-    .alert.alert-error
-      strong Please correct the following errors:
-      - f.object.errors.full_messages.each do |msg|
-        li = msg
-    hr
-
-  = f.input :name
-  = f.input :day
-  = f.input :start_time, as: :string
-  = f.input :duration, as: :string
-  = f.input :gist_url, as: :string
-  = f.input :type, collection: activity_type_options
-  = f.input :media_filename, as: :string
-  = f.input :allow_submissions
-  = f.input :code_review_percent, as: :string, label: 'Probability (percent) to trigger code review'
-  hr
-
-  = f.hidden_field :instructions, id: 'activity-instructions'
-  = f.hidden_field :teacher_notes, id: 'activity-notes'
-
+  = render "form", f: f
+  
   h3 Instructions
   #instructions-editor.editor = @activity.instructions
 
