@@ -33,6 +33,9 @@
     .name {
       color: $gray-light;
     }
+    .location {
+      color: $gray-light;
+    }
   }
   .icon {
     font-size: 36px;
@@ -60,6 +63,10 @@
     color: $green-sea;
     overflow: hidden;
     padding: 28px 0;
+  }
+  .location {
+    color: $green-sea;
+    font-size: 16px;
   }
   .time {
     color: white;

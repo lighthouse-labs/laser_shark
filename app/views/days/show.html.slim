@@ -22,9 +22,10 @@
         = @cohort_feedback[:sad]
 
 = render partial: 'activities/activity', collection: @activities
-
-h3 Event Calendar
-ul.list-group id="eventlist"
+- if student?
+  hr
+  h1 Events
+  list-group id="eventlist" data-location="#{current_user.location.name}"
 
 - if student? && !weekend?
   hr

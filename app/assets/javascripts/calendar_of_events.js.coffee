@@ -1,11 +1,21 @@
 $ ->
 
+  list = $('#eventlist')  
+  location = list.data 'location'
+  if location is 'Toronto'
+    calendarLocation = 'functionalimperative.com_du453ucqlvlir8rtf1sdjdd1ak@group.calendar.google.com'
+  else
+    # Need to get Vancouver calendar address
+    calendarLocation = 'en.canadian#holiday@group.v.calendar.google.com'
+
   $('#eventlist').gCalReader
 
     # Public Google Calendar
-    calendarId:'en.canadian#holiday@group.v.calendar.google.com'
+    # calendarId:'functionalimperative.com_du453ucqlvlir8rtf1sdjdd1ak@group.calendar.google.com'
+    calendarId: calendarLocation
 
     # Google API KEY
+    # I think we need to put one for compass
     apiKey:'AIzaSyA0e9Ts3CSV9CQ-dOV-Pxwc2d5EszJBFLI'
 
     # <a href="http://www.jqueryscript.net/time-clock/">date</a> format
@@ -15,7 +25,7 @@ $ ->
     errorMsg: 'No events in calendar'
 
     # maximum events
-    maxEvents: 25
+    maxEvents: 50
 
     # future-events filter
     futureEventsOnly: true
