@@ -99,8 +99,8 @@ class ApplicationController < ActionController::Base
   end
 
   def set_timezone
-    if cohort && cohort.location?
-      case cohort.location
+    if cohort
+      case cohort.location.name
       when 'Vancouver'
         Time.zone = 'Pacific Time (US & Canada)'
       when 'Toronto'
