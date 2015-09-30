@@ -25,6 +25,6 @@ class RegistrationForm < Reform::Form
   validates :bio,          presence: true,      length: { maximum: 1000 }, if: "type == 'Teacher'"
   validates :quirky_fact,  presence: true, if: "type == 'Teacher'"
   validates :specialties,  presence: true, if: "type == 'Teacher'"
-  validates :location_id,  presence: true, if: "type == 'Teacher'"
+  validates :location_id,  presence: true
 
 end
