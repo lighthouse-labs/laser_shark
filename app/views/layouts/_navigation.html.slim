@@ -50,7 +50,7 @@ nav.navbar.navbar-inverse.navbar-fixed-top role="navigation"
                 span.non-tablet-label
                   | Classmates
           li
-            = link_to teachers_path,title: 'Teachers'
+            = link_to teachers_path,title: 'Teachers', target: "_blank"
               i.fa.fa-fw.fa-group
               span.non-tablet-label
                 | Teachers
@@ -71,6 +71,8 @@ nav.navbar.navbar-inverse.navbar-fixed-top role="navigation"
             ul.dropdown-menu
               li
                 = link_to 'Cohorts', admin_cohorts_path
+              li
+                = link_to 'Feedbacks', admin_feedbacks_path
       ul.nav.navbar-nav.navbar-right
         - if teacher? && !cohorts.empty?
           li.dropdown.cohort

@@ -1,0 +1,54 @@
+= render 'form'
+
+h4 Feebacks:
+table.table.table-feedbacks
+  thead
+    tr
+      th Day
+      th Name
+      th Type
+      th 
+        = sortable "technical_rating", "Techincal Rating Average: #{@average_technical_rating}"
+      th 
+        = sortable "style_rating", "Style Rating Average: #{@average_style_rating}"
+      th Teacher
+      th Student
+      th 
+        = sortable "updated_at", "Updated"
+
+  tbody
+    - @feedbacks.each do |feedback|
+      tr
+        td
+          = feedback.feedbackable.day.upcase
+        td
+          = feedback.feedbackable.try(:name) || 'N/A'
+        td
+          = feedback.feedbackable.try(:type) || feedback.feedbackable.class.name
+        td
+          .raty-viewer data-score="#{feedback.technical_rating}"
+        td
+          .raty-viewer data-score="#{feedback.style_rating}"
+        td
+          - if feedback.teacher
+            = feedback.teacher.first_name + " " + feedback.teacher.last_name.first + "."
+          - else
+            = "N/A"
+        td 
+          = feedback.student.first_name + " " + feedback.student.last_name.first + "." 
+        td
+          = feedback.updated_at.to_date
+
+      - unless feedback.notes.blank?
+        tr
+          td
+          td colspan="5"
+            p 
+              | Notes
+
+            small
+              em 
+                = feedback.notes
+
+          td
+= paginate @feedbacks, :window => 2
