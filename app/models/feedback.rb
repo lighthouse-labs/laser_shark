@@ -11,14 +11,14 @@ class Feedback < ActiveRecord::Base
   scope :filter_by_teacher, -> (teacher_id) { where("teacher_id = ?", teacher_id) }
 
   scope :filter_by_location, -> (location_id) { 
-    joins("LEFT OUTER JOIN users ON users.id = feedbacks.student_id").
-    joins("LEFT OUTER JOIN locations ON locations.id = users.location_id").
-    where("locations.id = ?", location_id) 
+    includes(student: :location).
+    references(:student, :location).
+    where(locations: {id: location_id})
   }
   scope :filter_by_cohort, -> (cohort_id) {
-    joins("LEFT OUTER JOIN users ON users.id = feedbacks.student_id").
-    joins("LEFT OUTER JOIN cohorts ON cohorts.id = users.cohort_id").
-    where("cohorts.id = ?", cohort_id)
+    includes(student: :cohort).
+    references(:student, :cohort).
+    where(cohorts: {id: cohort_id})
   }
 
   validates :technical_rating, presence: true, on: :update 

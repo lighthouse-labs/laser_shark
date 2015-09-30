@@ -16,7 +16,7 @@ class Admin::FeedbacksController < Admin::BaseController
   private
 
   def sort_column
-    ["technical_rating", "style_rating", "updated_at"].include?(params[:sort]) ? params[:sort] : "updated_at"
+    ["technical_rating", "style_rating", "updated_at"].include?(params[:sort]) ? params[:sort] : "feedbacks.updated_at"
   end
 
   def sort_direction
