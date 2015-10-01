@@ -22,10 +22,11 @@
         = @cohort_feedback[:sad]
 
 = render partial: 'activities/activity', collection: @activities
-- if student?
+- if current_user.location
   hr
-  h1 Events
-  list-group id="eventlist" data-location="#{current_user.location.name}"
+  h1 id="events-header"
+    | Events
+  list-group id="eventlist" data-location="#{current_user.location.name}" data-program="#{current_user.cohort.program.name}" data-day="#{day}" data-start-date="#{current_user.cohort.start_date}"
 
 - if student? && !weekend?
   hr
