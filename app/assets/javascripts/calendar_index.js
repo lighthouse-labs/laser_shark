@@ -9,7 +9,6 @@
         startDate: new Date().toISOString(),
         endDate: new Date().toISOString(),
         errorMsg: 'No events in calendar',
-        maxEvents: 50,
         sortDescending: true
       },
       options);
@@ -48,8 +47,6 @@
             $($div).append(calendarEvent);
           });
         }
-        data.items = data.items.slice(0, defaults.maxEvents);
-
       },
       error: function(xhr, status) {
         $($div).append('<p>' + status +' : '+ defaults.errorMsg +'</p>');
