@@ -26,7 +26,7 @@
   hr
   h1 id="events-header"
     | Events
-  list-group id="eventlist" data-location="#{current_user.location.name}" data-program="#{current_user.cohort.program.name}" data-day="#{day}" data-start-date="#{current_user.cohort.start_date}"
+  list-group id="eventlist" data-location="#{current_user.location.name}" data-tags="#{current_user.cohort.program.tags}" data-day="#{day}" data-start-date="#{current_user.cohort.start_date}"
 
 - if student? && !weekend?
   hr

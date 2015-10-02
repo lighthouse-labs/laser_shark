@@ -1,49 +1,43 @@
 $ ->
 
-  getEvents = (calendar, startDate, endDate) ->
+  getEvents = (calendar, startDate, endDate, tags) ->
 
     $('#eventlist').gCalReader
 
       calendarId: calendar
 
       startDate: startDate
+
       endDate: endDate
+
+      tags: tags
 
   getLocationCalendar = (location) ->
     if location is 'Toronto'
       calendarLocation = 'functionalimperative.com_du453ucqlvlir8rtf1sdjdd1ak@group.calendar.google.com'
     else
       # Need to get Vancouver calendar address
-      calendarLocation = 'en.canadian#holiday@group.v.calendar.google.com'      
-    return calendarLocation    
-
-  getProgram = (program) ->
-    web = program.indexOf 'Web'
-    if web is -1
-      return 'iOS'
-    else
-      return 'web'
+      calendarLocation = 'en.canadian#holiday@group.v.calendar.google.com'
+    return calendarLocation
 
   getUserDetails = ->
        
     list = $('#eventlist')  
     location = list.data 'location'
-    program = list.data 'program'
+    tags = list.data 'tags'
     day = list.data 'day'
     cohortStartDate = list.data 'start-date'
     startDate = calculateDateOfCurriculumDay(day, cohortStartDate, 'start')
     endDate = calculateDateOfCurriculumDay(day, cohortStartDate, 'end')
-    program = getProgram(program)
-    console.log program
     calendarLocation = getLocationCalendar(location)
-    getEvents(calendarLocation, startDate, endDate)
+    getEvents(calendarLocation, startDate, endDate, tags)
 
   calculateDateOfCurriculumDay = (day, startDate, type) ->
     # Get which week/day is currently being viewed
     # Subtract one because if they are week 1, should not add an extra week. Similaraly, if day 2 should only add 1 day and not 2.
     weeks = parseInt(day[1]) - 1
     # If day is a weekend the number of days to add is 5
-    if day[3] is 'e'
+    if day[3] is undefined
       days = 5
     else
       days = parseInt day[3] - 1
