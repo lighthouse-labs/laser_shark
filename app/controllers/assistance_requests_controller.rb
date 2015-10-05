@@ -190,7 +190,9 @@ class AssistanceRequestsController < ApplicationController
 
   def selected_cohort_locations
     locations_cookie = cookies[:cohort_locations]
-    @selected_locations = locations_cookie ? JSON.parse(locations_cookie) : []
+    # The length thing is a hacky/lazy of getting around a JSON parse exception - KV
+    #   http://stackoverflow.com/questions/8390256/a-json-text-must-at-least-contain-two-octets
+    @selected_locations = locations_cookie && locations_cookie.to_s.length >= 2 ? JSON.parse(locations_cookie) : []
   end
 
   def teacher_required

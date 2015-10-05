@@ -151,7 +151,7 @@ ActiveRecord::Schema.define(version: 20150923193134) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
-
+  
   create_table "programs", force: true do |t|
     t.string   "name"
     t.text     "lecture_tips"
