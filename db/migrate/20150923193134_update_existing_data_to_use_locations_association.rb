@@ -1,18 +1,20 @@
 class UpdateExistingDataToUseLocationsAssociation < ActiveRecord::Migration
   def up
-    Location.create!(name: 'Vancouver')
-    Location.create!(name: 'Toronto')
-    Location.create!(name: 'Kelowna')
-    Location.create!(name: 'Whitehorse')
-    Location.create!(name: 'Calgary')
+    Location.find_or_create_by!(name: 'Vancouver')
+    Location.find_or_create_by!(name: 'Toronto')
+    Location.find_or_create_by!(name: 'Kelowna')
+    Location.find_or_create_by!(name: 'Whitehorse')
+    Location.find_or_create_by!(name: 'Calgary')
     add_column :cohorts, :location_id, :integer
     rename_column :cohorts, :location, :location_old
     Student.all.each do |student|
-      student.location = Location.find_by(name: student.cohort.location_old)
+      location = student.cohort.location_old.capitalize.trim
+      student.location = Location.find_by(name: location)
       student.save
     end
     Cohort.all.each do |cohort|
-      cohort.location = Location.find_by(name: cohort.location_old)
+      location = cohort.location_old.capitalize.trim
+      cohort.location = Location.find_by(name: location)
       cohort.save
     end
     remove_column :cohorts, :location_old

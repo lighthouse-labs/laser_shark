@@ -21,7 +21,7 @@ class AssistanceRequest < ActiveRecord::Base
     if locations.is_a?(Array) && locations.length > 0
       joins('LEFT OUTER JOIN users AS requestors ON assistance_requests.requestor_id = requestors.id').
       joins('LEFT OUTER JOIN cohorts AS requestors_cohorts ON requestors.cohort_id = requestors_cohorts.id').
-      joins('LEFT OUTER JOIN locations AS requestors_locations ON requestors.location_id = requestors_locations.id').
+      joins('LEFT OUTER JOIN locations AS requestors_locations ON requestors_cohorts.location_id = requestors_locations.id').
       where('requestors_locations.name' => locations)
     end
   }
