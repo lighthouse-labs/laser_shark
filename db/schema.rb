@@ -134,8 +134,6 @@ ActiveRecord::Schema.define(version: 20150915190703) do
     t.datetime "updated_at"
   end
 
-<<<<<<< HEAD
-=======
   create_table "feedbacks", force: true do |t|
     t.integer  "student_id"
     t.integer  "teacher_id"
@@ -148,7 +146,6 @@ ActiveRecord::Schema.define(version: 20150915190703) do
     t.datetime "updated_at"
   end
 
->>>>>>> feature/3-students-assistance-feedback
   create_table "programs", force: true do |t|
     t.string   "name"
     t.text     "lecture_tips"
