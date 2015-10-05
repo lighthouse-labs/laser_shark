@@ -41,6 +41,12 @@ class Activity < ActiveRecord::Base
     Activity.where('start_time < ? AND day = ?', self.start_time, self.day).order(start_time: :desc).first
   end
 
+  def feedbackable?
+    # If the activity is a lecture, an empty feedback is not created upon completion.
+    # It is instead created when the lecturer sends a message to all students.
+    type != 'Lecture'
+  end
+
   protected
 
   def add_revision_to_gist
