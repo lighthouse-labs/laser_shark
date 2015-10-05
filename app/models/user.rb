@@ -99,7 +99,7 @@ class User < ActiveRecord::Base
   end
 
   def incomplete_activities
-    Activity.where.not(id: self.activity_submissions.select(:activity_id)).where("day < ?", CurriculumDay.new(Date.today, cohort).to_s)
+    Activity.where.not(id: self.activity_submissions.select(:activity_id)).where("day < ?", CurriculumDay.new(Date.today, cohort).to_s).order(:day).reverse
   end 
 
   class << self
