@@ -1,0 +1,2 @@
+module IncompleteActivitiesHelper
+end

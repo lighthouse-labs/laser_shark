@@ -92,6 +92,11 @@ class User < ActiveRecord::Base
     activity_submissions.where(activity: activity).first.github_url if completed_activity?(activity)
   end
 
+  def incomplete_activities
+    Activity.joins("LEFT OUTER JOIN activity_submissions ON activity_submissions.activity_id = activities.id AND activity_submissions.user_id = #{id}")
+            .where("activity_submissions.activity_id IS NULL AND activities.day < ?", CurriculumDay.new(Date.today, cohort).to_s)  
+  end
+
   def full_name
     "#{self.first_name} #{self.last_name}"
   end

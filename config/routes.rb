@@ -7,13 +7,13 @@ LaserShark::Application.routes.draw do
 
   root to: 'home#show'
   get '/welcome', to: 'welcome#show'
-
   # STUDENT / TEACHER AUTH
   get '/auth/:provider/callback', to: 'sessions#create'
   get '/auth/github', as: 'github_session'
   resource :session, :only => [:new, :destroy]
   resource :registration, only: [:new, :create]
   resource :profile, only: [:edit, :update]
+  resources :incomplete_activities, only: [:index]
 
   resources :assistance_requests, only: [:index, :create, :destroy] do
     collection do

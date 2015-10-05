@@ -15,3 +15,6 @@
       = link_to 'Yesterday', day_path('yesterday'), class: 'btn btn-yesterday'
       | &nbsp;
     = link_to 'Today', day_path('today'), class: 'btn btn-today'
+    - if student?
+      - unless today == 'w1d1'
+        = link_to 'Incomplete Activities', '/incomplete_activities' ,class: 'btn btn-info top-buffer'
