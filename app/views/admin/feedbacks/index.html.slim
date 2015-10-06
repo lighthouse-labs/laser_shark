@@ -48,7 +48,7 @@ table.table.table-feedbacks
 
             small
               em 
-                = feedback.notes
+                = truncate feedback.notes, length: 200
 
           td
 = paginate @feedbacks, :window => 2

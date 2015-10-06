@@ -5,7 +5,6 @@ h1
   | Looks like your profile does not have a location!&nbsp;
   = link_to 'Edit Profile', edit_profile_path
   div id="teachers-selected-locations"
-    | Cohort locations:&nbsp;
     - @locations.each do |location|
       label
         = radio_button_tag "location_radio", location, location == 'Vancouver'
@@ -14,10 +13,9 @@ h1
 
 - else
   div id="teachers-selected-locations"
-    | Cohort locations:&nbsp;
     - @locations.each do |location|
       label
-        = radio_button_tag "location_radio", location, location == current_user.location.name
+        = radio_button_tag "location_radio", location, location == current_user.location.name || location == 'Vancouver'
         | &nbsp;
         | #{location}&nbsp;
  

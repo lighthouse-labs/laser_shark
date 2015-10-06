@@ -8,7 +8,7 @@
     <%= link_to 'Edit Profile', edit_profile_path %>
   <% else %>
     <% @all_locations.each do |location| %>
-      <label><%= radio_button_tag "location_radio", location, (location == current_user.location.name) %> <%= location %></label>
+      <label><%= radio_button_tag "location_radio", location, (location == current_user.location.name || location == 'Vancouver') %> <%= location %></label>
     <% end %>
   <% end %>
 </div>
