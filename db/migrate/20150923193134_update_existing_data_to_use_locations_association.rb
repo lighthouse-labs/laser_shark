@@ -18,9 +18,16 @@ class UpdateExistingDataToUseLocationsAssociation < ActiveRecord::Migration
       end
     end
     Cohort.all.each do |cohort|
-      location = cohort.location_old.capitalize.split
-      cohort.location = Location.find_by(name: location)
-      cohort.save
+      if cohort.code
+        location = cohort.location_old.capitalize.split
+        cohort.location = Location.find_by(name: location)
+        cohort.save
+      else
+        cohort.code = Faker::Name.first_name.downcase
+        location = cohort.location_old.capitalize.split
+        cohort.location = Location.find_by(name: location)
+        cohort.save
+      end
     end
     remove_column :cohorts, :location_old
   end
