@@ -8,12 +8,17 @@ class UpdateExistingDataToUseLocationsAssociation < ActiveRecord::Migration
     add_column :cohorts, :location_id, :integer
     rename_column :cohorts, :location, :location_old
     Student.all.each do |student|
-      location = student.cohort.location_old.capitalize.trim
-      student.location = Location.find_by(name: location)
-      student.save
+      if student.cohort
+        location = student.cohort.location_old.capitalize.split
+        student.location = Location.find_by(name: location)
+        student.save
+      else
+        student.location = Location.find_by(name: 'Vancouver')
+        student.save
+      end
     end
     Cohort.all.each do |cohort|
-      location = cohort.location_old.capitalize.trim
+      location = cohort.location_old.capitalize.split
       cohort.location = Location.find_by(name: location)
       cohort.save
     end
