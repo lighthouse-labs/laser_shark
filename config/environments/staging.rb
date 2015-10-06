@@ -74,11 +74,12 @@ Rails.application.configure do
 
   config.action_mailer.smtp_settings = {
     :address   => ENV["SMTP_SERVER"]   || "smtp.mandrillapp.com",
+    :domain    => ENV["SMTP_DOMAIN"],
     :port      => ENV["SMTP_PORT"]     || 587,
     :user_name => ENV["SMTP_USERNAME"] || ENV["MANDRILL_USERNAME"],
     :password  => ENV["SMTP_APIKEY"]   || ENV["MANDRILL_APIKEY"]
   }
-  
+
   # ActionMailer Config
   config.action_mailer.default_url_options = { :host => ENV['HOST'] }
   config.action_mailer.delivery_method = :smtp
