@@ -28,10 +28,7 @@ div
     = f.input :twitter
     = f.input :skype
     = f.input :slack
-    - if student?
-      = f.input :location_id, collection: Location.where('name IN (?)', ['Toronto', 'Vancouver']).order(:name), label: 'Location'
-    - else
-      = f.input :location_id, collection: Location.all.order(:name), label: 'Location'
+    = f.input :location_id, collection: Location.where('name IN (?)', ['Toronto', 'Vancouver']).order(:name), label: 'Location'
 
     - if teacher?
       = f.input :company_name, label: 'Company Name'
