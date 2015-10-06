@@ -77,7 +77,8 @@ Rails.application.configure do
     :domain    => ENV["SMTP_DOMAIN"],
     :port      => ENV["SMTP_PORT"]     || 587,
     :user_name => ENV["SMTP_USERNAME"] || ENV["MANDRILL_USERNAME"],
-    :password  => ENV["SMTP_APIKEY"]   || ENV["MANDRILL_APIKEY"]
+    :password  => ENV["SMTP_APIKEY"]   || ENV["MANDRILL_APIKEY"],
+    :authentication => :cram_md5
   }
 
   # ActionMailer Config
