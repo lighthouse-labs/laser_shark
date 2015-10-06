@@ -13,7 +13,6 @@ h1
 
 - else
   div id="teachers-selected-locations"
-    | Cohort locations:&nbsp;
     - @locations.each do |location|
       label
         = radio_button_tag "location_radio", location, location == current_user.location.name || location == 'Vancouver'
