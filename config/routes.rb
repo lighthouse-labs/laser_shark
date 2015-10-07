@@ -63,7 +63,7 @@ LaserShark::Application.routes.draw do
 
   resources :streams, only: [:index, :show]
 
-  resources :teachers, only: [:index]
+  resources :teachers, only: [:index, :show]
 
   # ADMIN
   namespace :admin do

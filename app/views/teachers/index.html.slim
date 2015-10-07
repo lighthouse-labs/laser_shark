@@ -34,8 +34,8 @@ table.table
     - @teachers.each do |teacher|
       - if teacher.location
         tr class="teacher #{teacher.location.name}"
-          td = image_tag(avatar_for(teacher), size: '100x100')
-          td = teacher.full_name
+          td = link_to image_tag(avatar_for(teacher), size: '100x100'), teacher_path(teacher)
+          td = link_to teacher.full_name, teacher_path(teacher)
           td = teacher.bio
           td 
             = link_to teacher.github_username, "https://github.com/#{teacher.github_username}"
