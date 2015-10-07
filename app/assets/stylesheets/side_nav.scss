@@ -14,6 +14,7 @@ h3.date-heading {
   .btn-incomplete-activites {
     @include button-variant($btn-default-color, $brand-info, $btn-warning-hover-bg, $btn-warning-active-bg);
     margin-top: 4px;
+    width: 174px;
   }
 }
 .nav-week {
