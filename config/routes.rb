@@ -44,6 +44,8 @@ LaserShark::Application.routes.draw do
   resources :days, param: :number, only: [:show] do
     resources :activities, only: [:new, :create, :show, :edit, :update]
     resources :feedbacks, only: [:create, :new], controller: :day_feedbacks
+
+    resource :info, only: [:edit, :update], controller: 'day_infos'
   end
 
   resources :activities, only: [] do

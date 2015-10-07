@@ -22,5 +22,4 @@ class DaysController < ApplicationController
     end
   end
 
-
 end

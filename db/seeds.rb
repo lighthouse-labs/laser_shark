@@ -11,10 +11,15 @@ if Rails.env.development?
   # => Create activities and content for cohort
   1.upto(8).each do |week|
     1.upto(5).each do |day|
+
+      day = "w#{week}d#{day}"
+
+      DayInfo.create!(day: day)
+
       [900, 1100, 1500, 1900, 2200].each do |time|
         params = {
           name: Faker::Commerce.product_name,
-          day: "w#{week}d#{day}",
+          day: day,
           start_time: time,
           duration: rand(60..180),
           instructions: Faker::Lorem.paragraphs.join("<br/><br/>")
