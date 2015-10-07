@@ -1,6 +1,6 @@
 class UpdateExistingDataToUseLocationsAssociation < ActiveRecord::Migration
   def up
-    Location.find_or_create_by!(name: 'Vancouver')
+    van = Location.find_or_create_by!(name: 'Vancouver')
     Location.find_or_create_by!(name: 'Toronto')
     Location.find_or_create_by!(name: 'Kelowna')
     Location.find_or_create_by!(name: 'Whitehorse')
@@ -10,7 +10,7 @@ class UpdateExistingDataToUseLocationsAssociation < ActiveRecord::Migration
     Student.all.each do |student|
       if student.cohort
         location = student.cohort.location_old.capitalize.split
-        student.location = Location.find_by(name: location)
+        student.location = Location.find_by(name: location) || van
         student.save
       else
         student.location = Location.find_by(name: 'Vancouver')
@@ -20,12 +20,12 @@ class UpdateExistingDataToUseLocationsAssociation < ActiveRecord::Migration
     Cohort.all.each do |cohort|
       if cohort.code
         location = cohort.location_old.capitalize.split
-        cohort.location = Location.find_by(name: location)
+        cohort.location = Location.find_by(name: location) || van
         cohort.save
       else
         cohort.code = Faker::Name.first_name.downcase
         location = cohort.location_old.capitalize.split
-        cohort.location = Location.find_by(name: location)
+        cohort.location = Location.find_by(name: location) || van
         cohort.save
       end
     end
