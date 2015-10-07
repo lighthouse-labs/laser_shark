@@ -11,7 +11,7 @@ class UpdateExistingDataToUseLocationsAssociation < ActiveRecord::Migration
     
     Student.all.each do |student|
       location = student.cohort ? student.cohort.location_old.capitalize.split : 'Vancouver'
-      student.location = Location.find_by(name: location) || van
+      location = Location.find_by(name: location) || van
       Student.where(id: student.id).update_all(location_id: location.id)
     end
 
