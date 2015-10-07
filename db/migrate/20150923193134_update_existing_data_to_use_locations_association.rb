@@ -1,34 +1,26 @@
 class UpdateExistingDataToUseLocationsAssociation < ActiveRecord::Migration
   def up
-    Location.find_or_create_by!(name: 'Vancouver')
+    van = Location.find_or_create_by!(name: 'Vancouver')
     Location.find_or_create_by!(name: 'Toronto')
     Location.find_or_create_by!(name: 'Kelowna')
     Location.find_or_create_by!(name: 'Whitehorse')
     Location.find_or_create_by!(name: 'Calgary')
+    
     add_column :cohorts, :location_id, :integer
     rename_column :cohorts, :location, :location_old
+    
     Student.all.each do |student|
-      if student.cohort
-        location = student.cohort.location_old.capitalize.split
-        student.location = Location.find_by(name: location)
-        student.save
-      else
-        student.location = Location.find_by(name: 'Vancouver')
-        student.save
-      end
+      location = student.cohort ? student.cohort.location_old.capitalize.split : 'Vancouver'
+      location = Location.find_by(name: location) || van
+      Student.where(id: student.id).update_all(location_id: location.id)
     end
+
     Cohort.all.each do |cohort|
-      if cohort.code
-        location = cohort.location_old.capitalize.split
-        cohort.location = Location.find_by(name: location)
-        cohort.save
-      else
-        cohort.code = Faker::Name.first_name.downcase
-        location = cohort.location_old.capitalize.split
-        cohort.location = Location.find_by(name: location)
-        cohort.save
-      end
+      location = cohort.location_old.capitalize.split
+      location = Location.find_by(name: location) || van
+      Cohort.where(id: cohort.id).update_all(location_id: location.id)
     end
+
     remove_column :cohorts, :location_old
   end
 
