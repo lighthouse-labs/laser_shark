@@ -98,6 +98,10 @@ class User < ActiveRecord::Base
     "#{self.first_name} #{self.last_name}"
   end
 
+  def incomplete_activities
+    Activity.where.not(id: self.activity_submissions.select(:activity_id)).where("day < ?", CurriculumDay.new(Date.today, cohort).to_s).order(:day).reverse
+  end 
+
   class << self
     def authenticate_via_github(auth)
       where(uid: auth["uid"]).first_or_create(attributes_from_oauth(auth))
