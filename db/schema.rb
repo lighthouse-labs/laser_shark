@@ -11,11 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-<<<<<<< HEAD
-ActiveRecord::Schema.define(version: 20150923193134) do
-=======
-ActiveRecord::Schema.define(version: 20150911171121) do
->>>>>>> feature/31-day-model
+ActiveRecord::Schema.define(version: 20151007123024) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -138,7 +134,6 @@ ActiveRecord::Schema.define(version: 20150911171121) do
     t.datetime "updated_at"
   end
 
-<<<<<<< HEAD
   create_table "feedbacks", force: true do |t|
     t.integer  "student_id"
     t.integer  "teacher_id"
@@ -157,8 +152,6 @@ ActiveRecord::Schema.define(version: 20150911171121) do
     t.datetime "updated_at"
   end
 
-=======
->>>>>>> feature/31-day-model
   create_table "programs", force: true do |t|
     t.string   "name"
     t.text     "lecture_tips"
