@@ -17,6 +17,7 @@ class RegistrationForm < Reform::Form
   property :completed_registration, on: :user
   property :type,         on: :user
   property :location_id,  on: :user
+  property :github_username, on: :user
 
   validates :first_name,   presence: true
   validates :last_name,    presence: true
@@ -26,5 +27,6 @@ class RegistrationForm < Reform::Form
   validates :quirky_fact,  presence: true, if: "type == 'Teacher'"
   validates :specialties,  presence: true, if: "type == 'Teacher'"
   validates :location_id,  presence: true
+  validates :github_username, presence: true
 
 end

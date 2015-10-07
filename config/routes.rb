@@ -34,6 +34,8 @@ LaserShark::Application.routes.draw do
     resources :assistances, only: [:create]
   end
 
+  resources :incomplete_activities, only: [:index]
+
   resources :assistances, only: [:destroy] do
     member do
       post :end

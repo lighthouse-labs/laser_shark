@@ -11,6 +11,11 @@ h3.date-heading {
   .btn-today {
     @include button-variant($btn-default-color, $brand-warning, $btn-warning-hover-bg, $btn-warning-active-bg);
   }
+  .btn-incomplete-activites {
+    @include button-variant($btn-default-color, $brand-info, $btn-warning-hover-bg, $btn-warning-active-bg);
+    margin-top: 4px;
+    width: 174px;
+  }
 }
 .nav-week {
   @extend .pagination;
