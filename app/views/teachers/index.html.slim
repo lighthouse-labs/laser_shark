@@ -39,8 +39,9 @@ table.table
           td = teacher.bio
           td 
             = link_to teacher.github_username, "https://github.com/#{teacher.github_username}"
-          td  
-            = link_to teacher.company_name, "http://#{teacher.company_url}", target: "_blank"
+          - if teacher.company_url && teacher.company_name  
+            td  
+              = link_to teacher.company_name, "http://#{teacher.company_url}", target: "_blank"
           td = teacher.quirky_fact
           td = teacher.specialties
 
