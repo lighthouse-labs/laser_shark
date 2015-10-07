@@ -21,7 +21,7 @@
       sub.sad title="Unhappy this cohort"
         = @cohort_feedback[:sad]
 
-//= render "days/info", day: @day if @day.info
+= render "days/info", day: @day if @day.info
 = render partial: 'activities/activity', collection: @activities
 
 - if teacher?

@@ -2,4 +2,4 @@
   .day-information-description
     == markdown day.info.description if day.info.description
 
-  = link_to "Edit Description", edit_day_info_path(day.raw_date), class: 'btn btn-primary' if teacher?
+  = link_to "Edit Description", edit_day_info_path(day), class: 'btn btn-primary' if teacher?
