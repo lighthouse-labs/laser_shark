@@ -40,7 +40,7 @@ table.table
           td 
             = link_to teacher.github_username, "https://github.com/#{teacher.github_username}"
           td  
-            = link_to teacher.company_name, "http://#{teacher.company_url}"
+            = link_to teacher.company_url, "http://#{teacher.company_url}", target: "_blank"
           td = teacher.quirky_fact
           td = teacher.specialties
 
