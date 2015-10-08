@@ -1,4 +1,30 @@
 h2.teacher-heading = @teacher.full_name
 
-.col-md-3
-  = image_tag(avatar_for(@teacher), size: '200x200')
+div
+  .col-md-3
+    = image_tag(avatar_for(@teacher), size: '200x200')
+    = link_to @teacher.company_name, "http://#{@teacher.company_url}", target: "_blank"
+    br
+    - if @teacher.github_username
+      = link_to image_tag('github-icon.png'), "https://github.com/#{@teacher.github_username}", target: "_blank"
+      | &nbsp;
+      = link_to @teacher.github_username, "https://github.com/#{@teacher.github_username}", target: "_blank"
+    br
+    - if @teacher.twitter
+      = link_to image_tag('twitter-icon.png'), "https://twitter.com/#{@teacher.twitter}", target: "_blank"
+      | &nbsp;
+      = link_to @teacher.twitter, "https://twitter.com/#{@teacher.twitter}", target: "_blank"
+    br
+    - if @teacher.slack
+      = image_tag('slack-icon.png')
+      | &nbsp;#{@teacher.slack}
+    br
+    - if @teacher.skype
+      = image_tag('skype-icon.png')
+      | &nbsp;#{@teacher.skype}
+
+  .col-md-9
+    p Bio: #{@teacher.bio}
+    p Quirky Fact: #{@teacher.quirky_fact}
+    p Specialties: #{@teacher.specialties}
+
