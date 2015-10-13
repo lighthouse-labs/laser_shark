@@ -13,6 +13,12 @@ class DayFeedback < ActiveRecord::Base
   scope :sad,     -> { where(mood: 'sad') }
 
   scope :from_cohort, -> (cohort) { joins(:student).where('users.cohort_id =? ', cohort.id) }
+  scope :reverse_chronological_order, -> { order(updated_at: :desc) }
+  scope :filter_by_location, -> (location_id) { 
+    includes(student: :location).
+    references(:student, :location).
+    where(locations: {id: location_id})
+  }
 
   after_create :notify_admin
 
@@ -20,6 +26,13 @@ class DayFeedback < ActiveRecord::Base
 
   def notify_admin
     AdminMailer.new_day_feedback(self).deliver
+  end
+
+  def self.filter_by(options)
+    options.inject(all) do |result, (k, v)|
+      attribute = k.gsub("_id", "")
+      result = result.send("filter_by_#{attribute}", v)
+    end
   end
 
 end

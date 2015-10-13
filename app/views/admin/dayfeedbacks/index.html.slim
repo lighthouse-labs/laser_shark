@@ -1,0 +1,25 @@
+= render 'form'
+
+h4 DayFeebacks:
+        
+table.table.table-feedbacks
+  thead
+    tr
+      th Mood
+      th Day
+      th Location
+      th Student
+
+  tbody
+    - @dayfeedbacks.each do |feedback|
+      tr
+        td
+          = feedback.mood
+        td
+          = feedback.day.upcase
+        td
+          = feedback.student.try(:location).try(:name) || 'N/A'
+        td
+          = feedback.student.try(:full_name) || 'N/A'
+          
+= paginate @dayfeedbacks, :window => 2
