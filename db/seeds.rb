@@ -68,20 +68,6 @@ if Rails.env.development?
     )
   end
 
-     Teacher.create!(
-       first_name: Faker::Name.first_name,
-       last_name: Faker::Name.last_name, 
-       email: Faker::Internet.email,
-       uid: 1000 + x,
-       token: 2000 + x,
-       completed_registration: true,
-       company_name: Faker::Company.name,
-       bio: Faker::Lorem.sentence,
-       specialties: Faker::Lorem.sentence,
-       quirky_fact: Faker::Lorem.sentence
-     )
-   end
-
   10.times do |i|
     Student.create!(
       first_name: Faker::Name.first_name,
