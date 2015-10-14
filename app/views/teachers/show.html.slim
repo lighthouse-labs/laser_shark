@@ -1,0 +1,50 @@
+div
+  .col-md-3.avatar-holder
+    = image_tag(avatar_for(@teacher), size: '200x200')
+
+  .col-md-9
+    h2 = @teacher.full_name
+
+    dl.dl-horizontal
+      dt
+        | Specialties
+      dd = @teacher.specialties
+
+      dt
+        | Quirky Fact
+      dd = @teacher.quirky_fact
+
+      - if @teacher.company_name && @teacher.company_url
+        dt 
+          | Company
+        dd = link_to @teacher.company_name, "http://#{@teacher.company_url}", target: "_blank"
+
+      dt
+        | Bio
+      dd = @teacher.bio
+
+      dt
+        | Contact
+      dd
+        ul.list-inline
+          - if @teacher.github_username
+            li
+              = link_to image_tag('github-icon.png'), "https://github.com/#{@teacher.github_username}", target: "_blank"
+              | &nbsp;
+              = link_to @teacher.github_username, "https://github.com/#{@teacher.github_username}", target: "_blank"
+          
+          - if @teacher.twitter
+            li
+              = link_to image_tag('twitter-icon.png'), "https://twitter.com/#{@teacher.twitter}", target: "_blank"
+              | &nbsp;
+              = link_to @teacher.twitter, "https://twitter.com/#{@teacher.twitter}", target: "_blank"
+          
+          - if @teacher.slack
+            li
+              = image_tag('slack-icon.png')
+              | &nbsp;#{@teacher.slack}
+            
+          - if @teacher.skype
+            li
+              = image_tag('skype-icon.png')
+              | &nbsp;#{@teacher.skype}
