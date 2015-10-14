@@ -1,6 +1,6 @@
 = form_tag admin_dayfeedbacks_path, method: 'get' do 
   
-  = select_tag :mood, options_for_select([["Happy", "happy"], ["OK", "ok"], ["Sad", "sad"]], params[:mood]), :prompt => 'All Moods'
+  = select_tag :mood, options_for_select([["Happy", "happy"], ["Ok", "ok"], ["Sad", "sad"]], params[:mood]), :prompt => 'All Moods'
   | &nbsp;
 
   = select_tag :location_id, options_from_collection_for_select(Location.all.order('name'), "id", "name", params[:location_id]), :prompt => 'All Locations'

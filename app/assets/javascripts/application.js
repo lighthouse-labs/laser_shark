@@ -18,6 +18,7 @@
 //= require jquery.timeago
 //= require mustache
 //= require jquery.raty
+//= require readmore
 
 //= require assistance_requests
 //= require navigation

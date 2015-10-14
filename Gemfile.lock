@@ -254,6 +254,8 @@ GEM
       ffi (>= 0.5.0)
     rdoc (4.1.1)
       json (~> 1.4)
+    readmorejs-rails (0.0.12)
+      railties (>= 3.2, < 5.0)
     redcarpet (3.1.2)
     reform (1.0.1)
       activemodel
@@ -388,6 +390,7 @@ DEPENDENCIES
   rb-fchange
   rb-fsevent
   rb-inotify
+  readmorejs-rails
   redcarpet
   reform
   rspec-rails (= 2.14.2)

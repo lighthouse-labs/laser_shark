@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151007123024) do
+ActiveRecord::Schema.define(version: 20151014042611) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -105,18 +105,6 @@ ActiveRecord::Schema.define(version: 20151007123024) do
 
   add_index "cohorts", ["program_id"], name: "index_cohorts_on_program_id", using: :btree
 
-  create_table "comments", force: true do |t|
-    t.text     "content"
-    t.integer  "commentable_id"
-    t.string   "commentable_type"
-    t.integer  "user_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "comments", ["commentable_id", "commentable_type"], name: "index_comments_on_commentable_id_and_commentable_type", using: :btree
-  add_index "comments", ["user_id"], name: "index_comments_on_user_id", using: :btree
-
   create_table "day_feedbacks", force: true do |t|
     t.string   "mood"
     t.string   "title"
@@ -125,6 +113,8 @@ ActiveRecord::Schema.define(version: 20151007123024) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "day"
+    t.datetime "archived_at"
+    t.integer  "archived_by_user_id"
   end
 
   create_table "day_infos", force: true do |t|
@@ -212,6 +202,7 @@ ActiveRecord::Schema.define(version: 20151007123024) do
     t.string   "quirky_fact"
     t.string   "specialties"
     t.integer  "location_id"
+    t.boolean  "teacher_on_floor",       default: false
   end
 
   add_index "users", ["cohort_id"], name: "index_users_on_cohort_id", using: :btree

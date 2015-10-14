@@ -8,6 +8,7 @@ class Admin::DayfeedbacksController < Admin::BaseController
     .reverse_chronological_order
     .page(params[:page])
     .per(DEFAULT_PER)
+
   end
 
   private

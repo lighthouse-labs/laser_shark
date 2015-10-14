@@ -1,6 +1,22 @@
 = render 'form'
 
 h4.pull-left Day Feebacks:  
+/ .pull-right.stats
+/       i class='happy fa fa-smile-o fa-2x' title="Happy feedback"
+/       sup.happy title="Happy total"
+/         = @happy
+/       sub.happy title="Happy this cohort"
+/         |3
+/       i class='ok fa fa-circle-thin fa-2x' title="OK feedback"
+/       sup.ok title="OK total"
+/         |4
+/       sub.ok title="OK this cohort"
+/         |5
+/       i class='sad fa fa-frown-o fa-2x' title="Sad feedback"
+/       sup.sad title="Unhappy total" 
+/         |6
+/       sub.sad title="Unhappy this cohort"
+/         |7
         
 table.table.table-feedbacks
   thead
@@ -9,20 +25,36 @@ table.table.table-feedbacks
       th Day
       th Location
       th Student
+      th Archived?
       th Text
 
   tbody
     - @dayfeedbacks.each do |dayfeedback|
-      tr
-        td
-          = dayfeedback.mood
-        td
-          = dayfeedback.day.upcase
-        td
-          = dayfeedback.student.try(:location).try(:name) || 'N/A'
-        td
-          = dayfeedback.student.try(:full_name) || 'N/A'
-        td
-          = dayfeedback.text.truncate(200)  
+      - if dayfeedback.student
+        tr class=("#{dayfeedback.mood}-row " + "#{dayfeedback.try(:student).cohort.active?}-row")
+          td
+            = dayfeedback.mood.capitalize
+          td
+            = dayfeedback.day.upcase
+          td
+            = dayfeedback.student.try(:location).try(:name) || 'N/A'
+          td
+            = dayfeedback.student.try(:full_name) || 'N/A'
+          td
+            article.read-more
+              = dayfeedback.text
+      - else
+        tr class=("#{dayfeedback.mood}-row")
+          td
+            = dayfeedback.mood.capitalize
+          td
+            = dayfeedback.day.upcase
+          td
+            | N/A
+          td
+            | N/A
+          td
+            article.read-more
+              = dayfeedback.text
           
 = paginate @dayfeedbacks, :window => 2
