@@ -27,10 +27,12 @@ div
     = f.input :phone_number, label: 'Phone Number'
     = f.input :twitter
     = f.input :skype
-    = f.input :location_id, collection: Location.where('name IN (?)', ['Toronto', 'Vancouver']).order(:name), label: 'Location'
+    - if student?
+      = f.input :location_id, collection: Location.where('name IN (?)', ['Toronto', 'Vancouver']).order(:name), label: 'Location'
 
     - if teacher?
       = f.input :slack
+      = f.input :location_id, collection: Location.all.order(:name), label: 'Location'
       = f.input :company_name, label: 'Company Name'
       = f.input :company_url, wrapper: :horizontal_input_group, label: 'Company URL'
         span.input-group-addon
