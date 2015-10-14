@@ -4,3 +4,35 @@
 .teacher-heading {
   text-align: center;
 }
+
+.avatar-holder {
+  margin-top: 30px;
+}
+
+.dl-horizontal {
+  dt {
+    text-align: left;
+  }
+
+  dd {
+    margin-bottom: 25px;
+  }
+}
+
+.list-inline {
+  li {
+    padding-right: 40px;
+  }
+}
+
+#teachers-selected-locations {
+  label {
+    margin-right: 20px;
+
+    input {
+      margin-right: 4px;
+      position: relative;
+      top: -1px;
+    }
+  }
+}

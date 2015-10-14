@@ -8,25 +8,20 @@ h1
     - @locations.each do |location|
       label
         = radio_button_tag "location_radio", location, location == 'Vancouver'
-        | &nbsp;
-        | #{location}&nbsp;
+        = location
 
 - else
   div id="teachers-selected-locations"
     - @locations.each do |location|
       label
         = radio_button_tag "location_radio", location, location == current_user.location.name || location == 'Vancouver'
-        | &nbsp;
-        | #{location}&nbsp;
+        = location
  
-table.table
+table.table.teachers-table
   thead
     tr
       th
       th Name
-      th Bio
-      th GitHub
-      th Company
       th Quirky Fact
       th Specialties
       
@@ -36,12 +31,6 @@ table.table
         tr class="teacher #{teacher.location.name}"
           td = link_to image_tag(avatar_for(teacher), size: '100x100'), teacher_path(teacher)
           td = link_to teacher.full_name, teacher_path(teacher)
-          td = teacher.bio
-          td 
-            = link_to teacher.github_username, "https://github.com/#{teacher.github_username}"
-          - if teacher.company_url && teacher.company_name  
-            td  
-              = link_to teacher.company_name, "http://#{teacher.company_url}", target: "_blank"
           td = teacher.quirky_fact
           td = teacher.specialties
 
