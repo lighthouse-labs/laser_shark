@@ -2,8 +2,8 @@
   
   = select_tag :mood, options_for_select([["Happy", "happy"], ["Ok", "ok"], ["Sad", "sad"]], params[:mood]), :prompt => 'All Moods'
   | &nbsp;
-
-  = select_tag :location_id, options_from_collection_for_select(Location.all.order('name'), "id", "name", params[:location_id]), :prompt => 'All Locations'
+  
+  = select_tag :location_id, options_from_collection_for_select(Location.all.order('name'), "id", "name", current_user.location.id), :prompt => 'All Locations'
   | &nbsp;
 
   = select_tag :archived, options_for_select([["Yes", "true"], ["No", "false"]], params[:archived]), :prompt => 'Archived?'
