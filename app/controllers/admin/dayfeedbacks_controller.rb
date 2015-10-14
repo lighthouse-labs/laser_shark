@@ -1,6 +1,6 @@
 class Admin::DayfeedbacksController < Admin::BaseController
 
-  FILTER_BY_OPTIONS = [:location_id].freeze
+  FILTER_BY_OPTIONS = [:mood, :day, :location_id].freeze
   DEFAULT_PER = 30
 
   def index
@@ -8,7 +8,6 @@ class Admin::DayfeedbacksController < Admin::BaseController
     .reverse_chronological_order
     .page(params[:page])
     .per(DEFAULT_PER)
-
   end
 
   private

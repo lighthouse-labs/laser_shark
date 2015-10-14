@@ -14,6 +14,9 @@ class DayFeedback < ActiveRecord::Base
 
   scope :from_cohort, -> (cohort) { joins(:student).where('users.cohort_id =? ', cohort.id) }
   scope :reverse_chronological_order, -> { order(updated_at: :desc) }
+
+  scope :filter_by_mood, -> (mood) { where(mood: mood) }
+  scope :filter_by_day, -> (day) { where(day: day.downcase) }
   scope :filter_by_location, -> (location_id) { 
     includes(student: :location).
     references(:student, :location).

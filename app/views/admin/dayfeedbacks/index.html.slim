@@ -1,6 +1,6 @@
 = render 'form'
 
-h4 DayFeebacks:
+h4.pull-left Day Feebacks:  
         
 table.table.table-feedbacks
   thead
@@ -9,17 +9,20 @@ table.table.table-feedbacks
       th Day
       th Location
       th Student
+      th Text
 
   tbody
-    - @dayfeedbacks.each do |feedback|
+    - @dayfeedbacks.each do |dayfeedback|
       tr
         td
-          = feedback.mood
+          = dayfeedback.mood
         td
-          = feedback.day.upcase
+          = dayfeedback.day.upcase
         td
-          = feedback.student.try(:location).try(:name) || 'N/A'
+          = dayfeedback.student.try(:location).try(:name) || 'N/A'
         td
-          = feedback.student.try(:full_name) || 'N/A'
+          = dayfeedback.student.try(:full_name) || 'N/A'
+        td
+          = dayfeedback.text.truncate(200)  
           
 = paginate @dayfeedbacks, :window => 2
