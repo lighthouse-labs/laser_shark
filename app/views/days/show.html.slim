@@ -32,6 +32,15 @@
       .name
         | New Activity
 
+
+- if current_user.location && ENV['GOOGLE_API_KEY']
+  hr
+  h1 id="events-header"
+    | Events
+  list-group id="eventlist" data-calendar="#{current_user.location.calendar}" data-tag="#{cohort.program.tag}" data-day="#{day}" data-start-date="#{cohort.start_date}"
+
+  = tag :meta, :name => "google-key", :content => ENV['GOOGLE_API_KEY']
+
 - if student? && !weekend?
   hr
   .row

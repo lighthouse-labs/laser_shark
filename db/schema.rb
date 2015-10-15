@@ -149,6 +149,7 @@ ActiveRecord::Schema.define(version: 20151014042611) do
     t.datetime "updated_at"
     t.string   "recordings_folder"
     t.string   "recordings_bucket"
+    t.text     "tags"
   end
 
   create_table "recordings", force: true do |t|

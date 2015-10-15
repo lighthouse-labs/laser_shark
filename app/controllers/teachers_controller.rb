@@ -5,4 +5,8 @@ class TeachersController < ApplicationController
     @locations = Location.all.map(&:name)
   end
 
+  def show
+    @teacher = Teacher.find(params[:id])
+  end
+
 end
