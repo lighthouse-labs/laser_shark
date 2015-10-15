@@ -1,36 +1,29 @@
 $ ->
 
-  getEvents = (calendar, startDate, endDate, tags) ->
+  getEvents = (calendar, startDate, endDate, tag) ->
 
     $('#eventlist').gCalReader
 
       calendarId: calendar
 
+      apiKey: $('meta[name="google-key"]').attr 'content'
+
       startDate: startDate
 
       endDate: endDate
 
-      tags: tags
-
-  getLocationCalendar = (location) ->
-    if location is 'Toronto'
-      calendarLocation = 'functionalimperative.com_du453ucqlvlir8rtf1sdjdd1ak@group.calendar.google.com'
-    else
-      # Need to get Vancouver calendar address
-      calendarLocation = 'en.canadian#holiday@group.v.calendar.google.com'
-    return calendarLocation
+      tag: tag
 
   getUserDetails = ->
        
     list = $('#eventlist')  
-    location = list.data 'location'
-    tags = list.data 'tags'
+    calendar = list.data 'calendar'
+    tag = list.data 'tag'
     day = list.data 'day'
     cohortStartDate = list.data 'start-date'
     startDate = calculateDateOfCurriculumDay(day, cohortStartDate, 'start')
     endDate = calculateDateOfCurriculumDay(day, cohortStartDate, 'end')
-    calendarLocation = getLocationCalendar(location)
-    getEvents(calendarLocation, startDate, endDate, tags)
+    getEvents(calendar, startDate, endDate, tag)
 
   calculateDateOfCurriculumDay = (day, startDate, type) ->
     # Get which week/day is currently being viewed

@@ -5,22 +5,13 @@
 
     var defaults = $.extend({
         calendarId: 'en.canadian#holiday@group.v.calendar.google.com',
-        apiKey: 'AIzaSyA0e9Ts3CSV9CQ-dOV-Pxwc2d5EszJBFLI',
+        apiKey: '',
         startDate: new Date().toISOString(),
         endDate: new Date().toISOString(),
-        errorMsg: 'No events in calendar',
-        tags: ['#web'],
+        tag: ['#web'],
         sortDescending: true
       },
       options);
-
-    var intersect = function(a, b) {
-      var t;
-      if (b.length > a.length) t = b, b = a, a = t; // indexOf to loop over shorter
-      return a.filter(function (e) {
-          if (b.indexOf(e) !== -1) return true;
-      });
-    }
 
     var appendDetails = function(item) {
       var link = item.htmlLink;
@@ -47,10 +38,14 @@
     var getDetails = function(item) {
       var summary = item.summary || '';
       var itemTags = summary.match(/#\w+/g);
+      var downcasedItemTags = [];
       if(itemTags) {
-        var intersection = intersect(defaults.tags, itemTags)
-        // Only append the calendar event if it has 1 or more tags that the Program has
-        if(intersection.length > 0) {
+        for (var i = 0; i < itemTags.length; i++) {
+            downcasedItemTags.push(itemTags[i].toLowerCase());
+        }
+        var intersection = downcasedItemTags.indexOf(defaults.tag.toLowerCase());
+        // Only append the calendar event if the program's tag is part of the events tag
+        if(intersection > -1) {
           eventsHeader.show();
           eventsHeader.prev().show();
           appendDetails(item);
@@ -77,9 +72,6 @@
             getDetails(item);
           });
         }
-      },
-      error: function(xhr, status) {
-        $($div).append('<p>' + status +' : '+ defaults.errorMsg +'</p>');
       }
     });
 
