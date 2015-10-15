@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151002150233) do
+ActiveRecord::Schema.define(version: 20151015000554) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -150,6 +150,7 @@ ActiveRecord::Schema.define(version: 20151002150233) do
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "calendar"
   end
 
   create_table "programs", force: true do |t|
@@ -159,7 +160,7 @@ ActiveRecord::Schema.define(version: 20151002150233) do
     t.datetime "updated_at"
     t.string   "recordings_folder"
     t.string   "recordings_bucket"
-    t.text     "tags"
+    t.string   "tag"
   end
 
   create_table "recordings", force: true do |t|
