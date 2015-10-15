@@ -23,7 +23,7 @@
 
 = render "days/info", day: @day if @day.info
 = render partial: 'activities/activity', collection: @activities
-- if current_user.location
+- if current_user.location && ENV['GOOGLE_API_KEY']
   hr
   h1 id="events-header"
     | Events
