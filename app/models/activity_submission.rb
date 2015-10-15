@@ -47,7 +47,7 @@ class ActivitySubmission < ActiveRecord::Base
   def destroy_feedback
     if self.activity.feedbackable?
       @feedback = self.activity.feedbacks.find_by(student: self.user)
-      @feedback.destroy
+      @feedback.destroy if @feedback
     end
   end
 
