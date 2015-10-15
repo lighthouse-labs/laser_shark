@@ -27,8 +27,6 @@ div
     = f.input :phone_number, label: 'Phone Number'
     = f.input :twitter
     = f.input :skype
-    - if student?
-      = f.input :location_id, collection: Location.where('name IN (?)', ['Toronto', 'Vancouver']).order(:name), label: 'Location'
 
     - if teacher?
       = f.input :slack
@@ -41,6 +39,8 @@ div
       = f.input :bio, as: :text, input_html: { maxlength: 1000 }, label: '*Bio'
       = f.input :quirky_fact, label: '*Quirky Fact'
       = f.input :specialties, label: '*Programming Specialties'
+    - else
+      = f.input :location_id, collection: Location.where('name IN (?)', ['Toronto', 'Vancouver']).order(:name), label: 'Location'
 
     .form-group
       .col-sm-offset-3.col-sm-9
