@@ -27,7 +27,7 @@
   hr
   h1 id="events-header"
     | Events
-  list-group id="eventlist" data-calendar="#{current_user.location.calendar}" data-tag="#{current_user.cohort.program.tag}" data-day="#{day}" data-start-date="#{current_user.cohort.start_date}"
+  list-group id="eventlist" data-calendar="#{current_user.location.calendar}" data-tag="#{cohort.program.tag}" data-day="#{day}" data-start-date="#{cohort.start_date}"
 
   = tag :meta, :name => "google-key", :content => ENV['GOOGLE_API_KEY']
 
