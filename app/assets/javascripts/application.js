@@ -18,9 +18,12 @@
 //= require jquery.timeago
 //= require mustache
 //= require jquery.raty
+//= require jquery.googlecalreader-1.1.min
 
 //= require assistance_requests
 //= require navigation
 //= require april1
 //= require feedbacks
+//= require calendar_of_events
+//= require calendar_index
 //= require teachers
