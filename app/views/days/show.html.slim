@@ -23,13 +23,6 @@
 
 = render "days/info", day: @day if @day.info
 = render partial: 'activities/activity', collection: @activities
-- if current_user.location
-  hr
-  h1 id="events-header"
-    | Events
-  list-group id="eventlist" data-calendar="#{current_user.location.calendar}" data-tag="#{current_user.cohort.program.tag}" data-day="#{day}" data-start-date="#{current_user.cohort.start_date}"
-
-  = tag :meta, :name => "google-key", :content => ENV['GOOGLE_API_KEY']
 
 - if teacher?
   = link_to new_day_activity_path(day)
@@ -38,6 +31,15 @@
         i.fa.fa-plus
       .name
         | New Activity
+
+
+- if current_user.location && ENV['GOOGLE_API_KEY']
+  hr
+  h1 id="events-header"
+    | Events
+  list-group id="eventlist" data-calendar="#{current_user.location.calendar}" data-tag="#{cohort.program.tag}" data-day="#{day}" data-start-date="#{cohort.start_date}"
+
+  = tag :meta, :name => "google-key", :content => ENV['GOOGLE_API_KEY']
 
 - if student? && !weekend?
   hr
