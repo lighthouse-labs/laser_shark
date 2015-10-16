@@ -49,9 +49,13 @@ table.table.table-feedbacks
             - if !dayfeedback.archived_at
               .btn.btn-primary.btn-xs.archive-button data-id='#{dayfeedback.id}'
                 | Archive
+              .btn.btn-primary.btn-xs.archive-confirm-button
+                | Confirm
             - else
               .btn.btn-primary.btn-xs.archive-button data-id='#{dayfeedback.id}'
                 | Unarchive
+              .btn.btn-primary.btn-xs.archive-confirm-button
+                | Confirm
       - else
         tr class=("#{dayfeedback.mood}-row")
           td
@@ -69,8 +73,12 @@ table.table.table-feedbacks
             - if !dayfeedback.archived_at
               .btn.btn-primary.btn-xs.archive-button
                 | Archive
+              .btn.btn-primary.btn-xs.archive-confirm-button
+                | Confirm
             - else
               .btn.btn-primary.btn-xs.archive-button
                 | Unarchive
+              .btn.btn-primary.btn-xs.archive-confirm-button
+                | Confirm
           
 = paginate @dayfeedbacks, :window => 2

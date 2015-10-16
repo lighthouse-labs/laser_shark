@@ -1,13 +1,13 @@
 $ ->
-
   $('.archive-button').click (e) ->
     that = $(e.target)
     action = that.text()
     archived_filter_status = $('#archived_').val()
     id = that.data 'id'
     if action is 'Archive'
-      response = confirm 'Are you sure?'
-      if response is true
+      that.hide()
+      that.next().show()
+      $('.archive-confirm-button').click (e) ->
         $.ajax
           url: '/admin/dayfeedbacks/' + id
           type: 'DELETE'
@@ -16,6 +16,8 @@ $ ->
               that.closest('tr').hide()
             else
               that.text 'Unarchive'    
+              that.show()
+              that.next().hide()
     else
       $.ajax
         url: '/admin/dayfeedbacks/' + id
