@@ -73,7 +73,7 @@ LaserShark::Application.routes.draw do
     resources :students, only: [:index]
     resources :cohorts, except: [:destroy]
     resources :feedbacks, except: [:edit, :update, :destroy]
-    resources :dayfeedbacks, except: [:edit, :update, :destroy]
+    resources :dayfeedbacks, except: [:edit, :update,]
   end
 
   # To test 500 error notifications on production

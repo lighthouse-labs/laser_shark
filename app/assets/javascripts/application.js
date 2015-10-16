@@ -28,3 +28,4 @@
 //= require calendar_of_events
 //= require calendar_index
 //= require teachers
+//= require day_feedbacks

@@ -1,15 +1,15 @@
 = form_tag admin_dayfeedbacks_path, method: 'get' do 
   
-  = select_tag :mood, options_for_select([["Happy", "happy"], ["Ok", "ok"], ["Sad", "sad"]], params[:mood]), :prompt => 'All Moods'
+  = select_tag :mood, options_for_select([["Happy", "happy"], ["Ok", "ok"], ["Sad", "sad"]], params[:mood]), :prompt => 'All Moods', class: "form-control admin-feedback-dropdown"
   | &nbsp;
   
-  = select_tag :location_id, options_from_collection_for_select(Location.all.order('name'), "id", "name", current_user.location.id), :prompt => 'All Locations'
+  = select_tag :location_id, options_from_collection_for_select(Location.all.order('name'), "id", "name", params[:location_id] || current_user.location.id), :prompt => 'All Locations', class: "form-control admin-feedback-dropdown"
   | &nbsp;
 
-  = select_tag :archived, options_for_select([["Yes", "true"], ["No", "false"]], params[:archived]), :prompt => 'Archived?'
+  = select_tag :archived?, options_for_select([["Archived", "true"], ["Unarchived", "false"]], params[:archived?]), :prompt => 'All Statuses', class: "form-control admin-feedback-dropdown"
   | &nbsp;
 
-  = text_field_tag 'day', params[:day], placeholder: 'Enter day'
+  = text_field_tag 'day', params[:day], placeholder: 'Day e.g. w1d2 or w1', class: "form-control admin-feedback-text-box"
   | &nbsp;
   
-  = submit_tag 'Filter', class: 'btn btn-success'
+  = submit_tag 'Filter', class: 'btn btn-success admin-feedback-button'

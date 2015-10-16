@@ -1,22 +1,25 @@
 = render 'form'
 
-h4.pull-left Day Feebacks:  
-/ .pull-right.stats
-/       i class='happy fa fa-smile-o fa-2x' title="Happy feedback"
-/       sup.happy title="Happy total"
-/         = @happy
-/       sub.happy title="Happy this cohort"
-/         |3
-/       i class='ok fa fa-circle-thin fa-2x' title="OK feedback"
-/       sup.ok title="OK total"
-/         |4
-/       sub.ok title="OK this cohort"
-/         |5
-/       i class='sad fa fa-frown-o fa-2x' title="Sad feedback"
-/       sup.sad title="Unhappy total" 
-/         |6
-/       sub.sad title="Unhappy this cohort"
-/         |7
+h4.pull-left Day Feeback:  
+.pull-right.stats.total-feedbacks
+  i class='happy fa fa-smile-o fa-2x' title="Happy feedback"
+  sup.happy title="Happy total"
+    = @stats[:happy_total]
+  sub.percentage-feedback.happy title="Happy %"
+    = @stats[:happy_percentage]
+    | %
+  i class='ok fa fa-circle-thin fa-2x' title="OK feedback"
+  sup.ok title="Ok total"
+    = @stats[:ok_total]
+  sub.percentage-feedback.ok title="Ok %"
+    = @stats[:ok_percentage]
+    | %
+  i class='sad fa fa-frown-o fa-2x' title="Sad feedback"
+  sup.sad title="Sad total" 
+    = @stats[:sad_total]
+  sub.percentage-feedback.sad title="Sad %"
+    = @stats[:sad_percentage]
+    | %
         
 table.table.table-feedbacks
   thead
@@ -42,6 +45,13 @@ table.table.table-feedbacks
           td
             article.read-more
               = dayfeedback.text
+          td
+            - if !dayfeedback.archived_at
+              .btn.btn-primary.btn-xs.archive-button data-id='#{dayfeedback.id}'
+                | Archive
+            - else
+              .btn.btn-primary.btn-xs.archive-button data-id='#{dayfeedback.id}'
+                | Unarchive
       - else
         tr class=("#{dayfeedback.mood}-row")
           td
@@ -55,5 +65,12 @@ table.table.table-feedbacks
           td
             article.read-more
               = dayfeedback.text
+          td
+            - if !dayfeedback.archived_at
+              .btn.btn-primary.btn-xs.archive-button
+                | Archive
+            - else
+              .btn.btn-primary.btn-xs.archive-button
+                | Unarchive
           
 = paginate @dayfeedbacks, :window => 2

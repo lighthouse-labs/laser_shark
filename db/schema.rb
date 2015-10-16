@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151014042611) do
+ActiveRecord::Schema.define(version: 20151015000554) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -140,6 +140,7 @@ ActiveRecord::Schema.define(version: 20151014042611) do
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "calendar"
   end
 
   create_table "programs", force: true do |t|
@@ -149,7 +150,7 @@ ActiveRecord::Schema.define(version: 20151014042611) do
     t.datetime "updated_at"
     t.string   "recordings_folder"
     t.string   "recordings_bucket"
-    t.text     "tags"
+    t.string   "tag"
   end
 
   create_table "recordings", force: true do |t|
@@ -203,7 +204,6 @@ ActiveRecord::Schema.define(version: 20151014042611) do
     t.string   "quirky_fact"
     t.string   "specialties"
     t.integer  "location_id"
-    t.boolean  "teacher_on_floor",       default: false
   end
 
   add_index "users", ["cohort_id"], name: "index_users_on_cohort_id", using: :btree

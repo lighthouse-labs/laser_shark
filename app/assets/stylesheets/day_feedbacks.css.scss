@@ -41,13 +41,13 @@
 }
 
 .happy-row {
-  background-color: #99FFCC;
+  background-color: #C6FFC6;
 }
 .ok-row {
-  background-color: #FFFFCC;
+  background-color: #FFFFDB;
 }
 .sad-row {
-  background-color: #FFBFDF;
+  background-color: #FFD7EB;
 }
 .true-row {
   font-weight: bold;
@@ -59,4 +59,40 @@
 .read-more-link:hover {
   color: black;
   text-decoration: underline;   
+}
+.percentage-feedback {
+  margin-left: -2px;
+}
+
+.total-feedbacks {
+  .happy {
+    color: $brand-secondary;
+  }
+  .ok {
+    color: $brand-warning;
+  }
+  .sad {
+    color: $brand-danger;
+  }
+}
+
+.admin-feedback-dropdown {
+  width: 120px;
+  height: 30px;
+  font-size: 12px;
+  line-height: 1.0;
+  display: inline-block;
+}
+
+.admin-feedback-button {
+  height: 30px;
+  line-height: 0.5;
+}
+
+.admin-feedback-text-box {
+  width: 150px;
+  height: 30px;
+  font-size: 12px;
+  line-height: 1.0;
+  display: inline-block;
 }
