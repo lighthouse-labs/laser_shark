@@ -3,21 +3,21 @@
 h4.pull-left Day Feeback:  
 .pull-right.stats.total-feedbacks
   i class='happy fa fa-smile-o fa-2x' title="Happy feedback"
-  sup.happy title="Happy total"
+  sup.total-feedbacks.happy title="Happy total"
     = @stats[:happy_total]
-  sub.percentage-feedback.happy title="Happy %"
+  sub.percentage-feedback-happy title="Happy %"
     = @stats[:happy_percentage]
     | %
   i class='ok fa fa-circle-thin fa-2x' title="OK feedback"
-  sup.ok title="Ok total"
+  sup.total-feedbacks.ok title="Ok total"
     = @stats[:ok_total]
-  sub.percentage-feedback.ok title="Ok %"
+  sub.percentage-feedback-ok title="Ok %"
     = @stats[:ok_percentage]
     | %
   i class='sad fa fa-frown-o fa-2x' title="Sad feedback"
-  sup.sad title="Sad total" 
+  sup.total-feedbacks.sad title="Sad total" 
     = @stats[:sad_total]
-  sub.percentage-feedback.sad title="Sad %"
+  sub.percentage-feedback-sad title="Sad %"
     = @stats[:sad_percentage]
     | %
         
