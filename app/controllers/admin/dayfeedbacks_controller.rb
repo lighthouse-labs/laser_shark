@@ -51,8 +51,4 @@ class Admin::DayfeedbacksController < Admin::BaseController
     params.slice(*FILTER_BY_OPTIONS).select { |k,v| v.present? }
   end
 
-  def calculate_percentages(feedbacks)
-    
-  end
-
 end
