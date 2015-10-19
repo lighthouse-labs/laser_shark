@@ -47,6 +47,18 @@ $ ->
         bindRatyElements()
         bindValidation()
 
+  $('#teacher_feedback_modal').on 'show.bs.modal', (event) ->
+    button = $(event.relatedTarget)
+    teacher_id = button.data('teacher-id')
+    modal = $(this)
+    $.ajax(
+      url: '/teachers/' + teacher_id + '/feedback'
+      method: 'GET').done (info) ->
+        modal.find('.modal-content').html(info)
+        # Redraw the Raty stars on new elements after they load from AJAX
+        bindRatyElements()
+        bindValidation()
+
 
   $('#feedback_modal').on 'hidden.bs.modal', (event) ->
     $(this).find('form')[0].reset()

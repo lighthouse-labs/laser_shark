@@ -9,4 +9,10 @@ class TeachersController < ApplicationController
     @teacher = Teacher.find(params[:id])
   end
 
+  def feedback
+    @teacher = Teacher.find(params[:id])
+    # @feedback = Feedback.new(teacher: @teacher, student: current_user, feedbackable: 'Activity')
+    render layout: false
+  end
+
 end

@@ -48,3 +48,11 @@ div
             li
               = image_tag('skype-icon.png')
               | &nbsp;#{@teacher.skype}
+      - if student?
+        dt
+          button.btn.btn-primary data-toggle="modal" data-target="#teacher_feedback_modal" data-teacher-id="#{@teacher.id}"
+            | Feedback 
+
+.modal.fade id="teacher_feedback_modal"
+  .modal-dialog
+    .modal-content
