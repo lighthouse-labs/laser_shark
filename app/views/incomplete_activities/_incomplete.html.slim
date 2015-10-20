@@ -1,30 +1,33 @@
-h4.col-md-2 #{activity.day.upcase}
+div.col-md-12.incomplete-activity-details-row
 
-.col-md-10
-  = link_to day_activity_path(activity.day, activity)
-    div class=("#{activity.type.downcase} " + 'activity')
-      .icon.icon-type title=activity.type
-        i class=(icon_for(activity))
-      - if activity.type != 'Lecture'
-        .time.time-duration
-          br
-          = duration activity
-          br
-      - else
-        .time
-          = integer_time_to_s activity.start_time
-          br
-          | to
-          br
-          = integer_time_to_s activity.end_time
-      .icon.icon-completion
-        -if student?
+  h4.col-md-1.activity-week #{activity.day.upcase}
+
+  .col-md-10
+    = link_to day_activity_path(activity.day, activity)
+      div class=("#{activity.type.downcase} " + 'activity')
+        .icon.icon-type title=activity.type
+          i class=(icon_for(activity))
+        - if (activity.type != 'Lecture' && activity.type != 'Test')
+          .time.time-duration
+            br
+            = duration activity
+            br
+        - else
+          .time
+            = integer_time_to_s activity.start_time
+            br
+            | to
+            br
+            = integer_time_to_s activity.end_time
+        .icon.icon-completion
           - if current_user.completed_activity?(activity)
             i.fa.fa-check-square-o
           - else
             i.fa.fa-square-o
-        -if teacher?
-          .completed-activities  
-            = completed_students(activity)
-      .name
-        = activity.name
+        .name
+          = activity.name
+
+  .col-md-1
+    - if !activity.allow_submissions?
+      button.btn.incomplete-activity-submit-button data-activity-id="#{activity.id}" data-activity-type="#{activity.type}"
+        i.fa.fa-check data-activity-id="#{activity.id}" data-activity-type="#{activity.type}"

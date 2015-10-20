@@ -29,3 +29,4 @@
 //= require calendar_index
 //= require teachers
 //= require day_feedbacks
+//= require incomplete_activities
