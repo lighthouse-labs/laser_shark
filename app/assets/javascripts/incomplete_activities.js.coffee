@@ -14,7 +14,7 @@ $ ->
       url: '/activities/' + activityId + '/activity_submission'
       type: 'POST'
       success: (result) ->
-        that.closest('.incomplete-activity-details-row').hide() 
+        that.closest('.incomplete-activity-details-row').hide(500) 
         # Update total count of incomplete activities on index page
         incompleteActivitiesTitle.text('Incomplete Activities (' + (numberOfIncompleteActivities-1).toString() + ')')
         # Update total number of feedbacks in nav menu if activity is not a lecture.
