@@ -62,25 +62,25 @@
 }
 
 .percentage-feedback-happy {
-  margin-left: -10px;
+  margin-left: 0px;
   top: -0.25em;
   color: $brand-secondary;
 }
 
 .percentage-feedback-ok {
-  margin-left: -10px;
+  margin-left: 0px;
   top: -0.25em;
   color: $brand-warning;
 }
 
 .percentage-feedback-sad {
-  margin-left: -10px;
+  margin-left: 0px;
   top: -0.25em;
   color: $brand-danger;
 }
 
 .total-feedbacks {
-  top: -1.5em;
+  top: -1.2em;
   .happy {
     color: $brand-secondary;
   }
