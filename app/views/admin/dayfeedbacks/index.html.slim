@@ -49,12 +49,12 @@ table.table.table-feedbacks
             - if !dayfeedback.archived_at
               .btn.btn-primary.btn-xs.archive-button data-id='#{dayfeedback.id}'
                 | Archive
-              .btn.btn-primary.btn-xs.archive-confirm-button
+              .btn.btn-danger.btn-xs.archive-confirm-button
                 | Confirm
             - else
-              .btn.btn-primary.btn-xs.archive-button data-id='#{dayfeedback.id}'
+              .btn.btn-warning.btn-xs.archive-button data-id='#{dayfeedback.id}'
                 | Unarchive
-              .btn.btn-primary.btn-xs.archive-confirm-button
+              .btn.btn-danger.btn-xs.archive-confirm-button
                 | Confirm
       - else
         tr class=("#{dayfeedback.mood}-row")
