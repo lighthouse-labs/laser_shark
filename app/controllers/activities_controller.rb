@@ -4,6 +4,7 @@ class ActivitiesController < ApplicationController
 
   before_action :require_activity, only: [:show, :edit, :update]
   before_action :teacher_required, only: [:new, :create, :edit, :update]
+  before_action :check_if_day_unlocked, only: [:show]
 
   def new
     @activity = Activity.new(day: params[:day_number])
@@ -72,6 +73,12 @@ class ActivitiesController < ApplicationController
 
   def require_activity
     @activity = Activity.find(params[:id])
+  end
+
+  def check_if_day_unlocked
+    if student?
+      redirect_to day_path('today'), alert: 'Not allowed' unless @activity.day == params[:day_number]
+    end
   end
 
 end
