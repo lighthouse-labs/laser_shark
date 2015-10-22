@@ -3,14 +3,27 @@
 
 h1 Description
 
-= simple_form_for @day_info, 
-  url: day_info_path(day.raw_date),
-  html: { class: 'form-horizontal' }, 
-  wrapper: :horizontal_form do |f|
+- if setup?
 
-  = render f
+  = simple_form_for @day_info, 
+    url: day_info_path('setup'),
+    html: { class: 'form-horizontal' }, 
+    wrapper: :horizontal_form do |f|
+    = render f
 
-  .actions.well
-    = f.submit 'Update', class: 'btn btn-primary', style: 'margin-right: 10px;'
-    = link_to '&laquo; Cancel'.html_safe, day_path(day.raw_date)
+    .actions.well
+      = f.submit 'Update', class: 'btn btn-primary', style: 'margin-right: 10px;'
+      = link_to '&laquo; Cancel'.html_safe, setup_path
+
+- else
+
+  = simple_form_for @day_info, 
+    url: day_info_path(day.raw_date),
+    html: { class: 'form-horizontal' }, 
+    wrapper: :horizontal_form do |f|
+    = render f
+
+    .actions.well
+      = f.submit 'Update', class: 'btn btn-primary', style: 'margin-right: 10px;'
+      = link_to '&laquo; Cancel'.html_safe, day_path(day.raw_date)
 
