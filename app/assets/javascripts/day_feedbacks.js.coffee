@@ -13,7 +13,7 @@ $ ->
           type: 'DELETE'
           success: (result) ->
             if archived_filter_status is 'false'
-              that.closest('tr').hide()
+              that.closest('tr').hide(500)
             else
               that.text 'Unarchive'    
               that.show()
