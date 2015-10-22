@@ -25,20 +25,22 @@ div
     = f.input :last_name, label: 'Last Name'
     = f.input :email
     = f.input :phone_number, label: 'Phone Number'
-    = f.input :location_id, collection: Location.all.order(:name), label: 'Location'
     = f.input :twitter
     = f.input :skype
 
     - if teacher?
       = f.input :slack
+      = f.input :location_id, collection: Location.all.order(:name), label: 'Location'
       = f.input :company_name, label: 'Company Name'
       = f.input :company_url, wrapper: :horizontal_input_group, label: 'Company URL'
         span.input-group-addon
           | http://
         = f.input_field :company_url, class: "form-control"
-      = f.input :bio, as: :text, input_html: { maxlength: 1000 }, label: '* Bio'
-      = f.input :quirky_fact, label: '* Quirky Fact'
-      = f.input :specialties, label: '* Programming Specialties'
+      = f.input :bio, as: :text, input_html: { maxlength: 1000 }, label: '*Bio'
+      = f.input :quirky_fact, label: '*Quirky Fact'
+      = f.input :specialties, label: '*Programming Specialties'
+    - else
+      = f.input :location_id, collection: Location.where('name IN (?)', ['Toronto', 'Vancouver']).order(:name), label: 'Location'
 
     .form-group
       .col-sm-offset-3.col-sm-9
