@@ -70,7 +70,7 @@ class ApplicationController < ActionController::Base
   helper_method :streams
 
   def pending_feedbacks
-    current_user.feedbacks.pending.reverse_chronological_order
+    current_user.feedbacks.pending.reverse_chronological_order.where.not(feedbackable: nil)
   end
   helper_method :pending_feedbacks
 
