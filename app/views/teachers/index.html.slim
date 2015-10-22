@@ -14,7 +14,7 @@ h1
   div id="teachers-selected-locations"
     - @locations.each do |location|
       label
-        = radio_button_tag "location_radio", location, location == current_user.location.name || location == 'Vancouver'
+        = radio_button_tag "location_radio", location, location == current_user.location.name
         = location
  
 table.table.teachers-table

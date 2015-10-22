@@ -2,7 +2,7 @@ class TeachersController < ApplicationController
 
   def index
     @teachers = Teacher.all
-    @locations = Location.all.map(&:name)
+    @locations = Location.all.order(:name).map(&:name)
   end
 
   def show
