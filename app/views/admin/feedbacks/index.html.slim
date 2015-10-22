@@ -19,12 +19,18 @@ table.table.table-feedbacks
   tbody
     - @feedbacks.each do |feedback|
       tr
-        td
-          = feedback.feedbackable.day.upcase
-        td
-          = feedback.feedbackable.try(:name) || 'N/A'
-        td
-          = feedback.feedbackable.try(:type) || feedback.feedbackable.class.name
+        - if feedback.try(:feedbackable)
+          td
+            = feedback.feedbackable.day.upcase
+          td
+            = feedback.feedbackable.try(:name) || 'N/A'
+          td
+            = feedback.feedbackable.try(:type) || feedback.feedbackable.class.name
+        - else
+          td
+          td
+          td
+            | Direct Feedback
         td
           .raty-viewer data-score="#{feedback.technical_rating}"
         td

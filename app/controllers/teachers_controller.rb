@@ -9,4 +9,10 @@ class TeachersController < ApplicationController
     @teacher = Teacher.find(params[:id])
   end
 
+  def feedback
+    @teacher = Teacher.find(params[:id])
+    @feedback = Feedback.find_or_create_by(teacher: @teacher, student: current_user)
+    render 'feedbacks/modal_content', layout: false
+  end
+
 end
