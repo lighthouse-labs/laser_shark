@@ -91,7 +91,7 @@ nav.navbar.navbar-inverse.navbar-fixed-top role="navigation"
             li
               = link_to feedbacks_path,title: 'Feedback'
                 i.fa.fa-fw.fa-comment
-                span.non-tablet-label
+                span.non-tablet-label id='feedback-link'
                   | Feedback (#{pending_feedbacks.count})
           - if current_user.active_student? && current_user.remote?
             li.dropdown

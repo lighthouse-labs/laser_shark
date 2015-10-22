@@ -1,3 +1,12 @@
-.incomplete-activites-title {
+.incomplete-activities-title {
   text-align: center;
+}
+
+.activity-week {
+  margin-top: 26px;
+}
+
+.incomplete-activity-submit-button {
+  @include button-variant($btn-default-color, $brand-success, $btn-success-hover-bg, $btn-success-active-bg);
+  margin-top: 20px;
 }
