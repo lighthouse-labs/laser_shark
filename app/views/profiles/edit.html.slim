@@ -19,7 +19,7 @@ div
         div.avatar-format
           = image_tag avatar_for(current_user) if avatar_for(current_user)
         div.col-sm-4.upload-button
-          button.btn.btn-default.btn-file.btn-block
+          div.button.btn.btn-default.btn-file.btn-block
             | Change Avatar
             = f.file_field :custom_avatar
 
