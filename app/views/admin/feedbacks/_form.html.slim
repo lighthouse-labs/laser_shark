@@ -1,6 +1,6 @@
 = form_tag admin_feedbacks_path, method: 'get' do 
   
-  = select_tag :completed?, options_for_select([["Complete", "true"], ["Incomplete", "false"]], params[:completed?]), :prompt => 'All Statuses', class: "form-control admin-feedback-dropdown"
+  = select_tag :completed?, options_for_select([["Complete", "true"], ["Incomplete", "false"], ["Expired", "expired"]], params[:completed?]), :prompt => 'All Statuses', class: "form-control admin-feedback-dropdown"
   | &nbsp;
   
   = select_tag :location_id, options_from_collection_for_select(Location.all.order('name'), "id", "name", params[:location_id]), :prompt => 'All Locations', class: "form-control admin-feedback-dropdown"
