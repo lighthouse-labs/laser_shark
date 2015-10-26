@@ -1,6 +1,6 @@
 = render 'form'
 
-h4.pull-left Day Feeback:  
+h4.pull-left Day Feeback (#{@stats[:total]})
 .pull-right.stats.total-feedbacks
   i class='happy fa fa-smile-o fa-2x' title="Happy feedback"
   sup.total-feedbacks.happy title="Happy total"
@@ -24,61 +24,36 @@ h4.pull-left Day Feeback:
 table.table.table-feedbacks
   thead
     tr
-      th Mood
       th Day
       th Location
       th Student
+      th Date
       th Text
 
   tbody
     - @dayfeedbacks.each do |dayfeedback|
-      - if dayfeedback.student
-        tr class=("#{dayfeedback.mood}-row " + "#{dayfeedback.try(:student).cohort.active?}-row")
-          td
-            = dayfeedback.mood.capitalize
-          td
-            = dayfeedback.day.upcase
-          td
-            = dayfeedback.student.try(:location).try(:name) || 'N/A'
-          td
-            = dayfeedback.student.try(:full_name) || 'N/A'
-          td
-            article.read-more
-              = dayfeedback.text
-          td
-            - if !dayfeedback.archived_at
-              .btn.btn-primary.btn-xs.archive-button data-id='#{dayfeedback.id}'
-                | Archive
-              .btn.btn-danger.btn-xs.archive-confirm-button
-                | Confirm
-            - else
-              .btn.btn-warning.btn-xs.archive-button data-id='#{dayfeedback.id}'
-                | Unarchive
-              .btn.btn-danger.btn-xs.archive-confirm-button
-                | Confirm
-      - else
-        tr class=("#{dayfeedback.mood}-row")
-          td
-            = dayfeedback.mood.capitalize
-          td
-            = dayfeedback.day.upcase
-          td
-            | N/A
-          td
-            | N/A
-          td
-            article.read-more
-              = dayfeedback.text
-          td
-            - if !dayfeedback.archived_at
-              .btn.btn-primary.btn-xs.archive-button
-                | Archive
-              .btn.btn-primary.btn-xs.archive-confirm-button
-                | Confirm
-            - else
-              .btn.btn-primary.btn-xs.archive-button
-                | Unarchive
-              .btn.btn-primary.btn-xs.archive-confirm-button
-                | Confirm
+      tr class=("#{dayfeedback.mood}-row " + "#{dayfeedback.try(:student).try(:cohort).try(:active?)}-row")
+        td
+          = dayfeedback.day.upcase
+        td
+          = dayfeedback.try(:student).try(:location).try(:name) || 'N/A'
+        td
+          = dayfeedback.try(:student).try(:full_name) || 'N/A'
+        td
+          = dayfeedback.created_at.to_s[0...20]
+        td
+          article.read-more
+            = dayfeedback.text
+        td
+          - if !dayfeedback.archived_at
+            .btn.btn-primary.btn-xs.archive-button data-id='#{dayfeedback.id}'
+              | Archive
+            .btn.btn-danger.btn-xs.archive-confirm-button
+              | Confirm
+          - else
+            .btn.btn-warning.btn-xs.archive-button data-id='#{dayfeedback.id}'
+              | Unarchive
+            .btn.btn-danger.btn-xs.archive-confirm-button
+              | Confirm
           
 = paginate @dayfeedbacks, :window => 2

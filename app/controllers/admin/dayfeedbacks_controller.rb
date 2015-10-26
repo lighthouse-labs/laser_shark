@@ -16,6 +16,7 @@ class Admin::DayfeedbacksController < Admin::BaseController
     @sad = @dayfeedbacks.sad.count.to_f
     if @total > 0
       @stats = {
+        total: @total.round(0),
         happy_total: @happy.round(0),
         ok_total: @ok.round(0),
         sad_total: @sad.round(0),
