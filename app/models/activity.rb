@@ -47,6 +47,11 @@ class Activity < ActiveRecord::Base
     type != 'Lecture'
   end
 
+  def display_duration?
+    return false if type == 'Lecture' || type == 'Test'
+    true
+  end
+
   protected
 
   def add_revision_to_gist
