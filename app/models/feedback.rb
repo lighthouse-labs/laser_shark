@@ -4,8 +4,8 @@ class Feedback < ActiveRecord::Base
   belongs_to :student
   belongs_to :teacher
 
-  scope :expired, -> { where("feedbacks.created_at < ?", Date.today-7) }
-  scope :not_expired, -> { where("feedbacks.created_at >= ?", Date.today-7) }
+  scope :expired, -> { where("feedbacks.created_at < ?", Date.today-1) }
+  scope :not_expired, -> { where("feedbacks.created_at >= ?", Date.today-1) }
   scope :completed, -> { where("technical_rating IS NOT NULL AND style_rating IS NOT NULL") }
   scope :pending, -> { where("technical_rating IS NULL AND style_rating IS NULL") }
   scope :reverse_chronological_order, -> { order("feedbacks.updated_at DESC") }
