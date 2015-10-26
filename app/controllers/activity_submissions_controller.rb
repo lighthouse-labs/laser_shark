@@ -9,8 +9,11 @@ class ActivitySubmissionsController < ApplicationController
       user: current_user,
       github_url: params[:github_url]
       )
-
     if @activity_submission.save
+      if params[:code_review]
+        @code_review_request = CodeReviewRequest.create(activity_submission: @activity_submission, requestor_id: current_user.id)
+        binding.pry
+      end
       redirect_to :back
     else
       redirect_to :back, alert: "Error: #{@activity_submission.errors.full_messages[0]}"
