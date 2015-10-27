@@ -5,7 +5,7 @@ class ActivitySubmission < ActiveRecord::Base
   
   has_one :code_review_request, dependent: :destroy
   
-  # after_save :request_code_review
+  after_save :request_code_review
   after_create :create_feedback
   before_destroy :destroy_feedback
 
@@ -29,7 +29,7 @@ class ActivitySubmission < ActiveRecord::Base
 
   def request_code_review
     if self.activity.allow_submissions? && should_code_review?
-      CodeReviewRequest.create(activity_submission: self, requestor_id: self.user.id)
+      CodeReviewRequest.find_or_create_by(activity_submission: self, requestor_id: self.user.id)
     end
   end
 

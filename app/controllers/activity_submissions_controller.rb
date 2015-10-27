@@ -12,7 +12,6 @@ class ActivitySubmissionsController < ApplicationController
     if @activity_submission.save
       if params[:code_review]
         @code_review_request = CodeReviewRequest.create(activity_submission: @activity_submission, requestor_id: current_user.id)
-        binding.pry
       end
       redirect_to :back
     else

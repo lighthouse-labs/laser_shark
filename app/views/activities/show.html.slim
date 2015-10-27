@@ -76,7 +76,7 @@ section.activity-details
               button.btn.btn-activity-complete-status data-toggle="modal" data-target="#feedback_modal" data-feedback-id="#{@feedback.id}"
                 | Feedback 
         - else
-          = form_for @activity_submission, url: activity_activity_submission_path(@activity), method: :post, html: { class: 'form-inline' }  do |f|
+          = form_for @activity_submission, url: activity_activity_submission_path(@activity), method: :post, html: { class: 'form-inline activity-submission-form' }  do |f|
             - if @activity.allow_submissions?
               input.form-control id="activity_submission_github_url" class="activity_submission_url" name="github_url" placeholder="Enter your Github repo or gist url" type="text"
               | &nbsp;
@@ -84,11 +84,11 @@ section.activity-details
               i.fa.fa-check
               | &nbsp;Submit
           - if @activity.allow_submissions?
-            = form_for @activity_submission, url: activity_activity_submission_path(@activity), method: :post, html: { class: 'form-inline' }  do |f|
+            = form_for @activity_submission, url: activity_activity_submission_path(@activity), method: :post, html: { class: 'form-inline activity-submission-form' }  do |f|
                 | &nbsp;
                 input name="github_url" type="hidden" id="hidden_github_url_input"
                 input name="code_review" type="hidden" value="true"
-                button.btn.btn-activity-complete-status name="button" type="submit" id="student-submit-code-review-button"
+                button.btn.btn-activity-complete-status name="button" type="submit" id="student_submit_code_review_button"
                   i.fa.fa-check
                   | &nbsp;Submit & Code Review
 
