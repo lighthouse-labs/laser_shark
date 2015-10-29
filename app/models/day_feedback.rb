@@ -27,6 +27,20 @@ class DayFeedback < ActiveRecord::Base
 
   after_create :notify_admin
 
+  def archived?
+    archived_at
+  end
+
+  def archive(user)
+    self.archived_at = Time.now
+    self.archived_by_user_id = user.id
+  end
+
+  def unarchive
+    self.archived_at = nil
+    self.archived_by_user_id = nil
+  end
+
   private
 
   def notify_admin

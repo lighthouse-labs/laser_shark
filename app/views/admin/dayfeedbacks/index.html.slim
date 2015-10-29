@@ -1,25 +1,26 @@
 = render 'form'
 
-h4.pull-left Day Feeback (#{@stats[:total]})
-.pull-right.stats.total-feedbacks
-  i class='happy fa fa-smile-o fa-2x' title="Happy feedback"
-  sup.total-feedbacks.happy title="Happy total"
-    = @stats[:happy_total]
-  sub.percentage-feedback-happy title="Happy %"
-    = @stats[:happy_percentage]
-    | %
-  i class='ok fa fa-circle-thin fa-2x' title="OK feedback"
-  sup.total-feedbacks.ok title="Ok total"
-    = @stats[:ok_total]
-  sub.percentage-feedback-ok title="Ok %"
-    = @stats[:ok_percentage]
-    | %
-  i class='sad fa fa-frown-o fa-2x' title="Sad feedback"
-  sup.total-feedbacks.sad title="Sad total" 
-    = @stats[:sad_total]
-  sub.percentage-feedback-sad title="Sad %"
-    = @stats[:sad_percentage]
-    | %
+- present @dayfeedbacks, DayFeedbacksPresenter do |dayfeedbacks_presenter|
+  h4.pull-left Day Feeback (#{dayfeedbacks_presenter.total_count})
+  .pull-right.stats.total-feedbacks
+    i class='happy fa fa-smile-o fa-2x' title="Happy feedback"
+    sup.total-feedbacks.happy title="Happy total"
+      = dayfeedbacks_presenter.happy_total
+    sub.percentage-feedback-happy title="Happy %"
+      = dayfeedbacks_presenter.happy_percentage
+      | %
+    i class='ok fa fa-circle-thin fa-2x' title="OK feedback"
+    sup.total-feedbacks.ok title="Ok total"
+      = dayfeedbacks_presenter.ok_total
+    sub.percentage-feedback-ok title="Ok %"
+      = dayfeedbacks_presenter.ok_percentage
+      | %
+    i class='sad fa fa-frown-o fa-2x' title="Sad feedback"
+    sup.total-feedbacks.sad title="Sad total" 
+      = dayfeedbacks_presenter.sad_total
+    sub.percentage-feedback-sad title="Sad %"
+      = dayfeedbacks_presenter.sad_percentage
+      | %
         
 table.table.table-feedbacks
   thead
@@ -27,33 +28,38 @@ table.table.table-feedbacks
       th Day
       th Location
       th Student
-      th Date
+      th Date/Time
       th Text
 
   tbody
-    - @dayfeedbacks.each do |dayfeedback|
-      tr class=("#{dayfeedback.mood}-row " + "#{dayfeedback.try(:student).try(:cohort).try(:active?)}-row")
-        td
-          = dayfeedback.day.upcase
-        td
-          = dayfeedback.try(:student).try(:location).try(:name) || 'N/A'
-        td
-          = dayfeedback.try(:student).try(:full_name) || 'N/A'
-        td
-          = dayfeedback.created_at.to_s[0...20]
-        td
-          article.read-more
-            = dayfeedback.text
-        td
-          - if !dayfeedback.archived_at
-            .btn.btn-primary.btn-xs.archive-button data-id='#{dayfeedback.id}'
-              | Archive
-            .btn.btn-danger.btn-xs.archive-confirm-button
-              | Confirm
-          - else
-            .btn.btn-warning.btn-xs.archive-button data-id='#{dayfeedback.id}'
-              | Unarchive
-            .btn.btn-danger.btn-xs.archive-confirm-button
-              | Confirm
+    - @paginated_dayfeedbacks.each do |dayfeedback|
+      - present dayfeedback do |day_feedback_presenter|
+          tr class=day_feedback_presenter.row_class
+            td
+              = day_feedback_presenter.capitalized_day
+            td
+              = day_feedback_presenter.location_name
+            td
+              = day_feedback_presenter.student_name
+            td.day-feedback-date
+              = day_feedback_presenter.created_at_with_time
+            td
+              article.read-more
+                = day_feedback_presenter.text
+            td data-id='#{dayfeedback.id}'
+              - if !day_feedback_presenter.archived_at
+                .btn.btn-primary.btn-xs.archive-button
+                  | Archive
+                .btn.btn-warning.btn-xs.unarchive-button.hidden-button
+                  | Unarchive
+                .btn.btn-danger.btn-xs.archive-confirm-button
+                  | Confirm
+              - else
+                .btn.btn-warning.btn-xs.unarchive-button
+                  | Unarchive
+                .btn.btn-primary.btn-xs.archive-button.hidden-button
+                  | Archive
+                .btn.btn-danger.btn-xs.archive-confirm-button
+                  | Confirm
           
-= paginate @dayfeedbacks, :window => 2
+= paginate @paginated_dayfeedbacks, :window => 2
