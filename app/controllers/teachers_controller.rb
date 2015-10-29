@@ -11,7 +11,7 @@ class TeachersController < ApplicationController
 
   def feedback
     @teacher = Teacher.find(params[:id])
-    @feedback = Feedback.find_or_create_by(teacher: @teacher, student: current_user, feedbackable: nil)
+    @feedback = @teacher.feedbacks.find_or_create_by(student: current_user, feedbackable: nil)
     render 'feedbacks/modal_content', layout: false
   end
 
