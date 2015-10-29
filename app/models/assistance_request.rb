@@ -10,19 +10,23 @@ class AssistanceRequest < ActiveRecord::Base
 
   scope :open_requests, -> { where(:canceled_at => nil).where(:assistance_id => nil) }
   scope :in_progress_requests, -> {
-    joins("LEFT OUTER JOIN assistances ON assistances.id = assistance_requests.assistance_id").
-    where("assistance_requests.canceled_at IS NULL AND assistances.id IS NOT NULL AND assistances.end_at IS NULL")
+    includes(:assistance).
+    where(assistance_requests: {canceled_at: nil}).
+    where.not(assistances: {id: nil}).
+    where(assistances: {end_at: nil}).
+    references(:assistance)
   }
   scope :open_or_in_progress_requests, -> {
-    joins("LEFT OUTER JOIN assistances ON assistances.id = assistance_requests.assistance_id").
-    where("assistance_requests.canceled_at IS NULL AND (assistances.id IS NULL OR assistances.end_at IS NULL)")
+    includes(:assistance).
+    where(assistance_requests: {canceled_at: nil}).
+    where("assistances.id IS NULL OR assistances.end_at IS NULL").
+    references(:assistance)
   }
   scope :requestor_cohort_in_locations, -> (locations) {
     if locations.is_a?(Array) && locations.length > 0
-      joins('LEFT OUTER JOIN users AS requestors ON assistance_requests.requestor_id = requestors.id').
-      joins('LEFT OUTER JOIN cohorts AS requestors_cohorts ON requestors.cohort_id = requestors_cohorts.id').
-      joins('LEFT OUTER JOIN locations AS requestors_locations ON requestors_cohorts.location_id = requestors_locations.id').
-      where('requestors_locations.name' => locations)
+      includes(requestor: {cohort: :location}).
+      where(locations: {name: locations}).
+      references(:requestor, :cohort, :location)
     end
   }
   scope :oldest_requests_first, -> { order(start_at: :asc) }

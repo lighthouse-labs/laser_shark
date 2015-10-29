@@ -18,9 +18,9 @@ class User < ActiveRecord::Base
   }
   scope :cohort_in_locations, -> (locations) {
     if locations.is_a?(Array) && locations.length > 0
-      joins('LEFT OUTER JOIN cohorts AS user_cohorts ON users.cohort_id = user_cohorts.id').
-      joins('LEFT OUTER JOIN locations AS user_locations ON user_cohorts.location_id = user_locations.id').
-      where('user_locations.name' => locations)
+      includes(cohort: :location).
+      where(locations: {name: locations}).
+      references(:cohort, :location)
     end
   }
   scope :active, -> {

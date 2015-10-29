@@ -12,13 +12,13 @@ class Feedback < ActiveRecord::Base
 
   scope :filter_by_location, -> (location_id) { 
     includes(student: :location).
-    references(:student, :location).
-    where(locations: {id: location_id})
+    where(locations: {id: location_id}).
+    references(:student, :location)
   }
   scope :filter_by_cohort, -> (cohort_id) {
     includes(student: :cohort).
-    references(:student, :cohort).
-    where(cohorts: {id: cohort_id})
+    where(cohorts: {id: cohort_id}).
+    references(:student, :cohort)
   }
 
   validates :technical_rating, presence: true, on: :update 
