@@ -55,6 +55,9 @@
   .btn-activity-complete-status {
     @include button-variant($btn-default-color, $brand-success, $btn-success-hover-bg, $btn-success-active-bg);
   }
+  .btn-activity-complete-status-no-code-review {
+   @include button-variant($btn-default-color, $brand-info, $btn-info-hover-bg, $btn-info-active-bg);
+  }
   .btn-activity-incomplete-status {
     @include button-variant($btn-default-color, $brand-danger, $btn-danger-hover-bg, $btn-danger-active-bg);
   }
@@ -73,4 +76,8 @@
     font-size: 1.2em;
     margin: 0;
   }
+}
+
+.activity-submission-form {
+  display: inline;
 }
