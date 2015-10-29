@@ -29,7 +29,7 @@ class ActivitySubmission < ActiveRecord::Base
 
   def request_code_review
     if self.activity.allow_submissions? && should_code_review?
-      CodeReviewRequest.find_or_create_by(activity_submission: self, requestor_id: self.user.id)
+      self.code_review_request.find_or_create_by(activity_submission: self, requestor_id: self.user.id)
     end
   end
 
