@@ -4,6 +4,7 @@ class FeedbacksController < ApplicationController
 
   def index
     @completed_feedbacks = current_user.feedbacks.completed.reverse_chronological_order
+    @expired_feedbacks = current_user.feedbacks.pending.reverse_chronological_order.expired
   end
 
   def update
