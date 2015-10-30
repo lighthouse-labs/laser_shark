@@ -3,9 +3,8 @@ div
     = image_tag(avatar_for(@teacher), size: '200x200')
 
     - if student?
-        p
-          button.btn.btn-primary data-toggle="modal" data-target="#teacher_feedback_modal" data-teacher-id="#{@teacher.id}"
-            | Feedback 
+        button.btn.btn-primary id="teacher_feedback_button" data-toggle="modal" data-target="#teacher_feedback_modal" data-teacher-id="#{@teacher.id}"
+          | Feedback 
 
   .col-md-9
     h2 = @teacher.full_name
