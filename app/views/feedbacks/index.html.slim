@@ -27,35 +27,6 @@ table.table
             button.btn.btn-xs.btn-primary data-toggle="modal" data-target="#feedback_modal" data-feedback-id="#{feedback.id}"
               | Provide   
 
-h3 Expired:
-table.table
-  thead
-    tr
-      th Day
-      th Name
-      th Type
-      th Teacher
-      th 
-
-  tbody
-    - @expired_feedbacks.each do |feedback|
-      - if feedback.try(:feedbackable) 
-        tr
-          td
-            = feedback.feedbackable.day.upcase
-          td
-            = feedback.feedbackable.try(:name) || 'N/A'
-          td
-            = feedback.feedbackable.try(:type) || feedback.feedbackable.class.name
-          td
-            - if feedback.teacher
-              = feedback.teacher.first_name + " " + feedback.teacher.last_name
-            - else
-              = "N/A"
-          td 
-            button.btn.btn-xs.btn-primary data-toggle="modal" data-target="#feedback_modal" data-feedback-id="#{feedback.id}"
-              | Provide   
-
 h3 Completed:
 table.table
   thead
@@ -103,6 +74,35 @@ table.table
                   = truncate feedback.notes, length: 200
 
             td
+
+h3 Expired:
+table.table
+  thead
+    tr
+      th Day
+      th Name
+      th Type
+      th Teacher
+      th 
+
+  tbody
+    - @expired_feedbacks.each do |feedback|
+      - if feedback.try(:feedbackable) 
+        tr
+          td
+            = feedback.feedbackable.day.upcase
+          td
+            = feedback.feedbackable.try(:name) || 'N/A'
+          td
+            = feedback.feedbackable.try(:type) || feedback.feedbackable.class.name
+          td
+            - if feedback.teacher
+              = feedback.teacher.first_name + " " + feedback.teacher.last_name
+            - else
+              = "N/A"
+          td 
+            button.btn.btn-xs.btn-primary data-toggle="modal" data-target="#feedback_modal" data-feedback-id="#{feedback.id}"
+              | Provide   
          
 .modal.fade id="feedback_modal"
   .modal-dialog
