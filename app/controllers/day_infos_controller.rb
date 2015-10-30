@@ -6,7 +6,7 @@ class DayInfosController < ApplicationController
   before_action :load_day_info, only: [:edit, :update]
 
   def edit
-    @setup = true if @day_info.day == 'setup'
+    @setup = (@day_info.day == 'setup')
   end
 
   def update

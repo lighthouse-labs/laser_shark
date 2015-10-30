@@ -3,6 +3,8 @@ class Admin::DayfeedbacksController < Admin::BaseController
   FILTER_BY_OPTIONS = [:mood, :day, :location_id, :archived?].freeze
   DEFAULT_PER = 20
 
+  before_action :load_dayfeedback, only: [:archive, :unarchive]
+
   def index
     @dayfeedbacks = DayFeedback.filter_by(filter_by_params)
 
@@ -17,7 +19,6 @@ class Admin::DayfeedbacksController < Admin::BaseController
   end
 
   def archive
-    @dayfeedback = DayFeedback.find(params[:id])
     @dayfeedback.archive(current_user)
     if @dayfeedback.save
       render nothing: true
@@ -25,7 +26,6 @@ class Admin::DayfeedbacksController < Admin::BaseController
   end
 
   def unarchive
-    @dayfeedback = DayFeedback.find(params[:id])
     @dayfeedback.unarchive
     if @dayfeedback.save
       render nothing: true
@@ -36,6 +36,10 @@ class Admin::DayfeedbacksController < Admin::BaseController
 
   def filter_by_params
     params.slice(*FILTER_BY_OPTIONS).select { |k,v| v.present? }
+  end
+
+  def load_dayfeedback
+    @dayfeedback = DayFeedback.find(params[:id])
   end
 
 end

@@ -48,8 +48,7 @@ class Activity < ActiveRecord::Base
   end
 
   def display_duration?
-    return false if type == 'Lecture' || type == 'Test'
-    true
+    type != 'Lecture' && type != 'Test'
   end
 
   protected
