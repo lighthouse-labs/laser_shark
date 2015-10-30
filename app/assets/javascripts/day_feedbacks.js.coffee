@@ -1,9 +1,13 @@
 $ ->
-
-  actionDayFeedback = (id) ->
+  archiveDayFeedback = (id) ->
     $.ajax
-      url: '/admin/dayfeedbacks/' + id
-      type: 'DELETE'
+      url: '/admin/dayfeedbacks/' + id + '/archive'
+      type: 'POST'
+
+   unarchiveDayFeedback = (id) ->
+     $.ajax
+       url: '/admin/dayfeedbacks/' + id + '/archive'
+       type: 'DELETE'   
 
   $('.archive-button').click (e) ->
     $(this).siblings('.archive-confirm-button').show()
@@ -13,7 +17,7 @@ $ ->
     id = $(this).parents('td').data 'id'
     archived_filter_status = $('#archived_').val()
 
-    actionDayFeedback(id)
+    archiveDayFeedback(id)
     if archived_filter_status is 'false'
       $(this).closest('tr').hide(500)
     else
@@ -23,5 +27,5 @@ $ ->
   $('.unarchive-button').click (e) ->
     id = $(this).parents('td').data 'id'
     $(this).hide()
-    actionDayFeedback(id)
+    unarchiveDayFeedback(id)
     $(this).siblings('.archive-button').show()

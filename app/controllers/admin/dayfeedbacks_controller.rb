@@ -16,16 +16,20 @@ class Admin::DayfeedbacksController < Admin::BaseController
       .per(DEFAULT_PER)
   end
 
-  def destroy
+  def archive
     @dayfeedback = DayFeedback.find(params[:id])
-    if @dayfeedback.archived?
-      @dayfeedback.unarchive
-    else
-      @dayfeedback.archive(current_user)
-    end
+    @dayfeedback.archive(current_user)
     if @dayfeedback.save
       render nothing: true
     end
+  end
+
+  def unarchive
+    @dayfeedback = DayFeedback.find(params[:id])
+    @dayfeedback.unarchive
+    if @dayfeedback.save
+      render nothing: true
+    end      
   end
 
   private
