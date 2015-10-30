@@ -15,6 +15,7 @@ gem 'bcrypt-ruby'
 gem 'puma'
 gem 'kaminari'
 gem 'readmorejs-rails'
+gem 'bootstrap-datepicker-rails'
 
 gem 'simple_form', '3.1.0.rc1'
 gem 'slim-rails'

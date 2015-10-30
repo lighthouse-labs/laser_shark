@@ -92,7 +92,7 @@
   }
 }
 
-.admin-feedback-dropdown {
+.admin-feedback-dropdown, .admin-feedback-text-box, .admin-feedback-date-select {
   width: 120px;
   height: 35px;
   font-size: 12px;
@@ -101,16 +101,8 @@
 }
 
 .admin-feedback-button {
-  height: 30px;
+  height: 35px;
   line-height: 0.5;
-}
-
-.admin-feedback-text-box {
-  width: 150px;
-  height: 30px;
-  font-size: 12px;
-  line-height: 1.0;
-  display: inline-block;
 }
 
 .archive-confirm-button {

@@ -1,4 +1,7 @@
 $ ->
+
+  $('.datepicker').datepicker()
+
   archiveDayFeedback = (id) ->
     $.ajax
       url: '/admin/dayfeedbacks/' + id + '/archive'
