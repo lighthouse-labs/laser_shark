@@ -83,14 +83,14 @@ section.activity-details
             button.btn.btn-activity-complete-status-no-code-review name="button" type="submit"
               i.fa.fa-check
               | &nbsp;Submit
-          - if @activity.allow_submissions?
-            = form_for @activity_submission, url: activity_activity_submission_path(@activity), method: :post, html: { class: 'form-inline activity-submission-form' }  do |f|
-                | &nbsp;
-                input name="github_url" type="hidden" id="hidden_github_url_input"
-                input name="code_review" type="hidden" value="true"
-                button.btn.btn-activity-complete-status name="button" type="submit" id="student_submit_code_review_button"
-                  i.fa.fa-check
-                  | &nbsp;Submit & Code Review
+          = form_for @activity_submission, url: activity_activity_submission_path(@activity), method: :post, html: { class: 'form-inline activity-submission-form' }  do |f|
+            - if @activity.allow_submissions?
+              | &nbsp;
+              input name="github_url" type="hidden" id="hidden_github_url_input"
+              input name="code_review" type="hidden" value="true"
+              button.btn.btn-activity-complete-status name="button" type="submit" id="student_submit_code_review_button"
+                i.fa.fa-check
+                | &nbsp;Submit & Code Review
 
   - if teacher?
     .collapse#student-progress
