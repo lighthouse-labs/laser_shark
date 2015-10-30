@@ -22,7 +22,7 @@ class DayFeedback < ActiveRecord::Base
   scope :filter_by_location, -> (location_id) { 
     includes(student: :location).
     references(:student, :location).
-    where(locations: {id: location_id})
+    where(locations: {id: location_id}) unless location_id.blank?
   }
 
   after_create :notify_admin

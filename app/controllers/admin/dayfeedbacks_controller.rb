@@ -4,10 +4,10 @@ class Admin::DayfeedbacksController < Admin::BaseController
   DEFAULT_PER = 20
 
   def index
-     @dayfeedbacks = DayFeedback.filter_by(filter_by_params)
+    @dayfeedbacks = DayFeedback.filter_by(filter_by_params)
 
     # => A location wasn't provided, use the current_user's location as the default
-    if params[:location_id].blank?
+    if params[:location_id].nil?
       @dayfeedbacks = @dayfeedbacks.filter_by_location(current_user.location.id)
     end
     
