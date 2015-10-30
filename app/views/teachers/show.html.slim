@@ -2,6 +2,11 @@ div
   .col-md-3.avatar-holder
     = image_tag(avatar_for(@teacher), size: '200x200')
 
+    - if student?
+        p
+          button.btn.btn-primary data-toggle="modal" data-target="#teacher_feedback_modal" data-teacher-id="#{@teacher.id}"
+            | Feedback 
+
   .col-md-9
     h2 = @teacher.full_name
 
@@ -48,10 +53,6 @@ div
             li
               = image_tag('skype-icon.png')
               | &nbsp;#{@teacher.skype}
-      - if student?
-        dt
-          button.btn.btn-primary data-toggle="modal" data-target="#teacher_feedback_modal" data-teacher-id="#{@teacher.id}"
-            | Feedback 
 
 .modal.fade id="teacher_feedback_modal"
   .modal-dialog
