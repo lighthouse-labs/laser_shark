@@ -28,8 +28,8 @@ class ActivitySubmission < ActiveRecord::Base
   end
 
   def request_code_review
-    if self.activity.allow_submissions? && should_code_review?
-      self.code_review_request.create!(requestor_id: self.user.id)
+    if self.activity.allow_submissions? && should_code_review? && self.code_review_request == nil
+      self.create_code_review_request(requestor_id: self.user.id)
     end
   end
 
