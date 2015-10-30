@@ -1,4 +1,4 @@
-class UserPresenter
+class UserPresenter < BasePresenter
   presents :user
 
   def image
