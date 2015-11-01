@@ -82,6 +82,14 @@
   display: inline;
 }
 
-code {
+pre code {
+  -moz-user-select: none;
   -webkit-user-select: none;
+  -ms-user-select: none;
+}
+
+.allow-select {
+ -moz-user-select: text;
+ -webkit-user-select: text;
+ -ms-user-select: text; 
 }
