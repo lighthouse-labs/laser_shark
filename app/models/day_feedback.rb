@@ -24,6 +24,8 @@ class DayFeedback < ActiveRecord::Base
     references(:student, :location).
     where(locations: {id: location_id}) unless location_id.blank?
   }
+  scope :filter_by_start_date, -> (date_str) { where("day_feedbacks.created_at >= ?", Time.zone.parse(date_str).beginning_of_day) }
+  scope :filter_by_end_date, -> (date_str) { where("day_feedbacks.created_at <= ?", Time.zone.parse(date_str).end_of_day) }
 
   after_create :notify_admin
 

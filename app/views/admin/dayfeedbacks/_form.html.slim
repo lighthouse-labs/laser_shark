@@ -12,7 +12,14 @@
   = text_field_tag 'day', params[:day], placeholder: 'Day e.g. w1d2 or w1', class: "form-control admin-feedback-text-box"
   | &nbsp;
 
-  = text_field_tag 'start_date', params[:start_date], placeholder: 'Start Date', class: "form-control admin-feedback-date-select datepicker"
+  label for="start_date"
+    |Start:&nbsp; 
+  input type='date' class='form-control admin-feedback-date-select' name='start_date' id='start_date'
+  | &nbsp;
+
+  label for="end_date"
+    |End:&nbsp;
+  input type='date' class='form-control admin-feedback-date-select' name='end_date' id='end_date'
   | &nbsp;
   
   = submit_tag 'Filter', class: 'btn btn-success admin-feedback-button'
