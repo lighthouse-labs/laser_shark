@@ -27,11 +27,12 @@ table.table.teachers-table
       
   tbody
     - @teachers.each do |teacher|
-      - if teacher.location
-        tr class="teacher #{teacher.location.name}"
-          td = link_to image_tag(avatar_for(teacher), size: '100x100'), teacher_path(teacher)
-          td = link_to teacher.full_name, teacher_path(teacher)
-          td = teacher.quirky_fact
-          td = teacher.specialties
+      - present teacher, UserPresenter do |teacher_presenter|
+        - if teacher.location
+          tr class="teacher #{teacher.location.name}"
+            td = link_to teacher_presenter.image_for_index_page, teacher_path(teacher)
+            td = link_to teacher_presenter.full_name, teacher_path(teacher)
+            td = teacher_presenter.quirky_fact
+            td = teacher_presenter.specialties
 
          
