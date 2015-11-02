@@ -10,7 +10,11 @@ class FeedbackPresenter < BasePresenter
   end
 
   def upcased_day
-    feedback.feedbackable.day.upcase
+    if feedbackable_present?
+      feedback.feedbackable.day.upcase
+    else
+      CurriculumDay.new(feedback.created_at.to_date, feedback.student.cohort).to_s.upcase
+    end
   end
 
   def feedbackable_present?
@@ -20,8 +24,10 @@ class FeedbackPresenter < BasePresenter
   def feedbackable_name
     if feedbackable_present? && feedback.feedbackable.try(:name)
       feedback.feedbackable.name
-    else 
+    elsif feedbackable_present?
       'N/A'
+    else
+      ''
     end
   end
 
@@ -31,13 +37,29 @@ class FeedbackPresenter < BasePresenter
     elsif feedbackable_present?
       feedback.feedbackable.class.name
     else
+      'Direct Feedback'
+    end
+  end
+
+  def teacher?
+    feedback.teacher.present?
+  end
+
+  def teacher_full_name
+    if teacher?
+      feedback.teacher.first_name + " " + feedback.teacher.last_name
+    else
       'N/A'
     end
   end
 
-  def teacher_full_name
-    if feedback.teacher.present?
-      feedback.teacher.first_name + " " + feedback.teacher.last_name
+  def student?
+    feedback.student.present?
+  end
+
+  def student_full_name
+    if student?
+      feedback.student.first_name + " " + feedback.student.last_name
     else
       'N/A'
     end
