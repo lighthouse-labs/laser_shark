@@ -4,9 +4,10 @@ module ActivitiesHelper
     options = {
       autolink: true,
       space_after_headers: true,
-      fenced_code_blocks: true
+      fenced_code_blocks: true,
+      tables: true
     }
-    @markdown ||= Redcarpet::Markdown.new(TargetBlankRenderer, options)
+    @markdown ||= Redcarpet::Markdown.new(CompassMarkdownRenderer, options)
     @markdown.render(content)
   end
 
