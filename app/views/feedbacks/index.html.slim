@@ -10,22 +10,16 @@ table.table
 
   tbody
     - pending_feedbacks.each do |feedback|
-      - if feedback.try(:feedbackable) 
-        tr
-          td
-            = feedback.feedbackable.day.upcase
-          td
-            = feedback.feedbackable.try(:name) || 'N/A'
-          td
-            = feedback.feedbackable.try(:type) || feedback.feedbackable.class.name
-          td
-            - if feedback.teacher
-              = feedback.teacher.first_name + " " + feedback.teacher.last_name
-            - else
-              = "N/A"
-          td 
-            button.btn.btn-xs.btn-primary data-toggle="modal" data-target="#feedback_modal" data-feedback-id="#{feedback.id}"
-              | Provide   
+      - present feedback do |feedback_presenter|
+        - if feedback_presenter.feedbackable_present?
+          tr
+            td = feedback_presenter.upcased_day
+            td = feedback_presenter.feedbackable_name
+            td = feedback_presenter.feedbackable_type
+            td = feedback_presenter.teacher_full_name
+            td 
+              button.btn.btn-xs.btn-primary data-toggle="modal" data-target="#feedback_modal" data-feedback-id="#{feedback.id}"
+                | Provide   
 
 h3 Completed:
 table.table
@@ -41,39 +35,33 @@ table.table
 
   tbody
     - @completed_feedbacks.each do |feedback|
-      - if feedback.try(:feedbackable)
-        tr
-          td
-            = feedback.feedbackable.day.upcase
-          td
-            = feedback.feedbackable.try(:name) || 'N/A'
-          td
-            = feedback.feedbackable.try(:type) || feedback.feedbackable.class.name
-          td
-            - if feedback.teacher
-              = feedback.teacher.first_name + " " + feedback.teacher.last_name
-            - else
-              = "N/A"
-          td
-            .raty-viewer data-score="#{feedback.technical_rating}"
-          td
-            .raty-viewer data-score="#{feedback.style_rating}"
-          td 
-            button.btn.btn-xs data-toggle="modal" data-target="#feedback_modal" data-feedback-id="#{feedback.id}"
-              | Edit    
-
-        - unless feedback.notes.blank?
+      - present feedback do |feedback_presenter|
+        - if feedback_presenter.feedbackable_present?
           tr
+            td = feedback_presenter.upcased_day
+            td = feedback_presenter.feedbackable_name
+            td = feedback_presenter.feedbackable_type
+            td = feedback_presenter.teacher_full_name
             td
-            td colspan="5"
-              p 
-                | Notes
-
-              small
-                em 
-                  = truncate feedback.notes, length: 200
-
+              .raty-viewer data-score="#{feedback.technical_rating}"
             td
+              .raty-viewer data-score="#{feedback.style_rating}"
+            td 
+              button.btn.btn-xs data-toggle="modal" data-target="#feedback_modal" data-feedback-id="#{feedback.id}"
+                | Edit    
+
+          - if feedback_presenter.notes?
+            tr
+              td
+              td colspan="5"
+                p 
+                  | Notes
+
+                small
+                  em 
+                    = feedback_presenter.truncated_notes
+
+              td
 
 h3 Expired:
 table.table
@@ -87,22 +75,16 @@ table.table
 
   tbody
     - @expired_feedbacks.each do |feedback|
-      - if feedback.try(:feedbackable) 
-        tr
-          td
-            = feedback.feedbackable.day.upcase
-          td
-            = feedback.feedbackable.try(:name) || 'N/A'
-          td
-            = feedback.feedbackable.try(:type) || feedback.feedbackable.class.name
-          td
-            - if feedback.teacher
-              = feedback.teacher.first_name + " " + feedback.teacher.last_name
-            - else
-              = "N/A"
-          td 
-            button.btn.btn-xs.btn-primary data-toggle="modal" data-target="#feedback_modal" data-feedback-id="#{feedback.id}"
-              | Provide   
+      - present feedback do |feedback_presenter|
+        - if feedback_presenter.feedbackable_present?
+          tr
+            td = feedback_presenter.upcased_day
+            td = feedback_presenter.feedbackable_name
+            td = feedback_presenter.feedbackable_type
+            td = feedback_presenter.teacher_full_name
+            td 
+              button.btn.btn-xs.btn-primary data-toggle="modal" data-target="#feedback_modal" data-feedback-id="#{feedback.id}"
+                | Provide   
          
 .modal.fade id="feedback_modal"
   .modal-dialog

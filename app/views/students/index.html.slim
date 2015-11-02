@@ -10,11 +10,11 @@ table.table
       
   tbody
     - @students.each do |student|
-      tr
-        td = image_tag(avatar_for(student), size: '100x100')
-        td = student.full_name
-        td = student.email
-        td = student.phone_number
-        td  
-          a href=("https://github.com/#{student.github_username}") = student.github_username
+      - present student, UserPresenter do |student_presenter|
+        tr
+          td = student_presenter.image_for_index_page
+          td = student_presenter.full_name
+          td = student_presenter.email
+          td = student_presenter.phone_number
+          td = student_presenter.linked_github_username 
        

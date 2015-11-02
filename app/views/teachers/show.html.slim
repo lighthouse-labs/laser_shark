@@ -1,57 +1,58 @@
-div
-  .col-md-3.avatar-holder
-    = image_tag(avatar_for(@teacher), size: '200x200')
+- present @teacher, UserPresenter do |teacher_presenter|
+  div
+    .col-md-3.avatar-holder
+      = teacher_presenter.image_for_show_page
 
-    - if student?
-        button.btn.btn-primary id="teacher_feedback_button" data-toggle="modal" data-target="#teacher_feedback_modal" data-teacher-id="#{@teacher.id}"
-          | Feedback 
+      - if student?
+          button.btn.btn-primary id="teacher_feedback_button" data-toggle="modal" data-target="#teacher_feedback_modal" data-teacher-id="#{@teacher.id}"
+            | Feedback 
 
-  .col-md-9
-    h2 = @teacher.full_name
+    .col-md-9
+      h2 = teacher_presenter.full_name
 
-    dl.dl-horizontal
-      dt
-        | Specialties
-      dd = @teacher.specialties
+      dl.dl-horizontal
+        dt
+          | Specialties
+        dd = teacher_presenter.specialties
 
-      dt
-        | Quirky Fact
-      dd = @teacher.quirky_fact
+        dt
+          | Quirky Fact
+        dd = teacher_presenter.quirky_fact
 
-      - if @teacher.company_name && @teacher.company_url
-        dt 
-          | Company
-        dd = link_to @teacher.company_name, "http://#{@teacher.company_url}", target: "_blank"
+        - if teacher_presenter.company?
+          dt 
+            | Company
+          dd = teacher_presenter.linked_company
 
-      dt
-        | Bio
-      dd = @teacher.bio
+        dt
+          | Bio
+        dd = teacher_presenter.bio
 
-      dt
-        | Contact
-      dd
-        ul.list-inline
-          - unless @teacher.github_username.blank?
-            li
-              = link_to image_tag('github-icon.png'), "https://github.com/#{@teacher.github_username}", target: "_blank"
-              | &nbsp;
-              = link_to @teacher.github_username, "https://github.com/#{@teacher.github_username}", target: "_blank"
-          
-          - unless @teacher.twitter.blank?
-            li
-              = link_to image_tag('twitter-icon.png'), "https://twitter.com/#{@teacher.twitter}", target: "_blank"
-              | &nbsp;
-              = link_to @teacher.twitter, "https://twitter.com/#{@teacher.twitter}", target: "_blank"
-          
-          - unless @teacher.slack.blank?
-            li
-              = image_tag('slack-icon.png')
-              | &nbsp;#{@teacher.slack}
+        dt
+          | Contact
+        dd
+          ul.list-inline
+            - if teacher_presenter.github_username?
+              li
+                = teacher_presenter.linked_github_image
+                | &nbsp;
+                = teacher_presenter.linked_github_username
             
-          - unless @teacher.skype.blank?
-            li
-              = image_tag('skype-icon.png')
-              | &nbsp;#{@teacher.skype}
+            - if teacher_presenter.twitter?
+              li
+                = teacher_presenter.linked_twitter_image
+                | &nbsp;
+                = teacher_presenter.linked_twitter
+            
+            - if teacher_presenter.slack?
+              li
+                = teacher_presenter.slack_image
+                | &nbsp;#{teacher_presenter.slack}
+              
+            - if teacher_presenter.skype?
+              li
+                = teacher_presenter.skype_image
+                | &nbsp;#{teacher_presenter.skype}
 
 .modal.fade id="teacher_feedback_modal"
   .modal-dialog
