@@ -6,12 +6,11 @@ class Admin::DayfeedbacksController < Admin::BaseController
   before_action :load_dayfeedback, only: [:archive, :unarchive]
 
   def index
-    @dayfeedbacks = DayFeedback.filter_by(filter_by_params)
-
     # => A location wasn't provided, use the current_user's location as the default
     if params[:location_id].nil?
-      @dayfeedbacks = @dayfeedbacks.filter_by_location(current_user.location.id)
+      params[:location_id] = current_user.location.id.to_s  
     end
+      @dayfeedbacks = DayFeedback.filter_by(filter_by_params)
     
     @paginated_dayfeedbacks = @dayfeedbacks.reverse_chronological_order
       .page(params[:page])

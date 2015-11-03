@@ -24,11 +24,16 @@ class DayFeedback < ActiveRecord::Base
     references(:student, :location).
     where(locations: {id: location_id}) unless location_id.blank?
   }
-  # scope :filter_by_start_date, -> (date_str) { 
-  #   includes(student: :location).
-  #   where("day_feedbacks.created_at >= ?", Time.parse(date_str).in_time_zone(locations.timezone).beginning_of_day) 
-  # }
-  scope :filter_by_end_date, -> (date_str) { where("day_feedbacks.created_at <= ?", Time.zone.parse(date_str).end_of_day) }
+  scope :filter_by_start_date, -> (date_str, location_id) { 
+    Time.use_zone(Location.find(location_id).timezone) do 
+      where("day_feedbacks.created_at >= ?", Time.zone.parse(date_str).beginning_of_day.utc) 
+    end
+  }
+  scope :filter_by_end_date, -> (date_str, location_id) { 
+    Time.use_zone(Location.find(location_id).timezone) do 
+      where("day_feedbacks.created_at <= ?", Time.zone.parse(date_str).end_of_day.utc) 
+    end
+  }
 
   after_create :notify_admin
 
@@ -53,10 +58,13 @@ class DayFeedback < ActiveRecord::Base
   end
 
   def self.filter_by(options)
+    location_id = options[:location_id]
     options.inject(all) do |result, (k, v)|
       attribute = k.gsub("_id", "")
       if attribute == 'archived?'
         result = self.filter_by_archived(v, result)
+      elsif attribute.include?('date')
+        result = result.send("filter_by_#{attribute}", v, location_id)
       else
         result = result.send("filter_by_#{attribute}", v)
       end   

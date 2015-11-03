@@ -17,7 +17,7 @@ class DayFeedbackPresenter < BasePresenter
   end
 
   def created_at_with_time
-    dayfeedback.created_at
+    dayfeedback.created_at.to_date
   end
 
   def text

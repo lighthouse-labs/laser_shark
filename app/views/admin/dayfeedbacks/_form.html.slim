@@ -3,7 +3,7 @@
   = select_tag :mood, options_for_select([["Happy", "happy"], ["Ok", "ok"], ["Sad", "sad"]], params[:mood]), :prompt => 'All Moods', class: "form-control admin-feedback-dropdown"
   | &nbsp;
   
-  = select_tag :location_id, options_from_collection_for_select(Location.all.order('name'), "id", "name", params[:location_id] || current_user.location.id), :prompt => 'All Locations', class: "form-control admin-feedback-dropdown"
+  = select_tag :location_id, options_from_collection_for_select(Location.all.order('name'), "id", "name", params[:location_id] || current_user.location.id), class: "form-control admin-feedback-dropdown"
   | &nbsp;
 
   = select_tag :archived?, options_for_select([["Archived", "true"], ["Unarchived", "false"]], params[:archived?]), :prompt => 'All Statuses', class: "form-control admin-feedback-dropdown"
