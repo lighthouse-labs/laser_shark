@@ -12,8 +12,25 @@ class Admin::DayfeedbacksController < Admin::BaseController
     if params[:location_id].nil?
       @dayfeedbacks = @dayfeedbacks.filter_by_location(current_user.location.id)
     end
+
+    @total = @dayfeedbacks.count.to_f
+    @happy = @dayfeedbacks.happy.count.to_f
+    @ok = @dayfeedbacks.ok.count.to_f
+    @sad = @dayfeedbacks.sad.count.to_f
+    if @total > 0
+      @stats = {
+        happy_total: @happy.round(0),
+        ok_total: @ok.round(0),
+        sad_total: @sad.round(0),
+        happy_percentage: (@happy/@total*100).round(0),
+        ok_percentage: (@ok/@total*100).round(0),
+        sad_percentage: (@sad/@total*100).round(0)
+      }
+    else
+      @stats = Hash.new(0)
+    end
     
-    @paginated_dayfeedbacks = @dayfeedbacks.reverse_chronological_order
+    @dayfeedbacks = @dayfeedbacks.reverse_chronological_order
       .page(params[:page])
       .per(DEFAULT_PER)
   end
