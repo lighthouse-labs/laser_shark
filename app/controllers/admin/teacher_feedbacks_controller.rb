@@ -3,7 +3,7 @@ class Admin::TeacherFeedbacksController < Admin::BaseController
   FILTER_BY_OPTIONS = [:teacher_id, :location_id].freeze
 
   def index
-    @teachers = Teacher.all.filter_by(filter_by_params)
+    @teachers = Teacher.all.order(:first_name).filter_by(filter_by_params)
   end
 
   private

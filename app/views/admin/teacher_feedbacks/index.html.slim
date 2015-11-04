@@ -1,16 +1,41 @@
 = render 'form'
 br
 - @teachers.each do |teacher|
-  table.table
-    thead
-      tr
-        th.teacher-name-column 
-          = teacher.full_name
-        th 
-          |Average Technical Rating: 
-          = teacher.feedbacks.average(:technical_rating).to_f.round(2)
-          |/5
-        th
-          |Average Style Rating:  
-          = teacher.feedbacks.average(:style_rating).to_f.round(2)
-          |/5
+  - present teacher do |teacher_presenter|
+    .row.teacher_feedbacks_section
+      .col-md-4
+        = teacher_presenter.full_name
+      .col-md-4
+        = teacher_presenter.average_technical_rating
+      .col-md-4
+        = teacher_presenter.average_style_rating
+    .row
+      table.table
+        thead
+          tr
+            th Date
+            th Student Name
+            th Feedback Type
+            th Technical Rating
+            th Style Rating
+            th 
+        tbody
+          - teacher_presenter.feedbacks.completed.each do |teacher_feedback|
+            - present teacher_feedback do |teacher_feedback_presenter|
+              tr
+                td = teacher_feedback_presenter.upcased_day
+                td = teacher_feedback_presenter.student_full_name
+                td = teacher_feedback_presenter.feedbackable_type
+                td
+                  .raty-viewer data-score="#{teacher_feedback_presenter.technical_rating}"
+                td
+                  .raty-viewer data-score="#{teacher_feedback_presenter.style_rating}"
+              - if teacher_feedback.notes.present?
+                tr
+                  td
+                  td colspan="5"
+                    small
+                      em 
+                        = teacher_feedback_presenter.truncated_notes
+                  td
+

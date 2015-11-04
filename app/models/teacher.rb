@@ -7,7 +7,7 @@ class Teacher < User
     where(locations: {id: location_id})
   }
 
-  scope :fiter_by_teacher, -> (teacher_id) {
+  scope :filter_by_teacher, -> (teacher_id) {
     where(id: teacher_id)
   }
 
