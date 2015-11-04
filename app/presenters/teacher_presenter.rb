@@ -18,6 +18,5 @@ class TeacherPresenter < UserPresenter
   def company_link
     link_to user.company_name, "http://#{user.company_url}", target: "_blank"
   end
-
-
+  
 end

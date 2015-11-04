@@ -15,7 +15,7 @@ class UserPresenter < BasePresenter
     if user.github_username.present?
       content_tag :li do
         link_to "https://github.com/#{user.github_username}", target: "_blank" do
-          github_image + " " + user.github_username
+          image_tag('github-icon.png') + " " + user.github_username
         end
       end
     end
@@ -25,7 +25,7 @@ class UserPresenter < BasePresenter
     if user.twitter.present?
       content_tag :li do
         link_to "https://twitter.com/#{user.twitter}", target: "_blank" do
-          twitter_image + " " + user.twitter
+          image_tag('twitter-icon.png') + " " + user.twitter
         end
       end
     end
@@ -34,7 +34,7 @@ class UserPresenter < BasePresenter
   def slack_info
     if user.slack.present?
       content_tag :li do
-        slack_image + " " + user.slack  
+        image_tag('slack-icon.png') + " " + user.slack  
       end
     end
   end
@@ -42,7 +42,7 @@ class UserPresenter < BasePresenter
   def skype_info
     if user.skype.present?
       content_tag :li do
-        skype_image + " " + user.skype
+        image_tag('skype-icon.png') + " " + user.skype
       end
     end
   end
@@ -56,22 +56,5 @@ class UserPresenter < BasePresenter
       user.avatar_url
     end
   end
-
-  def github_image
-    image_tag('github-icon.png')
-  end
-
-  def twitter_image
-    image_tag('twitter-icon.png')
-  end
-
-  def slack_image
-    image_tag('slack-icon.png')
-  end
-
-  def skype_image
-    image_tag('skype-icon.png')
-  end
-
 
 end
