@@ -1,6 +1,8 @@
 class UserPresenter < BasePresenter
   presents :user
 
+  delegate :full_name, :email, :phone_number, :quirky_fact, :bio, :specialties, :company_name, :company_url, :slack, :skype, to: :user
+
   def image_for_index_page
     h.image_tag(avatar_for, size: '100x100')
   end
@@ -8,95 +10,43 @@ class UserPresenter < BasePresenter
   def image_for_show_page
     h.image_tag(avatar_for, size: '200x200')
   end
-
-  def full_name
-    user.full_name
+  
+  def github_info
+    if user.github_username.present?
+      content_tag :li do
+        link_to "https://github.com/#{user.github_username}", target: "_blank" do
+          github_image + " " + user.github_username
+        end
+      end
+    end
   end
 
-  def email
-    user.email
+  def twitter_info
+    if user.twitter.present?
+      content_tag :li do
+        link_to "https://twitter.com/#{user.twitter}", target: "_blank" do
+          twitter_image + " " + user.twitter
+        end
+      end
+    end
   end
 
-  def phone_number
-    user.phone_number
+  def slack_info
+    if user.slack.present?
+      content_tag :li do
+        slack_image + " " + user.slack  
+      end
+    end
   end
 
-  def quirky_fact
-    user.quirky_fact
+  def skype_info
+    if user.skype.present?
+      content_tag :li do
+        skype_image + " " + user.skype
+      end
+    end
   end
-
-  def bio
-    user.bio
-  end
-
-  def specialties
-    user.specialties
-  end
-
-  def company?
-    user.company_name.present? && user.company_url.present?
-  end
-
-  def github_username?
-    user.github_username.present?
-  end
-
-  def twitter?
-    user.twitter.present?
-  end
-
-  def slack?
-    user.slack.present?
-  end
-
-  def skype?
-    user.skype.present?
-  end
-
-  def company_name
-    user.company_name
-  end
-
-  def company_url
-    user.company_url
-  end
-
-  def linked_company
-    link_to user.company_name, "http://#{user.company_url}", target: "_blank"
-  end
-
-  def linked_github_image
-    link_to image_tag('github-icon.png'), "https://github.com/#{user.github_username}", target: "_blank"
-  end
-
-  def linked_github_username
-    link_to user.github_username, "https://github.com/#{user.github_username}", target: "_blank"
-  end
-
-  def linked_twitter_image
-    link_to image_tag('twitter-icon.png'), "https://twitter.com/#{user.twitter}", target: "_blank"
-  end
-
-  def linked_twitter
-    link_to user.twitter, "https://twitter.com/#{user.twitter}", target: "_blank"
-  end
-
-  def slack_image
-    image_tag('slack-icon.png')
-  end
-
-  def slack
-    user.slack
-  end
-
-  def skype_image
-    image_tag('skype-icon.png')
-  end
-
-  def skype
-    user.skype
-  end
-
+  
   private
 
   def avatar_for
@@ -106,5 +56,22 @@ class UserPresenter < BasePresenter
       user.avatar_url
     end
   end
+
+  def github_image
+    image_tag('github-icon.png')
+  end
+
+  def twitter_image
+    image_tag('twitter-icon.png')
+  end
+
+  def slack_image
+    image_tag('slack-icon.png')
+  end
+
+  def skype_image
+    image_tag('skype-icon.png')
+  end
+
 
 end
