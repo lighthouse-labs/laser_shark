@@ -1,7 +1,7 @@
 class FeedbackPresenter < BasePresenter
   presents :feedback
 
-  delegate :feedbackable, :technical_rating, :style_rating, :student, :teacher, to: :feedback
+  delegate :updated_at, :feedbackable, :technical_rating, :style_rating, :student, :teacher, to: :feedback
 
   def truncated_notes
     if feedback.notes.present? 
@@ -54,6 +54,10 @@ class FeedbackPresenter < BasePresenter
     else
       'N/A'
     end
+  end
+
+  def updated_date
+    feedback.updated_at.to_date.to_s
   end
 
 end
