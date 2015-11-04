@@ -17,6 +17,11 @@ class DayFeedback < ActiveRecord::Base
   scope :archived, -> { where("archived_at IS NOT NULL") }
   scope :unarchived, -> { where("archived_at IS NULL") }
 
+  scope :filter_by_program, -> (program_id) {
+    includes(student: {cohort: :program}).
+    where(programs: {id: program_id}).
+    references(:student, :cohort, :program)
+  }
   scope :filter_by_mood, -> (mood) { where(mood: mood) }
   scope :filter_by_day, -> (day) { where("day LIKE ?", day.downcase+"%") }
   scope :filter_by_location, -> (location_id) { 
