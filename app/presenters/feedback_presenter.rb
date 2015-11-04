@@ -1,18 +1,18 @@
 class FeedbackPresenter < BasePresenter
   presents :feedback
 
-  def notes?
-    feedback.notes.present?
-  end
+  delegate :feedbackable, :technical_rating, :style_rating, :student, :teacher, to: :feedback
 
   def truncated_notes
-    truncate feedback.notes, length: 200
+    if feedback.notes.present? 
+      truncate feedback.notes, length: 200
+    end
   end
 
   def upcased_day
-    if feedbackable_present?
+    if feedback.try(:feedbackable)
       feedback.feedbackable.day.upcase
-    elsif student?
+    elsif feedback.student.present?
       CurriculumDay.new(feedback.created_at.to_date, feedback.student.cohort).to_s.upcase
     else
       # If the student is no longer registered for some reason, display just the date
@@ -20,14 +20,10 @@ class FeedbackPresenter < BasePresenter
     end
   end
 
-  def feedbackable_present?
-    feedback.try(:feedbackable)
-  end
-
   def feedbackable_name
-    if feedbackable_present? && feedback.feedbackable.try(:name)
+    if feedback.try(:feedbackable) && feedback.feedbackable.try(:name)
       feedback.feedbackable.name
-    elsif feedbackable_present?
+    elsif feedback.try(:feedbackable)
       'N/A'
     else
       ''
@@ -35,33 +31,25 @@ class FeedbackPresenter < BasePresenter
   end
 
   def feedbackable_type
-    if feedbackable_present? && feedback.feedbackable.try(:type)
+    if feedback.try(:feedbackable) && feedback.feedbackable.try(:type)
       feedback.feedbackable.type
-    elsif feedbackable_present?
+    elsif feedback.try(:feedbackable)
       feedback.feedbackable.class.name
     else
       'Direct Feedback'
     end
   end
 
-  def teacher?
-    feedback.teacher.present?
-  end
-
   def teacher_full_name
-    if teacher?
+    if feedback.teacher.present?
       feedback.teacher.first_name + " " + feedback.teacher.last_name
     else
       'N/A'
     end
   end
 
-  def student?
-    feedback.student.present?
-  end
-
   def student_full_name
-    if student?
+    if feedback.student.present?
       feedback.student.first_name + " " + feedback.student.last_name
     else
       'N/A'

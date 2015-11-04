@@ -1,11 +1,8 @@
-- present @teacher, UserPresenter do |teacher_presenter|
+- present @teacher do |teacher_presenter|
   div
     .col-md-3.avatar-holder
       = teacher_presenter.image_for_show_page
-
-      - if student?
-          button.btn.btn-primary id="teacher_feedback_button" data-toggle="modal" data-target="#teacher_feedback_modal" data-teacher-id="#{@teacher.id}"
-            | Feedback 
+      = teacher_presenter.feedback_button
 
     .col-md-9
       h2 = teacher_presenter.full_name
@@ -19,10 +16,7 @@
           | Quirky Fact
         dd = teacher_presenter.quirky_fact
 
-        - if teacher_presenter.company?
-          dt 
-            | Company
-          dd = teacher_presenter.linked_company
+        = teacher_presenter.company_info
 
         dt
           | Bio
@@ -32,27 +26,10 @@
           | Contact
         dd
           ul.list-inline
-            - if teacher_presenter.github_username?
-              li
-                = teacher_presenter.linked_github_image
-                | &nbsp;
-                = teacher_presenter.linked_github_username
-            
-            - if teacher_presenter.twitter?
-              li
-                = teacher_presenter.linked_twitter_image
-                | &nbsp;
-                = teacher_presenter.linked_twitter
-            
-            - if teacher_presenter.slack?
-              li
-                = teacher_presenter.slack_image
-                | &nbsp;#{teacher_presenter.slack}
-              
-            - if teacher_presenter.skype?
-              li
-                = teacher_presenter.skype_image
-                | &nbsp;#{teacher_presenter.skype}
+            = teacher_presenter.github_info  
+            = teacher_presenter.twitter_info
+            = teacher_presenter.slack_info
+            = teacher_presenter.skype_info
 
 .modal.fade id="teacher_feedback_modal"
   .modal-dialog
