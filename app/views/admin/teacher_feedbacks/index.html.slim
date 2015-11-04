@@ -4,10 +4,13 @@ br
   table.table
     thead
       tr
-        th = teacher.full_name
+        th.teacher-name-column 
+          = teacher.full_name
         th 
           |Average Technical Rating: 
           = teacher.feedbacks.average(:technical_rating).to_f.round(2)
+          |/5
         th
           |Average Style Rating:  
           = teacher.feedbacks.average(:style_rating).to_f.round(2)
+          |/5
