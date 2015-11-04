@@ -16,11 +16,11 @@ class TeacherPresenter < UserPresenter
   end
 
   def average_technical_rating
-    teacher.feedbacks.average(:technical_rating).to_f.round(2)
+    "Average Technical Rating: #{teacher.feedbacks.average(:technical_rating).to_f.round(2)}/5"
   end
 
   def average_style_rating
-    teacher.feedbacks.average(:style_rating).to_f.round(2)
+    "Average Style Rating: #{teacher.feedbacks.average(:style_rating).to_f.round(2)}/5"
   end
 
   protected
