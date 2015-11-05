@@ -4,6 +4,7 @@ class Feedback < ActiveRecord::Base
   belongs_to :student
   belongs_to :teacher
 
+  scope :curriculum_feedbacks, -> { where(teacher: nil) }
   scope :teacher_feedbacks, -> { where.not(teacher: nil) }
   scope :expired, -> { where("feedbacks.created_at < ?", Date.today-1) }
   scope :not_expired, -> { where("feedbacks.created_at >= ?", Date.today-1) }
@@ -13,10 +14,21 @@ class Feedback < ActiveRecord::Base
   scope :filter_by_student, -> (student_id) { where("student_id = ?", student_id) }
   scope :filter_by_teacher, -> (teacher_id) { where("teacher_id = ?", teacher_id) }
 
-  scope :filter_by_location, -> (location_id) { 
+  scope :filter_by_program, -> (program_id) {
+    includes(student: {cohort: :program}).
+    where(programs: {id: program_id}).
+    references(:student, :cohort, :program)
+  }
+
+  scope :filter_by_student_location, -> (location_id) { 
     includes(student: :location).
     where(locations: {id: location_id}).
     references(:student, :location)
+  }
+  scope :filter_by_teacher_location, -> (location_id) { 
+    includes(teacher: :location).
+    where(locations: {id: location_id}).
+    references(:teacher, :location)
   }
   scope :filter_by_cohort, -> (cohort_id) {
     includes(student: :cohort).
@@ -39,7 +51,8 @@ class Feedback < ActiveRecord::Base
   validates :style_rating, presence: true, on: :update
 
   def self.filter_by(options)
-    location_id = options[:location_id]
+    location_id = options[:student_location_id] if options[:student_location_id]
+    location_id = options[:teacher_location_id] if options[:teacher_location_id]
     options.inject(all) do |result, (k, v)|
       attribute = k.gsub("_id", "")
       if attribute == 'completed?'

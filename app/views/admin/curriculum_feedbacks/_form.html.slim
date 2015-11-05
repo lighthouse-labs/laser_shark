@@ -1,0 +1,27 @@
+= form_tag admin_curriculum_feedbacks_path, method: 'get' do 
+
+  = select_tag :program_id, options_from_collection_for_select(Program.all.order('name'), "id", "name", params[:program_id]), :prompt => 'All Programs', class: "form-control admin-feedback-dropdown"
+  
+  = select_tag :completed?, options_for_select([["Complete", "true"], ["Incomplete", "false"], ["Expired", "expired"]], params[:completed?]), :prompt => 'All Statuses', class: "form-control admin-feedback-dropdown"
+  | &nbsp;
+  
+  = select_tag :student_location_id, options_from_collection_for_select(Location.all.order('name'), "id", "name", params[:student_location_id] || current_user.location.id), class: "form-control admin-feedback-dropdown"
+  | &nbsp;
+  
+  = select_tag :cohort_id, options_from_collection_for_select(Cohort.all.order('name'), "id", "name", params[:cohort_id]), :prompt => 'All Cohorts', class: "form-control admin-feedback-dropdown"
+  | &nbsp;
+  
+  = select_tag :student_id, options_from_collection_for_select(Student.all.order('first_name'), "id", "full_name", params[:student_id]), :prompt => 'All Students', class: "form-control admin-feedback-dropdown"
+  | &nbsp;
+
+  label for="start_date"
+    |Start:&nbsp; 
+  input type='date' class='form-control admin-feedback-date-select' name='start_date' id='start_date' value=params[:start_date]
+  | &nbsp;
+
+  label for="end_date"
+    |End:&nbsp;
+  input type='date' class='form-control admin-feedback-date-select' name='end_date' id='end_date' value=params[:end_date]
+  | &nbsp;
+  
+  = submit_tag 'Filter', class: 'btn btn-success admin-feedback-button'

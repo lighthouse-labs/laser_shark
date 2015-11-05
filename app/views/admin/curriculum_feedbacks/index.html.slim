@@ -7,9 +7,8 @@ table.table.table-feedbacks
       th Day
       th Name
       th Type
-      th = sortable "technical_rating", "Techincal Rating Average: #{@average_technical_rating}"
-      th = sortable "style_rating", "Style Rating Average: #{@average_style_rating}"
-      th Teacher
+      th = sortable "technical_rating", "Average Techincal Rating: #{@average_technical_rating}"
+      th = sortable "style_rating", "Average Style Rating: #{@average_style_rating}"
       th Student
       th = sortable "updated_at", "Updated"
 
@@ -24,7 +23,6 @@ table.table.table-feedbacks
             .raty-viewer data-score="#{feedback.technical_rating}"
           td
             .raty-viewer data-score="#{feedback.style_rating}"
-          td = feedback_presenter.teacher_full_name
           td = feedback_presenter.student_full_name
           td = feedback.updated_at.to_date
 
@@ -32,9 +30,6 @@ table.table.table-feedbacks
           tr
             td
             td colspan="5"
-              p 
-                | Notes
-
               small
                 em 
                   = feedback_presenter.truncated_notes

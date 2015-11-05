@@ -78,6 +78,7 @@ LaserShark::Application.routes.draw do
     resources :cohorts, except: [:destroy]
     resources :feedbacks, except: [:edit, :update, :destroy]
     resources :teacher_feedbacks, only: [:index]
+    resources :curriculum_feedbacks, only: [:index]
     resources :dayfeedbacks, except: [:edit, :update,] do 
       member do 
         post :archive
