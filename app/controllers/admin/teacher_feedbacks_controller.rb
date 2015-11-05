@@ -1,9 +1,9 @@
 class Admin::TeacherFeedbacksController < Admin::BaseController
 
-  FILTER_BY_OPTIONS = [:teacher_id, :location_id].freeze
+  FILTER_BY_OPTIONS = [:teacher_id, :location_id, :start_date, :end_date].freeze
 
   def index
-    @teachers = Teacher.all.order(:first_name).filter_by(filter_by_params)
+    @feedbacks = Feedback.teacher_feedbacks.completed.filter_by(filter_by_params).group_by(&:teacher)
   end
 
   private

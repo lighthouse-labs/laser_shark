@@ -4,6 +4,7 @@ class Feedback < ActiveRecord::Base
   belongs_to :student
   belongs_to :teacher
 
+  scope :teacher_feedbacks, -> { where.not(teacher: nil) }
   scope :expired, -> { where("feedbacks.created_at < ?", Date.today-1) }
   scope :not_expired, -> { where("feedbacks.created_at >= ?", Date.today-1) }
   scope :completed, -> { where("technical_rating IS NOT NULL AND style_rating IS NOT NULL") }
@@ -23,14 +24,28 @@ class Feedback < ActiveRecord::Base
     references(:student, :cohort)
   }
 
+   scope :filter_by_start_date, -> (date_str, location_id) { 
+    Time.use_zone(Location.find(location_id).timezone) do 
+      where("feedbacks.updated_at >= ?", Time.zone.parse(date_str).beginning_of_day.utc) 
+    end
+   }
+   scope :filter_by_end_date, -> (date_str, location_id) { 
+    Time.use_zone(Location.find(location_id).timezone) do 
+      where("feedbacks.updated_at <= ?", Time.zone.parse(date_str).end_of_day.utc) 
+    end
+   }
+
   validates :technical_rating, presence: true, on: :update 
   validates :style_rating, presence: true, on: :update
 
   def self.filter_by(options)
+    location_id = options[:location_id]
     options.inject(all) do |result, (k, v)|
       attribute = k.gsub("_id", "")
       if attribute == 'completed?'
         result = self.filter_by_completed(v, result)
+      elsif attribute.include?('date')
+        result = result.send("filter_by_#{attribute}", v, location_id)
       else
         result = result.send("filter_by_#{attribute}", v)
       end    
