@@ -8,7 +8,7 @@
   = select_tag :student_location_id, options_from_collection_for_select(Location.all.order('name'), "id", "name", params[:student_location_id] || current_user.location.id), class: "form-control admin-feedback-dropdown"
   | &nbsp;
   
-  = select_tag :cohort_id, options_from_collection_for_select(Cohort.all.order('name'), "id", "name", params[:cohort_id]), :prompt => 'All Cohorts', class: "form-control admin-feedback-dropdown"
+  = select_tag :cohort_id, options_from_collection_for_select(Cohort.all.order('created_at').reverse, "id", "name", params[:cohort_id]), :prompt => 'All Cohorts', class: "form-control admin-feedback-dropdown"
   | &nbsp;
   
   = select_tag :student_id, options_from_collection_for_select(Student.all.order('first_name'), "id", "full_name", params[:student_id]), :prompt => 'All Students', class: "form-control admin-feedback-dropdown"

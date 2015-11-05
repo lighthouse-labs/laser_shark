@@ -7,8 +7,8 @@ table.table.table-feedbacks
       th Day
       th Name
       th Type
-      th = sortable "technical_rating", "Average Techincal Rating: #{@average_technical_rating}"
-      th = sortable "style_rating", "Average Style Rating: #{@average_style_rating}"
+      th.feedback-rating-column = sortable "technical_rating", "Average Techincal Rating: #{@average_technical_rating}"
+      th.feedback-rating-column = sortable "style_rating", "Average Style Rating: #{@average_style_rating}"
       th Student
       th = sortable "updated_at", "Updated"
 
