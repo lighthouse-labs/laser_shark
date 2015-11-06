@@ -1,4 +1,4 @@
-= form_tag admin_teacher_feedbacks_path, class: 'admin-teacher-filter-form', method: 'get' do 
+= form_tag admin_teacher_feedbacks_path, method: 'get' do 
 
   = select_tag :teacher_location_id, options_from_collection_for_select(Location.all.order('name'), "id", "name", params[:teacher_location_id] || current_user.location.id), class: "form-control admin-feedback-dropdown"
   | &nbsp;
