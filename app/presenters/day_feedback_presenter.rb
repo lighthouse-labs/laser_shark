@@ -1,5 +1,8 @@
 class DayFeedbackPresenter < BasePresenter
   presents :dayfeedback
+  
+  delegate :text, :archived_at, to: :dayfeedback
+
   def capitalized_day
     dayfeedback.day.upcase
   end
@@ -17,14 +20,7 @@ class DayFeedbackPresenter < BasePresenter
   end
 
   def created_at_with_time
-    dayfeedback.created_at.to_s[0...20]
+    dayfeedback.created_at.to_date
   end
 
-  def text
-    dayfeedback.text
-  end
-
-  def archived_at
-    dayfeedback.archived_at
-  end
 end

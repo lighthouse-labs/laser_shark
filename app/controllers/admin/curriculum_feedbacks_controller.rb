@@ -1,10 +1,13 @@
-class Admin::FeedbacksController < Admin::BaseController
+class Admin::CurriculumFeedbacksController < Admin::BaseController
 
-  FILTER_BY_OPTIONS = [:completed?, :student_id, :teacher_id, :location_id, :cohort_id].freeze
+  FILTER_BY_OPTIONS = [:program, :completed?, :student_id, :student_location_id, :cohort_id, :start_date, :end_date].freeze
   DEFAULT_PER = 10
 
   def index
-    @feedbacks = Feedback.filter_by(filter_by_params)
+    if params[:student_location_id].nil?
+      params[:student_location_id] = current_user.location.id.to_s  
+    end
+    @feedbacks = Feedback.curriculum_feedbacks.filter_by(filter_by_params)
       .order(order)
       .page(params[:page])
       .per(DEFAULT_PER)

@@ -1,4 +1,5 @@
 $ ->
+
   archiveDayFeedback = (id) ->
     $.ajax
       url: '/admin/dayfeedbacks/' + id + '/archive'

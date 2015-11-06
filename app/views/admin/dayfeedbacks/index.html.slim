@@ -1,6 +1,6 @@
 = render 'form'
 
-h4.pull-left Day Feeback:  
+h4.pull-left Day Feeback (#{@total.round(0)}):  
 .pull-right.stats.total-feedbacks
   i class='happy fa fa-smile-o fa-2x' title="Happy feedback"
   sup.total-feedbacks.happy title="Happy total"
@@ -27,7 +27,7 @@ table.table.table-feedbacks
       th Day
       th Location
       th Student
-      th Date/Time
+      th Date
       th Text
 
   tbody

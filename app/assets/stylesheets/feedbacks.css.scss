@@ -31,3 +31,14 @@ th .asc {
 th .desc { 
   background-image: url(down_arrow.gif); 
 }
+
+.teacher_feedbacks_section {
+  border-bottom: 1px solid black;
+}
+
+.feedback-rating-column {
+  width: 185px;
+}
+.admin-curriculum-feedback-date-column, .admin-curriculum-feedback-student-column {
+  width: 145px;
+}
