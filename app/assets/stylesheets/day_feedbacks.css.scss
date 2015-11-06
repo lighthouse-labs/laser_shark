@@ -81,6 +81,7 @@
 
 .total-feedbacks {
   top: -1.2em;
+  margin-top: 15px;
   .happy {
     color: $brand-secondary;
   }
@@ -92,7 +93,7 @@
   }
 }
 
-.admin-feedback-dropdown {
+.admin-feedback-dropdown, .admin-feedback-text-box {
   width: 120px;
   height: 35px;
   font-size: 12px;
@@ -111,6 +112,11 @@
   font-size: 12px;
   line-height: 1.0;
   display: inline-block;
+}
+
+.admin-feedback-button {
+  height: 35px;
+  line-height: 0.5;
 }
 
 .archive-confirm-button {

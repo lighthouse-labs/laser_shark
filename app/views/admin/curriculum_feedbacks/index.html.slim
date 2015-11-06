@@ -9,8 +9,8 @@ table.table.table-feedbacks
       th Type
       th.feedback-rating-column = sortable "technical_rating", "Average Techincal Rating: #{@average_technical_rating}"
       th.feedback-rating-column = sortable "style_rating", "Average Style Rating: #{@average_style_rating}"
-      th Student
-      th = sortable "updated_at", "Updated"
+      th.admin-curriculum-feedback-student-column Student
+      th.admin-curriculum-feedback-date-column = sortable "updated_at", "Updated"
 
   tbody
     - @feedbacks.each do |feedback|
