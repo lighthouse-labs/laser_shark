@@ -42,6 +42,15 @@ class DayFeedback < ActiveRecord::Base
 
   after_create :notify_admin
 
+  def self.count_for_mood(mood)
+    self.send(mood).count
+  end
+
+  def self.percentage_of_mood(mood)
+    return 0 if self.count == 0
+    self.count_for_mood(mood).to_f/self.count*100
+  end
+
   def archived?
     archived_at
   end
