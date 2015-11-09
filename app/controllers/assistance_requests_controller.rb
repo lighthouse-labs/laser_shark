@@ -5,7 +5,13 @@ class AssistanceRequestsController < ApplicationController
 
   def index
     @all_locations = Location.where("id IN (?)", Cohort.all.map(&:location_id).uniq).map(&:name)
-    render :index, layout: 'assistance'
+
+    render component: "RequestQueue", 
+      props: {
+        locations: @all_locations,
+        user: UserSerializer.new(current_user).as_json
+      }, 
+      layout: "assistance"
   end
 
   def queue

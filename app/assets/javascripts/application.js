@@ -31,3 +31,6 @@
 //= require day_feedbacks
 //= require incomplete_activities
 //= require activities
+//= require react
+//= require react_ujs
+//= require components
