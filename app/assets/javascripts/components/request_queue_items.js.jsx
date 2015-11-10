@@ -24,9 +24,28 @@ var RequestQueueItems = React.createClass({
 
   requestSuccess: function(response) {
     this.setState({
-      students: response.all_students,
-      requests: response.requests
+      activeAssistances: response.active_assistances,
+      requests: response.requests,
+      codeReviews: response.code_reviews,
+      students: response.all_students
     });
+  },
+
+  renderAssisting: function() {
+    if(this.state.activeAssistances.length > 0) {
+      return (
+        <div>
+          <h3 className="section-heading">Currently Assisting</h3>
+          <ul className="student-list">
+            { 
+              this.state.activeAssistances.map(function(assistance) { 
+                return <Assistance assistance={assistance} key={assistance.id}/>
+              })
+            }
+          </ul>
+        </div>
+      )
+    }
   },
 
   renderRequests: function() {
@@ -56,7 +75,10 @@ var RequestQueueItems = React.createClass({
   render: function() {
     return (
       <div className="requests-list">
-        <h3 className="section-heading">Currently Assisting</h3>
+        
+        { this.renderAssisting() }
+
+        <h3 className="section-heading">Awaiting Assistance</h3>
         <ul className="student-list">
           { this.renderRequests() }
         </ul>

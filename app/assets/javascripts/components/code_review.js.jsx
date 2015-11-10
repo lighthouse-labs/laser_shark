@@ -24,6 +24,8 @@ var CodeReview = React.createClass({
   
   render: function() {
     var codeReview = this.props.codeReview;
+    var student = codeReview.requestor;
+
     return (
       <RequestItem student={student}>
         <p className="assistance-timestamp">
@@ -36,6 +38,7 @@ var CodeReview = React.createClass({
         { this.renderSubmission() }
         <p>
           <a href={"/assistance_requests/" + codeReview.id + "/start_assistance"} className="btn btn-primary btn-lg" data-method="post">Start Reviewing</a>
+          &nbsp;
           <a href={"/assistance_requests/" + codeReview.id} className="btn btn-danger btn-lg" data-method="delete">&times;</a>
         </p>
       </RequestItem>
