@@ -27,10 +27,11 @@ class Assistance < ActiveRecord::Base
     if assistance_request.instance_of?(CodeReviewRequest) && !rating.nil? && !assistee.code_review_percent.nil?
       assistee.code_review_percent += Assistance::RATING_BASELINE - rating
     end
-    self.assistee.save
-    self.create_feedback(student: self.assistee, teacher: self.assistor)
-
-    send_notes_to_slack
+    
+    self.assistee.save.tap do
+      self.create_feedback(student: self.assistee, teacher: self.assistor)
+      send_notes_to_slack
+    end
   end
 
   def to_json

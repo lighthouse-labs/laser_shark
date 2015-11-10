@@ -97,7 +97,7 @@ var Assistance = React.createClass({
           { this.renderCancelButton(assistance, activitySubmission) }
         </p>
 
-        <RequestModal assistanceRequest={assistanceRequest} ref="requestModal" />
+        <RequestModal assistance={assistance} ref="requestModal" />
 
       </RequestItem>
     )
