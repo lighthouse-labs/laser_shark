@@ -1,5 +1,5 @@
 window.App = {};
-App.cable = Cable.createConsumer('ws://compass.dev:3000/websocket');
+App.cable = Cable.createConsumer('ws://<%= ENV['HOST'] %>/websocket');
 
 App.userChannel = App.cable.subscriptions.create("UserChannel", 
   requestAssistance: (reason) ->
