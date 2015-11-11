@@ -1,5 +1,13 @@
 var CodeReview = React.createClass({
 
+  startAssisting: function() {
+    App.assistance.startAssisting(this.props.codeReview);
+  },
+
+  cancelAssistance: function() {
+    App.assistance.cancelAssistanceRequest(this.props.codeReview);
+  },
+
   renderSubmission: function() {
     var codeReview = this.props.codeReview;
 
@@ -37,9 +45,9 @@ var CodeReview = React.createClass({
 
         { this.renderSubmission() }
         <p>
-          <a href={"/assistance_requests/" + codeReview.id + "/start_assistance"} className="btn btn-primary btn-lg" data-method="post">Start Reviewing</a>
+          <a className="btn btn-primary btn-lg" onClick={this.startAssisting}>Start Reviewing</a>
           &nbsp;
-          <a href={"/assistance_requests/" + codeReview.id} className="btn btn-danger btn-lg" data-method="delete">&times;</a>
+          <a className="btn btn-danger btn-lg" onClick={this.cancelAssistance}>&times;</a>
         </p>
       </RequestItem>
     )

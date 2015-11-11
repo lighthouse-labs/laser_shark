@@ -3,6 +3,10 @@ var Request = React.createClass({
   startAssisting: function() {
     App.assistance.startAssisting(this.props.request);
   },
+
+  cancelAssistance: function() {
+    App.assistance.cancelAssistanceRequest(this.props.request);
+  },
   
   render: function() {
     var request = this.props.request;
@@ -20,7 +24,7 @@ var Request = React.createClass({
         <p>
           <a className="btn btn-primary btn-lg" onClick={this.startAssisting}>Start Assisting</a>
           &nbsp;
-          <a href={"/assistance_requests/" + request.id} className="btn btn-danger btn-lg" data-method="delete">&times;</a>
+          <a className="btn btn-danger btn-lg" onClick={this.cancelAssistance}>&times;</a>
         </p>
       </RequestItem>
     )

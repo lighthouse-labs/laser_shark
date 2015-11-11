@@ -14,5 +14,6 @@ App.userChannel = App.cable.subscriptions.create("UserChannel",
       when "AssistanceRequested" then updateAssistanceUI() 
       when "AssistanceStarted" then updateAssistanceUI()
       when "AssistanceCancelled" then updateAssistanceUI()
+      when "AssistanceEnded" then updateAssistanceUI()
 
 )

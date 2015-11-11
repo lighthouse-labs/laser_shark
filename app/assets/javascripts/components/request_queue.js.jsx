@@ -49,17 +49,28 @@ var RequestQueue = React.createClass({
       startAssisting: function(request) {
         this.perform('start_assisting', {request_id: request.id})
       },
+      endAssistance: function(assistance) {
+        this.perform('end_assistance', {assistance_id: assistance.id})
+      },
+      cancelAssistanceRequest: function(request) {
+        this.perform('cancel_assistance_request', {request_id: request.id})
+      },
       received: function(data) {
-        console.log(data)
         switch(data.type) {
           case "AssistanceRequest":
             that.handleAssistanceRequest(data.object);
             break;
+          case "CodeReviewRequest":
+            that.handleCodeReviewRequest(data.object);
+            break;
           case "CancelAssistanceRequest":
-            that.handleCancelAssistanceRequest(data.object)
+            that.removeFromQueue(data.object)
             break;
           case "AssistanceStarted":
             that.handleAssistanceStarted(data.object);
+            break;
+          case "AssistanceEnded":
+            that.removeFromQueue(data.object.assistance_request)
             break;
         }
       }
@@ -72,9 +83,16 @@ var RequestQueue = React.createClass({
     this.setState({requests: requests});
   },
 
-  handleCancelAssistanceRequest: function(assistanceRequest) {
+  handleCodeReviewRequest: function(codeReviewRequest) {
+    var codeReviews = this.state.codeReviews;
+    codeReviews.push(codeReviewRequest);
+    this.setState({codeReviews: codeReviews});
+  },
+
+  removeFromQueue: function(assistanceRequest) {
     this.removeAssistanceFromRequests(assistanceRequest);
-    this.removeFromAssisting(assistanceRequest)
+    this.removeFromAssisting(assistanceRequest);
+    this.removeFromCodeReviews(assistanceRequest);
   },
 
   handleAssistanceStarted: function(assistance) {
@@ -105,6 +123,19 @@ var RequestQueue = React.createClass({
     if(ind > -1) {
       activeAssistances.splice(ind, 1);
       this.setState({activeAssistances: activeAssistances});
+    }
+  },
+
+  removeFromCodeReviews: function(assistanceRequest) {
+    var codeReviews = this.state.codeReviews;
+    var ids = codeReviews.map(function(cr) {
+      return cr.id;
+    });
+
+    var ind = ids.indexOf(assistanceRequest.id);
+    if(ind > -1) {
+      codeReviews.splice(ind, 1);
+      this.setState({codeReviews: codeReviews});
     }
   },
 

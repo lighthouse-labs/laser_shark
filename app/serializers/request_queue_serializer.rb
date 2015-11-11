@@ -22,7 +22,7 @@ class RequestQueueSerializer < ActiveModel::Serializer
 
   def requests
     object[:requests].collect do |request|
-      RequestSerializer.new(request).as_json
+      AssistanceRequestSerializer.new(request).as_json
     end
   end
 

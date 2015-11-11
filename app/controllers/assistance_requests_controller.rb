@@ -48,31 +48,9 @@ class AssistanceRequestsController < ApplicationController
     end
   end
   
-  def cancel
-    ar = current_user.assistance_requests.where(type: nil).open_or_in_progress_requests.newest_requests_first.first
-    status = ar.try(:cancel) ? 200 : 409
-
-    respond_to do |format|
-      format.json { render(:nothing => true, :status => status) }
-      format.all { redirect_to(assistance_requests_path) }
-    end
-  end
-
   def destroy
     ar = AssistanceRequest.find params[:id]
     status = ar.try(:cancel) ? 200 : 409
-
-    respond_to do |format|
-      format.json { render(:nothing => true, :status => status) }
-      format.all { redirect_to(assistance_requests_path) }
-    end
-  end
-
-  def end_assistance
-    params.permit(:assistance).permit(:notes)
-
-    ar = AssistanceRequest.find(params[:id].to_i)
-    status = ar.end_assistance(params[:assistance][:notes]) ? 200 : 400
 
     respond_to do |format|
       format.json { render(:nothing => true, :status => status) }

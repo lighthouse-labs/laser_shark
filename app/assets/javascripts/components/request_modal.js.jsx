@@ -8,19 +8,7 @@ var RequestModal = React.createClass({
     var notes = this.refs.notes.value;
     var rating = this.refs.rating.value;
 
-    $.ajax({
-      url: '/assistances/' + this.props.assistance.id + "/end",
-      type: "POST",
-      data: {
-        assistance: {
-          notes: notes,
-          rating: rating
-        }
-      },
-      complete: function(data) {
-        window.location.reload()
-      }
-    });
+    App.assistance.endAssistance(this.props.assistance)
   },
 
   renderReason: function(assistanceRequest) {
