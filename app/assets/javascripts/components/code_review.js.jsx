@@ -5,7 +5,8 @@ var CodeReview = React.createClass({
   },
 
   cancelAssistance: function() {
-    App.assistance.cancelAssistanceRequest(this.props.codeReview);
+    if(confirm("Are you sure you want to cancel this Request?"))
+      App.assistance.cancelAssistanceRequest(this.props.codeReview);
   },
 
   renderSubmission: function() {

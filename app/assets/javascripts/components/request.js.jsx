@@ -5,7 +5,8 @@ var Request = React.createClass({
   },
 
   cancelAssistance: function() {
-    App.assistance.cancelAssistanceRequest(this.props.request);
+    if(confirm("Are you sure you want to cancel this Request?"))
+      App.assistance.cancelAssistanceRequest(this.props.request);
   },
   
   render: function() {

@@ -9,6 +9,8 @@ var RequestModal = React.createClass({
     var rating = this.refs.rating.value;
 
     App.assistance.endAssistance(this.props.assistance)
+
+    $(this.refs.modal).modal('hide')
   },
 
   renderReason: function(assistanceRequest) {
@@ -66,8 +68,8 @@ var RequestModal = React.createClass({
               </div>
             </div>
             <div className="modal-footer">
-              <button type="button" className="btn btn-default" data-dismiss="modal">Cancel</button>
-              <button type="button" className="btn btn-primary" data-dismiss="modal" onClick={this.endAssistance}>End Assistance</button>
+              <button type="button" className="btn btn-default">Cancel</button>
+              <button type="button" className="btn btn-primary" onClick={this.endAssistance}>End Assistance</button>
             </div>
           </div>
         </div>
