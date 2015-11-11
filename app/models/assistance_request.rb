@@ -1,5 +1,5 @@
 class AssistanceRequest < ActiveRecord::Base
-  belongs_to :requestor, :class => User
+  belongs_to :requestor, :class_name => User
   belongs_to :assistance
   belongs_to :activity_submission
 

@@ -94,6 +94,7 @@ var Assistance = React.createClass({
             { activitySubmission ? "End Code Review" : "End Assistance"}
           </button>
 
+          &nbsp;
           { this.renderCancelButton(assistance, activitySubmission) }
         </p>
 

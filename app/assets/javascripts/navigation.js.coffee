@@ -1,4 +1,16 @@
 $ ->
+
+  $('.request-assistance-button').click (e) ->
+    e.preventDefault()
+    reason = $(@).closest('form').find('textarea').val()
+    window.App.userChannel.requestAssistance(reason)
+
+
+  $('.cancel-request-assistance-button').click (e) ->
+    e.preventDefault()
+    if confirm("Are you sure you want to withdraw this assistance request?")
+      window.App.userChannel.cancelAssistanceRequest()
+
   ar_module = $('#assistance-request-module')
 
   haveAssistanceUI = ->
@@ -24,12 +36,12 @@ $ ->
       setTimeout(updateAssistanceUI, 10000)
     )
 
-    ar_cancel_button.click (e) ->
-      if confirm("Are you sure you want to withdraw this assistance request?")
-        ar_cancel.addClass('hidden')
-        ar_create.removeClass('hidden')
-      else
-        return false
+    # ar_cancel_button.click (e) ->
+    #   if confirm("Are you sure you want to withdraw this assistance request?")
+    #     ar_cancel.addClass('hidden')
+    #     ar_create.removeClass('hidden')
+    #   else
+    #     return false
 
     updateAssistanceUI = ->
       $.getJSON '/assistance_requests/status', (data) ->

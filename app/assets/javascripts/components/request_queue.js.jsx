@@ -11,6 +11,78 @@ var RequestQueue = React.createClass({
     this.setState({location: location});
   },
 
+  componentDidMount: function() {
+    this.loadQueue();
+    this.subscribeToSocket();
+  },
+
+  componentDidUpdate: function(prevProps, prevState) {
+    if(prevState.location != this.state.location)
+      this.loadQueue();
+  },
+
+  getInitialState: function() {
+    return {
+      activeAssistances: [],
+      requests: [],
+      codeReviews: [],
+      students: []
+    }
+  },
+  
+  loadQueue: function() {
+    $.getJSON("/assistance_requests/queue?location=" + this.state.location, this.requestSuccess)  
+  },
+
+  requestSuccess: function(response) {
+    this.setState({
+      activeAssistances: response.active_assistances,
+      requests: response.requests,
+      codeReviews: response.code_reviews,
+      students: response.all_students
+    });
+  },
+
+  subscribeToSocket: function() {
+    var that = this;
+    App.assistance = App.cable.subscriptions.create("AssistanceChannel", {
+      connected: function() {
+        console.log("connected")
+      },
+      received: function(data) {
+        console.log(data)
+        switch(data.type) {
+          case "AssistanceRequest":
+            that.handleAssistanceRequest(data.object);
+            break;
+          case "CancelAssistanceRequest":
+            that.handleCancelAssistanceRequest(data.object)
+            break;
+        }
+      }
+    });
+  },
+
+  handleAssistanceRequest: function(assistanceRequest) {
+    var requests = this.state.requests;
+    requests.push(assistanceRequest);
+    this.setState({requests: requests});
+  },
+
+  handleCancelAssistanceRequest: function(assistanceRequest) {
+    var requests = this.state.requests;
+    var ids = requests.map(function(r){ 
+      return r.id;
+    });
+
+    var ind = ids.indexOf(assistanceRequest.id);
+    
+    if(ind > -1) {
+      requests.splice(ind, 1);
+      this.setState({requests: requests});
+    }
+  },
+
   locationChanged: function(event) {
     this.setState({location: event.target.value});
   },
@@ -51,7 +123,11 @@ var RequestQueue = React.createClass({
     return(
       <div>
         { this.renderLocations() }
-        <RequestQueueItems location={this.state.location} />
+        <RequestQueueItems
+          activeAssistances={this.state.activeAssistances}
+          requests={this.state.requests}
+          codeReviews={this.state.codeReviews}
+          students={this.state.students} />
       </div>
     )
   }
