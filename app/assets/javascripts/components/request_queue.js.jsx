@@ -46,8 +46,8 @@ var RequestQueue = React.createClass({
   subscribeToSocket: function() {
     var that = this;
     App.assistance = App.cable.subscriptions.create("AssistanceChannel", {
-      connected: function() {
-        console.log("connected")
+      startAssisting: function(request) {
+        this.perform('start_assisting', {request_id: request.id})
       },
       received: function(data) {
         console.log(data)
@@ -57,6 +57,9 @@ var RequestQueue = React.createClass({
             break;
           case "CancelAssistanceRequest":
             that.handleCancelAssistanceRequest(data.object)
+            break;
+          case "AssistanceStarted":
+            that.handleAssistanceStarted(data.object);
             break;
         }
       }
@@ -70,17 +73,48 @@ var RequestQueue = React.createClass({
   },
 
   handleCancelAssistanceRequest: function(assistanceRequest) {
+    this.removeAssistanceFromRequests(assistanceRequest);
+    this.removeFromAssisting(assistanceRequest)
+  },
+
+  handleAssistanceStarted: function(assistance) {
+    this.removeAssistanceFromRequests(assistance.assistance_request);
+    if(assistance.assistor.id === this.props.user.id) {
+      var activeAssistances = this.state.activeAssistances;
+      activeAssistances.push(assistance);
+      this.setState({activeAssistances: activeAssistances});
+    }
+  },
+
+  removeAssistanceFromRequests: function(assistanceRequest) {
+    var requests = this.state.requests;
+    var ind = this.getRequestIndex(assistanceRequest);
+    if(ind > -1) {
+      requests.splice(ind, 1);
+      this.setState({requests: requests});
+    }
+  },
+
+  removeFromAssisting: function(assistanceRequest) {
+    var activeAssistances = this.state.activeAssistances;
+    var ids = activeAssistances.map(function(a) {
+      return a.assistance_request.id;
+    });
+
+    var ind = ids.indexOf(assistanceRequest.id);
+    if(ind > -1) {
+      activeAssistances.splice(ind, 1);
+      this.setState({activeAssistances: activeAssistances});
+    }
+  },
+
+  getRequestIndex: function(assistanceRequest) {
     var requests = this.state.requests;
     var ids = requests.map(function(r){ 
       return r.id;
     });
 
-    var ind = ids.indexOf(assistanceRequest.id);
-    
-    if(ind > -1) {
-      requests.splice(ind, 1);
-      this.setState({requests: requests});
-    }
+    return ids.indexOf(assistanceRequest.id);
   },
 
   locationChanged: function(event) {

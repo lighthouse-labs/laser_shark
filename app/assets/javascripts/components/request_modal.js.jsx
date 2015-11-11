@@ -18,7 +18,6 @@ var RequestModal = React.createClass({
         }
       },
       complete: function(data) {
-        console.log("in here")
         window.location.reload()
       }
     });

@@ -4,12 +4,15 @@ $ ->
     e.preventDefault()
     reason = $(@).closest('form').find('textarea').val()
     window.App.userChannel.requestAssistance(reason)
-
+    updateAssistanceUI()
 
   $('.cancel-request-assistance-button').click (e) ->
     e.preventDefault()
+    e.stopPropagation()
+
     if confirm("Are you sure you want to withdraw this assistance request?")
       window.App.userChannel.cancelAssistanceRequest()
+      updateAssistanceUI()
 
   ar_module = $('#assistance-request-module')
 
