@@ -21,7 +21,7 @@ gem 'readmorejs-rails'
 
 gem 'simple_form', '3.1.0.rc1'
 gem 'slim-rails'
-gem 'bootstrap-sass', '~> 3.1.1'
+gem 'bootstrap-sass', '~> 3.3.5'
 gem 'font-awesome-rails'
 gem 'compass-rails'
 

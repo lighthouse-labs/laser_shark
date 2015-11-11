@@ -4,13 +4,20 @@ var RequestModal = React.createClass({
     $(this.refs.modal).modal()
   },
 
+  close: function() {
+    $(this.refs.modal).modal('hide')
+  },
+
   endAssistance: function() {
     var notes = this.refs.notes.value;
     var rating = this.refs.rating.value;
 
-    App.assistance.endAssistance(this.props.assistance)
+    this.close()
 
-    $(this.refs.modal).modal('hide')
+    if(this.props.assistance)
+      App.assistance.endAssistance(this.props.assistance, notes, rating)
+    else
+      App.assistance.providedAssistance(this.props.student, notes, rating)
   },
 
   renderReason: function(assistanceRequest) {
@@ -25,7 +32,9 @@ var RequestModal = React.createClass({
   
   render: function() {
     var assistance = this.props.assistance;
-    var assistanceRequest = assistance.assistance_request;
+
+    if(assistance)
+      var assistanceRequest = assistance.assistance_request;
 
     return (
       <div className="modal fade" ref="modal">
@@ -40,12 +49,10 @@ var RequestModal = React.createClass({
             </div>
             <div className="modal-body">
 
-              { this.renderReason(assistanceRequest) }
+              { assistanceRequest ? this.renderReason(assistanceRequest) : null }
 
               <div className="form-group">
                 <textarea 
-                  id="assistance_notes" 
-                  name="assistance[notes]" 
                   className="form-control" 
                   placeholder="How did the assistance go?"
                   ref="notes">
@@ -55,8 +62,6 @@ var RequestModal = React.createClass({
               <div className="form-group">
                 <label>Rating</label>
                 <select 
-                  id="assistance_rating" 
-                  name="assistance[rating]" 
                   className="form-control" 
                   defaultValue="3"
                   ref="rating">
@@ -68,7 +73,7 @@ var RequestModal = React.createClass({
               </div>
             </div>
             <div className="modal-footer">
-              <button type="button" className="btn btn-default">Cancel</button>
+              <button type="button" className="btn btn-default" onClick={this.close}>Cancel</button>
               <button type="button" className="btn btn-primary" onClick={this.endAssistance}>End Assistance</button>
             </div>
           </div>

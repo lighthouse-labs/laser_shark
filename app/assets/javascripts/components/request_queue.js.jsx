@@ -49,8 +49,11 @@ var RequestQueue = React.createClass({
       startAssisting: function(request) {
         this.perform('start_assisting', {request_id: request.id})
       },
-      endAssistance: function(assistance) {
-        this.perform('end_assistance', {assistance_id: assistance.id})
+      endAssistance: function(assistance, notes, rating) {
+        this.perform('end_assistance', {assistance_id: assistance.id, notes: notes, rating: rating})
+      },
+      providedAssistance: function(student, notes, rating) {
+        this.perform('provided_assistance', {student_id: student.id, notes: notes, rating: rating})
       },
       cancelAssistanceRequest: function(request) {
         this.perform('cancel_assistance_request', {request_id: request.id})

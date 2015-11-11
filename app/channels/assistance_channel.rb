@@ -19,15 +19,14 @@ class AssistanceChannel < ApplicationCable::Channel
 
   def end_assistance(data)
     assistance = Assistance.find data["assistance_id"]
-    ar = assistance.assistance_request
-    ar.end_assistance(data["notes"])
+    assistance.end(data["notes"], data["rating"])
 
     ActionCable.server.broadcast "assistance", {
       type: "AssistanceEnded",
-      object: AssistanceSerializer.new(ar.reload.assistance, root: false).as_json
+      object: AssistanceSerializer.new(assistance, root: false).as_json
     }
 
-    UserChannel.broadcast_to ar.requestor, {type: "AssistanceEnded"}
+    UserChannel.broadcast_to assistance.assistance_request.requestor, {type: "AssistanceEnded"}
   end
 
   def cancel_assistance_request(data)
@@ -40,5 +39,18 @@ class AssistanceChannel < ApplicationCable::Channel
 
       UserChannel.broadcast_to ar.requestor, {type: "AssistanceCancelled"}
     end
+  end
+
+  def provided_assistance(data)
+    student = Student.find data["student_id"]
+    assistance_request = AssistanceRequest.create(requestor: student, reason: "Offline assistance requested")
+    assistance_request.start_assistance(current_user)
+    assistance = assistance_request.reload.assistance
+
+    assistance.end(data["notes"], data["rating"])
+    ActionCable.server.broadcast "assistance", {
+      type: "OffineAssistanceCreated",
+      object: UserSerializer.new(student).as_json
+    }
   end
 end

@@ -1,5 +1,9 @@
 var Student = React.createClass({
 
+  openModal: function() {
+    this.refs.requestModal.open()
+  },
+
   render: function() {
     var student = this.props.student;
 
@@ -13,10 +17,12 @@ var Student = React.createClass({
         </p>
 
         <p>
-          <a href={"students/" + student.id + "/assistances"} className="btn btn-primary btn-lg" data-method="post">
-            Checkin On
+          <a className="btn btn-primary btn-lg" onClick={this.openModal}>
+            Assisted
           </a>
         </p>
+
+        <RequestModal student={student} ref="requestModal" />
       </RequestItem>
     )
   }

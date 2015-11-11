@@ -58,6 +58,9 @@ GEM
       builder
       multi_json
     arel (6.0.3)
+    autoprefixer-rails (6.1.0.1)
+      execjs
+      json
     aws-sdk-core (2.1.35)
       jmespath (~> 1.0)
     babel-source (5.8.33)
@@ -67,8 +70,9 @@ GEM
     bcrypt (3.1.10)
     bcrypt-ruby (3.1.5)
       bcrypt (>= 3.1.3)
-    bootstrap-sass (3.1.1.1)
-      sass (~> 3.2)
+    bootstrap-sass (3.3.5)
+      autoprefixer-rails (>= 5.0.0.1)
+      sass (>= 3.2.19)
     builder (3.2.2)
     capybara (2.5.0)
       mime-types (>= 1.16)
@@ -503,7 +507,7 @@ DEPENDENCIES
   airbrake
   aws-sdk-core
   bcrypt-ruby
-  bootstrap-sass (~> 3.1.1)
+  bootstrap-sass (~> 3.3.5)
   capybara
   carrierwave
   codeclimate-test-reporter
