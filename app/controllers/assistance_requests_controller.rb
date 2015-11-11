@@ -37,7 +37,7 @@ class AssistanceRequestsController < ApplicationController
           }
         },
         assistance_request: {
-          only: [:reason],
+          only: [:id, :reason],
           include: {
             activity_submission: {
               only: [:github_url],

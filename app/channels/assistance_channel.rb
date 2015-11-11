@@ -13,6 +13,8 @@ class AssistanceChannel < ApplicationCable::Channel
       object: AssistanceSerializer.new(ar.reload.assistance, root: false).as_json
     }
 
+    UserChannel.broadcast_to ar.requestor, {type: "AssistanceStarted"}
+
   end
 
 end
