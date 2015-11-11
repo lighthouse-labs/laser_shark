@@ -4,7 +4,7 @@ class ActivityRevision
     @activity = activity
   end
 
-  # Designed to fail silently, but notify airbrake
+  # Designed to fail silently, but notify error system (Raven / SentryApp)
   def commit
     return nil unless client
     if @activity.revisions_gistid?
@@ -13,7 +13,7 @@ class ActivityRevision
       create
     end
   rescue Octokit::Error => e
-    Airbrake.notify(e)
+    Raven.capture_exception(e)
     nil
   end
 
