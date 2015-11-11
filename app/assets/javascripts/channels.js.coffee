@@ -9,6 +9,10 @@ App.userChannel = App.cable.subscriptions.create("UserChannel",
     @perform 'cancel_assistance'
 
   received: (data) ->
+    # For now these all do the same thing, but they may do other things
     switch data.type
+      when "AssistanceRequested" then updateAssistanceUI() 
       when "AssistanceStarted" then updateAssistanceUI()
+      when "AssistanceCancelled" then updateAssistanceUI()
+
 )

@@ -12,7 +12,6 @@ $ ->
 
     if confirm("Are you sure you want to withdraw this assistance request?")
       window.App.userChannel.cancelAssistanceRequest()
-      window.updateAssistanceUI()
 
   ar_module = $('#assistance-request-module')
 

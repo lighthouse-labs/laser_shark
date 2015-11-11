@@ -12,6 +12,8 @@ class UserChannel < ApplicationCable::Channel
       type: "AssistanceRequest",
       object: AssistanceRequestSerializer.new(ar, root: false).as_json
     }
+
+    UserChannel.broadcast_to current_user, {type: "AssistanceRequested"}
   end
 
   def cancel_assistance
@@ -21,6 +23,8 @@ class UserChannel < ApplicationCable::Channel
         type: "CancelAssistanceRequest",
         object: AssistanceRequestSerializer.new(ar, root: false).as_json
       }
+
+      UserChannel.broadcast_to current_user, {type: "AssistanceCancelled"}
     end
   end
 

@@ -1,4 +1,6 @@
 class AssistanceSerializer < ActiveModel::Serializer
+
+  root false
   
   attributes :id, :start_at
   has_one :assistance_request
