@@ -4,4 +4,11 @@ development: &development
   :port: 6379
   :timeout: 1
   :inline: true
+
 test: *development
+
+production: 
+  url: <%= ENV['REDIS_URL'] %>
+  host: <%= ENV['REDIS_HOST'] %>
+  port: <%= ENV['REDIS_PORT'] %>
+  timeout: 1
