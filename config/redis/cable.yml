@@ -7,6 +7,10 @@ development: &development
 
 test: *development
 
+staging: 
+  url: <%= ENV['REDIS_URL'] %>
+  timeout: 1
+
 production: 
   url: <%= ENV['REDIS_URL'] %>
   host: <%= ENV['REDIS_HOST'] %>
