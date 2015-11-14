@@ -19,7 +19,7 @@ class AssistanceChannel < ApplicationCable::Channel
 
   def end_assistance(data)
     assistance = Assistance.find data["assistance_id"]
-    assistance.end(data["notes"], data["rating"])
+    assistance.end(data["notes"], data["rating"].to_i)
 
     ActionCable.server.broadcast "assistance", {
       type: "AssistanceEnded",
@@ -38,6 +38,18 @@ class AssistanceChannel < ApplicationCable::Channel
       }
 
       UserChannel.broadcast_to ar.requestor, {type: "AssistanceCancelled"}
+    end
+  end
+
+  def stop_assisting(data)
+    assistance = Assistance.find data["assistance_id"]
+    if assistance && assistance.destroy
+      ActionCable.server.broadcast "assistance", {
+        type: "StoppedAssisting",
+        object: AssistanceSerializer.new(assistance).as_json
+      }
+
+      UserChannel.broadcast_to assistance.assistee, {type: "AssistanceCancelled"}
     end
   end
 

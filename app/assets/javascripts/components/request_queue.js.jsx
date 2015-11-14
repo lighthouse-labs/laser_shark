@@ -1,5 +1,10 @@
 var RequestQueue = React.createClass({
 
+  propTypes: {
+    locations: React.PropTypes.array.isRequired,
+    user: React.PropTypes.object.isRequired
+  },
+
   componentWillMount: function() {
     var location;
 
@@ -58,6 +63,9 @@ var RequestQueue = React.createClass({
       cancelAssistanceRequest: function(request) {
         this.perform('cancel_assistance_request', {request_id: request.id})
       },
+      stopAssisting: function(assistance) {
+        this.perform('stop_assisting', {assistance_id: assistance.id})
+      },
       received: function(data) {
         switch(data.type) {
           case "AssistanceRequest":
@@ -74,6 +82,10 @@ var RequestQueue = React.createClass({
             break;
           case "AssistanceEnded":
             that.removeFromQueue(data.object.assistance_request)
+            break;
+          case "StoppedAssisting":
+            that.removeFromQueue(data.object.assistance_request);
+            that.handleAssistanceRequest(data.object.assistance_request);
             break;
         }
       }
@@ -170,8 +182,7 @@ var RequestQueue = React.createClass({
                     type="radio" 
                     value={location} 
                     checked={that.state.location == location}
-                    onChange={that.locationChanged}
-                    onClick={that.locationChanged} />
+                    onChange={that.locationChanged} />
                     { location }
                 </label>
               )

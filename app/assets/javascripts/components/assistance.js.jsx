@@ -45,13 +45,16 @@ var Assistance = React.createClass({
     });
   },
 
-  renderCancelButton: function(assistance, activitySubmission) {
-    if(activitySubmission)
-      return (
-        <a href={"/assistances/" + assistance.id} className="btn btn-danger btn-lg" data-method="delete">
-          Cancel Code Review
-        </a>
-      )
+  renderCancelButton: function(text) {
+    return (
+      <a className="btn btn-danger btn-lg" onClick={this.stopAssisting}>
+        Cancel {text}
+      </a>
+    )
+  },
+
+  stopAssisting: function() {
+    App.assistance.stopAssisting(this.props.assistance)
   },
 
   openModal: function() {
@@ -62,6 +65,7 @@ var Assistance = React.createClass({
     var assistance = this.props.assistance;
     var assistanceRequest = assistance.assistance_request;
     var activitySubmission = assistanceRequest.activity_submission;
+    
     var student = assistance.assistee;
 
     return (
@@ -95,7 +99,7 @@ var Assistance = React.createClass({
           </button>
 
           &nbsp;
-          { this.renderCancelButton(assistance, activitySubmission) }
+          { this.renderCancelButton(activitySubmission ? "Code Review" : "Assisting") }
         </p>
 
         <RequestModal assistance={assistance} ref="requestModal" />
