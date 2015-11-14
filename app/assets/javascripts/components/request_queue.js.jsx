@@ -85,7 +85,13 @@ var RequestQueue = React.createClass({
             break;
           case "StoppedAssisting":
             that.removeFromQueue(data.object.assistance_request);
-            that.handleAssistanceRequest(data.object.assistance_request);
+
+            var assistanceRequest = data.object.assistance_request;
+            if(assistanceRequest.activity_submission)
+              that.handleCodeReviewRequest(assistanceRequest);
+            else
+              that.handleAssistanceRequest(assistanceRequest);
+            
             break;
         }
       }
@@ -94,8 +100,10 @@ var RequestQueue = React.createClass({
 
   handleAssistanceRequest: function(assistanceRequest) {
     var requests = this.state.requests;
-    requests.push(assistanceRequest);
-    this.setState({requests: requests});
+    if(this.getRequestIndex(assistanceRequest) === -1) {
+      requests.push(assistanceRequest);
+      this.setState({requests: requests});
+    }
   },
 
   handleCodeReviewRequest: function(codeReviewRequest) {
