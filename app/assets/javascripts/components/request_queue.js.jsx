@@ -51,6 +51,9 @@ var RequestQueue = React.createClass({
   subscribeToSocket: function() {
     var that = this;
     App.assistance = App.cable.subscriptions.create("AssistanceChannel", {
+      rejected: function() {
+        window.location.reload()
+      },
       startAssisting: function(request) {
         this.perform('start_assisting', {request_id: request.id})
       },
@@ -91,7 +94,7 @@ var RequestQueue = React.createClass({
               that.handleCodeReviewRequest(assistanceRequest);
             else
               that.handleAssistanceRequest(assistanceRequest);
-            
+
             break;
         }
       }

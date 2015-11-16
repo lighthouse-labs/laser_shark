@@ -25,7 +25,7 @@ var Request = React.createClass({
         <p>
           <a className="btn btn-primary btn-lg" onClick={this.startAssisting}>Start Assisting</a>
           &nbsp;
-          <a className="btn btn-danger btn-lg" onClick={this.cancelAssistance}>&times;</a>
+          <a className="btn btn-danger btn-lg" onClick={this.cancelAssistance}>Remove from queue</a>
         </p>
       </RequestItem>
     )

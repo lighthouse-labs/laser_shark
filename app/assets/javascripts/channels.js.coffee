@@ -8,6 +8,9 @@ if window.location.port isnt ""
 App.cable = Cable.createConsumer('ws://' + host + '/websocket');
 
 App.userChannel = App.cable.subscriptions.create("UserChannel", 
+  rejected: ->
+    window.location.reload()
+    
   requestAssistance: (reason) ->
     @perform 'request_assistance', reason: reason
 
