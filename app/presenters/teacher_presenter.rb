@@ -14,15 +14,7 @@ class TeacherPresenter < UserPresenter
       link_to "Feedback", '#', id: "teacher_feedback_button", class: 'btn btn-primary', data: {toggle: 'modal', target: '#teacher_feedback_modal', teacher_id: teacher.id}
     end
   end
-
-  def average_technical_rating
-    "Average Technical Rating: #{teacher.feedbacks.average(:technical_rating).to_f.round(2)}/5"
-  end
-
-  def average_style_rating
-    "Average Style Rating: #{teacher.feedbacks.average(:style_rating).to_f.round(2)}/5"
-  end
-
+  
   protected
 
   def company_link

@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
-ruby '2.1.1'
+ruby '2.1.7'
 
 gem 'rails', '4.1.1'
 gem 'sass-rails', '~> 4.0.2'
@@ -38,7 +38,8 @@ gem 'carrierwave'
 gem 'mini_magick'
 gem 'fog'
 
-gem 'airbrake' # errors going to errbit actually. See errbit.rb
+# gem 'airbrake' # errors going to errbit actually. See errbit.rb
+gem "sentry-raven"
 
 gem 'rubyzip', '>= 1.0.0'
 

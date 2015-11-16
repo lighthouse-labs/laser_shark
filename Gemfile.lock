@@ -28,9 +28,6 @@ GEM
       thread_safe (~> 0.1)
       tzinfo (~> 1.1)
     addressable (2.3.6)
-    airbrake (4.1.0)
-      builder
-      multi_json
     arel (5.0.1.20140414130214)
     aws-sdk-core (2.0.41)
       builder (~> 3.0)
@@ -295,6 +292,8 @@ GEM
     sdoc (0.4.0)
       json (~> 1.8)
       rdoc (~> 4.0, < 5.0)
+    sentry-raven (0.15.2)
+      faraday (>= 0.7.6)
     simple_form (3.1.0.rc1)
       actionpack (~> 4.0)
       activemodel (~> 4.0)
@@ -349,7 +348,6 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  airbrake
   aws-sdk-core
   bcrypt-ruby
   bootstrap-sass
@@ -397,6 +395,7 @@ DEPENDENCIES
   rubyzip (>= 1.0.0)
   sass-rails (~> 4.0.2)
   sdoc (~> 0.4.0)
+  sentry-raven
   simple_form (= 3.1.0.rc1)
   slack-poster
   slim-rails

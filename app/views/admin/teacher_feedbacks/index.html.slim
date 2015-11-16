@@ -8,11 +8,11 @@ br
           = teacher_presenter.full_name
         .col-md-4
           | Average Technical Rating:&nbsp;
-          = (feedbacks.inject(0){|sum,feedback| sum + feedback.technical_rating}.to_f)/feedbacks.length
+          = ((feedbacks.inject(0){|sum,feedback| sum + feedback.technical_rating}.to_f)/feedbacks.length).round(2)
           | /5
         .col-md-4
           | Average Style Rating:&nbsp;
-          = (feedbacks.inject(0){|sum,feedback| sum + feedback.style_rating}.to_f)/feedbacks.length
+          = ((feedbacks.inject(0){|sum,feedback| sum + feedback.style_rating}.to_f)/feedbacks.length).round(2)
           | /5
       .row
         table.table
