@@ -48,7 +48,7 @@ var CodeReview = React.createClass({
         <p>
           <a className="btn btn-primary btn-lg" onClick={this.startAssisting}>Start Reviewing</a>
           &nbsp;
-          <a className="btn btn-danger btn-lg" onClick={this.cancelAssistance}>Remove queue</a>
+          <a className="btn btn-danger btn-lg" onClick={this.cancelAssistance}>Remove from queue</a>
         </p>
       </RequestItem>
     )

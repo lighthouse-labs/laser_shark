@@ -49,6 +49,12 @@ class ActivitySubmission < ActiveRecord::Base
       @feedback = self.activity.feedbacks.find_by(student: self.user)
       @feedback.destroy if @feedback
     end
+
+    ActionCable.server.broadcast "assistance", {
+      type: "CancelAssistanceRequest",
+      object: AssistanceRequestSerializer.new(self.code_review_request, root: false).as_json
+    }
+
   end
 
 end
