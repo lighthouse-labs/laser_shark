@@ -56,10 +56,11 @@ class AssistanceChannel < ApplicationCable::Channel
   def provided_assistance(data)
     student = Student.find data["student_id"]
     assistance_request = AssistanceRequest.create(requestor: student, reason: "Offline assistance requested")
+    puts assistance_request.errors.inspect
     assistance_request.start_assistance(current_user)
     assistance = assistance_request.reload.assistance
-
     assistance.end(data["notes"], data["rating"])
+    
     ActionCable.server.broadcast "assistance", {
       type: "OffineAssistanceCreated",
       object: UserSerializer.new(student).as_json
