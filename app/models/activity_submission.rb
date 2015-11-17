@@ -41,11 +41,11 @@ class ActivitySubmission < ActiveRecord::Base
   end
 
   def create_feedback
-    self.activity.feedbacks.create(student: self.user) if self.user.is_a?(Student) && self.activity.feedbackable?
+    self.activity.feedbacks.create(student: self.user) if self.user.is_a?(Student) && self.activity.allow_feedback?
   end
 
   def destroy_feedback
-    if self.activity.feedbackable?
+    if self.activity.allow_feedback?
       @feedback = self.activity.feedbacks.find_by(student: self.user)
       @feedback.destroy if @feedback
     end
