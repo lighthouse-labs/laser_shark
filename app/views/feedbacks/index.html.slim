@@ -29,8 +29,7 @@ table.table
       th Name
       th Type
       th Teacher
-      th Technical Rating
-      th Style Rating
+      th Rating
       th    
 
   tbody
@@ -43,9 +42,7 @@ table.table
             td = feedback_presenter.feedbackable_type
             td = feedback_presenter.teacher_full_name
             td
-              .raty-viewer data-score="#{feedback.technical_rating}"
-            td
-              .raty-viewer data-score="#{feedback.style_rating}"
+              .raty-viewer data-score="#{feedback.average_rating}"
             td 
               button.btn.btn-xs data-toggle="modal" data-target="#feedback_modal" data-feedback-id="#{feedback.id}"
                 | Edit    

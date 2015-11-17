@@ -1,7 +1,7 @@
 class FeedbackPresenter < BasePresenter
   presents :feedback
 
-  delegate :updated_at, :feedbackable, :technical_rating, :style_rating, :student, :teacher, to: :feedback
+  delegate :average_rating, :updated_at, :feedbackable, :technical_rating, :style_rating, :student, :teacher, to: :feedback
 
   def truncated_notes
     if feedback.notes.present? 
