@@ -32,7 +32,7 @@ table.table.table-feedbacks
             td colspan="5"
               small
                 em 
-                  = feedback_presenter.truncated_notes
+                  article.read-more = feedback_presenter.notes
 
             td
 = paginate @feedbacks, :window => 2
