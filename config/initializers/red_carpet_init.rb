@@ -11,5 +11,30 @@ class CompassMarkdownRenderer < Redcarpet::Render::HTML
       "#{header}#{body}" \
     "</table>"
   end
+
+  def block_code(code, lang)
+    class_name = ""
+    if lang
+      ar = lang.split('-') 
+      class_name += ar.first if ar.first != "selectable"
+      class_name += " allow-select" if ar.include?("selectable")
+    end
+    "<pre>" \
+      "<code class='#{class_name}'>#{html_escape(code)}</code>" \
+    "</pre>"
+  end
+
+  private
+
+  def html_escape(string)
+    string.gsub(/['&\"<>\/]/, {
+      '&' => '&amp;',
+      '<' => '&lt;',
+      '>' => '&gt;',
+      '"' => '&quot;',
+      "'" => '&#x27;',
+      "/" => '&#x2F;',
+    })
+  end
   
 end
