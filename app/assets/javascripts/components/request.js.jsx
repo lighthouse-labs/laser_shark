@@ -1,11 +1,19 @@
 var Request = React.createClass({
 
+  getInitialState: function() {
+    return {
+      disabled: false
+    }
+  },
+
   startAssisting: function() {
+    this.setState({disabled: true})
     App.assistance.startAssisting(this.props.request);
   },
 
   cancelAssistance: function() {
     if(confirm("Are you sure you want to cancel this Request?"))
+      this.setState({disabled: true})
       App.assistance.cancelAssistanceRequest(this.props.request);
   },
   
@@ -23,9 +31,9 @@ var Request = React.createClass({
         </p>
         <p><b>Reason:</b> {request.reason}</p>
         <p>
-          <a className="btn btn-primary btn-lg" onClick={this.startAssisting}>Start Assisting</a>
+          <a className="btn btn-primary btn-lg" onClick={this.startAssisting} disabled={this.state.disabled}>Start Assisting</a>
           &nbsp;
-          <a className="btn btn-danger btn-lg" onClick={this.cancelAssistance}>Remove from queue</a>
+          <a className="btn btn-danger btn-lg" onClick={this.cancelAssistance} disabled={this.state.disabled}>Remove from queue</a>
         </p>
       </RequestItem>
     )

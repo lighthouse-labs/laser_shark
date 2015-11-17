@@ -123,6 +123,7 @@ var RequestQueue = React.createClass({
 
   handleAssistanceStarted: function(assistance) {
     this.removeAssistanceFromRequests(assistance.assistance_request);
+    this.removeFromCodeReviews(assistance.assistance_request);
     if(assistance.assistor.id === this.props.user.id) {
       var activeAssistances = this.state.activeAssistances;
       activeAssistances.push(assistance);

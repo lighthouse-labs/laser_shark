@@ -1,5 +1,11 @@
 var Assistance = React.createClass({
 
+  getInitialState: function() {
+    return {
+      disabled: false
+    }
+  },
+
   renderReason: function() {
     var assistance = this.props.assistance;
 
@@ -47,13 +53,14 @@ var Assistance = React.createClass({
 
   renderCancelButton: function(text) {
     return (
-      <a className="btn btn-danger btn-lg" onClick={this.stopAssisting}>
+      <a className="btn btn-danger btn-lg" onClick={this.stopAssisting} disabled={this.state.disabled}>
         Cancel {text}
       </a>
     )
   },
 
   stopAssisting: function() {
+    this.setState({diabled: true})
     App.assistance.stopAssisting(this.props.assistance)
   },
 

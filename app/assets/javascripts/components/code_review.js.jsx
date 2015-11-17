@@ -1,6 +1,13 @@
 var CodeReview = React.createClass({
 
+  getInitialState: function() {
+    return {
+      disabled: false
+    };
+  },
+
   startAssisting: function() {
+    this.setState({disabled: true})
     App.assistance.startAssisting(this.props.codeReview);
   },
 
@@ -46,9 +53,9 @@ var CodeReview = React.createClass({
 
         { this.renderSubmission() }
         <p>
-          <a className="btn btn-primary btn-lg" onClick={this.startAssisting}>Start Reviewing</a>
+          <a className="btn btn-primary btn-lg" onClick={this.startAssisting} disabled={this.state.disabled}>Start Reviewing</a>
           &nbsp;
-          <a className="btn btn-danger btn-lg" onClick={this.cancelAssistance}>Remove from queue</a>
+          <a className="btn btn-danger btn-lg" onClick={this.cancelAssistance} disabled={this.state.disabled}>Remove from queue</a>
         </p>
       </RequestItem>
     )
