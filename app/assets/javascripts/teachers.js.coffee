@@ -17,4 +17,4 @@ $ ->
     speed: 75
     moreLink: '<a class="read-more-link" href="#">Read More</a>'
     lessLink: '<a class="read-more-link" href="#">Close</a>'
-    collapsedHeight: 38
+    collapsedHeight: 45

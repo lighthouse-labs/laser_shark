@@ -40,8 +40,9 @@ table.table.table-feedbacks
             td.day-feedback-date
               = day_feedback_presenter.created_at_with_time
             td
-              article.read-more
-                = day_feedback_presenter.text
+              small
+                em 
+                  article.read-more = day_feedback_presenter.text
             td data-id='#{dayfeedback.id}'
               - if !day_feedback_presenter.archived_at
                 .btn.btn-primary.btn-xs.archive-button

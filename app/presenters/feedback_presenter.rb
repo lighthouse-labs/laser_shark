@@ -1,13 +1,7 @@
 class FeedbackPresenter < BasePresenter
   presents :feedback
 
-  delegate :updated_at, :feedbackable, :technical_rating, :style_rating, :student, :teacher, to: :feedback
-
-  def truncated_notes
-    if feedback.notes.present? 
-      truncate feedback.notes, length: 200
-    end
-  end
+  delegate :notes, :updated_at, :feedbackable, :technical_rating, :style_rating, :student, :teacher, to: :feedback
 
   def upcased_day
     if feedback.try(:feedbackable)
