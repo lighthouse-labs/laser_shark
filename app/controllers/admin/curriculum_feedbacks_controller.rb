@@ -12,14 +12,13 @@ class Admin::CurriculumFeedbacksController < Admin::BaseController
       .page(params[:page])
       .per(DEFAULT_PER)
 
-    @average_technical_rating = @feedbacks.average(:technical_rating).to_f.round(2)
-    @average_style_rating = @feedbacks.average(:style_rating).to_f.round(2)
+    @average_rating = @feedbacks.average(:average_rating).to_f.round(2)
   end
 
   private
 
   def sort_column
-    ["technical_rating", "style_rating", "updated_at"].include?(params[:sort]) ? params[:sort] : "feedbacks.updated_at"
+    ["average_rating" "updated_at"].include?(params[:sort]) ? params[:sort] : "feedbacks.updated_at"
   end
 
   def sort_direction

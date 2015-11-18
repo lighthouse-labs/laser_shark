@@ -4,13 +4,12 @@ $ ->
 
   bindValidation = ->
     $('#modal-submit-button').on 'click', (event) ->
-      technical_rating = $('#modal-technical-rating').val()
-      style_rating = $('#modal-style-rating').val()
+      average_rating = $('#modal-average-rating').val()
       
-      unless technical_rating && style_rating
+      unless average_rating
         event.preventDefault()        
       
-        error_message = $('<strong id="error_message">**Please fill in both ratings**</strong><br>')
+        error_message = $('<strong id="error_message">**Please provide a rating**</strong><br>')
         error_message.css('color', 'tomato')
         error_message.prependTo '.modal-body'
 
@@ -19,8 +18,11 @@ $ ->
     $('div.raty-viewer').raty
       readOnly: true,
       hints: ['Terrible', 'Bad', 'OK', 'Good', 'Awesome'],
-      starOn: "<%= asset_path('duck-on.png') %>",
-      starOff: "<%= asset_path('duck-off.png') %>",
+      starOn: "<%= asset_path('duck-on-small.png') %>",
+      starOff: "<%= asset_path('duck-off-small.png') %>",
+      starHalf: "<%= asset_path('duck-half-small.png') %>",
+      half        : true,
+      halfShow    : true,
       score: ->
         $(@).data('score')
 
@@ -29,12 +31,14 @@ $ ->
       hints: ['Terrible', 'Bad', 'OK', 'Good', 'Awesome'],
       starOn: "<%= asset_path('duck-on.png') %>",
       starOff: "<%= asset_path('duck-off.png') %>",
+      starHalf: "<%= asset_path('duck-half.png') %>",
+      half        : false,
+      halfShow    : false
       score: ->
         $(@).data('score')
       click: (score, evt) ->
-        # TODO: Set a hidden field value
         $(this).find('input').attr('value', score)
-
+      
   $('#feedback_modal').on 'show.bs.modal', (event) ->
     button = $(event.relatedTarget)
     feedback_id = button.data('feedback-id')
