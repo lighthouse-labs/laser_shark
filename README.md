@@ -83,9 +83,9 @@ Some selectable text
 **To make a toggleable answer section:**
 
 ???
-
+*line break*
 \`\`\`Some regular Markdown\`\`\`
-
+*line break*
 ???
 
 
