@@ -65,7 +65,7 @@ Ask the teachers for the `activites_seed.rb` which has some activities that can 
 
 ## Custom markdown
 
-To make code selectable in the browser use:
+**To make code selectable in the browser use:**
 
   
 \`\`\`ruby-selectable
@@ -80,7 +80,7 @@ Some selectable text
 
 \`\`\`
 
-To make a toggleable answer section: 
+**To make a toggleable answer section:**
 
 ???
 
