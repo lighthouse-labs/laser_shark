@@ -3,7 +3,7 @@
   = select_tag :program_id, options_from_collection_for_select(Program.all.order('name'), "id", "name", params[:program_id]), :prompt => 'All Programs', class: "form-control admin-feedback-dropdown"
   | &nbsp;
   
-  = select_tag :completed?, options_for_select([["Complete", "true"], ["Incomplete", "false"], ["Expired", "expired"]], params[:completed?]), :prompt => 'All Statuses', class: "form-control admin-feedback-dropdown"
+  = select_tag :completed?, options_for_select([["Complete", "true"], ["Incomplete", "false"], ["Expired", "expired"]], params[:completed?] || "true"), :prompt => 'All Statuses', class: "form-control admin-feedback-dropdown"
   | &nbsp;
   
   = select_tag :student_location_id, options_from_collection_for_select(Location.all.order('name'), "id", "name", params[:student_location_id] || current_user.location.id), class: "form-control admin-feedback-dropdown"
