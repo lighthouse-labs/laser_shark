@@ -68,24 +68,24 @@ Ask the teachers for the `activites_seed.rb` which has some activities that can 
 To make code selectable in the browser use:
 
   
-  \`\`\`ruby-selectable
+\`\`\`ruby-selectable
 
-    Some selectable text
+Some selectable text
 
-  \`\`\`
-  
-  \`\`\`selectable
+\`\`\`
 
-    Some selectable text
+\`\`\`selectable
 
-  \`\`\`
+Some selectable text
+
+\`\`\`
 
 To make a toggleable answer section: 
 
 ???
 
-  \`\`\`Some regular Markdown\`\`\`
-  
+\`\`\`Some regular Markdown\`\`\`
+
 ???
 
 
