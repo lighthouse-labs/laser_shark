@@ -69,17 +69,23 @@ To make code selectable in the browser use:
 
   
   \`\`\`ruby-selectable
+
     Some selectable text
+
   \`\`\`
   
   \`\`\`selectable
+
     Some selectable text
+
   \`\`\`
 
 To make a toggleable answer section: 
 
 ???
+
   \`\`\`Some regular Markdown\`\`\`
+  
 ???
 
 
