@@ -60,6 +60,7 @@ class ActivitiesController < ApplicationController
       :instructions,
       :teacher_notes,
       :allow_submissions,
+      :allow_feedback,
       :day,
       :gist_url,
       :media_filename,
