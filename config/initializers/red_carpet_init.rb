@@ -24,6 +24,15 @@ class CompassMarkdownRenderer < Redcarpet::Render::HTML
     "</pre>"
   end
 
+  def postprocess(full_document)
+    match = Regexp.new(/\?\?\?(.*?)\?\?\?/m).match(full_document)
+    if match
+      full_document.gsub(match[0], generate_toggle_block(match[1]))
+    else
+      full_document
+    end
+  end
+
   private
 
   def html_escape(string)
@@ -35,6 +44,15 @@ class CompassMarkdownRenderer < Redcarpet::Render::HTML
       "'" => '&#x27;',
       "/" => '&#x2F;',
     })
+  end
+
+  def generate_toggle_block(content)
+    "<div class='togglable-solution'>
+      <div class='alert alert-success answer' role='alert' style='display: none;'>
+        #{content}
+      </div>
+      <a class='btn btn-primary' onclick='$(this).closest(\".togglable-solution\").find(\".answer\").toggle();'>Toggle Answer</a>
+    </div>"
   end
   
 end

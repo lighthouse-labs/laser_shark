@@ -63,5 +63,29 @@ At the moment, this project is managed via a [Public Trello Board](https://trell
 
 Ask the teachers for the `activites_seed.rb` which has some activities that can be populated by the `bin/rake db:seed` command. They will send you a gist with the rb file in it.
 
+## Custom markdown
+
+**To make code selectable in the browser use:**
+
+  
+\`\`\`ruby-selectable
+
+Some selectable text
+
+\`\`\`
+
+\`\`\`selectable
+
+Some selectable text
+
+\`\`\`
+
+**To make a toggleable answer section:**
+
+???
+
+\`\`\`Some regular Markdown\`\`\`
+
+???
 
 
