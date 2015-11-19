@@ -1,6 +1,8 @@
-.pull-left = render 'form'
+h4 Teacher Feedback
+= render 'form'
 br 
-.admin-teacher-stats-row
+
+.alert.alert-info.col-md-7
   table.table
     thead
       th.admin-teacher-stat-heading Total
@@ -18,15 +20,7 @@ br
         | /5
 br
 
-h1 Teacher Feedback
-
-.alert.alert-info
-  strong Overall
-  br
-  | Average Rating: 
-  = "#{@overall} / 5"
-
-- @feedbacks.each do |teacher, feedbacks|
+- @completed_feedbacks.each do |teacher, feedbacks|
   - unless teacher.nil?
     - present teacher do |teacher_presenter|
       .row.teacher_feedbacks_section
