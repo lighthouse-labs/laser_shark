@@ -34,6 +34,7 @@ th .desc {
 
 .teacher_feedbacks_section {
   border-bottom: 1px solid black;
+  clear: both;
 }
 
 .feedback-rating-column {
@@ -44,4 +45,7 @@ th .desc {
 }
 .admin-teacher-feedback-date-column {
   width: 140px;
+}
+.admin-teacher-feedback-stats {
+  margin-bottom: 25px;
 }

@@ -1,6 +1,25 @@
-= render 'form'
+.admin-teacher-feedback-stats
+  .pull-left = render 'form'
+  br 
+  .pull-left
+    table.table
+      thead
+        th Total
+        th Completed
+        th Pending
+        th Expired
+        th Avg. Rating
+      tbody
+        td = @feedbacks.count
+        td = @feedbacks.completed.count
+        td = @feedbacks.pending.not_expired.count
+        td = @feedbacks.pending.expired.count
+        td = ((@feedbacks.completed.inject(0){|sum,feedback| sum + feedback.average_rating}.to_f)/@feedbacks.completed.length).round(2)
+          | /5
 br
-- @feedbacks.each do |teacher, feedbacks|
+br
+
+- @completed_feedbacks.each do |teacher, feedbacks|
   - unless teacher.nil?
     - present teacher do |teacher_presenter|
       .row.teacher_feedbacks_section
