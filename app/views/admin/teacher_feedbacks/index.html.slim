@@ -6,11 +6,8 @@ h1 Teacher Feedback
 .alert.alert-info
   strong Overall
   br
-  | Technical Rating: 
-  = "#{@overall_stats[:technical]} / 5"
-  br
-  | Style Rating: 
-  = "#{@overall_stats[:style]} / 5"
+  | Average Rating: 
+  = "#{@overall} / 5"
 
 - @feedbacks.each do |teacher, feedbacks|
   - unless teacher.nil?

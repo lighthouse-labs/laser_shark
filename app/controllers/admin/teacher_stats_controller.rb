@@ -30,7 +30,7 @@ class Admin::TeacherStatsController < Admin::BaseController
   end
 
   def feedback
-    avg_col = "ROUND(AVG(average_rating), 2)::float"
+    avg_col = "ROUND(AVG(average_rating::numeric), 2)::float"
     cols = "feedbacks.created_at::date, #{avg_col}"
 
     feedback = Feedback.teacher_feedbacks.completed
