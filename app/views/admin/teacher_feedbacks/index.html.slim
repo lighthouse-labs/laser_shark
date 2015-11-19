@@ -1,11 +1,23 @@
 = render 'form'
 br
+
+h1 Teacher Feedback
+
+.alert.alert-info
+  strong Overall
+  br
+  | Technical Rating: 
+  = "#{@overall_stats[:technical]} / 5"
+  br
+  | Style Rating: 
+  = "#{@overall_stats[:style]} / 5"
+
 - @feedbacks.each do |teacher, feedbacks|
   - unless teacher.nil?
     - present teacher do |teacher_presenter|
       .row.teacher_feedbacks_section
         .col-md-3
-          = teacher_presenter.full_name
+          = link_to teacher_presenter.full_name, admin_teacher_stat_path(teacher_presenter.teacher)
         .col-md-3
           | Average Rating:&nbsp;
           = ((feedbacks.inject(0){|sum,feedback| sum + feedback.average_rating}.to_f)/feedbacks.length).round(2)
