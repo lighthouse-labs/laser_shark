@@ -46,6 +46,14 @@ th .desc {
 .admin-teacher-feedback-date-column {
   width: 140px;
 }
-.admin-teacher-feedback-stats {
-  margin-bottom: 25px;
+.admin-teacher-stat {
+  text-align: center;
+}
+.admin-teacher-stat-heading {
+  font-size: 12px;
+}
+.admin-teacher-stats-row {
+  float: left;
+  clear: both;
+  margin-top: 15px;
 }

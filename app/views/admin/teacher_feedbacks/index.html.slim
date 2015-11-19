@@ -1,21 +1,21 @@
-.admin-teacher-feedback-stats
-  .pull-left = render 'form'
-  br 
-  .pull-left
-    table.table
-      thead
-        th Total
-        th Completed
-        th Pending
-        th Expired
-        th Avg. Rating
-      tbody
-        td = @feedbacks.count
-        td = @feedbacks.completed.count
-        td = @feedbacks.pending.not_expired.count
-        td = @feedbacks.pending.expired.count
-        td = ((@feedbacks.completed.inject(0){|sum,feedback| sum + feedback.average_rating}.to_f)/@feedbacks.completed.length).round(2)
-          | /5
+.pull-left = render 'form'
+br 
+.admin-teacher-stats-row
+  table.table
+    thead
+      th.admin-teacher-stat-heading Total
+      th.admin-teacher-stat-heading Completed
+      th.admin-teacher-stat-heading Pending
+      th.admin-teacher-stat-heading Expired
+      th.admin-teacher-stat-heading Avg. Rating
+    tbody
+      td.admin-teacher-stat = @feedbacks.count
+      td.admin-teacher-stat = @feedbacks.completed.count
+      td.admin-teacher-stat = @feedbacks.pending.not_expired.count
+      td.admin-teacher-stat = @feedbacks.pending.expired.count
+      td.admin-teacher-stat 
+        = ((@feedbacks.completed.inject(0){|sum,feedback| sum + feedback.average_rating}.to_f)/@feedbacks.completed.length).round(2)
+        | /5
 br
 br
 
