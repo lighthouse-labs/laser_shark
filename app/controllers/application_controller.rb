@@ -4,6 +4,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   before_action :authenticate_user
   before_action :set_timezone
+  before_filter :set_raven_context
 
   private
 
@@ -14,6 +15,15 @@ class ApplicationController < ActionController::Base
     elsif current_user.deactivated?
       session[:user_id] = nil
       redirect_to :root, alert: 'Your account has been deactivated. Please contact the admin if this is in error.'
+    end
+  end
+
+  def set_raven_context
+    if current_user
+      Raven.user_context({
+        'id' => current_user.id,
+        'email' => current_user.email
+      })
     end
   end
 

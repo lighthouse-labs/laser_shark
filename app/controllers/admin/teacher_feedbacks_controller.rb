@@ -6,7 +6,14 @@ class Admin::TeacherFeedbacksController < Admin::BaseController
     if params[:teacher_location_id].nil?
       params[:teacher_location_id] = current_user.location.id.to_s  
     end
-    @feedbacks = Feedback.teacher_feedbacks.completed.filter_by(filter_by_params).group_by(&:teacher)
+    @feedbacks = Feedback.teacher_feedbacks.completed.filter_by(filter_by_params)
+
+    @overall_stats = {
+      technical: @feedbacks.average(:technical_rating).to_f.round(2),
+      style:     @feedbacks.average(:style_rating).to_f.round(2)
+    }
+
+    @feedbacks = @feedbacks.group_by(&:teacher)
   end
 
   private
