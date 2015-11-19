@@ -2,6 +2,8 @@ class Teacher < User
 
   has_many :feedbacks
 
+  has_many :teaching_assistances, class_name: Assistance, foreign_key: :assistor_id
+
   scope :filter_by_location, -> (location_id) {
     includes(:location).
     where(locations: {id: location_id})

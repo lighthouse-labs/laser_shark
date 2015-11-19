@@ -7,8 +7,7 @@ table.table.table-feedbacks
       th Day
       th Name
       th Type
-      th.feedback-rating-column = sortable "technical_rating", "Average Techincal Rating: #{@average_technical_rating}"
-      th.feedback-rating-column = sortable "style_rating", "Average Style Rating: #{@average_style_rating}"
+      th.feedback-rating-column = sortable "average_rating", "Rating (Avg: #{@average_rating})"
       th.admin-curriculum-feedback-student-column Student
       th.admin-curriculum-feedback-date-column = sortable "updated_at", "Updated"
 
@@ -20,9 +19,7 @@ table.table.table-feedbacks
           td = feedback_presenter.feedbackable_name
           td = feedback_presenter.feedbackable_type
           td
-            .raty-viewer data-score="#{feedback.technical_rating}"
-          td
-            .raty-viewer data-score="#{feedback.style_rating}"
+            .raty-viewer data-score="#{feedback.average_rating}"
           td = feedback_presenter.student_full_name
           td = feedback.updated_at.to_date
 
@@ -32,7 +29,7 @@ table.table.table-feedbacks
             td colspan="5"
               small
                 em 
-                  = feedback_presenter.truncated_notes
+                  article.read-more = feedback_presenter.notes
 
             td
 = paginate @feedbacks, :window => 2

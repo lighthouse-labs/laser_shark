@@ -1,1 +1,1 @@
-Rails.application.config.assets.precompile += %w( */*.eot */*.woff */*.ttf */*.svg )
+Rails.application.config.assets.precompile += %w( admin.js admin.css */*.eot */*.woff */*.ttf */*.svg )

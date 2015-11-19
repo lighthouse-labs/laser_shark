@@ -4,22 +4,19 @@ class Admin::CurriculumFeedbacksController < Admin::BaseController
   DEFAULT_PER = 10
 
   def index
-    if params[:student_location_id].nil?
-      params[:student_location_id] = current_user.location.id.to_s  
-    end
-    @feedbacks = Feedback.curriculum_feedbacks.filter_by(filter_by_params)
-      .order(order)
-      .page(params[:page])
-      .per(DEFAULT_PER)
+    params[:student_location_id] = current_user.location.id.to_s if params[:student_location_id].nil?
+    params[:completed?] = 'true' if params[:completed].nil?
+    
+    @feedbacks = Feedback.curriculum_feedbacks.filter_by(filter_by_params).order(order)
+    @average_rating = @feedbacks.average(:average_rating).to_f.round(2)
+    @feedbacks = @feedbacks.page(params[:page]).per(DEFAULT_PER)
 
-    @average_technical_rating = @feedbacks.average(:technical_rating).to_f.round(2)
-    @average_style_rating = @feedbacks.average(:style_rating).to_f.round(2)
   end
 
   private
 
   def sort_column
-    ["technical_rating", "style_rating", "updated_at"].include?(params[:sort]) ? params[:sort] : "feedbacks.updated_at"
+    ["average_rating" "updated_at"].include?(params[:sort]) ? params[:sort] : "feedbacks.updated_at"
   end
 
   def sort_direction

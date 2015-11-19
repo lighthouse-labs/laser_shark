@@ -6,25 +6,18 @@ h1 Teacher Feedback
 .alert.alert-info
   strong Overall
   br
-  | Technical Rating: 
-  = "#{@overall_stats[:technical]} / 5"
-  br
-  | Style Rating: 
-  = "#{@overall_stats[:style]} / 5"
+  | Average Rating: 
+  = "#{@overall} / 5"
 
 - @feedbacks.each do |teacher, feedbacks|
   - unless teacher.nil?
     - present teacher do |teacher_presenter|
       .row.teacher_feedbacks_section
-        .col-md-4
-          = teacher_presenter.full_name
-        .col-md-4
-          | Average Technical Rating:&nbsp;
-          = ((feedbacks.inject(0){|sum,feedback| sum + feedback.technical_rating}.to_f)/feedbacks.length).round(2)
-          | /5
-        .col-md-4
-          | Average Style Rating:&nbsp;
-          = ((feedbacks.inject(0){|sum,feedback| sum + feedback.style_rating}.to_f)/feedbacks.length).round(2)
+        .col-md-3
+          = link_to teacher_presenter.full_name, admin_teacher_stat_path(teacher_presenter.teacher)
+        .col-md-3
+          | Average Rating:&nbsp;
+          = ((feedbacks.inject(0){|sum,feedback| sum + feedback.average_rating}.to_f)/feedbacks.length).round(2)
           | /5
       .row
         table.table
@@ -33,26 +26,23 @@ h1 Teacher Feedback
               th Date
               th Student Name
               th Feedback Type
-              th Technical Rating
-              th Style Rating
+              th Rating
               th 
           tbody
             - feedbacks.each do |teacher_feedback|
               - present teacher_feedback do |teacher_feedback_presenter|
                 tr
-                  td = teacher_feedback_presenter.updated_date
+                  td.admin-teacher-feedback-date-column = teacher_feedback_presenter.updated_date
                   td = teacher_feedback_presenter.student_full_name
                   td = teacher_feedback_presenter.feedbackable_type
                   td
-                    .raty-viewer data-score="#{teacher_feedback_presenter.technical_rating}"
-                  td
-                    .raty-viewer data-score="#{teacher_feedback_presenter.style_rating}"
+                    .raty-viewer data-score="#{teacher_feedback_presenter.average_rating}"
                 - if teacher_feedback.notes.present?
                   tr
                     td
                     td colspan="5"
                       small
                         em 
-                          = teacher_feedback_presenter.truncated_notes
+                          article.read-more = teacher_feedback_presenter.notes
                     td
 

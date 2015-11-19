@@ -77,6 +77,12 @@ LaserShark::Application.routes.draw do
   namespace :admin do
     root to: 'dashboard#show'
     resources :students, only: [:index]
+    resources :teacher_stats, only: [:index, :show] do 
+      member do
+        get :assistance
+        get :feedback
+      end
+    end
     resources :cohorts, except: [:destroy]
     resources :feedbacks, except: [:edit, :update, :destroy]
     resources :teacher_feedbacks, only: [:index]

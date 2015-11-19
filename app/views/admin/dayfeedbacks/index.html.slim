@@ -1,25 +1,22 @@
 = render 'form'
 
-h4.pull-left Day Feeback (#{@total.round(0)}):  
+h4.pull-left Day Feeback (#{@dayfeedbacks.count}):  
 .pull-right.stats.total-feedbacks
   i class='happy fa fa-smile-o fa-2x' title="Happy feedback"
   sup.total-feedbacks.happy title="Happy total"
-    = @stats[:happy_total]
+    = @dayfeedbacks.count_for_mood(:happy)
   sub.percentage-feedback-happy title="Happy %"
-    = @stats[:happy_percentage]
-    | %
+    = number_to_percentage(@dayfeedbacks.percentage_of_mood(:happy), precision: 0)
   i class='ok fa fa-circle-thin fa-2x' title="OK feedback"
   sup.total-feedbacks.ok title="Ok total"
-    = @stats[:ok_total]
+    = @dayfeedbacks.count_for_mood(:ok)
   sub.percentage-feedback-ok title="Ok %"
-    = @stats[:ok_percentage]
-    | %
+    = number_to_percentage(@dayfeedbacks.percentage_of_mood(:ok), precision: 0)
   i class='sad fa fa-frown-o fa-2x' title="Sad feedback"
   sup.total-feedbacks.sad title="Sad total" 
-    = @stats[:sad_total]
+    = @dayfeedbacks.count_for_mood(:sad)
   sub.percentage-feedback-sad title="Sad %"
-    = @stats[:sad_percentage]
-    | %
+    = number_to_percentage(@dayfeedbacks.percentage_of_mood(:sad), precision: 0)
         
 table.table.table-feedbacks
   thead
@@ -31,7 +28,7 @@ table.table.table-feedbacks
       th Text
 
   tbody
-    - @dayfeedbacks.each do |dayfeedback|
+    - @paginated_dayfeedbacks.each do |dayfeedback|
       - present dayfeedback do |day_feedback_presenter|
           tr class=day_feedback_presenter.row_class
             td
@@ -43,8 +40,9 @@ table.table.table-feedbacks
             td.day-feedback-date
               = day_feedback_presenter.created_at_with_time
             td
-              article.read-more
-                = day_feedback_presenter.text
+              small
+                em 
+                  article.read-more = day_feedback_presenter.text
             td data-id='#{dayfeedback.id}'
               - if !day_feedback_presenter.archived_at
                 .btn.btn-primary.btn-xs.archive-button
@@ -61,4 +59,4 @@ table.table.table-feedbacks
                 .btn.btn-danger.btn-xs.archive-confirm-button
                   | Confirm
           
-= paginate @dayfeedbacks, :window => 2
+= paginate @paginated_dayfeedbacks, :window => 2

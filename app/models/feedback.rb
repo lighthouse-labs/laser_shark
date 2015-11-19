@@ -8,12 +8,16 @@ class Feedback < ActiveRecord::Base
   scope :teacher_feedbacks, -> { where.not(teacher: nil) }
   scope :expired, -> { where("feedbacks.created_at < ?", Date.today-1) }
   scope :not_expired, -> { where("feedbacks.created_at >= ?", Date.today-1) }
-  scope :completed, -> { where("technical_rating IS NOT NULL AND style_rating IS NOT NULL") }
-  scope :pending, -> { where("technical_rating IS NULL AND style_rating IS NULL") }
+  scope :completed, -> { where.not(average_rating: nil) }
+  scope :pending, -> { where(average_rating: nil) }
   scope :reverse_chronological_order, -> { order("feedbacks.updated_at DESC") }
   scope :filter_by_student, -> (student_id) { where("student_id = ?", student_id) }
   scope :filter_by_teacher, -> (teacher_id) { where("teacher_id = ?", teacher_id) }
 
+  scope :lecture, -> { teacher_feedbacks.where(feedbackable_type: ['Activity']) }
+  scope :assistance, -> { where(feedbackable_type: 'Assistance') }
+  scope :direct, -> { where(feedbackable_type: nil) }
+  
   scope :filter_by_program, -> (program_id) {
     includes(student: {cohort: :program}).
     where(programs: {id: program_id}).
@@ -47,8 +51,7 @@ class Feedback < ActiveRecord::Base
     end
    }
 
-  validates :technical_rating, presence: true, on: :update 
-  validates :style_rating, presence: true, on: :update
+  validates :average_rating, presence: true, on: :update 
 
   def self.filter_by(options)
     location_id = options[:student_location_id] if options[:student_location_id]

@@ -41,7 +41,7 @@ class ActivitySubmission < ActiveRecord::Base
   end
 
   def create_feedback
-    self.activity.feedbacks.create(student: self.user) if self.user.is_a?(Student) && self.activity.feedbackable?
+    self.activity.feedbacks.create(student: self.user) if self.user.is_a?(Student) && self.activity.allow_feedback?
   end
 
   def handle_submission_destroy
@@ -49,7 +49,6 @@ class ActivitySubmission < ActiveRecord::Base
       type: "CancelAssistanceRequest",
       object: AssistanceRequestSerializer.new(self.code_review_request, root: false).as_json
     }
-
   end
 
 end

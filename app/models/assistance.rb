@@ -12,6 +12,7 @@ class Assistance < ActiveRecord::Base
     joins("LEFT OUTER JOIN assistance_requests ON assistance_requests.assistance_id = assistances.id").
     where("assistance_requests.canceled_at IS NULL AND assistances.end_at IS NULL")
   }
+  scope :completed, -> { where('assistances.end_at IS NOT NULL') }
   scope :order_by_start, -> { order(:start_at) }
   scope :assisted_by, -> (user) { where(:assistor => user) }
   scope :assisting, -> (user) { where(:assistee => user) }

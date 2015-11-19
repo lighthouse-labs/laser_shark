@@ -8,10 +8,7 @@ class Admin::TeacherFeedbacksController < Admin::BaseController
     end
     @feedbacks = Feedback.teacher_feedbacks.completed.filter_by(filter_by_params)
 
-    @overall_stats = {
-      technical: @feedbacks.average(:technical_rating).to_f.round(2),
-      style:     @feedbacks.average(:style_rating).to_f.round(2)
-    }
+    @overall = @feedbacks.average(:average_rating).to_f.round(2)
 
     @feedbacks = @feedbacks.group_by(&:teacher)
   end
