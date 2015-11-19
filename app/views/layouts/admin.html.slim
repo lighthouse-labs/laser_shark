@@ -5,10 +5,16 @@ html
     title
       = content_for?(:title) ? yield(:title) : 'LaserShark Admin'
     meta name="description" content="#{content_for?(:description) ? yield(:description) : 'LaserShark'}"
+
     == stylesheet_link_tag 'application', :media => 'all', 'data-turbolinks-track' => true
+    == stylesheet_link_tag 'admin', :media => 'all', 'data-turbolinks-track' => true
     == javascript_include_tag 'application', 'data-turbolinks-track' => true
+
+    == yield :pre_admin_js
+    == javascript_include_tag 'admin', 'data-turbolinks-track' => true
+
     == csrf_meta_tags
-  body
+  body*{class: yield(:body_class)}
     header
       == render 'layouts/navigation'
     main.container[role="main"]

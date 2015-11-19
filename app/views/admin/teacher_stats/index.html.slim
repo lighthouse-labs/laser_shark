@@ -1,0 +1,16 @@
+h1 Teacher Stats
+
+table.table
+  thead
+    tr
+      th Name
+      th Location
+      th Assistances
+      th Avg Feedback
+      th Feedback Count
+      th
+  tbody
+    - @teachers.each do |teacher|
+      = render 'teacher', teacher: teacher
+
+
