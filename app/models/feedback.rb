@@ -14,6 +14,10 @@ class Feedback < ActiveRecord::Base
   scope :filter_by_student, -> (student_id) { where("student_id = ?", student_id) }
   scope :filter_by_teacher, -> (teacher_id) { where("teacher_id = ?", teacher_id) }
 
+  scope :lecture, -> { teacher_feedbacks.where(feedbackable_type: ['Activity']) }
+  scope :assistance, -> { where(feedbackable_type: 'Assistance') }
+  scope :direct, -> { where(feedbackable_type: nil) }
+  
   scope :filter_by_program, -> (program_id) {
     includes(student: {cohort: :program}).
     where(programs: {id: program_id}).

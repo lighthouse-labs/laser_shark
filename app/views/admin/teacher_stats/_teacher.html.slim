@@ -1,0 +1,7 @@
+tr
+  td = link_to teacher.full_name, admin_teacher_stat_path(teacher)
+  td = teacher.location.try :name
+  td = teacher.assistance_count
+  td = teacher.average_feedback_score
+  td = teacher.feedback_count
+  td

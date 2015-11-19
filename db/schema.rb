@@ -105,18 +105,6 @@ ActiveRecord::Schema.define(version: 20151103162541) do
 
   add_index "cohorts", ["program_id"], name: "index_cohorts_on_program_id", using: :btree
 
-  create_table "comments", force: true do |t|
-    t.text     "content"
-    t.integer  "commentable_id"
-    t.string   "commentable_type"
-    t.integer  "user_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "comments", ["commentable_id", "commentable_type"], name: "index_comments_on_commentable_id_and_commentable_type", using: :btree
-  add_index "comments", ["user_id"], name: "index_comments_on_user_id", using: :btree
-
   create_table "day_feedbacks", force: true do |t|
     t.string   "mood"
     t.string   "title"

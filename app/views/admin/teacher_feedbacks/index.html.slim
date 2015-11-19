@@ -17,7 +17,7 @@ h1 Teacher Feedback
     - present teacher do |teacher_presenter|
       .row.teacher_feedbacks_section
         .col-md-4
-          = teacher_presenter.full_name
+          = link_to teacher_presenter.full_name, admin_teacher_stat_path(teacher_presenter.teacher)
         .col-md-4
           | Average Technical Rating:&nbsp;
           = ((feedbacks.inject(0){|sum,feedback| sum + feedback.technical_rating}.to_f)/feedbacks.length).round(2)
