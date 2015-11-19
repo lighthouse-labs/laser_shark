@@ -4,15 +4,11 @@ br
   - unless teacher.nil?
     - present teacher do |teacher_presenter|
       .row.teacher_feedbacks_section
-        .col-md-4
+        .col-md-3
           = teacher_presenter.full_name
-        .col-md-4
-          | Average Technical Rating:&nbsp;
-          = ((feedbacks.inject(0){|sum,feedback| sum + feedback.technical_rating}.to_f)/feedbacks.length).round(2)
-          | /5
-        .col-md-4
-          | Average Style Rating:&nbsp;
-          = ((feedbacks.inject(0){|sum,feedback| sum + feedback.style_rating}.to_f)/feedbacks.length).round(2)
+        .col-md-3
+          | Average Rating:&nbsp;
+          = ((feedbacks.inject(0){|sum,feedback| sum + feedback.average_rating}.to_f)/feedbacks.length).round(2)
           | /5
       .row
         table.table
@@ -21,26 +17,23 @@ br
               th Date
               th Student Name
               th Feedback Type
-              th Technical Rating
-              th Style Rating
+              th Rating
               th 
           tbody
             - feedbacks.each do |teacher_feedback|
               - present teacher_feedback do |teacher_feedback_presenter|
                 tr
-                  td = teacher_feedback_presenter.updated_date
+                  td.admin-teacher-feedback-date-column = teacher_feedback_presenter.updated_date
                   td = teacher_feedback_presenter.student_full_name
                   td = teacher_feedback_presenter.feedbackable_type
                   td
-                    .raty-viewer data-score="#{teacher_feedback_presenter.technical_rating}"
-                  td
-                    .raty-viewer data-score="#{teacher_feedback_presenter.style_rating}"
+                    .raty-viewer data-score="#{teacher_feedback_presenter.average_rating}"
                 - if teacher_feedback.notes.present?
                   tr
                     td
                     td colspan="5"
                       small
                         em 
-                          = teacher_feedback_presenter.truncated_notes
+                          article.read-more = teacher_feedback_presenter.notes
                     td
 

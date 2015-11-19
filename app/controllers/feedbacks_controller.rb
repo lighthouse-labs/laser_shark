@@ -28,7 +28,7 @@ class FeedbacksController < ApplicationController
 
   def feedback_params
     params.require(:feedback).permit(
-      :technical_rating, :style_rating, :notes
+      :notes, :average_rating
     )
   end
 
