@@ -1,6 +1,7 @@
 class Feedback < ActiveRecord::Base
 
   belongs_to :feedbackable, polymorphic: true
+  belongs_to :activity, -> { where(feedbacks: {feedbackable_type: 'Activity'}) }, foreign_key: 'feedbackable_id'
   belongs_to :student
   belongs_to :teacher
 
@@ -13,7 +14,11 @@ class Feedback < ActiveRecord::Base
   scope :reverse_chronological_order, -> { order("feedbacks.updated_at DESC") }
   scope :filter_by_student, -> (student_id) { where("student_id = ?", student_id) }
   scope :filter_by_teacher, -> (teacher_id) { where("teacher_id = ?", teacher_id) }
-
+  scope :filter_by_day, -> (day) { 
+    includes(:activity).
+    where("day LIKE ?", day.downcase+"%").
+    references(:activity)
+  }
   scope :lecture, -> { teacher_feedbacks.where(feedbackable_type: ['Activity']) }
   scope :assistance, -> { where(feedbackable_type: 'Assistance') }
   scope :direct, -> { where(feedbackable_type: nil) }

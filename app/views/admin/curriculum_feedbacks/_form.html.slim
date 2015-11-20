@@ -14,6 +14,10 @@
   
   = select_tag :student_id, options_from_collection_for_select(Student.all.order('first_name'), "id", "full_name", params[:student_id]), :prompt => 'All Students', class: "form-control admin-feedback-dropdown"
   | &nbsp;
+  br
+
+  = text_field_tag 'day', params[:day], placeholder: 'Day e.g. w1d2 or w1', class: "form-control admin-feedback-text-box"
+  | &nbsp;
 
   label for="start_date"
     |Start:&nbsp; 
