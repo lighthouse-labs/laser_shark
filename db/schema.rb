@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151117214623) do
+ActiveRecord::Schema.define(version: 20151120163825) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -116,6 +116,7 @@ ActiveRecord::Schema.define(version: 20151117214623) do
     t.string   "day"
     t.datetime "archived_at"
     t.integer  "archived_by_user_id"
+    t.text     "notes"
   end
 
   create_table "day_infos", force: true do |t|

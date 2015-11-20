@@ -30,3 +30,6 @@ $ ->
     $(this).hide()
     unarchiveDayFeedback(id)
     $(this).siblings('.archive-button').show()
+
+  # Activating Best In Place Editor
+  $(".best_in_place").best_in_place();

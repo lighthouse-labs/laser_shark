@@ -13,8 +13,13 @@ $ ->
   teachers_locations_checkboxes.on 'change', ->  
     show_teachers_in_location()    
 
-  $('.read-more').readmore
-    speed: 75
-    moreLink: '<a class="read-more-link" href="#">Read More</a>'
-    lessLink: '<a class="read-more-link" href="#">Close</a>'
-    collapsedHeight: 45
+  bind_readmore_to_feedbacks = ->
+    $('.read-more').readmore
+      speed: 75
+      moreLink: '<a class="read-more-link" href="#">Read More</a>'
+      lessLink: '<a class="read-more-link" href="#">Close</a>'
+      collapsedHeight: 45
+
+  bind_readmore_to_feedbacks()
+
+  $('.read-more').blur console.log 'changed'

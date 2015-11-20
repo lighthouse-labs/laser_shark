@@ -1,3 +1,11 @@
+GIT
+  remote: git://github.com/bernat/best_in_place.git
+  revision: f6f108ecaba04d9990ceea03df00ca6006bb9b0f
+  specs:
+    best_in_place (3.0.3)
+      actionpack (>= 3.2)
+      railties (>= 3.2)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -350,6 +358,7 @@ PLATFORMS
 DEPENDENCIES
   aws-sdk-core
   bcrypt-ruby
+  best_in_place!
   bootstrap-sass
   capybara
   carrierwave
@@ -402,3 +411,6 @@ DEPENDENCIES
   spring
   spring-commands-rspec
   uglifier (>= 1.3.0)
+
+BUNDLED WITH
+   1.10.6

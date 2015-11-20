@@ -20,6 +20,7 @@
 //= require jquery.raty
 //= require readmore
 //= require jquery.googlecalreader-1.1.min
+//= require best_in_place
 
 //= require assistance_requests
 //= require navigation
