@@ -59,27 +59,26 @@ class Feedback < ActiveRecord::Base
   validates :average_rating, presence: true, on: :update 
 
   def self.filter_by(options)
-    location_id = options[:student_location_id] if options[:student_location_id]
-    location_id = options[:teacher_location_id] if options[:teacher_location_id]
+    location_id = options[:teacher_location_id] || options[:student_location_id]
     options.inject(all) do |result, (k, v)|
       attribute = k.gsub("_id", "")
       if attribute == 'completed?'
-        result = self.filter_by_completed(v, result)
+        self.filter_by_completed(v, result)
       elsif attribute.include?('date')
-        result = result.send("filter_by_#{attribute}", v, location_id)
+        result.send("filter_by_#{attribute}", v, location_id)
       else
-        result = result.send("filter_by_#{attribute}", v)
+        result.send("filter_by_#{attribute}", v)
       end    
     end
   end
 
   def self.filter_by_completed(value, result)
     if value == 'true'
-      result = result.completed
+      result.completed
     elsif value == 'expired'
-      result = result.expired.pending
+      result.expired.pending
     else
-      result = result.pending
+      result.pending
     end  
   end
 
