@@ -2,12 +2,12 @@ $ ->
 
   archiveDayFeedback = (id) ->
     $.ajax
-      url: '/admin/dayfeedbacks/' + id + '/archive'
+      url: '/admin/day_feedbacks/' + id + '/archive'
       type: 'POST'
 
    unarchiveDayFeedback = (id) ->
      $.ajax
-       url: '/admin/dayfeedbacks/' + id + '/archive'
+       url: '/admin/day_feedbacks/' + id + '/archive'
        type: 'DELETE'   
 
   $('.archive-button').click (e) ->

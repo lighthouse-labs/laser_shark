@@ -47,7 +47,7 @@ table.table.table-feedbacks
           td
             small
               em 
-                article.read-more = best_in_place [:admin, dayfeedback], :notes, :as => :textarea, :place_holder => "Click here to add notes"
+                article.read-more = best_in_place [:admin, dayfeedback], :notes, :as => :textarea, :place_holder => "Click here to add notes", :inner_class => "in-place-edit-text-area", :html_attrs => { :onfocus  => "$(this).css('outline','none');", :style => 'background: transparent; border: none; width:283px; height:100px;' }
           td data-id='#{dayfeedback.id}'
             - if !day_feedback_presenter.archived_at
               .btn.btn-primary.btn-xs.archive-button
