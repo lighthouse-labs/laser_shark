@@ -13,6 +13,20 @@ $ ->
     if confirm("Are you sure you want to withdraw this assistance request?")
       window.App.userChannel.cancelAssistanceRequest()
 
+  $('.on-duty-link').click (e) ->
+    e.preventDefault()
+    window.App.userChannel.onDuty()
+
+    $('.on-duty-link').addClass('hidden')
+    $('.off-duty-link').removeClass('hidden')
+
+  $('.off-duty-link').click (e) ->
+    e.preventDefault()
+    window.App.userChannel.offDuty()
+
+    $('.off-duty-link').addClass('hidden')
+    $('.on-duty-link').removeClass('hidden')
+
   ar_module = $('#assistance-request-module')
 
   haveAssistanceUI = ->

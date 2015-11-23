@@ -17,6 +17,12 @@ App.userChannel = App.cable.subscriptions.create("UserChannel",
   cancelAssistanceRequest: ->
     @perform 'cancel_assistance'
 
+  onDuty: ->
+    @perform 'on_duty'
+
+  offDuty: ->
+    @perform 'off_duty'
+
   received: (data) ->
     # For now these all do the same thing, but they may do other things
     switch data.type
@@ -24,5 +30,9 @@ App.userChannel = App.cable.subscriptions.create("UserChannel",
       when "AssistanceStarted" then updateAssistanceUI()
       when "AssistanceCancelled" then updateAssistanceUI()
       when "AssistanceEnded" then updateAssistanceUI()
+      when "TeacherOnDuty" 
+        console.log(data)
+      when "TeacherOffDuty" 
+        console.log(data)
 
 )
