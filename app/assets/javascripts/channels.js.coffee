@@ -7,32 +7,31 @@ if window.location.port isnt ""
 
 App.cable = Cable.createConsumer('ws://' + host + '/websocket');
 
-App.userChannel = App.cable.subscriptions.create("UserChannel", 
-  rejected: ->
-    window.location.reload()
+$ ->
+  App.userChannel = App.cable.subscriptions.create("UserChannel", 
+    rejected: ->
+      window.location.reload()
+      
+    requestAssistance: (reason) ->
+      @perform 'request_assistance', reason: reason
+
+    cancelAssistanceRequest: ->
+      @perform 'cancel_assistance'
     
-  requestAssistance: (reason) ->
-    @perform 'request_assistance', reason: reason
+    received: (data) ->
+      handler = new UserChannelHandler data
+      handler.processResponse()
+  )
 
-  cancelAssistanceRequest: ->
-    @perform 'cancel_assistance'
 
-  onDuty: ->
-    @perform 'on_duty'
+  App.teacherChannel = App.cable.subscriptions.create("TeacherChannel",
+    onDuty: ->
+      @perform 'on_duty'
 
-  offDuty: ->
-    @perform 'off_duty'
+    offDuty: ->
+      @perform 'off_duty'
 
-  received: (data) ->
-    # For now these all do the same thing, but they may do other things
-    switch data.type
-      when "AssistanceRequested" then updateAssistanceUI() 
-      when "AssistanceStarted" then updateAssistanceUI()
-      when "AssistanceCancelled" then updateAssistanceUI()
-      when "AssistanceEnded" then updateAssistanceUI()
-      when "TeacherOnDuty" 
-        console.log(data)
-      when "TeacherOffDuty" 
-        console.log(data)
-
-)
+    received: (data) ->
+      handler = new TeacherChannelHandler data
+      handler.processResponse()
+  )

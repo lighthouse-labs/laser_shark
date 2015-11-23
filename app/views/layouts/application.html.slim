@@ -17,6 +17,9 @@ html
       == render 'layouts/navigation'
     main.container[role="main"]
       == render 'layouts/messages'
+
+      .teacher-holder
+
       - if content_for? :side_nav
         aside.side-nav.col-md-3
           == yield :side_nav

@@ -15,14 +15,14 @@ $ ->
 
   $('.on-duty-link').click (e) ->
     e.preventDefault()
-    window.App.userChannel.onDuty()
+    window.App.teacherChannel.onDuty()
 
     $('.on-duty-link').addClass('hidden')
     $('.off-duty-link').removeClass('hidden')
 
   $('.off-duty-link').click (e) ->
     e.preventDefault()
-    window.App.userChannel.offDuty()
+    window.App.teacherChannel.offDuty()
 
     $('.off-duty-link').addClass('hidden')
     $('.on-duty-link').removeClass('hidden')
