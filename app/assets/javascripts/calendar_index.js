@@ -16,7 +16,16 @@
       var link = item.htmlLink;
       var location = item.location || '';
       var details = '<div class="icon icon-type"><i class="fa fa-calendar"></i></div>'
-      details += '<a href=' + link + '><div class="name">' + item.summary + '<div class="location">' + location + '</div>' + '</div></a>';
+      if (item.description) {
+        details += '<div class="name">' + item.summary + 
+        '<div class="location">' + location + '</div>' +
+        '<div class="togglable-description" style="display: none;">' + item.description + '</div>' +
+        '<div class="togglable-description-link">Click to view description</div>'
+        + '</div>';
+      }
+      else {
+        details += '<a href=' + link + '><div class="name">' + item.summary + '<div class="location">' + location + '</div>' + '</div></a>';
+      }
       if (item.start.dateTime) {
         var startTime = item.start.dateTime.substring(11,16);
         var endTime = item.end.dateTime.substring(11,16);
@@ -24,6 +33,11 @@
       }
       calendarEvent = '<div class="calendar activity">' + details + '</div>';
       $($div).append(calendarEvent);
+      $('.toggable-description-link').click(function(){
+        $(this).closest('.togglable-description').toggle();
+        console.log('plzwork')
+      }) 
+
     }
 
     var feedUrl = 'https://www.googleapis.com/calendar/v3/calendars/' +
