@@ -68,7 +68,10 @@ class Assistance < ActiveRecord::Base
       icon_url: self.assistor.avatar_url,
       channel: channel
     }
-    poster = Slack::Poster.new('lighthouse', ENV['SLACK_TOKEN'], options)
-    poster.send_message("*Assisted #{self.assistee.full_name} for #{ ((self.end_at - self.start_at)/60).to_i } minutes*:\n #{self.notes}")
+    begin
+      poster = Slack::Poster.new('lighthouse', ENV['SLACK_TOKEN'], options)
+      poster.send_message("*Assisted #{self.assistee.full_name} for #{ ((self.end_at - self.start_at)/60).to_i } minutes*:\n #{self.notes}")
+    rescue
+    end
   end
 end
