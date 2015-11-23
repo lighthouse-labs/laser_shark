@@ -57,7 +57,7 @@ class FeedbackPresenter < BasePresenter
   end
 
   def updated_date
-    feedback.updated_at.to_date.to_s
+    feedback.created_at.to_date.to_s
   end
 
 end
