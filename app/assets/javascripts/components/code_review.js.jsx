@@ -19,7 +19,7 @@ var CodeReview = React.createClass({
   renderSubmission: function() {
     var codeReview = this.props.codeReview;
 
-    if(codeReview.activitySubmission)
+    if(codeReview.activity_submission)
       return (
         <div>
           <p>
