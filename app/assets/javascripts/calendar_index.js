@@ -17,10 +17,10 @@
       var location = item.location || '';
       var details = '<div class="icon icon-type"><i class="fa fa-calendar"></i></div>'
       if (item.description) {
-        details += '<div class="name">' + item.summary + 
-        '<div class="location">' + location + '</div>' +
-        '<div class="togglable-description" style="display: none;">' + item.description + '</div>' +
-        '<div class="togglable-description-link">Click to view description</div>'
+        details += '<div class="event-block">' + '<div class="event-name">' + item.summary + '</div>' + 
+        '<div class="event-location">' + location + '</div>' +
+        '<a class="toggable-description-link"><small>See Description</small></a>' +
+        '<div class="toggable-description" style="display: none;">' + item.description + '</div>'
         + '</div>';
       }
       else {
@@ -34,8 +34,7 @@
       calendarEvent = '<div class="calendar activity">' + details + '</div>';
       $($div).append(calendarEvent);
       $('.toggable-description-link').click(function(){
-        $(this).closest('.togglable-description').toggle();
-        console.log('plzwork')
+        $(this).siblings('.toggable-description').toggle();
       }) 
 
     }

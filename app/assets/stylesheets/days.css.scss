@@ -85,3 +85,27 @@
   }
 }
 
+.calendar {
+  .event-block {
+    padding-top: 28px;
+  }
+  .event-name, .event-location {
+    color: $green-sea;
+  }
+  .event-location {
+    font-size: 16px;
+  }
+  .toggable-description-link {
+    font-size: 14px;
+    text-decoration: underline;
+
+  }
+  .toggable-description-link:hover {
+    color: $gray-light;
+    cursor: pointer;
+  }
+  .toggable-description {
+    font-size: 12px;
+    color: $gray-light;
+  }
+}
