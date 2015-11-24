@@ -3,7 +3,7 @@ class window.UserChannelHandler
     @type = data.type
     @object = data.object
 
-  processResponse: ->
+  processResponse: (callback) ->
     # For now these all do the same thing, but they may do other things
     switch @type
       when "UserConnected"
@@ -15,3 +15,6 @@ class window.UserChannelHandler
 
   userConnected: ->
     window.current_user = @object
+
+    # Connect to the teachers socket when we know the user has connected
+    window.connectToTeachersSocket()

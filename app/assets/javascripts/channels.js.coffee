@@ -7,6 +7,19 @@ if window.location.port isnt ""
 
 App.cable = Cable.createConsumer('ws://' + host + '/websocket');
 
+window.connectToTeachersSocket = ->
+  App.teacherChannel = App.cable.subscriptions.create("TeacherChannel",
+    onDuty: ->
+      @perform 'on_duty'
+
+    offDuty: ->
+      @perform 'off_duty'
+
+    received: (data) ->
+      handler = new TeacherChannelHandler data
+      handler.processResponse()
+  )
+
 $ ->
   App.userChannel = App.cable.subscriptions.create("UserChannel", 
     rejected: ->
@@ -20,18 +33,5 @@ $ ->
     
     received: (data) ->
       handler = new UserChannelHandler data
-      handler.processResponse()
-  )
-
-
-  App.teacherChannel = App.cable.subscriptions.create("TeacherChannel",
-    onDuty: ->
-      @perform 'on_duty'
-
-    offDuty: ->
-      @perform 'off_duty'
-
-    received: (data) ->
-      handler = new TeacherChannelHandler data
       handler.processResponse()
   )
