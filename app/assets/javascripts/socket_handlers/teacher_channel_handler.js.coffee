@@ -38,7 +38,7 @@ class window.TeacherChannelHandler
   teacherInLocation: (teacher) ->
     if current_user
       if current_user.type is 'Teacher' 
-        return current_user.location.id is @object.location.id
+        return current_user.location.id is teacher.location.id
       else
         if current_user.cohort
           return current_user.cohort.location.id is teacher.location.id
