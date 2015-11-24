@@ -18,14 +18,15 @@ class window.TeacherChannelHandler
 
   userConnected: ->
     for teacher in @object
-      @addTeacherToSidebar(teacher)
+      if @teacherInLocation(teacher)
+        @addTeacherToSidebar(teacher)
 
   teacherOnDuty: ->
-    if @teacherInLocation()
+    if @teacherInLocation(@object)
       @addTeacherToSidebar(@object)
 
   teacherOffDuty: ->
-    if @teacherInLocation()
+    if @teacherInLocation(@object)
       @removeTeacherFromSidebar(@object)
 
   teacherBusy: ->
@@ -34,13 +35,13 @@ class window.TeacherChannelHandler
   teacherAvailable: ->
     $('.teacher-holder').find('#teacher_' + @object.id).removeClass('busy')
 
-  teacherInLocation: ->
+  teacherInLocation: (teacher) ->
     if current_user
       if current_user.type is 'Teacher' 
         return current_user.location.id is @object.location.id
       else
         if current_user.cohort
-          return current_user.cohort.location.id is @object.location.id
+          return current_user.cohort.location.id is teacher.location.id
 
   addTeacherToSidebar: (teacher) ->
     if $('.teacher-holder').find('#teacher_' + teacher.id).length is 0
