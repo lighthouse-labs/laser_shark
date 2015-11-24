@@ -57,6 +57,18 @@ class ApplicationController < ActionController::Base
   end
   helper_method :admin?
 
+  def teachers_on_duty
+    if current_user
+      location = current_user.location
+      location = current_user.cohort.location if current_user.is_a?(Student)
+
+      Teacher.where(on_duty: true, location: location)
+    else
+      []
+    end
+  end
+  helper_method :teachers_on_duty
+
   def cohort
     # Teachers can switch to any cohort
     if teacher?
