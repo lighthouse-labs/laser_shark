@@ -9,7 +9,8 @@ class UserSerializer < ActiveModel::Serializer
     :last_name,
     :github_username,
     :avatar_url,
-    :busy
+    :busy,
+    :last_assisted_at
 
   has_one :location
   has_one :cohort
