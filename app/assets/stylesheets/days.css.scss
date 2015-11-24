@@ -92,14 +92,15 @@
   .event-block-with-description {
     padding-top: 28px;
   }
-  .event-name, .event-location {
+  .event-name, .event-location, .toggable-description-link {
     color: $green-sea;
   }
   .event-location {
     font-size: 16px;
   }
   .toggable-description-link {
-    font-size: 14px;
+    font-size: 12px;
+    margin-top: -4px;
   }
   .toggable-description-link:hover {
     color: $gray-light;

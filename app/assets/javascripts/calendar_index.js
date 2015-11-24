@@ -19,7 +19,7 @@
       if (item.description) {
         details += '<div class="event-block-with-description">' + '<div class="event-name">' + item.summary + '</div>' + 
         '<div class="event-location">' + location + '</div>' +
-        '<a class="toggable-description-link"><small>View Description</small></a>' +
+        '<div class="toggable-description-link">View Description</div>' +
         '<div class="toggable-description" style="display: none;">' + item.description + '</div>'
         + '</div>';
       }
