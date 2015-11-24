@@ -12,7 +12,7 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require bootstrap.min
+//= require bootstrap-sprockets
 //= require flat-ui-pro
 //= require ace
 //= require jquery.timeago
@@ -20,8 +20,11 @@
 //= require jquery.raty
 //= require readmore
 //= require jquery.googlecalreader-1.1.min
+//= require cable
+//= require react
+//= require react_ujs
 
-//= require assistance_requests
+//= require channels
 //= require navigation
 //= require april1
 //= require feedbacks
@@ -31,3 +34,4 @@
 //= require day_feedbacks
 //= require incomplete_activities
 //= require activities
+//= require components
