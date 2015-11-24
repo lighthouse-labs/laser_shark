@@ -2,12 +2,6 @@ class TeacherChannel < ApplicationCable::Channel
 
   def subscribed
     stream_from "teachers"
-
-    # teachers = Teacher.where(on_duty: true)
-    # ActionCable.server.broadcast "teachers", {
-    #   type: "UserConnected",
-    #   object: teachers.collect{|teacher| UserSerializer.new(teacher).as_json}
-    # }
   end
 
   def on_duty
