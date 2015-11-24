@@ -5,7 +5,13 @@ class AssistanceRequestsController < ApplicationController
 
   def index
     @all_locations = Location.where("id IN (?)", Cohort.all.map(&:location_id).uniq).map(&:name)
-    render :index, layout: 'assistance'
+
+    render component: "RequestQueue", 
+      props: {
+        locations: @all_locations,
+        user: UserSerializer.new(current_user).as_json
+      }, 
+      layout: "assistance"
   end
 
   def queue
@@ -13,101 +19,8 @@ class AssistanceRequestsController < ApplicationController
     requests = AssistanceRequest.where(type: nil).open_requests.oldest_requests_first.requestor_cohort_in_locations([params[:location]])
     code_reviews = CodeReviewRequest.open_requests.oldest_requests_first.requestor_cohort_in_locations([params[:location]])
     all_students = Student.in_active_cohort.active.order_by_last_assisted_at.cohort_in_locations([params[:location]])
-    
-    active_assistances_json = my_active_assistances.all.to_json(
-      only: [:id, :start_at],
-      include: {
-        assistee: {
-          only: [:first_name, :last_name, :remote, :avatar_url, :custom_avatar, :email, :slack, :skype],
-          include: {
-            cohort: {
-              only: [:id, :name],
-              include: {
-                location: {
-                  only: [:name]
-                }
-              }
-            }
-          }
-        },
-        assistance_request: {
-          only: [:reason],
-          include: {
-            activity_submission: {
-              only: [:github_url],
-              include: {
-                activity: {
-                  only: [:id, :day, :name]
-                }
-              }
-            }
-          }
-        }
-      }
-    )
-    requests_json = requests.all.to_json(
-      only: [:id, :reason, :start_at],
-      include: {
-        requestor: {
-          only: [:first_name, :last_name, :remote, :avatar_url, :custom_avatar],
-          include: {
-            cohort: {
-              only: [:id, :name],
-              include: {
-                location: {
-                  only: [:name]
-                }
-              }
-            }
-          }
-        }
-      }
-    )
-    code_reviews_json = code_reviews.all.to_json(
-      only: [:id, :start_at],
-      include: {
-        requestor: {
-          only: [:first_name, :last_name, :remote, :avatar_url, :custom_avatar],
-          include: {
-            cohort: {
-              only: [:id, :name],
-              include: {
-                location: {
-                  only: [:name]
-                }
-              }
-            }
-          }
-        },
-        activity_submission: {
-          only: [:github_url],
-          include: {
-            activity: {
-              only: [:id, :day, :name]
-            }
-          }
-        }
-      }
-    )
-    all_students_json = all_students.all.to_json(
-      only: [:id, :first_name, :last_name, :remote, :avatar_url, :custom_avatar, :last_assisted_at],
-      include: {
-        cohort: {
-          only: [:id, :name],
-          include: {
-            location: {
-              only: [:name]
-            }
-          }
-        }
-      }
-    )
-    render content_type: 'application/json', text: "{
-      \"active_assistances\":#{active_assistances_json},
-      \"requests\":#{requests_json},
-      \"code_reviews\":#{code_reviews_json},
-      \"all_students\":#{all_students_json}
-    }"
+
+    render json: RequestQueueSerializer.new(assistances: my_active_assistances, requests: requests, code_reviews: code_reviews, students: all_students).as_json
   end
 
   def status
@@ -134,51 +47,10 @@ class AssistanceRequestsController < ApplicationController
       format.all { redirect_to(assistance_requests_path) }
     end
   end
-
-  def create
-    ar = AssistanceRequest.new(:requestor => current_user, :reason => params[:reason])
-    status = ar.save ? 200 : 400
-    respond_to do |format|
-      format.json { render(:nothing => true, :status => status) }
-      format.all { redirect_to(assistance_requests_path) }
-    end
-  end
-
-  def cancel
-    ar = current_user.assistance_requests.where(type: nil).open_or_in_progress_requests.newest_requests_first.first
-    status = ar.try(:cancel) ? 200 : 409
-
-    respond_to do |format|
-      format.json { render(:nothing => true, :status => status) }
-      format.all { redirect_to(assistance_requests_path) }
-    end
-  end
-
+  
   def destroy
     ar = AssistanceRequest.find params[:id]
     status = ar.try(:cancel) ? 200 : 409
-
-    respond_to do |format|
-      format.json { render(:nothing => true, :status => status) }
-      format.all { redirect_to(assistance_requests_path) }
-    end
-  end
-
-  def start_assistance
-    ar = AssistanceRequest.find(params[:id].to_i)
-    status = ar.start_assistance(current_user) ? 200 : 400
-
-    respond_to do |format|
-      format.json { render(:nothing => true, :status => status) }
-      format.all { redirect_to(assistance_requests_path) }
-    end
-  end
-
-  def end_assistance
-    params.permit(:assistance).permit(:notes)
-
-    ar = AssistanceRequest.find(params[:id].to_i)
-    status = ar.end_assistance(params[:assistance][:notes]) ? 200 : 400
 
     respond_to do |format|
       format.json { render(:nothing => true, :status => status) }

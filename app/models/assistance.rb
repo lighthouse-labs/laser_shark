@@ -1,8 +1,8 @@
 class Assistance < ActiveRecord::Base
   has_one :assistance_request, dependent: :nullify
-  belongs_to :assistor, :class => User
-  belongs_to :assistee, :class => User
-  has_one :feedback, as: :feedbackable
+  belongs_to :assistor, :class_name => User
+  belongs_to :assistee, :class_name => User
+  has_one :feedback, as: :feedbackable, dependent: :destroy
 
   validates :rating, numericality: { only_integer: true, greater_than_or_equal_to: 1, less_than_or_equal_to: 4, allow_nil: true }
 
@@ -28,10 +28,11 @@ class Assistance < ActiveRecord::Base
     if assistance_request.instance_of?(CodeReviewRequest) && !rating.nil? && !assistee.code_review_percent.nil?
       assistee.code_review_percent += Assistance::RATING_BASELINE - rating
     end
-    self.assistee.save
-    self.create_feedback(student: self.assistee, teacher: self.assistor)
-
-    send_notes_to_slack
+    
+    self.assistee.save.tap do
+      self.create_feedback(student: self.assistee, teacher: self.assistor)
+      send_notes_to_slack
+    end
   end
 
   def to_json
@@ -67,7 +68,10 @@ class Assistance < ActiveRecord::Base
       icon_url: self.assistor.avatar_url,
       channel: channel
     }
-    poster = Slack::Poster.new('lighthouse', ENV['SLACK_TOKEN'], options)
-    poster.send_message("*Assisted #{self.assistee.full_name} for #{ ((self.end_at - self.start_at)/60).to_i } minutes*:\n #{self.notes}")
+    begin
+      poster = Slack::Poster.new('lighthouse', ENV['SLACK_TOKEN'], options)
+      poster.send_message("*Assisted #{self.assistee.full_name} for #{ ((self.end_at - self.start_at)/60).to_i } minutes*:\n #{self.notes}")
+    rescue
+    end
   end
 end
