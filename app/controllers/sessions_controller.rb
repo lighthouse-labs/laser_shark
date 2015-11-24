@@ -30,6 +30,7 @@ class SessionsController < ApplicationController
 
   def destroy
     reset_session
+    cookies.delete :user_id
     redirect_to :root
   end
 

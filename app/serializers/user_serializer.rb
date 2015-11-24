@@ -8,7 +8,9 @@ class UserSerializer < ActiveModel::Serializer
     :first_name, 
     :last_name,
     :github_username,
-    :avatar_url
+    :avatar_url,
+    :busy,
+    :last_assisted_at
 
   has_one :location
   has_one :cohort
@@ -17,6 +19,12 @@ class UserSerializer < ActiveModel::Serializer
 
   def avatar_url
     object.custom_avatar.url.try(:thumb) || object.avatar_url
+  end
+
+  def busy
+    if object.is_a?(Teacher)
+      object.teaching_assistances.currently_active.length > 0
+    end
   end
 
 end

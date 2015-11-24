@@ -13,6 +13,11 @@ class AssistanceChannel < ApplicationCable::Channel
       }
 
       UserChannel.broadcast_to ar.requestor, {type: "AssistanceStarted"}
+
+      ActionCable.server.broadcast "teachers", {
+        type: "TeacherBusy",
+        object: UserSerializer.new(current_user).as_json
+      }      
     end
 
   end
@@ -27,6 +32,11 @@ class AssistanceChannel < ApplicationCable::Channel
     }
 
     UserChannel.broadcast_to assistance.assistance_request.requestor, {type: "AssistanceEnded"}
+
+    ActionCable.server.broadcast "teachers", {
+      type: "TeacherAvailable",
+      object: UserSerializer.new(current_user).as_json
+    }      
   end
 
   def cancel_assistance_request(data)
@@ -50,6 +60,10 @@ class AssistanceChannel < ApplicationCable::Channel
       }
 
       UserChannel.broadcast_to assistance.assistee, {type: "AssistanceCancelled"}
+        ActionCable.server.broadcast "teachers", {
+        type: "TeacherAvailable",
+        object: UserSerializer.new(current_user).as_json
+      }      
     end
   end
 

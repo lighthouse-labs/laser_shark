@@ -69,3 +69,24 @@ main {
     }
   }
 }
+
+.teacher-holder {
+    position: fixed;
+    right: 10px;
+    top: 75px;
+
+    img {
+      width: 75px;
+      border-width: 3px;
+      border-style: solid;
+      border-color: $brand-success;
+      border-radius: 10px;
+      float: left;
+      clear: left;
+      margin-bottom: 2px;
+
+      &.busy {
+        border-color: $brand-warning;
+      }
+    }
+  }

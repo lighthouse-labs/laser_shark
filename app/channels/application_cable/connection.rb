@@ -8,6 +8,8 @@ module ApplicationCable
 
     protected
       def find_verified_user
+        reject_unauthorized_connection unless cookies.signed[:user_id]
+        
         if current_user = User.find(cookies.signed[:user_id])
           current_user
         else
