@@ -22,9 +22,6 @@ window.connectToTeachersSocket = ->
 
 $ ->
   App.userChannel = App.cable.subscriptions.create("UserChannel", 
-    rejected: ->
-      window.location.reload()
-      
     requestAssistance: (reason) ->
       @perform 'request_assistance', reason: reason
 
