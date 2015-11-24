@@ -63,6 +63,8 @@ class ApplicationController < ActionController::Base
       location = current_user.cohort.location if current_user.is_a?(Student)
 
       Teacher.where(on_duty: true, location: location)
+    else
+      []
     end
   end
   helper_method :teachers_on_duty
