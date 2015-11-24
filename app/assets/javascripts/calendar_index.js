@@ -17,14 +17,16 @@
       var location = item.location || '';
       var details = '<div class="icon icon-type"><i class="fa fa-calendar"></i></div>'
       if (item.description) {
-        details += '<div class="event-block">' + '<div class="event-name">' + item.summary + '</div>' + 
+        details += '<div class="event-block-with-description">' + '<div class="event-name">' + item.summary + '</div>' + 
         '<div class="event-location">' + location + '</div>' +
-        '<a class="toggable-description-link"><small>See Description</small></a>' +
+        '<a class="toggable-description-link"><small>Toggle Description</small></a>' +
         '<div class="toggable-description" style="display: none;">' + item.description + '</div>'
         + '</div>';
       }
       else {
-        details += '<a href=' + link + '><div class="name">' + item.summary + '<div class="location">' + location + '</div>' + '</div></a>';
+        details += '<div class="event-block-no-description">' + '<div class="event-name">' + item.summary + '</div>' + 
+        '<div class="event-location">' + location + '</div>'
+        + '</div>';
       }
       if (item.start.dateTime) {
         var startTime = item.start.dateTime.substring(11,16);

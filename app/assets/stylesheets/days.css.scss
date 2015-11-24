@@ -86,7 +86,10 @@
 }
 
 .calendar {
-  .event-block {
+  .event-block-no-description {
+    padding: 28px 0;
+  }
+  .event-block-with-description {
     padding-top: 28px;
   }
   .event-name, .event-location {
@@ -97,8 +100,6 @@
   }
   .toggable-description-link {
     font-size: 14px;
-    text-decoration: underline;
-
   }
   .toggable-description-link:hover {
     color: $gray-light;
