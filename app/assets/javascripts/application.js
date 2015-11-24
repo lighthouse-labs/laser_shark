@@ -25,6 +25,8 @@
 //= require react_ujs
 
 //= require channels
+//= require_tree ./socket_handlers/
+
 //= require navigation
 //= require april1
 //= require feedbacks
@@ -35,3 +37,5 @@
 //= require incomplete_activities
 //= require activities
 //= require components
+
+

@@ -120,8 +120,18 @@ nav.navbar.navbar-inverse.navbar-fixed-top role="navigation"
             ul.dropdown-menu
               li
                 = link_to 'Edit profile', edit_profile_path
+
+              - if teacher?
+                li
+                  = link_to "Go on duty", '#', class: "on-duty-link #{'hidden' if current_user.on_duty?}"
+                
+                li
+                  = link_to "Go off duty", '#', class: "off-duty-link #{'hidden' unless current_user.on_duty?}"
+
               li
                 = link_to 'Sign Out', session_path, :method => :delete
+              
+
           - if current_user.active_student?
             li#assistance-request-module
               span#cancel-assistance-request class="#{'hidden' unless current_user.waiting_for_assistance? || current_user.being_assisted?}"
