@@ -36,10 +36,11 @@ class window.TeacherChannelHandler
 
   teacherInLocation: ->
     if current_user
-      if current_user.cohort
-        return current_user.cohort.location.id is @object.location.id
-      else
+      if current_user.type is 'Teacher' 
         return current_user.location.id is @object.location.id
+      else
+        if current_user.cohort
+          return current_user.cohort.location.id is @object.location.id
 
   addTeacherToSidebar: (teacher) ->
     if $('.teacher-holder').find('#teacher_' + teacher.id).length is 0
