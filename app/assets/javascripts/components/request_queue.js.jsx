@@ -103,7 +103,7 @@ var RequestQueue = React.createClass({
 
   handleAssistanceRequest: function(assistanceRequest) {
     var requests = this.state.requests;
-    if(this.getRequestIndex(assistanceRequest) === -1) {
+    if(this.getRequestIndex(assistanceRequest) === -1 && this.inLocation(assistanceRequest)) {
       requests.push(assistanceRequest);
       this.setState({requests: requests});
     }
@@ -111,8 +111,10 @@ var RequestQueue = React.createClass({
 
   handleCodeReviewRequest: function(codeReviewRequest) {
     var codeReviews = this.state.codeReviews;
-    codeReviews.push(codeReviewRequest);
-    this.setState({codeReviews: codeReviews});
+    if(this.inLocation(codeReviewRequest)) {
+      codeReviews.push(codeReviewRequest);
+      this.setState({codeReviews: codeReviews});
+    }
   },
 
   removeFromQueue: function(assistanceRequest) {
@@ -164,6 +166,10 @@ var RequestQueue = React.createClass({
       codeReviews.splice(ind, 1);
       this.setState({codeReviews: codeReviews});
     }
+  },
+
+  inLocation: function(assistanceRequest) {
+    return assistanceRequest.requestor.cohort.location.name === this.state.location;
   },
 
   getRequestIndex: function(assistanceRequest) {
