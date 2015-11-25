@@ -24,9 +24,9 @@ var Request = React.createClass({
     return (
       <RequestItem student={student}>
         <p className="assistance-timestamp">
-          Requested assistance 
+          Requested assistance: 
           <abbr className="timeago" title="{request.start_at}">
-            {$.timeago(request.start_at)}
+            <TimeAgo date={request.start_at} />
           </abbr>
         </p>
         <p><b>Reason:</b> {request.reason}</p>
