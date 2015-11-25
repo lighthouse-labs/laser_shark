@@ -58,10 +58,11 @@ class ApplicationController < ActionController::Base
   helper_method :admin?
 
   def teachers_on_duty
+    return [] if current_user && !current_user.is_a?(Teacher) && !current_user.is_a?(Student)
+
     if current_user
       location = current_user.location
       location = current_user.cohort.location if current_user.is_a?(Student)
-
       Teacher.where(on_duty: true, location: location)
     else
       []
