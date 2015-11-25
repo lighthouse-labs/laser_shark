@@ -12,7 +12,7 @@ var Student = React.createClass({
         <p className="assistance-timestamp">
           Last received assistance
           <abbr className='timeago' ref="lastAssistedTime" title={student.last_assisted_at}>
-            {student.last_assisted_at ? $.timeago(student.last_assisted_at) : "never"}
+            {student.last_assisted_at ? <TimeAgo date={student.last_assisted_at} /> : "never"}
           </abbr>
         </p>
 

@@ -80,7 +80,7 @@ var Assistance = React.createClass({
         <p className="assistance-timestamp">
           You started { activitySubmission ? "reviewing" : "assisting"}
           <abbr className="timeago" title="{assitance.start_at}">
-            {$.timeago(assistance.start_at)}
+            <TimeAgo date={assistance.start_at} />
           </abbr>
         </p>
 
