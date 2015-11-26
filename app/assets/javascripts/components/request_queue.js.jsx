@@ -105,6 +105,9 @@ var RequestQueue = React.createClass({
     var requests = this.state.requests;
     if(this.getRequestIndex(assistanceRequest) === -1 && this.inLocation(assistanceRequest)) {
       requests.push(assistanceRequest);
+      requests.sort(function(a,b){
+        return new Date(a.start_at) - new Date(b.start_at);
+      })
       this.setState({requests: requests});
     }
   },
@@ -113,6 +116,9 @@ var RequestQueue = React.createClass({
     var codeReviews = this.state.codeReviews;
     if(this.inLocation(codeReviewRequest)) {
       codeReviews.push(codeReviewRequest);
+      codeReviews.sort(function(a,b){
+        return new Date(a.start_at) - new Date(b.start_at);
+      })
       this.setState({codeReviews: codeReviews});
     }
   },
