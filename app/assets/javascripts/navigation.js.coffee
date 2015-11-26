@@ -25,3 +25,6 @@ $ ->
 
     $('.off-duty-link').addClass('hidden')
     $('.on-duty-link').removeClass('hidden')
+
+  $('.sign-out-link').click (e) ->
+    window.App.teacherChannel.offDuty()    
