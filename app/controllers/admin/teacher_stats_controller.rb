@@ -8,7 +8,7 @@ class Admin::TeacherStatsController < Admin::BaseController
 
   def index
     assistances_sub = Assistance.completed.group('1').select('assistances.assistor_id AS teacher_id, COUNT(assistances.id) AS assistance_count').to_sql
-    feedback_sub = Feedback.teacher_feedbacks.completed.group('1').select('feedbacks.teacher_id, COUNT(feedbacks.id) AS feedback_count, ROUND(AVG(feedbacks.average_rating::numeric), 2)::float AS average_feedback_score').to_sql
+    feedback_sub = Feedback.teacher_feedbacks.completed.group('1').select('feedbacks.teacher_id, COUNT(feedbacks.id) AS feedback_count, ROUND(AVG(feedbacks.rating::numeric), 2)::float AS average_feedback_score').to_sql
 
     @teachers = Teacher.
       select(:id, :first_name, :last_name, :location_id, 'assistance_stats.assistance_count', 'feedback_stats.feedback_count', 'feedback_stats.average_feedback_score').
@@ -30,7 +30,7 @@ class Admin::TeacherStatsController < Admin::BaseController
   end
 
   def feedback
-    avg_col = "ROUND(AVG(average_rating::numeric), 2)::float"
+    avg_col = "ROUND(AVG(rating::numeric), 2)::float"
     cols = "feedbacks.created_at::date, #{avg_col}"
 
     feedback = Feedback.teacher_feedbacks.completed
