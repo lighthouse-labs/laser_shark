@@ -4,14 +4,12 @@ class window.UserChannelHandler
     @object = data.object
 
   processResponse: (callback) ->
-    # For now these all do the same thing, but they may do other things
     switch @type
       when "UserConnected"
         @userConnected()
-      when "AssistanceRequested" then updateAssistanceUI() 
-      when "AssistanceStarted" then updateAssistanceUI()
-      when "AssistanceCancelled" then updateAssistanceUI()
-      when "AssistanceEnded" then updateAssistanceUI()
+      else
+        presenter = new RequestButtonPresenter @type, @object
+        presenter.render()
 
   userConnected: ->
     window.current_user = @object
