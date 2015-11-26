@@ -18,7 +18,7 @@ class UserSerializer < ActiveModel::Serializer
   protected
 
   def avatar_url
-    object.custom_avatar.url.try(:thumb) || object.avatar_url
+    object.custom_avatar.try(:url, :thumb) || object.avatar_url
   end
 
   def busy
