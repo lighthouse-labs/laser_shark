@@ -15,7 +15,6 @@
 //= require bootstrap-sprockets
 //= require flat-ui-pro
 //= require ace
-//= require jquery.timeago
 //= require mustache
 //= require jquery.raty
 //= require readmore
