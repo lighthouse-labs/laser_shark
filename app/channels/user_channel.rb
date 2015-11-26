@@ -15,7 +15,7 @@ class UserChannel < ApplicationCable::Channel
       object: AssistanceRequestSerializer.new(ar, root: false).as_json
     }
 
-    UserChannel.broadcast_to current_user, {type: "AssistanceRequested"}
+    UserChannel.broadcast_to current_user, {type: "AssistanceRequested", object: current_user.position_in_queue}
   end
 
   def cancel_assistance
@@ -27,6 +27,8 @@ class UserChannel < ApplicationCable::Channel
       }
 
       UserChannel.broadcast_to current_user, {type: "AssistanceCancelled"}
+
+      update_students_in_queue(ar.requestor.cohort.location.name)
     end
   end
 
