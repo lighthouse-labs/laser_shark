@@ -229,7 +229,7 @@ var RequestQueue = React.createClass({
         <RequestQueueItems
           activeAssistances={this.state.activeAssistances}
           requests={this.state.requests}
-          codeReviews={this.state.location != "Vancouver" ? this.state.codeReviews : {}}
+          codeReviews={this.state.codeReviews}
           students={this.state.students} />
       </div>
     )
