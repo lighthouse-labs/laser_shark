@@ -23,7 +23,7 @@ class UserSerializer < ActiveModel::Serializer
 
   def busy
     if object.is_a?(Teacher)
-      object.teaching_assistances.currently_active.length > 0
+      object.busy?
     end
   end
 

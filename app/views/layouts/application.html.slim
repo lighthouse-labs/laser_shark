@@ -25,7 +25,7 @@ html
 
           - teachers_on_duty.each do |teacher|
             = link_to teacher do
-              = image_tag avatar_for(teacher), id: "teacher_#{teacher.id}"
+              = image_tag avatar_for(teacher), id: "teacher_#{teacher.id}", class: teacher.busy? ? "busy" : nil
 
       - if content_for? :side_nav
         aside.side-nav.col-md-3

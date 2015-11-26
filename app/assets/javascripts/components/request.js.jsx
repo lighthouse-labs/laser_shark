@@ -12,9 +12,10 @@ var Request = React.createClass({
   },
 
   cancelAssistance: function() {
-    if(confirm("Are you sure you want to cancel this Request?"))
+    if(confirm("Are you sure you want to cancel this Request?")) {
       this.setState({disabled: true})
       App.assistance.cancelAssistanceRequest(this.props.request);
+    }
   },
   
   render: function() {
