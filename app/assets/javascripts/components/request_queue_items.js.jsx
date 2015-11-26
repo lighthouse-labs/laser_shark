@@ -51,7 +51,7 @@ var RequestQueueItems = React.createClass({
         <ul className="student-list">
           { this.renderRequests() }
         </ul>
-
+        
         <h3 className="section-heading">Awaiting Code Review</h3>
         <ul className="student-list">
           { this.renderCodeReviews() }

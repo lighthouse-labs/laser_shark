@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151119212048) do
+ActiveRecord::Schema.define(version: 20151126203655) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -106,18 +106,6 @@ ActiveRecord::Schema.define(version: 20151119212048) do
 
   add_index "cohorts", ["program_id"], name: "index_cohorts_on_program_id", using: :btree
 
-  create_table "comments", force: :cascade do |t|
-    t.text     "content"
-    t.integer  "commentable_id"
-    t.string   "commentable_type", limit: 255
-    t.integer  "user_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "comments", ["commentable_id", "commentable_type"], name: "index_comments_on_commentable_id_and_commentable_type", using: :btree
-  add_index "comments", ["user_id"], name: "index_comments_on_user_id", using: :btree
-
   create_table "day_feedbacks", force: :cascade do |t|
     t.string   "mood",                limit: 255
     t.string   "title",               limit: 255
@@ -128,6 +116,7 @@ ActiveRecord::Schema.define(version: 20151119212048) do
     t.string   "day",                 limit: 255
     t.datetime "archived_at"
     t.integer  "archived_by_user_id"
+    t.text     "notes"
   end
 
   create_table "day_infos", force: :cascade do |t|
@@ -147,15 +136,16 @@ ActiveRecord::Schema.define(version: 20151119212048) do
     t.string   "feedbackable_type", limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.float    "average_rating"
+    t.float    "rating"
   end
 
   create_table "locations", force: :cascade do |t|
-    t.string   "name",       limit: 255
+    t.string   "name",             limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "calendar",   limit: 255
-    t.string   "timezone",   limit: 255
+    t.string   "calendar",         limit: 255
+    t.string   "timezone",         limit: 255
+    t.boolean  "has_code_reviews",             default: true
   end
 
   create_table "programs", force: :cascade do |t|
