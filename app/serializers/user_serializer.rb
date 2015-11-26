@@ -18,12 +18,12 @@ class UserSerializer < ActiveModel::Serializer
   protected
 
   def avatar_url
-    object.custom_avatar.url.try(:thumb) || object.avatar_url
+    object.custom_avatar.try(:url, :thumb) || object.avatar_url
   end
 
   def busy
     if object.is_a?(Teacher)
-      object.teaching_assistances.currently_active.length > 0
+      object.busy?
     end
   end
 

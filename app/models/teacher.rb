@@ -13,6 +13,13 @@ class Teacher < User
     where(id: teacher_id)
   }
 
+  def self.filter_by(options)
+    options.inject(all) do |result, (k, v)|
+      attribute = k.gsub("_id", "")
+      result = result.send("filter_by_#{attribute}", v)
+    end
+  end
+
   def can_access_day?(day)
     true
   end
@@ -25,11 +32,9 @@ class Teacher < User
     false
   end
 
-  def self.filter_by(options)
-    options.inject(all) do |result, (k, v)|
-      attribute = k.gsub("_id", "")
-      result = result.send("filter_by_#{attribute}", v)
-    end
+  def busy?
+    self.teaching_assistances.currently_active.length > 0
   end
+
 
 end
