@@ -34,6 +34,7 @@ th .desc {
 
 .teacher_feedbacks_section {
   border-bottom: 1px solid black;
+  clear: both;
 }
 
 .feedback-rating-column {
@@ -44,4 +45,15 @@ th .desc {
 }
 .admin-teacher-feedback-date-column {
   width: 140px;
+}
+.admin-teacher-stat {
+  text-align: center;
+}
+.admin-teacher-stat-heading {
+  font-size: 14px;
+}
+.admin-teacher-stats-row {
+  float: left;
+  display: block;
+  margin-top: 15px;
 }

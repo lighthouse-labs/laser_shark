@@ -8,8 +8,7 @@
         apiKey: '',
         startDate: new Date().toISOString(),
         endDate: new Date().toISOString(),
-        tag: ['#web'],
-        sortDescending: true
+        tag: ['#web']
       },
       options);
 
@@ -63,9 +62,6 @@
       url: feedUrl,
       dataType: 'json',
       success: function(data) {
-        if(defaults.sortDescending){
-          data.items = data.items.reverse();
-        }
         // If there are events that day, show events section
         if (data.items.length > 0) {
           $.each(data.items, function(e, item){

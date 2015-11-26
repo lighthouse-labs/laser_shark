@@ -1,6 +1,6 @@
 class Admin::CurriculumFeedbacksController < Admin::BaseController
 
-  FILTER_BY_OPTIONS = [:program, :completed?, :student_id, :student_location_id, :cohort_id, :start_date, :end_date].freeze
+  FILTER_BY_OPTIONS = [:program, :completed?, :student_id, :student_location_id, :cohort_id, :start_date, :end_date, :day].freeze
   DEFAULT_PER = 10
 
   def index
@@ -10,7 +10,6 @@ class Admin::CurriculumFeedbacksController < Admin::BaseController
     @feedbacks = Feedback.curriculum_feedbacks.filter_by(filter_by_params).order(order)
     @average_rating = @feedbacks.average(:average_rating).to_f.round(2)
     @feedbacks = @feedbacks.page(params[:page]).per(DEFAULT_PER)
-
   end
 
   private
