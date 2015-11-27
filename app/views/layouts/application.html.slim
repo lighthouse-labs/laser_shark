@@ -19,13 +19,8 @@ html
       == render 'layouts/messages'
 
       - if current_user && (current_user.is_a?(Teacher) || current_user.is_a?(Student))
-        .teacher-holder
-          h4
-            | Teachers on duty
-
-          - teachers_on_duty.each do |teacher|
-            = link_to teacher do
-              = image_tag avatar_for(teacher), id: "teacher_#{teacher.id}", class: teacher.busy? ? "busy" : nil
+        = render "layouts/teachers_holder"
+        = render "layouts/reconnect_holder"
 
       - if content_for? :side_nav
         aside.side-nav.col-md-3
