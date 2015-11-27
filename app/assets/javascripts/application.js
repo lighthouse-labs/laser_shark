@@ -37,3 +37,4 @@
 //= require day_feedbacks
 //= require incomplete_activities
 //= require activities
+//= require reconnect_holder
