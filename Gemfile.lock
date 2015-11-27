@@ -1,14 +1,14 @@
 GIT
-<<<<<<< HEAD
   remote: git://github.com/bernat/best_in_place.git
   revision: f6f108ecaba04d9990ceea03df00ca6006bb9b0f
   specs:
     best_in_place (3.0.3)
       actionpack (>= 3.2)
       railties (>= 3.2)
-=======
+
+GIT
   remote: git://github.com/rails/actioncable.git
-  revision: 63cdbf87ddaeb6bbc852de7ca2c504b7f6a22321
+  revision: 6be2604aa719713c602b8a873337d328196f8f57
   specs:
     actioncable (0.0.3)
       actionpack (>= 4.2.0)
@@ -19,7 +19,6 @@ GIT
       faye-websocket (~> 0.10.0)
       redis (~> 3.0)
       websocket-driver (~> 0.6.1)
->>>>>>> feature/100-rename-average-rating
 
 GEM
   remote: https://rubygems.org/
@@ -142,7 +141,7 @@ GEM
       i18n (~> 0.5)
     faraday (0.9.2)
       multipart-post (>= 1.2, < 3)
-    faye-websocket (0.10.1)
+    faye-websocket (0.10.2)
       eventmachine (>= 0.12.0)
       websocket-driver (>= 0.5.1)
     ffi (1.9.10)
@@ -417,7 +416,7 @@ GEM
     readmorejs-rails (0.0.12)
       railties (>= 3.2, < 5.0)
     redcarpet (3.3.3)
-    redis (3.2.1)
+    redis (3.2.2)
     reform (2.0.5)
       disposable (~> 0.1.11)
       uber (~> 0.0.11)
@@ -515,7 +514,6 @@ DEPENDENCIES
   aws-sdk-core
   bcrypt-ruby
   best_in_place!
-  bootstrap-sass
   bootstrap-sass (~> 3.3.5)
   capybara
   carrierwave
