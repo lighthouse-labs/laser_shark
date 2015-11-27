@@ -91,7 +91,7 @@ var RequestQueue = React.createClass({
       received: function(data) {
         switch(data.type) {
           case "AssistanceRequest":
-            that.handleAssistanceRequest(data.object);
+            that.handleAssistanceRequest(data.object, true);
             break;
           case "CodeReviewRequest":
             that.handleCodeReviewRequest(data.object);
@@ -120,7 +120,7 @@ var RequestQueue = React.createClass({
     });
   },
 
-  handleAssistanceRequest: function(assistanceRequest) {
+  handleAssistanceRequest: function(assistanceRequest, showNotification = false) {
     var requests = this.state.requests;
     if(this.getRequestIndex(assistanceRequest) === -1 && this.inLocation(assistanceRequest)) {
       requests.push(assistanceRequest);
@@ -129,12 +129,12 @@ var RequestQueue = React.createClass({
       })
       this.setState({requests: requests});
 
-      this.html5Notification(assistanceRequest);
+      this.html5Notification(assistanceRequest, showNotification);
     }
   },
 
-  html5Notification: function(assistanceRequest) {
-    if(this.state.hasNotification && this.state.canNotify) {
+  html5Notification: function(assistanceRequest, showNotification) {
+    if(showNotification && this.state.hasNotification && this.state.canNotify) {
       new Notification(
         "Assistance Requested by " + assistanceRequest.requestor.first_name + ' ' + assistanceRequest.requestor.last_name,
         {
