@@ -9,10 +9,12 @@ module ApplicationCable
     end
 
     def teacher_available(teacher)
-      ActionCable.server.broadcast "teachers", {
-        type: "TeacherAvailable",
-        object: UserSerializer.new(teacher).as_json
-      }
+      if teacher.teaching_assistances.currently_active.empty?
+        ActionCable.server.broadcast "teachers", {
+          type: "TeacherAvailable",
+          object: UserSerializer.new(teacher).as_json
+        }
+      end
     end
 
     def teacher_busy(teacher)
