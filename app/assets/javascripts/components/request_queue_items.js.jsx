@@ -26,23 +26,25 @@ var RequestQueueItems = React.createClass({
       return <i>This queue is empty.  Good job!</i>
   },
 
-  renderCodeReviews: function() {
-    if(this.props.codeReviews.length > 0){
-      return (
+  codeReviewHolder: function() {
+    if(this.props.location.has_code_reviews)
+      return(
         <div>
           <h3 className="section-heading">Awaiting Code Review</h3>
           <ul className="student-list">
-            {
-              this.props.codeReviews.map(function(codeReview) {
-                return (
-                  <CodeReview codeReview={codeReview} key={codeReview.id} />
-                )
-              })
-            }
+            { this.renderCodeReviews() }
           </ul>
         </div>
       )
-    }
+  },
+
+  renderCodeReviews: function() {
+    if(this.props.codeReviews.length > 0)
+      return this.props.codeReviews.map(function(codeReview) {
+        return <CodeReview codeReview={codeReview} key={codeReview.id} />
+      })
+    else
+      return <i>There aren&#39;t any code reviews</i>
   },
 
   renderStudents: function() {
@@ -62,7 +64,7 @@ var RequestQueueItems = React.createClass({
           { this.renderRequests() }
         </ul>
         
-        { this.renderCodeReviews() }
+        { this.codeReviewHolder() }
 
         <h3 className="section-heading">All Students</h3>
         <ul className="student-list">
