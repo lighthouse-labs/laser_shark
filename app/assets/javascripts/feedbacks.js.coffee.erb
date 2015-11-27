@@ -4,9 +4,9 @@ $ ->
 
   bindValidation = ->
     $('#modal-submit-button').on 'click', (event) ->
-      average_rating = $('#modal-average-rating').val()
+      rating = $('#modal-average-rating').val()
       
-      unless average_rating
+      unless rating
         event.preventDefault()        
       
         error_message = $('<strong id="error_message">**Please provide a rating**</strong><br>')
