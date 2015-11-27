@@ -8,5 +8,19 @@ module ApplicationCable
       end
     end
 
+    def teacher_available(teacher)
+      ActionCable.server.broadcast "teachers", {
+        type: "TeacherAvailable",
+        object: UserSerializer.new(teacher).as_json
+      }
+    end
+
+    def teacher_busy(teacher)
+      ActionCable.server.broadcast "teachers", {
+        type: "TeacherBusy",
+        object: UserSerializer.new(teacher).as_json
+      }
+    end
+
   end
 end
