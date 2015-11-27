@@ -7,7 +7,7 @@ class ActivitySubmission < ActiveRecord::Base
   
   after_save :request_code_review
   after_create :create_feedback
-  before_destroy :destroy_feedback
+  after_destroy :handle_submission_destroy
 
   default_value_for :completed_at, allows_nil: false do
     Time.now
@@ -44,11 +44,11 @@ class ActivitySubmission < ActiveRecord::Base
     self.activity.feedbacks.create(student: self.user) if self.user.is_a?(Student) && self.activity.allow_feedback?
   end
 
-  def destroy_feedback
-    if self.activity.allow_feedback?
-      @feedback = self.activity.feedbacks.find_by(student: self.user)
-      @feedback.destroy if @feedback
-    end
+  def handle_submission_destroy
+    ActionCable.server.broadcast "assistance", {
+      type: "CancelAssistanceRequest",
+      object: AssistanceRequestSerializer.new(self.code_review_request, root: false).as_json
+    }
   end
 
 end

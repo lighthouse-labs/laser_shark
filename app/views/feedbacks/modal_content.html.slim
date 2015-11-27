@@ -9,8 +9,8 @@
   .modal-body
     | *Rating:
     br
-    .raty-editor name="feedback[average_rating]" data-score=f.object.average_rating value=""
-      = f.hidden_field :average_rating, id: "modal-average-rating"
+    .raty-editor name="feedback[rating]" data-score=f.object.rating value=""
+      = f.hidden_field :rating, id: "modal-average-rating"
 
     | (Optional) Please enter some additional feedback:
     br

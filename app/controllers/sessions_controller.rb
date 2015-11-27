@@ -10,6 +10,7 @@ class SessionsController < ApplicationController
   def create
     @current_user = User.authenticate_via_github auth_hash_params
     session[:user_id] = @current_user.id
+    cookies.signed[:user_id] = @current_user.id
     if @current_user.completed_registration?
       if session[:invitation_code]
         apply_invitation_code(session[:invitation_code])
@@ -29,6 +30,7 @@ class SessionsController < ApplicationController
 
   def destroy
     reset_session
+    cookies.delete :user_id
     redirect_to :root
   end
 

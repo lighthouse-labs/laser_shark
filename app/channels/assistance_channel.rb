@@ -1,0 +1,84 @@
+class AssistanceChannel < ApplicationCable::Channel  
+
+  def subscribed
+    stream_from "assistance"
+  end
+
+  def start_assisting(data)
+    ar = AssistanceRequest.find(data["request_id"])
+    if ar.start_assistance(current_user)
+      ActionCable.server.broadcast "assistance", {
+        type: "AssistanceStarted",
+        object: AssistanceSerializer.new(ar.reload.assistance, root: false).as_json
+      }
+
+      UserChannel.broadcast_to ar.requestor, {type: "AssistanceStarted"}
+
+      ActionCable.server.broadcast "teachers", {
+        type: "TeacherBusy",
+        object: UserSerializer.new(current_user).as_json
+      }      
+    end
+
+  end
+
+  def end_assistance(data)
+    assistance = Assistance.find data["assistance_id"]
+    assistance.end(data["notes"], data["rating"].to_i)
+
+    ActionCable.server.broadcast "assistance", {
+      type: "AssistanceEnded",
+      object: AssistanceSerializer.new(assistance, root: false).as_json
+    }
+
+    UserChannel.broadcast_to assistance.assistance_request.requestor, {type: "AssistanceEnded"}
+
+    ActionCable.server.broadcast "teachers", {
+      type: "TeacherAvailable",
+      object: UserSerializer.new(current_user).as_json
+    }      
+  end
+
+  def cancel_assistance_request(data)
+    ar = AssistanceRequest.find data["request_id"]
+    if ar && ar.cancel
+      ActionCable.server.broadcast "assistance", {
+        type: "CancelAssistanceRequest",
+        object: AssistanceRequestSerializer.new(ar, root: false).as_json
+      }
+
+      UserChannel.broadcast_to ar.requestor, {type: "AssistanceCancelled"}
+    end
+  end
+
+  def stop_assisting(data)
+    assistance = Assistance.find data["assistance_id"]
+    if assistance && assistance.destroy
+      ActionCable.server.broadcast "assistance", {
+        type: "StoppedAssisting",
+        object: AssistanceSerializer.new(assistance).as_json
+      }
+
+      UserChannel.broadcast_to assistance.assistee, {type: "AssistanceCancelled"}
+        ActionCable.server.broadcast "teachers", {
+        type: "TeacherAvailable",
+        object: UserSerializer.new(current_user).as_json
+      }      
+    end
+  end
+
+  def provided_assistance(data)
+    student = Student.find data["student_id"]
+    assistance_request = AssistanceRequest.new(requestor: student, reason: "Offline assistance requested")
+    if assistance_request.save
+      assistance_request.start_assistance(current_user)
+      assistance = assistance_request.reload.assistance
+      assistance.end(data["notes"], data["rating"])
+      
+      ActionCable.server.broadcast "assistance", {
+        type: "OffineAssistanceCreated",
+        object: UserSerializer.new(student).as_json
+      }
+    end
+  end
+end

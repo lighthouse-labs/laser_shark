@@ -1,5 +1,7 @@
 LaserShark::Application.routes.draw do
 
+  match "/websocket", :to => ActionCable.server, via: [:get, :post]
+
   get '/i/:code', to: 'invitations#show' # student/teacher invitation handler
   get 'prep'  => 'setup#show' # temporary
   get 'setup' => 'setup#show' # temporary

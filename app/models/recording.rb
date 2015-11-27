@@ -1,6 +1,6 @@
 class Recording < ActiveRecord::Base
 
-  belongs_to :presenter, :class => User
+  belongs_to :presenter, :class_name => User
   belongs_to :cohort
   belongs_to :activity
   belongs_to :program

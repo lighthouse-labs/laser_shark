@@ -16,7 +16,7 @@ br
       td.admin-teacher-stat = @feedbacks.pending.not_expired.count
       td.admin-teacher-stat = @feedbacks.pending.expired.count
       td.admin-teacher-stat 
-        = ((@feedbacks.completed.inject(0){|sum,feedback| sum + feedback.average_rating}.to_f)/@feedbacks.completed.length).round(2)
+        = ((@feedbacks.completed.inject(0){|sum,feedback| sum + feedback.rating}.to_f)/@feedbacks.completed.length).round(2)
         | /5
 br
 
@@ -28,7 +28,7 @@ br
           = link_to teacher_presenter.full_name, admin_teacher_stat_path(teacher_presenter.teacher)
         .col-md-3
           | Average Rating:&nbsp;
-          = ((feedbacks.inject(0){|sum,feedback| sum + feedback.average_rating}.to_f)/feedbacks.length).round(2)
+          = ((feedbacks.inject(0){|sum,feedback| sum + feedback.rating}.to_f)/feedbacks.length).round(2)
           | /5
       .row
         table.table
@@ -43,11 +43,11 @@ br
             - feedbacks.each do |teacher_feedback|
               - present teacher_feedback do |teacher_feedback_presenter|
                 tr
-                  td.admin-teacher-feedback-date-column = teacher_feedback_presenter.updated_date
+                  td.admin-teacher-feedback-date-column = teacher_feedback_presenter.date
                   td = teacher_feedback_presenter.student_full_name
                   td = teacher_feedback_presenter.feedbackable_type
                   td
-                    .raty-viewer data-score="#{teacher_feedback_presenter.average_rating}"
+                    .raty-viewer data-score="#{teacher_feedback_presenter.rating}"
                 - if teacher_feedback.notes.present?
                   tr
                     td
