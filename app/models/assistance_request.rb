@@ -25,7 +25,7 @@ class AssistanceRequest < ActiveRecord::Base
   scope :requestor_cohort_in_locations, -> (locations) {
     if locations.is_a?(Array) && locations.length > 0
       includes(requestor: {cohort: :location}).
-      where(locations: {name: locations}).
+      where(locations: {name: locations, has_code_reviews: true}).
       references(:requestor, :cohort, :location)
     end
   }

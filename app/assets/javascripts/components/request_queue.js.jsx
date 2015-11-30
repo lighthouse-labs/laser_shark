@@ -9,9 +9,9 @@ var RequestQueue = React.createClass({
     var location;
 
     if(this.props.user.location)
-      location = this.props.user.location.name;
+      location = this.props.user.location;
     else
-      location = "Vancouver";
+      location = this.props.locations[0];
 
     this.setState({location: location});
   },
@@ -23,7 +23,7 @@ var RequestQueue = React.createClass({
   },
 
   componentDidUpdate: function(prevProps, prevState) {
-    if(prevState.location != this.state.location)
+    if(prevState.location.id != this.state.location.id)
       this.loadQueue();
   },
 
@@ -55,7 +55,7 @@ var RequestQueue = React.createClass({
   },
   
   loadQueue: function() {
-    $.getJSON("/assistance_requests/queue?location=" + this.state.location, this.requestSuccess)  
+    $.getJSON("/assistance_requests/queue?location=" + this.state.location.name, this.requestSuccess)  
   },
 
   requestSuccess: function(response) {
@@ -208,7 +208,7 @@ var RequestQueue = React.createClass({
   },
 
   inLocation: function(assistanceRequest) {
-    return assistanceRequest.requestor.cohort.location.name === this.state.location;
+    return assistanceRequest.requestor.cohort.location.id === this.state.location.id;
   },
 
   getRequestIndex: function(assistanceRequest) {
@@ -221,7 +221,9 @@ var RequestQueue = React.createClass({
   },
 
   locationChanged: function(event) {
-    this.setState({location: event.target.value});
+    var locationNames = this.props.locations.map(function(l) { return l.name });
+    var ind = locationNames.indexOf(event.target.value);
+    this.setState({location: this.props.locations[ind]});
   },
 
   renderLocations: function() {
@@ -234,13 +236,13 @@ var RequestQueue = React.createClass({
           { 
             this.props.locations.map(function(location) {
               return (
-                <label key={location}>
+                <label key={location.id}>
                   <input 
                     type="radio" 
-                    value={location} 
-                    checked={that.state.location == location}
+                    value={location.name} 
+                    checked={that.state.location.id == location.id}
                     onChange={that.locationChanged} />
-                    { location }
+                    { location.name }
                 </label>
               )
             })
@@ -263,7 +265,8 @@ var RequestQueue = React.createClass({
           activeAssistances={this.state.activeAssistances}
           requests={this.state.requests}
           codeReviews={this.state.codeReviews}
-          students={this.state.students} />
+          students={this.state.students}
+          location={this.state.location} />
       </div>
     )
   }
