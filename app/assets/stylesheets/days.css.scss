@@ -33,9 +33,6 @@
     .name {
       color: $gray-light;
     }
-    .location {
-      color: $gray-light;
-    }
   }
   .icon {
     font-size: 36px;
@@ -56,6 +53,16 @@
       font-size: .6em;
     }
   }
+  .icon-calendar-description-button {
+    right: 0;
+    .fa-chevron-down {
+      color: $green-sea;
+    }
+    .fa-chevron-down:hover {
+      color: $gray-light;
+      cursor: pointer;
+    }
+  }
   .icon-type {
     left: 0;
   }
@@ -64,9 +71,19 @@
     overflow: hidden;
     padding: 28px 0;
   }
-  .location {
+  .calendar-event-location {
     color: $green-sea;
     font-size: 16px;
+  }
+  .calendar-event-name {
+    color: $green-sea;
+    font-size: 24px;
+    padding: 28px 0;
+  }
+  .calendar-event-name-with-location {
+    color: $green-sea;
+    font-size: 24px;
+    padding: 20px 0;
   }
   .time {
     color: white;
@@ -85,29 +102,10 @@
   }
 }
 
-.calendar {
-  .event-block-no-description {
-    padding: 28px 0;
-  }
-  .event-block-with-description {
-    padding-top: 28px;
-  }
-  .event-name, .event-location, .toggable-description-link {
-    color: $green-sea;
-  }
-  .event-location {
-    font-size: 16px;
-  }
-  .toggable-description-link {
-    font-size: 12px;
-    margin-top: -4px;
-  }
-  .toggable-description-link:hover {
-    color: $gray-light;
-    cursor: pointer;
-  }
-  .toggable-description {
-    font-size: 12px;
-    color: $gray-light;
-  }
+.description-details {
+  font-size: 16px;
+  padding: 10px 0;
+  color: $green-sea;
+  display: none;
+  margin-top: -20px;
 }

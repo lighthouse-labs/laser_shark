@@ -16,29 +16,29 @@
       var link = item.htmlLink;
       var location = item.location || '';
       var details = '<div class="icon icon-type"><i class="fa fa-calendar"></i></div>'
-      if (item.description) {
-        details += '<div class="event-block-with-description">' + '<div class="event-name">' + item.summary + '</div>' + 
-        '<div class="event-location">' + location + '</div>' +
-        '<div class="toggable-description-link">View Description</div>' +
-        '<div class="toggable-description" style="display: none;">' + item.description + '</div>'
-        + '</div>';
+      if (item.location) {
+        details += '<div class="calendar-event-name-with-location">' + item.summary + '<div class="calendar-event-location">' + item.location + '</div>' + '</div>'
       }
       else {
-        details += '<div class="event-block-no-description">' + '<div class="event-name">' + item.summary + '</div>' + 
-        '<div class="event-location">' + location + '</div>'
-        + '</div>';
+       details += '<div class="calendar-event-name">' + item.summary + '</div>' 
       }
       if (item.start.dateTime) {
         var startTime = item.start.dateTime.substring(11,16);
         var endTime = item.end.dateTime.substring(11,16);
         details += '<div class="time">' + startTime + '<br> to ' + endTime + '<br>' + '</div>';
       }
-      calendarEvent = '<div class="calendar activity">' + details + '</div>';
+      if (item.description) {
+        details += '<div class="icon icon-calendar-description-button"><i class="fa fa-chevron-down"></i></div>'
+        calendarEvent = '<div class="calendar activity">' + details + 
+        '<div class="description-details">' + item.description + '</div></div>';
+      }
+      else {
+        calendarEvent = '<div class="calendar activity">' + details + '</div>'
+      }
       $($div).append(calendarEvent);
-      $('.toggable-description-link').click(function(){
-        $(this).siblings('.toggable-description').toggle();
+      $('.icon-calendar-description-button').click(function(){
+        $(this).siblings('.description-details').toggle();
       }) 
-
     }
 
     var feedUrl = 'https://www.googleapis.com/calendar/v3/calendars/' +
