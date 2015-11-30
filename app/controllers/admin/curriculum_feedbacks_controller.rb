@@ -8,14 +8,14 @@ class Admin::CurriculumFeedbacksController < Admin::BaseController
     params[:completed?] = 'true' if params[:completed].nil?
     
     @feedbacks = Feedback.curriculum_feedbacks.filter_by(filter_by_params).order(order)
-    @average_rating = @feedbacks.average(:average_rating).to_f.round(2)
+    @rating = @feedbacks.average(:rating).to_f.round(2)
     @feedbacks = @feedbacks.page(params[:page]).per(DEFAULT_PER)
   end
 
   private
 
   def sort_column
-    ["average_rating" "updated_at"].include?(params[:sort]) ? params[:sort] : "feedbacks.updated_at"
+    ["rating" "updated_at"].include?(params[:sort]) ? params[:sort] : "feedbacks.updated_at"
   end
 
   def sort_direction

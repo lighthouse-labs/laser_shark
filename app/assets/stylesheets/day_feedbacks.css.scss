@@ -133,7 +133,11 @@
 }
 
 .day-feedback-date {
-  width: 140px;
+  width: 75px;
+}
+
+.day-feedback-text {
+  width: 500px;
 }
 
 .admin-feedback-date-select {
@@ -142,4 +146,8 @@
   font-size: 12px;
   line-height: 1.0;
   display: inline-block;
+ }
+
+ .admin-edit-day-feedback-notes-text-area {
+  border: none;
  }

@@ -7,7 +7,7 @@ table.table.table-feedbacks
       th Day
       th Name
       th Type
-      th.feedback-rating-column = sortable "average_rating", "Rating (Avg: #{@average_rating})"
+      th.feedback-rating-column = sortable "rating", "Rating (Avg: #{@rating})"
       th.admin-curriculum-feedback-student-column Student
       th.admin-curriculum-feedback-date-column = sortable "updated_at", "Updated"
 
@@ -19,7 +19,7 @@ table.table.table-feedbacks
           td = feedback_presenter.feedbackable_name
           td = feedback_presenter.feedbackable_type
           td
-            .raty-viewer data-score="#{feedback.average_rating}"
+            .raty-viewer data-score="#{feedback.rating}"
           td = feedback_presenter.student_full_name
           td = feedback.updated_at.to_date
 
