@@ -107,9 +107,6 @@ GEM
     default_value_for (3.0.1)
       activerecord (>= 3.2.0, < 5.0)
     diff-lcs (1.2.5)
-    disposable (0.1.14)
-      representable (>= 2.2.3, < 3.0.0)
-      uber
     docile (1.1.5)
     dotenv (2.0.2)
     em-hiredis (0.3.0)
@@ -409,11 +406,6 @@ GEM
       railties (>= 3.2, < 5.0)
     redcarpet (3.3.3)
     redis (3.2.1)
-    reform (2.0.5)
-      disposable (~> 0.1.11)
-      uber (~> 0.0.11)
-    representable (2.3.0)
-      uber (~> 0.0.7)
     rspec (2.14.1)
       rspec-core (~> 2.14.0)
       rspec-expectations (~> 2.14.0)
@@ -486,7 +478,6 @@ GEM
       hitimes
     tzinfo (1.2.2)
       thread_safe (~> 0.1)
-    uber (0.0.15)
     uglifier (2.7.2)
       execjs (>= 0.3.0)
       json (>= 1.8.0)
@@ -545,7 +536,6 @@ DEPENDENCIES
   react-rails (~> 1.4.1)
   readmorejs-rails
   redcarpet
-  reform
   rspec-rails (= 2.14.2)
   rubyzip (>= 1.0.0)
   sass-rails (~> 4.0.2)

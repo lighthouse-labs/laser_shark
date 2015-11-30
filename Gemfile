@@ -28,7 +28,6 @@ gem 'compass-rails'
 gem 'actioncable', github: "rails/actioncable"
 
 gem 'email_validator'
-gem 'reform'
 
 gem 'redcarpet'
 
