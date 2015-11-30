@@ -16,6 +16,12 @@ class Admin::DayFeedbacksController < Admin::BaseController
     @paginated_day_feedbacks = @day_feedbacks.reverse_chronological_order
       .page(params[:page])
       .per(DEFAULT_PER)
+
+    respond_to do |format|
+      format.html
+      format.csv {render text: @day_feedbacks.to_csv}
+      format.xls
+    end
   end
 
   def update
