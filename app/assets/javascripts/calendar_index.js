@@ -14,7 +14,7 @@
 
     var appendDetails = function(item) {
       var link = item.htmlLink;
-      var location = item.location || '';
+      var location = item.location;
       var details = '<div class="icon icon-type"><i class="fa fa-calendar"></i></div>'
       if (item.location) {
         details += '<div class="calendar-event-name-with-location">' + item.summary + '<div class="calendar-event-location">' + item.location + '</div>' + '</div>'
@@ -29,15 +29,16 @@
       }
       if (item.description) {
         details += '<div class="icon icon-calendar-description-button"><i class="fa fa-chevron-down"></i></div>'
-        calendarEvent = '<div class="calendar activity">' + details + 
-        '<div class="description-details">' + item.description + '</div></div>';
+        calendarEvent = '<div class="calendar"><div class="activity">' + details + 
+        '</div><div class="description-container"><div class="description-details">' + item.description + '</div></div></div>';
       }
       else {
         calendarEvent = '<div class="calendar activity">' + details + '</div>'
       }
       $($div).append(calendarEvent);
       $('.icon-calendar-description-button').click(function(){
-        $(this).siblings('.description-details').toggle();
+        $(this).parent().siblings('.description-container').toggle();
+        $(this).parent().toggleClass('description-open');
       }) 
     }
 

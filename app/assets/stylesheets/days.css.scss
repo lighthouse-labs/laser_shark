@@ -102,10 +102,25 @@
   }
 }
 
-.description-details {
+.description-container {
   font-size: 16px;
-  padding: 10px 0;
-  color: $green-sea;
+  padding: 2px 0;
   display: none;
   margin-top: -20px;
+  background-color: #2c3e50;
+  color: #798795;
+  border-radius: 0px 0px 6px 6px;
+}
+.description-details {
+  margin-left: 140px;
+  color: $green-sea;
+}
+.description-open {
+  border-bottom: 1px solid black;
+  border-radius: 6px 6px 0px 0px;
+}
+.calendar {
+  .activity:hover {
+    box-shadow: none;
+  }
 }
