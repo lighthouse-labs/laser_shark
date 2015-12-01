@@ -51,12 +51,12 @@ class DayFeedback < ActiveRecord::Base
     self.count_for_mood(mood).to_f/self.count*100
   end
 
-  def self.to_csv(options = {})
+  def self.to_csv
     day_feedback_attributes = ['day', 'mood', 'text', 'created_at', 'archived_at', 'notes']
     student_attributes = ['first_name', 'last_name']
     location_attributes = ['name']
-    CSV.generate(options) do |csv|
-      csv << (day_feedback_attributes + student_attributes + location_attributes)
+    CSV.generate do |csv|
+      csv << ['Curriculum Day', 'Mood', 'Feedback Text', 'Created Date', 'Archived Date', 'Notes', 'Student First Name', 'Student Last Name', 'Location']
       all.each do |day_feedback|
         csv << (day_feedback.attributes.values_at(*day_feedback_attributes) + 
                 day_feedback.student.attributes.values_at(*student_attributes) + 

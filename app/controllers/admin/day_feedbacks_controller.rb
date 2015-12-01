@@ -20,7 +20,9 @@ class Admin::DayFeedbacksController < Admin::BaseController
     respond_to do |format|
       format.html
       format.csv {render text: @day_feedbacks.to_csv}
-      format.xls
+      format.xls do 
+        headers['Content-Disposition'] = 'attachment; filename=day_feedbacks.xls'
+      end
     end
   end
 
