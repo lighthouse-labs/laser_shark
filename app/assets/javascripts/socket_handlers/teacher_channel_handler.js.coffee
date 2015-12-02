@@ -59,7 +59,7 @@ class window.TeacherChannelHandler
         img.className = 'busy'
 
       $('.teacher-holder').append(link)
-      $('.teacher-holder').find(link).tooltip({position: {my: "center", at: "left"}})
+      $('.teacher-holder').find(link).tooltip()
 
   removeTeacherFromSidebar: (teacher) ->
     $('.teacher-holder').find('#teacher_' + teacher.id).remove()
