@@ -13,7 +13,11 @@ module CourseCalendar
   private
 
   def weekend?
-    !!(day =~ /(?<=w\d)e$/)
+    !!(day.to_s =~ /(?<=w\d)e$/)
+  end
+
+  def friday?
+    !!(today.to_s =~ /[w][1-8][d][5]/)
   end
 
   def day
@@ -51,7 +55,7 @@ module CourseCalendar
 
   def allowed_day?
     # return true if day == 'setup' # setup always allowed, for now - KV
-    unless current_user.can_access_day?(day)
+    unless ( current_user.can_access_day?(day) || (weekend? && friday?) )
       if today?
         redirect_to(setup_path, alert: 'Access not allowed yet.')
       else
