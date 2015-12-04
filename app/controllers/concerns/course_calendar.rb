@@ -55,7 +55,7 @@ module CourseCalendar
 
   def allowed_day?
     # return true if day == 'setup' # setup always allowed, for now - KV
-    unless ( current_user.can_access_day?(day) || (weekend? && friday?) )
+    unless current_user.can_access_day?(day)
       if today?
         redirect_to(setup_path, alert: 'Access not allowed yet.')
       else
