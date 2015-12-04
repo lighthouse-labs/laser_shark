@@ -116,6 +116,9 @@ var RequestQueue = React.createClass({
 
             break;
         }
+      },
+      disconnected: function() {
+        $('.reconnect-holder').show()
       }
     });
   },
