@@ -7,7 +7,6 @@ var RequestItem = React.createClass({
       <li>
         <div className="student-avatar">
           <img src={student.avatar_url} />
-          { student.remote ? <span className="student-remote">Remote</span> : null }
         </div>
 
         <div className="student-description">
@@ -16,8 +15,9 @@ var RequestItem = React.createClass({
             <a href={"cohorts/" + student.cohort.id + "/students"} className="cohort-name">
               {student.cohort.name}
               <span className="cohort-location">
-                {student.cohort.location.name}
+                {student.location.name}
               </span>
+              { student.remote ? <span className="student-remote">Remote</span> : null }
             </a>
           </p>
 

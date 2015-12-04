@@ -10,7 +10,8 @@ class UserSerializer < ActiveModel::Serializer
     :github_username,
     :avatar_url,
     :busy,
-    :last_assisted_at
+    :last_assisted_at,
+    :remote
 
   has_one :location
   has_one :cohort
@@ -22,9 +23,17 @@ class UserSerializer < ActiveModel::Serializer
   end
 
   def busy
-    if object.is_a?(Teacher)
+    if teacher?
       object.busy?
     end
+  end
+
+  def remote
+    !teacher? && (object.cohort.location != object.location) 
+  end
+
+  def teacher?
+    object.is_a?(Teacher)
   end
 
 end
