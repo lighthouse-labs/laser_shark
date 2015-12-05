@@ -174,10 +174,6 @@
       color: $link-hover-color;
     }
   }
-  .icon-bar {
-    display: none;
-  }
-  
   @media (min-width: $grid-float-breakpoint) {
     display: none;
   }
