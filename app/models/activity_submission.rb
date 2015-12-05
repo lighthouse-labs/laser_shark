@@ -8,6 +8,7 @@ class ActivitySubmission < ActiveRecord::Base
   after_save :request_code_review
   after_create :create_feedback
   after_destroy :handle_submission_destroy
+  after_destroy :destroy_feedback
 
   default_value_for :completed_at, allows_nil: false do
     Time.now
@@ -42,6 +43,13 @@ class ActivitySubmission < ActiveRecord::Base
 
   def create_feedback
     self.activity.feedbacks.create(student: self.user) if self.user.is_a?(Student) && self.activity.allow_feedback?
+  end
+
+  def destroy_feedback
+    if self.activity.allow_feedback?
+       @feedback = self.activity.feedbacks.find_by(student: self.user)
+       @feedback.destroy if @feedback
+    end
   end
 
   def handle_submission_destroy
