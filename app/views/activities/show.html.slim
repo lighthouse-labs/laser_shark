@@ -178,7 +178,7 @@ section.activity-details
                 = msg.cohort.name
 
           .contents
-            = simple_format msg.body
+            == markdown msg.body
             - if teacher? && msg.teacher_notes?
               .teacher-notes 
                 h5 Teacher (Internal) Notes
