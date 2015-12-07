@@ -37,6 +37,7 @@ LaserShark::Application.routes.draw do
   end
 
   resources :incomplete_activities, only: [:index]
+  resources :search_activities, only: [:index]
 
   resources :assistances, only: [:destroy] do
     member do

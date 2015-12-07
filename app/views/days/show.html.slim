@@ -20,6 +20,10 @@
         = @feedback[:sad]
       sub.sad title="Unhappy this cohort"
         = @cohort_feedback[:sad]
+  .pull-right.activities-search-bar
+    = form_tag search_activities_path, method: 'get' do 
+      = text_field_tag 'query', params[:query], placeholder: 'Search for an activity', class: 'form-control'
+      = submit_tag 'Go', class: 'btn btn-success'
 
 = render "days/info", day: day if day.info
 = render partial: 'activities/activity', collection: @activities
