@@ -1,26 +1,33 @@
-- if !@cohort.nil?
-    h1 = @cohort.name
+- if !@current_cohort.nil?
+    h3 = @current_cohort.name
 table.table
   thead
     tr
       th
       th Name
       th Email
-      th Phone
-      th Twitter
-      th Skype
-      th Slack
       th GitHub Username
-      th Completed Registration
+      th Registered?
+      th Cohort
+      th 
   tbody
     - @students.each do |student|
-      tr
+      tr data-id='#{student.id}'
         td = image_tag(avatar_for(student), {size:'100x100'})
         td = student.full_name
         td = student.email
-        td = student.phone_number
-        td = student.twitter
-        td = student.skype
-        td = student.slack
         td = student.github_username
         td = completed_registration?(student)
+        td
+          = select_tag :cohort_id, options_from_collection_for_select(@cohorts, "id", "name", student.cohort.id), class: "form-control admin-student-cohort-selector"
+        td 
+          - if student.deactivated?
+            .btn.btn-primary.btn-xs.student-reactivate-button
+              | Reactivate
+            .btn.btn-danger.btn-xs.student-deactivate-button.hidden-button
+              | Deactivate
+          - else
+            .btn.btn-danger.btn-xs.student-deactivate-button
+              | Deactivate
+            .btn.btn-primary.btn-xs.student-reactivate-button.hidden-button
+              | Reactivate

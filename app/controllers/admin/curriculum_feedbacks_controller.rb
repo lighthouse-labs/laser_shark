@@ -9,7 +9,16 @@ class Admin::CurriculumFeedbacksController < Admin::BaseController
     
     @feedbacks = Feedback.curriculum_feedbacks.filter_by(filter_by_params).order(order)
     @rating = @feedbacks.average(:rating).to_f.round(2)
-    @feedbacks = @feedbacks.page(params[:page]).per(DEFAULT_PER)
+    @paginated_feedbacks = @feedbacks.page(params[:page]).per(DEFAULT_PER)
+
+    respond_to do |format|
+      format.html
+      format.csv {render text: @feedbacks.to_csv}
+      format.xls do 
+        headers['Content-Disposition'] = 'attachment; filename=curriculum_feedbacks.xls'
+      end
+    end
+
   end
 
   private
