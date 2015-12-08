@@ -1,0 +1,13 @@
+.reconnect-holder {
+  position: fixed;
+  top: 50px;
+  right: 0px;
+
+  width: 275px;
+  z-index: 100;
+  display: none;
+
+  .btn {
+    margin-right: 5px;
+  }
+}

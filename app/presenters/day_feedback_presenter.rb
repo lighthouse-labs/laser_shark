@@ -1,7 +1,7 @@
 class DayFeedbackPresenter < BasePresenter
   presents :dayfeedback
   
-  delegate :text, :archived_at, to: :dayfeedback
+  delegate :notes, :text, :archived_at, to: :dayfeedback
 
   def capitalized_day
     dayfeedback.day.upcase
