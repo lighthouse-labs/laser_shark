@@ -19,6 +19,7 @@ var RequestQueue = React.createClass({
   componentDidMount: function() {
     this.loadQueue();
     this.subscribeToSocket();
+    this.requestNotificationPermission();
   },
 
   componentDidUpdate: function(prevProps, prevState) {
@@ -26,12 +27,30 @@ var RequestQueue = React.createClass({
       this.loadQueue();
   },
 
+  requestNotificationPermission: function() {
+    that = this;
+    switch(Notification.permission) {
+    case "granted":
+      this.setState({canNotify: true})
+      break;
+    default:
+      Notification.requestPermission(function(e) {
+        if(e == "granted") {
+          that.setState({canNotify: true})
+        }
+      });
+    }
+  },
+
   getInitialState: function() {
     return {
       activeAssistances: [],
       requests: [],
       codeReviews: [],
-      students: []
+      students: [],
+      hasNotification: ("Notification" in window),
+      canNotify: false,
+
     }
   },
   
@@ -97,6 +116,9 @@ var RequestQueue = React.createClass({
 
             break;
         }
+      },
+      disconnected: function() {
+        $('.reconnect-holder').show()
       }
     });
   },
@@ -105,14 +127,34 @@ var RequestQueue = React.createClass({
     var requests = this.state.requests;
     if(this.getRequestIndex(assistanceRequest) === -1 && this.inLocation(assistanceRequest)) {
       requests.push(assistanceRequest);
+      requests.sort(function(a,b){
+        return new Date(a.start_at) - new Date(b.start_at);
+      })
       this.setState({requests: requests});
+
+      this.html5Notification(assistanceRequest);
     }
   },
+
+  html5Notification: function(assistanceRequest) {
+    if(this.state.hasNotification && this.state.canNotify) {
+      new Notification(
+        "Assistance Requested by " + assistanceRequest.requestor.first_name + ' ' + assistanceRequest.requestor.last_name,
+        {
+          body: assistanceRequest.requestor.cohort.name + "\r\n" + (assistanceRequest.reason || ''),
+          icon: assistanceRequest.requestor.avatar_url
+        }
+      );
+    }
+  }, 
 
   handleCodeReviewRequest: function(codeReviewRequest) {
     var codeReviews = this.state.codeReviews;
     if(this.inLocation(codeReviewRequest)) {
       codeReviews.push(codeReviewRequest);
+      codeReviews.sort(function(a,b){
+        return new Date(a.start_at) - new Date(b.start_at);
+      })
       this.setState({codeReviews: codeReviews});
     }
   },
