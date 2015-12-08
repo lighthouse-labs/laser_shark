@@ -1,4 +1,16 @@
 var RequestItem = React.createClass({
+
+  renderStudentLocation: function() {
+    var student = this.props.student;
+
+    if(this.props.location.id != student.location.id)
+      return (
+        <small>
+          - {student.location.name}
+          { student.remote ? <span className="label label-info">Remote</span> : null }
+        </small>
+      )
+  },
   
   render: function() {
     var student = this.props.student;
@@ -10,14 +22,13 @@ var RequestItem = React.createClass({
         </div>
 
         <div className="student-description">
-          <h4 className="student-heading">{student.first_name} {student.last_name}</h4>
+          <h4 className="student-heading">
+            {student.first_name} {student.last_name}
+            { this.renderStudentLocation() }
+          </h4>
           <p className="student-cohort">
             <a href={"cohorts/" + student.cohort.id + "/students"} className="cohort-name">
               {student.cohort.name}
-              <span className="cohort-location">
-                {student.location.name}
-              </span>
-              { student.remote ? <span className="student-remote">Remote</span> : null }
             </a>
           </p>
 
