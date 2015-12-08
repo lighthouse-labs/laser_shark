@@ -25,9 +25,10 @@
   color: #798795;
   font-size: 24px;
   line-height: 24px;
-  margin-bottom: 20px;
   padding: 0 60px 0 140px;
   position: relative;
+  margin-bottom: 20px;
+
   &:hover {
     box-shadow: 0 0 0 3px $gray;
     .name {
@@ -112,14 +113,20 @@
   border-radius: 0px 0px 6px 6px;
 }
 .description-details {
-  margin-left: 140px;
   color: $green-sea;
+
+  margin-left: 140px;
+  padding: 10px 55px 10px 0px;
 }
+
 .description-open {
   border-bottom: 1px solid black;
   border-radius: 6px 6px 0px 0px;
 }
+
 .calendar {
+  margin-bottom: 20px;
+
   .activity:hover {
     box-shadow: none;
   }

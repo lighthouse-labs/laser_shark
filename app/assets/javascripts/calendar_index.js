@@ -15,31 +15,32 @@
     var appendDetails = function(item) {
       var link = item.htmlLink;
       var location = item.location;
-      var details = '<div class="icon icon-type"><i class="fa fa-calendar"></i></div>'
-      if (item.location) {
-        details += '<div class="calendar-event-name-with-location">' + item.summary + '<div class="calendar-event-location">' + item.location + '</div>' + '</div>'
-      }
-      else {
-       details += '<div class="calendar-event-name">' + item.summary + '</div>' 
-      }
+
+      // Create the event holder
+      var holderDiv = getEventHolder();
+
+      var activityDiv = document.createElement('div')
+      activityDiv.className = "activity";
+      
+      // Add the icon to the holder
+      activityDiv.appendChild(getEventIcon());
+
+      // Add the location 
+      activityDiv.appendChild(getEventLocation(item));
+
       if (item.start.dateTime) {
-        var startTime = item.start.dateTime.substring(11,16);
-        var endTime = item.end.dateTime.substring(11,16);
-        details += '<div class="time">' + startTime + '<br> to ' + endTime + '<br>' + '</div>';
+        activityDiv.appendChild(getStartTime(item));
       }
+
+      // Append all the information before the description
+      holderDiv.appendChild(activityDiv);
+
       if (item.description) {
-        details += '<div class="icon icon-calendar-description-button"><i class="fa fa-chevron-down"></i></div>'
-        calendarEvent = '<div class="calendar"><div class="activity">' + details + 
-        '</div><div class="description-container"><div class="description-details">' + item.description + '</div></div></div>';
+        getDescription(holderDiv, activityDiv, item);
       }
-      else {
-        calendarEvent = '<div class="calendar activity">' + details + '</div>'
-      }
-      $($div).append(calendarEvent);
-      $('.icon-calendar-description-button').click(function(){
-        $(this).parent().siblings('.description-container').toggle();
-        $(this).parent().toggleClass('description-open');
-      }) 
+
+      // Add the event to the event div
+      $($div).append(holderDiv);
     }
 
     var feedUrl = 'https://www.googleapis.com/calendar/v3/calendars/' +
@@ -49,6 +50,81 @@
     var eventsHeader = $div.prev();
     eventsHeader.hide();
     eventsHeader.prev().hide();
+
+    function getEventHolder() {
+      var holderDiv = document.createElement('div')
+      holderDiv.className = "calendar"
+
+      return holderDiv;
+    }
+
+    function getEventIcon() {
+      var iconDiv = document.createElement('div');
+      iconDiv.className = "icon icon-type";
+
+      var iEle = document.createElement('i');
+      iEle.className = "fa fa-calendar";
+
+      iconDiv.appendChild(iEle);
+      return iconDiv;
+    }
+
+    function getEventLocation(eventData) {
+      var locationDiv = document.createElement('div');
+      var textNode = document.createTextNode(eventData.summary);
+      locationDiv.appendChild(textNode);
+
+      if (eventData.location) {
+        locationDiv.className = "calendar-event-name-with-location";
+
+        var innerLocationDiv = document.createElement('div');
+        innerLocationDiv.className = "calendar-event-location";
+        innerLocationDiv.innerHTML = eventData.location;
+
+        locationDiv.appendChild(innerLocationDiv);
+      }
+      else
+        locationDiv.className = "calendar-event-name";
+
+      return locationDiv;
+    }
+
+    function getStartTime(eventData) {
+      var startTime = eventData.start.dateTime.substring(11,16);
+      var endTime = eventData.end.dateTime.substring(11,16);
+
+      var timeDiv = document.createElement('div');
+      timeDiv.className = "time"
+      timeDiv.innerHTML = startTime + '<br> to ' + endTime + '<br>';
+
+      return timeDiv;
+    }
+
+    function getDescription(eventHolder, activityDiv, eventData) {
+      var showDescriptionDiv = document.createElement('div');
+      showDescriptionDiv.className = "icon icon-calendar-description-button";
+
+      var iEle = document.createElement('i');
+      iEle.className = "fa fa-chevron-down";
+
+      showDescriptionDiv.appendChild(iEle);
+      activityDiv.appendChild(showDescriptionDiv);
+
+      var descriptionHolder = document.createElement('div');
+      descriptionHolder.className = "description-container";
+
+      var descriptionContentDiv = document.createElement('div');
+      descriptionContentDiv.className = "description-details";
+      descriptionContentDiv.innerHTML = eventData.description;
+
+      $(showDescriptionDiv).click(function() {
+        $(descriptionHolder).toggle();
+        $(activityDiv).toggleClass('description-open');
+      })
+
+      descriptionHolder.appendChild(descriptionContentDiv);
+      eventHolder.appendChild(descriptionHolder);
+    }
 
     var getDetails = function(item) {
       var summary = item.summary || '';
