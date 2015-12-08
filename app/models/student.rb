@@ -5,7 +5,11 @@ class Student < User
   has_many :feedbacks
   
   scope :in_active_cohort, -> { joins(:cohort).merge(Cohort.is_active) }
-
+  scope :has_open_requests, -> {
+    joins(:assistance_requests).
+    where(assistance_requests: {type: nil, canceled_at: nil, assistance_id: nil}).
+    references(:assistance_requests)
+  }
 
   def prepping?
     self.cohort.nil?

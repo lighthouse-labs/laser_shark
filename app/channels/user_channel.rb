@@ -2,6 +2,8 @@ class UserChannel < ApplicationCable::Channel
 
   def subscribed
     stream_for current_user
+
+    UserChannel.broadcast_to current_user, {type: "UserConnected", object: UserSerializer.new(current_user).as_json}
   end
 
   def request_assistance(data)
@@ -13,7 +15,7 @@ class UserChannel < ApplicationCable::Channel
       object: AssistanceRequestSerializer.new(ar, root: false).as_json
     }
 
-    UserChannel.broadcast_to current_user, {type: "AssistanceRequested"}
+    UserChannel.broadcast_to current_user, {type: "AssistanceRequested", object: current_user.position_in_queue}
   end
 
   def cancel_assistance
@@ -24,7 +26,10 @@ class UserChannel < ApplicationCable::Channel
         object: AssistanceRequestSerializer.new(ar, root: false).as_json
       }
 
-      UserChannel.broadcast_to current_user, {type: "AssistanceCancelled"}
+      UserChannel.broadcast_to current_user, {type: "AssistanceEnded"}
+
+      teacher_available(ar.assistance.assistor)
+      update_students_in_queue(ar.requestor.cohort.location.name)
     end
   end
 

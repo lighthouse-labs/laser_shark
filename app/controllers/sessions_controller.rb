@@ -24,12 +24,13 @@ class SessionsController < ApplicationController
         redirect_to :root
       end
     else
-      redirect_to [:new, :registration]
+      redirect_to [:edit, :profile]
     end
   end
 
   def destroy
     reset_session
+    cookies.delete :user_id
     redirect_to :root
   end
 

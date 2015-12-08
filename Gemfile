@@ -17,6 +17,7 @@ gem 'bcrypt-ruby'
 gem 'puma'
 gem 'kaminari'
 gem 'readmorejs-rails'
+gem 'best_in_place', github: 'bernat/best_in_place'
 
 
 gem 'simple_form', '3.1.0.rc1'
@@ -28,7 +29,6 @@ gem 'compass-rails'
 gem 'actioncable', github: "rails/actioncable"
 
 gem 'email_validator'
-gem 'reform'
 
 gem 'redcarpet'
 

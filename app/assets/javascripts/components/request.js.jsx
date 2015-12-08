@@ -12,9 +12,10 @@ var Request = React.createClass({
   },
 
   cancelAssistance: function() {
-    if(confirm("Are you sure you want to cancel this Request?"))
+    if(confirm("Are you sure you want to cancel this Request?")) {
       this.setState({disabled: true})
       App.assistance.cancelAssistanceRequest(this.props.request);
+    }
   },
   
   render: function() {
@@ -24,9 +25,9 @@ var Request = React.createClass({
     return (
       <RequestItem student={student}>
         <p className="assistance-timestamp">
-          Requested assistance 
+          Requested assistance: 
           <abbr className="timeago" title="{request.start_at}">
-            {$.timeago(request.start_at)}
+            <TimeAgo date={request.start_at} />
           </abbr>
         </p>
         <p><b>Reason:</b> {request.reason}</p>

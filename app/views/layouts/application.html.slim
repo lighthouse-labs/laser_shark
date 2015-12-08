@@ -17,6 +17,11 @@ html
       == render 'layouts/navigation'
     main.container[role="main"]
       == render 'layouts/messages'
+
+      - if current_user && (current_user.is_a?(Teacher) || current_user.is_a?(Student))
+        = render "layouts/teachers_holder"
+        = render "layouts/reconnect_holder"
+
       - if content_for? :side_nav
         aside.side-nav.col-md-3
           == yield :side_nav

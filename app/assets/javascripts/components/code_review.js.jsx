@@ -47,7 +47,7 @@ var CodeReview = React.createClass({
         <p className="assistance-timestamp">
           Generated code review 
           <abbr className="timeago" title="{codeReview.start_at}">
-            {$.timeago(codeReview.start_at)}
+            <TimeAgo date={codeReview.start_at} />
           </abbr>
         </p>
 

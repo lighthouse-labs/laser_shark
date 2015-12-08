@@ -14,6 +14,9 @@ html
     header
       == render 'layouts/navigation'
     div.container-fluid[role="main"]
+      = render "layouts/teachers_holder"
+      = render "layouts/reconnect_holder"
+
       == yield
 
     == yield :end_of_body

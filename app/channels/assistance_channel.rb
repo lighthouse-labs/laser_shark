@@ -12,7 +12,10 @@ class AssistanceChannel < ApplicationCable::Channel
         object: AssistanceSerializer.new(ar.reload.assistance, root: false).as_json
       }
 
-      UserChannel.broadcast_to ar.requestor, {type: "AssistanceStarted"}
+      UserChannel.broadcast_to ar.requestor, {type: "AssistanceStarted", object: UserSerializer.new(current_user).as_json}
+
+      teacher_busy(current_user)
+      update_students_in_queue(ar.requestor.cohort.location.name)
     end
 
   end
@@ -27,6 +30,8 @@ class AssistanceChannel < ApplicationCable::Channel
     }
 
     UserChannel.broadcast_to assistance.assistance_request.requestor, {type: "AssistanceEnded"}
+    teacher_available(current_user)
+          
   end
 
   def cancel_assistance_request(data)
@@ -37,7 +42,8 @@ class AssistanceChannel < ApplicationCable::Channel
         object: AssistanceRequestSerializer.new(ar, root: false).as_json
       }
 
-      UserChannel.broadcast_to ar.requestor, {type: "AssistanceCancelled"}
+      UserChannel.broadcast_to ar.requestor, {type: "AssistanceEnded"}
+      update_students_in_queue(ar.requestor.cohort.location.name)
     end
   end
 
@@ -49,7 +55,8 @@ class AssistanceChannel < ApplicationCable::Channel
         object: AssistanceSerializer.new(assistance).as_json
       }
 
-      UserChannel.broadcast_to assistance.assistee, {type: "AssistanceCancelled"}
+      teacher_available(current_user)     
+      update_students_in_queue(assistance.assistance_request.requestor.cohort.location.name)
     end
   end
 
@@ -67,4 +74,5 @@ class AssistanceChannel < ApplicationCable::Channel
       }
     end
   end
+
 end

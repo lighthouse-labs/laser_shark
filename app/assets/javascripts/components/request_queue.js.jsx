@@ -9,9 +9,9 @@ var RequestQueue = React.createClass({
     var location;
 
     if(this.props.user.location)
-      location = this.props.user.location.name;
+      location = this.props.user.location;
     else
-      location = "Vancouver";
+      location = this.props.locations[0];
 
     this.setState({location: location});
   },
@@ -19,11 +19,27 @@ var RequestQueue = React.createClass({
   componentDidMount: function() {
     this.loadQueue();
     this.subscribeToSocket();
+    this.requestNotificationPermission();
   },
 
   componentDidUpdate: function(prevProps, prevState) {
-    if(prevState.location != this.state.location)
+    if(prevState.location.id != this.state.location.id)
       this.loadQueue();
+  },
+
+  requestNotificationPermission: function() {
+    that = this;
+    switch(Notification.permission) {
+    case "granted":
+      this.setState({canNotify: true})
+      break;
+    default:
+      Notification.requestPermission(function(e) {
+        if(e == "granted") {
+          that.setState({canNotify: true})
+        }
+      });
+    }
   },
 
   getInitialState: function() {
@@ -31,12 +47,15 @@ var RequestQueue = React.createClass({
       activeAssistances: [],
       requests: [],
       codeReviews: [],
-      students: []
+      students: [],
+      hasNotification: ("Notification" in window),
+      canNotify: false,
+
     }
   },
   
   loadQueue: function() {
-    $.getJSON("/assistance_requests/queue?location=" + this.state.location, this.requestSuccess)  
+    $.getJSON("/assistance_requests/queue?location=" + this.state.location.name, this.requestSuccess)  
   },
 
   requestSuccess: function(response) {
@@ -97,22 +116,47 @@ var RequestQueue = React.createClass({
 
             break;
         }
+      },
+      disconnected: function() {
+        $('.reconnect-holder').show()
       }
     });
   },
 
   handleAssistanceRequest: function(assistanceRequest) {
     var requests = this.state.requests;
-    if(this.getRequestIndex(assistanceRequest) === -1) {
+    if(this.getRequestIndex(assistanceRequest) === -1 && this.inLocation(assistanceRequest)) {
       requests.push(assistanceRequest);
+      requests.sort(function(a,b){
+        return new Date(a.start_at) - new Date(b.start_at);
+      })
       this.setState({requests: requests});
+
+      this.html5Notification(assistanceRequest);
     }
   },
 
+  html5Notification: function(assistanceRequest) {
+    if(this.state.hasNotification && this.state.canNotify) {
+      new Notification(
+        "Assistance Requested by " + assistanceRequest.requestor.first_name + ' ' + assistanceRequest.requestor.last_name,
+        {
+          body: assistanceRequest.requestor.cohort.name + "\r\n" + (assistanceRequest.reason || ''),
+          icon: assistanceRequest.requestor.avatar_url
+        }
+      );
+    }
+  }, 
+
   handleCodeReviewRequest: function(codeReviewRequest) {
     var codeReviews = this.state.codeReviews;
-    codeReviews.push(codeReviewRequest);
-    this.setState({codeReviews: codeReviews});
+    if(this.inLocation(codeReviewRequest)) {
+      codeReviews.push(codeReviewRequest);
+      codeReviews.sort(function(a,b){
+        return new Date(a.start_at) - new Date(b.start_at);
+      })
+      this.setState({codeReviews: codeReviews});
+    }
   },
 
   removeFromQueue: function(assistanceRequest) {
@@ -166,6 +210,10 @@ var RequestQueue = React.createClass({
     }
   },
 
+  inLocation: function(assistanceRequest) {
+    return assistanceRequest.requestor.cohort.location.id === this.state.location.id;
+  },
+
   getRequestIndex: function(assistanceRequest) {
     var requests = this.state.requests;
     var ids = requests.map(function(r){ 
@@ -176,7 +224,9 @@ var RequestQueue = React.createClass({
   },
 
   locationChanged: function(event) {
-    this.setState({location: event.target.value});
+    var locationNames = this.props.locations.map(function(l) { return l.name });
+    var ind = locationNames.indexOf(event.target.value);
+    this.setState({location: this.props.locations[ind]});
   },
 
   renderLocations: function() {
@@ -189,13 +239,13 @@ var RequestQueue = React.createClass({
           { 
             this.props.locations.map(function(location) {
               return (
-                <label key={location}>
+                <label key={location.id}>
                   <input 
                     type="radio" 
-                    value={location} 
-                    checked={that.state.location == location}
+                    value={location.name} 
+                    checked={that.state.location.id == location.id}
                     onChange={that.locationChanged} />
-                    { location }
+                    { location.name }
                 </label>
               )
             })
@@ -218,7 +268,8 @@ var RequestQueue = React.createClass({
           activeAssistances={this.state.activeAssistances}
           requests={this.state.requests}
           codeReviews={this.state.codeReviews}
-          students={this.state.students} />
+          students={this.state.students}
+          location={this.state.location} />
       </div>
     )
   }
