@@ -14,6 +14,9 @@
 //= require jquery_ujs
 //= require bootstrap-sprockets
 //= require flat-ui-pro
+
+//= require default
+
 //= require ace
 //= require mustache
 //= require jquery.raty
