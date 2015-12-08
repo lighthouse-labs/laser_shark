@@ -54,6 +54,17 @@ nav.navbar.navbar-inverse.navbar-fixed-top role="navigation"
               i.fa.fa-fw.fa-group
               span.non-tablet-label
                 | Teachers
+
+        - if student?
+          li.dropdown
+            = link_to '#', :class => 'dropdown-toggle', :'data-toggle' => 'dropdown', title: 'Search Activities'
+              i.fa.fa-fw.fa-search
+              span.non-tablet-label
+                | Search Activities
+            ul.dropdown-menu
+              = form_tag search_activities_path, method: 'get'
+                = text_field_tag 'query', params[:query], placeholder: 'Enter activity name'
+
         - if teacher?
           li
             = link_to :assistance_requests, data: { 'no-turbolink' => true }, title: 'Request Queue'
