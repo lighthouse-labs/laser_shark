@@ -15,7 +15,6 @@
 //= require bootstrap-sprockets
 //= require flat-ui-pro
 //= require ace
-//= require mustache
 //= require jquery.raty
 //= require readmore
 //= require jquery.googlecalreader-1.1.min

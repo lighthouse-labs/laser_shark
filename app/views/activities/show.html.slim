@@ -182,7 +182,7 @@ section.activity-details
             - if teacher? && msg.teacher_notes?
               .teacher-notes 
                 h5 Teacher (Internal) Notes
-                = simple_format msg.teacher_notes
+                == markdown msg.teacher_notes
 
           - if teacher? && current_user == msg.user
             .actions
@@ -194,4 +194,3 @@ section.activity-details
 .modal.fade id="feedback_modal"
   .modal-dialog
     .modal-content
-
