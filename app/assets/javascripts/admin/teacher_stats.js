@@ -172,9 +172,8 @@ $(function() {
   // Assistances Chart
   var assistanceContainer = $('#assistances-chart');
   $.getJSON(assistanceContainer.data('url'), function (data) {
-
-    $('#total-assistance-count').text(data.overall_stats.total_count);
-    $('#average-l-score').text(data.overall_stats.average_l_score);
+    $('#total-assistance-count').text(data.overall_assistance_stats.total_count);
+    $('#average-l-score').text(data.overall_assistance_stats.average_l_score);
 
     assistanceContainer.highcharts({
       chart: {
