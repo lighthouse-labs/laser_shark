@@ -27,6 +27,7 @@
 
 //= require channels
 //= require_tree ./socket_handlers/
+//= require admin
 
 //= require components
 //= require_tree ./presenters
