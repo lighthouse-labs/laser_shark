@@ -54,7 +54,7 @@ LaserShark::Application.routes.draw do
 
   resources :activities, only: [] do
     resource :activity_submission, only: [:create, :destroy]
-    resources :messages, only: [:new, :edit, :update, :create, :index], controller: 'activity_messages'
+    resources :messages, controller: 'activity_messages'
     resources :recordings, only: [:new, :create]
   end
 
