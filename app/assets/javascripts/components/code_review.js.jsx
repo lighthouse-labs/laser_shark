@@ -43,7 +43,7 @@ var CodeReview = React.createClass({
     var student = codeReview.requestor;
 
     return (
-      <RequestItem student={student}>
+      <RequestItem student={student} location={this.props.location}>
         <p className="assistance-timestamp">
           Generated code review 
           <abbr className="timeago" title="{codeReview.start_at}">

@@ -14,6 +14,9 @@
 //= require jquery_ujs
 //= require bootstrap-sprockets
 //= require flat-ui-pro
+
+//= require default
+
 //= require ace
 //= require mustache
 //= require jquery.raty
@@ -30,6 +33,7 @@
 
 //= require components
 //= require_tree ./presenters
+//= require_tree ./admin
 //= require navigation
 //= require april1
 //= require feedbacks
