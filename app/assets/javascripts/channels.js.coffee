@@ -31,4 +31,7 @@ $ ->
     received: (data) ->
       handler = new UserChannelHandler data
       handler.processResponse()
+
+    disconnected: ->
+      $('.reconnect-holder').show()
   )

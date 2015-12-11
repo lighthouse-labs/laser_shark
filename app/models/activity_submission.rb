@@ -5,7 +5,7 @@ class ActivitySubmission < ActiveRecord::Base
   
   has_one :code_review_request, dependent: :destroy
   
-  after_save :request_code_review
+  #after_save :request_code_review
   after_create :create_feedback
   after_destroy :handle_submission_destroy
 

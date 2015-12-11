@@ -129,7 +129,7 @@ nav.navbar.navbar-inverse.navbar-fixed-top role="navigation"
                   = link_to "Go off duty", '#', class: "off-duty-link #{'hidden' unless current_user.on_duty?}"
 
               li
-                = link_to 'Sign Out', session_path, :method => :delete
+                = link_to 'Sign Out', session_path, :method => :delete, class: "sign-out-link" 
               
 
           - if current_user.active_student?

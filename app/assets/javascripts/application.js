@@ -20,6 +20,7 @@
 //= require readmore
 //= require jquery.googlecalreader-1.1.min
 //= require best_in_place
+//= require_tree ./polyfills/
 //= require cable
 //= require react
 //= require react_ujs
@@ -27,6 +28,8 @@
 //= require channels
 //= require_tree ./socket_handlers/
 
+//= require components
+//= require_tree ./presenters
 //= require navigation
 //= require april1
 //= require feedbacks
@@ -36,6 +39,4 @@
 //= require day_feedbacks
 //= require incomplete_activities
 //= require activities
-//= require components
-
-
+//= require reconnect_holder
