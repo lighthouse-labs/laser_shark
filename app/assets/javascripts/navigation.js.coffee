@@ -28,3 +28,9 @@ $ ->
 
   $('.sign-out-link').click (e) ->
     window.App.teacherChannel.offDuty()    
+
+  $('#search-activities-button').click (e) ->
+    $('#search-form').slideToggle(250)
+
+  if window.location.pathname == '/search_activities'
+    $('#search-form').toggle()
