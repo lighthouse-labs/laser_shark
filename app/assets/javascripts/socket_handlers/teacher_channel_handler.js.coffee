@@ -52,6 +52,7 @@ class window.TeacherChannelHandler
       link = document.createElement('a')
       link.href = "/teachers/" + teacher.id
       link.title = teacher.first_name + " " + teacher.last_name
+      link.setAttribute("data-placement", "bottom")
 
       link.appendChild(img)
 
