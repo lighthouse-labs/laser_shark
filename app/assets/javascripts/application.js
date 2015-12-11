@@ -15,6 +15,7 @@
 //= require bootstrap-sprockets
 //= require flat-ui-pro
 //= require ace
+//= require theme-monokai
 //= require jquery.raty
 //= require readmore
 //= require jquery.googlecalreader-1.1.min
