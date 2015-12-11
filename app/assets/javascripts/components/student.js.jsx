@@ -8,7 +8,7 @@ var Student = React.createClass({
     var student = this.props.student;
 
     return (
-      <RequestItem student={student}>
+      <RequestItem student={student} location={this.props.location}>
         <p className="assistance-timestamp">
           Last received assistance
           <abbr className='timeago' ref="lastAssistedTime" title={student.last_assisted_at}>

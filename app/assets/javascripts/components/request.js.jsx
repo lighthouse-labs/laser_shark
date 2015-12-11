@@ -23,7 +23,7 @@ var Request = React.createClass({
     var student = request.requestor;
 
     return (
-      <RequestItem student={student}>
+      <RequestItem student={student} location={this.props.location}>
         <p className="assistance-timestamp">
           Requested assistance: 
           <abbr className="timeago" title="{request.start_at}">

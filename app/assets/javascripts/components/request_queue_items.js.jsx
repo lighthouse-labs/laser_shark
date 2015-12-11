@@ -1,6 +1,7 @@
 var RequestQueueItems = React.createClass({
 
   renderAssisting: function() {
+    var that = this;
     if(this.props.activeAssistances.length > 0) {
       return (
         <div>
@@ -8,7 +9,7 @@ var RequestQueueItems = React.createClass({
           <ul className="student-list">
             { 
               this.props.activeAssistances.map(function(assistance) { 
-                return <Assistance assistance={assistance} key={assistance.id}/>
+                return <Assistance assistance={assistance} key={assistance.id} location={that.props.location}/>
               })
             }
           </ul>
@@ -18,9 +19,10 @@ var RequestQueueItems = React.createClass({
   },
 
   renderRequests: function() {
+    var that = this;
     if(this.props.requests.length > 0)
       return this.props.requests.map(function(request) {
-        return <Request request={request} key={request.id} />
+        return <Request request={request} key={request.id} location={that.props.location} />
       })
     else
       return <i>This queue is empty.  Good job!</i>
@@ -39,17 +41,19 @@ var RequestQueueItems = React.createClass({
   },
 
   renderCodeReviews: function() {
+    var that = this;
     if(this.props.codeReviews.length > 0)
       return this.props.codeReviews.map(function(codeReview) {
-        return <CodeReview codeReview={codeReview} key={codeReview.id} />
+        return <CodeReview codeReview={codeReview} key={codeReview.id} location={that.props.location} />
       })
     else
       return <i>There aren&#39;t any code reviews</i>
   },
 
   renderStudents: function() {
+    var that = this;
     return this.props.students.map(function(student) {
-      return <Student student={student} key={student.id} />
+      return <Student student={student} key={student.id} location={that.props.location} />
     })
   },
 
