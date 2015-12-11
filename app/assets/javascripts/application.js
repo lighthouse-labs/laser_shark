@@ -30,6 +30,7 @@
 
 //= require components
 //= require_tree ./presenters
+//= require_tree ./admin
 //= require navigation
 //= require april1
 //= require feedbacks
