@@ -14,12 +14,16 @@
 //= require jquery_ujs
 //= require bootstrap-sprockets
 //= require flat-ui-pro
+
+//= require default
+
 //= require ace
 //= require mustache
 //= require jquery.raty
 //= require readmore
 //= require jquery.googlecalreader-1.1.min
 //= require best_in_place
+//= require_tree ./polyfills/
 //= require cable
 //= require react
 //= require react_ujs
@@ -29,6 +33,7 @@
 
 //= require components
 //= require_tree ./presenters
+//= require_tree ./admin
 //= require navigation
 //= require april1
 //= require feedbacks

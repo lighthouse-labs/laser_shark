@@ -21,7 +21,7 @@ nav.navbar.navbar-inverse.navbar-fixed-top role="navigation"
               | Setup
         - if current_user && !current_user.completed_registration?
           li
-            = link_to new_registration_path, title: 'Complete Signup'
+            = link_to edit_profile_path, title: 'Complete Signup'
               i.fa.fa-fw.fa-sign-in
               span.non-tablet-label
                 | Complete Signup
