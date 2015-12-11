@@ -18,6 +18,7 @@
 //= require default
 
 //= require ace
+//= require theme-monokai
 //= require jquery.raty
 //= require readmore
 //= require jquery.googlecalreader-1.1.min
