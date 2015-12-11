@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151126195812) do
+ActiveRecord::Schema.define(version: 20151126203655) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -140,11 +140,12 @@ ActiveRecord::Schema.define(version: 20151126195812) do
   end
 
   create_table "locations", force: :cascade do |t|
-    t.string   "name",       limit: 255
+    t.string   "name",             limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "calendar",   limit: 255
-    t.string   "timezone",   limit: 255
+    t.string   "calendar",         limit: 255
+    t.string   "timezone",         limit: 255
+    t.boolean  "has_code_reviews",             default: true
   end
 
   create_table "programs", force: :cascade do |t|
