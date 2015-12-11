@@ -12,3 +12,11 @@ div.form-group.select {
 .navbar-nav > li > a {
   padding: 15px 10px;
 }
+
+.navbar-nav > li > a.on-duty-link {
+  padding: 15px 15px;
+}
+
+.navbar-nav > li > a.off-duty-link {
+  padding: 15px 15px;
+}
