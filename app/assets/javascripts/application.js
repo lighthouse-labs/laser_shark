@@ -14,11 +14,10 @@
 //= require jquery_ujs
 //= require bootstrap-sprockets
 //= require flat-ui-pro
-
 //= require default
-
-//= require ace
-//= require theme-monokai
+//= require ace-rails-ap
+//= require ace/theme-monokai
+//= require ace/mode-markdown
 //= require jquery.raty
 //= require readmore
 //= require jquery.googlecalreader-1.1.min
