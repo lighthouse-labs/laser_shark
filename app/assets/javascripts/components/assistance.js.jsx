@@ -76,7 +76,7 @@ var Assistance = React.createClass({
     var student = assistance.assistee;
 
     return (
-      <RequestItem student={student}>
+      <RequestItem student={student} location={this.props.location}>
         <p className="assistance-timestamp">
           You started { activitySubmission ? "reviewing" : "assisting"}
           <abbr className="timeago" title="{assitance.start_at}">

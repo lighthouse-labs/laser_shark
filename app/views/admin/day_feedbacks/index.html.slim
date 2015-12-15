@@ -65,3 +65,5 @@ table.table.table-feedbacks
                 | Confirm
           
 = paginate @paginated_day_feedbacks, :window => 2
+= link_to "Download CSV", admin_day_feedbacks_path(params.merge(format: "csv")), :class => "btn btn-success download-csv-button", :method => :get
+= link_to "Download XLS", admin_day_feedbacks_path(params.merge(format: "xls")), :class => "btn btn-success download-xls-button", :method => :get
