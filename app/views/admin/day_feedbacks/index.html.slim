@@ -1,0 +1,69 @@
+= render 'form'
+
+h4.pull-left Day Feeback (#{@day_feedbacks.count}):  
+.pull-right.stats.total-feedbacks
+  i class='happy fa fa-smile-o fa-2x' title="Happy feedback"
+  sup.total-feedbacks.happy title="Happy total"
+    = @day_feedbacks.count_for_mood(:happy)
+  sub.percentage-feedback-happy title="Happy %"
+    = number_to_percentage(@day_feedbacks.percentage_of_mood(:happy), precision: 0)
+  i class='ok fa fa-circle-thin fa-2x' title="OK feedback"
+  sup.total-feedbacks.ok title="Ok total"
+    = @day_feedbacks.count_for_mood(:ok)
+  sub.percentage-feedback-ok title="Ok %"
+    = number_to_percentage(@day_feedbacks.percentage_of_mood(:ok), precision: 0)
+  i class='sad fa fa-frown-o fa-2x' title="Sad feedback"
+  sup.total-feedbacks.sad title="Sad total" 
+    = @day_feedbacks.count_for_mood(:sad)
+  sub.percentage-feedback-sad title="Sad %"
+    = number_to_percentage(@day_feedbacks.percentage_of_mood(:sad), precision: 0)
+        
+table.table.table-feedbacks
+  thead
+    tr
+      th Day
+      th Location
+      th Student
+      th Date
+      th Text
+      th Admin Notes
+
+  tbody
+    - @paginated_day_feedbacks.each do |dayfeedback|
+      - present dayfeedback do |day_feedback_presenter|
+        tr class=day_feedback_presenter.row_class
+          td
+            small = day_feedback_presenter.capitalized_day
+          td
+            small = day_feedback_presenter.location_name
+          td
+            small = day_feedback_presenter.student_name
+          td.day-feedback-date
+            small = day_feedback_presenter.created_at_with_time
+          td.day-feedback-text
+            small
+              em 
+                article.read-more = day_feedback_presenter.text
+          td
+            small
+              em 
+                article.read-more = best_in_place [:admin, dayfeedback], :notes, :as => :textarea, :place_holder => "Click here to add notes", :inner_class => "in-place-edit-text-area", :html_attrs => { :onfocus  => "$(this).css('outline','none');", :style => 'background: transparent; border: none; width:283px; height:100px;' }
+          td data-id='#{dayfeedback.id}'
+            - if !day_feedback_presenter.archived_at
+              .btn.btn-primary.btn-xs.archive-button
+                | Archive
+              .btn.btn-warning.btn-xs.unarchive-button.hidden-button
+                | Unarchive
+              .btn.btn-danger.btn-xs.archive-confirm-button
+                | Confirm
+            - else
+              .btn.btn-warning.btn-xs.unarchive-button
+                | Unarchive
+              .btn.btn-primary.btn-xs.archive-button.hidden-button
+                | Archive
+              .btn.btn-danger.btn-xs.archive-confirm-button
+                | Confirm
+          
+= paginate @paginated_day_feedbacks, :window => 2
+= link_to "Download CSV", admin_day_feedbacks_path(params.merge(format: "csv")), :class => "btn btn-success download-csv-button", :method => :get
+= link_to "Download XLS", admin_day_feedbacks_path(params.merge(format: "xls")), :class => "btn btn-success download-xls-button", :method => :get

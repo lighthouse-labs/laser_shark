@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:o="urn:schemas-microsoft-com:office:office"
+  xmlns:x="urn:schemas-microsoft-com:office:excel"
+  xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:html="http://www.w3.org/TR/REC-html40">
+  <Worksheet ss:Name="CurriculumFeedbacks">
+    <Table>
+      <Row>
+        <Cell><Data ss:Type="String">Student First Name</Data></Cell>
+        <Cell><Data ss:Type="String">Student Last Name</Data></Cell>
+        <Cell><Data ss:Type="String">Activity Name</Data></Cell>
+        <Cell><Data ss:Type="String">Activity Day</Data></Cell>
+        <Cell><Data ss:Type="String">Activity Type</Data></Cell>
+        <Cell><Data ss:Type="String">Rating</Data></Cell>
+        <Cell><Data ss:Type="String">Created Date</Data></Cell>
+        <Cell><Data ss:Type="String">Location</Data></Cell>
+      </Row>
+    <% @feedbacks.each do |feedback| %>
+      <Row>
+        <Cell><Data ss:Type="String"><%= feedback.student.first_name %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= feedback.student.last_name %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= feedback.feedbackable.name %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= feedback.feedbackable.day.upcase %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= feedback.feedbackable.type %></Data></Cell>
+        <Cell><Data ss:Type="Number"><%= feedback.rating %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= feedback.created_at %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= feedback.student.cohort.location.name %></Data></Cell>
+      </Row>
+    <% end %>
+    </Table>
+  </Worksheet>
+</Workbook>

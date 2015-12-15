@@ -40,12 +40,13 @@ class CurriculumDay
 
   def unlocked?
     return true if @date == 'setup'
+    return true if unlock_weekend_on_friday
     return false unless @cohort
     return false if @cohort.start_date > Date.current
     if CURRICULUM_UNLOCKING == 'weekly'
       self.date.cweek <= today.date.cweek
     else # assume daily
-      self.date <= today.date 
+      self.date <= today.date
     end
   end
 
@@ -61,6 +62,18 @@ class CurriculumDay
 
   def today
     @today ||= CurriculumDay.new(Date.current, @cohort)
+  end
+
+  def friday?
+    !!(today.to_s =~ /[w][1-8][d][5]/)
+  end
+
+  def weekend?
+    !!(self.to_s =~ /(?<=w\d)e$/)
+  end
+
+  def unlock_weekend_on_friday
+    (friday? && weekend?) && (self.to_s[1] == today.to_s[1])
   end
 
   def determine_d

@@ -1,7 +1,7 @@
 class UserPresenter < BasePresenter
   presents :user
 
-  delegate :full_name, :email, :phone_number, :quirky_fact, :bio, :specialties, :company_name, :company_url, :slack, :skype, to: :user
+  delegate :full_name, :email, :phone_number, :quirky_fact, :bio, :specialties, :company_name, :company_url, :slack, :skype, :type, to: :user
 
   def image_for_index_page
     h.image_tag(avatar_for, size: '100x100')
@@ -13,7 +13,13 @@ class UserPresenter < BasePresenter
   
   def github_info
     if user.github_username.present?
-      content_tag :li do
+      if user.type == 'Teacher'
+        content_tag :li do
+          link_to "https://github.com/#{user.github_username}", target: "_blank" do
+            image_tag('github-icon.png') + " " + user.github_username
+          end
+        end
+      else
         link_to "https://github.com/#{user.github_username}", target: "_blank" do
           image_tag('github-icon.png') + " " + user.github_username
         end

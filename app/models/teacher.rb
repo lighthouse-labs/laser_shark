@@ -13,6 +13,10 @@ class Teacher < User
     where(id: teacher_id)
   }
 
+  validates :bio,             presence: true, length: { maximum: 1000 }
+  validates :quirky_fact,     presence: true
+  validates :specialties,     presence: true
+
   def self.filter_by(options)
     options.inject(all) do |result, (k, v)|
       attribute = k.gsub("_id", "")

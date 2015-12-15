@@ -13,7 +13,7 @@ LaserShark::Application.routes.draw do
   get '/auth/:provider/callback', to: 'sessions#create'
   get '/auth/github', as: 'github_session'
   resource :session, :only => [:new, :destroy]
-  resource :registration, only: [:new, :create]
+  # resource :registration, only: [:new, :create]
   resource :profile, only: [:edit, :update]
   resources :feedbacks, only: [:index, :update] do 
     member do 
@@ -76,7 +76,12 @@ LaserShark::Application.routes.draw do
   # ADMIN
   namespace :admin do
     root to: 'dashboard#show'
-    resources :students, only: [:index]
+    resources :students, only: [:index, :update] do 
+      member do 
+        post :reactivate
+        post :deactivate 
+      end
+    end
     resources :teacher_stats, only: [:index, :show] do 
       member do
         get :assistance
@@ -87,7 +92,7 @@ LaserShark::Application.routes.draw do
     resources :feedbacks, except: [:edit, :update, :destroy]
     resources :teacher_feedbacks, only: [:index]
     resources :curriculum_feedbacks, only: [:index]
-    resources :dayfeedbacks, except: [:edit, :update,] do 
+    resources :day_feedbacks, except: [:destroy] do 
       member do 
         post :archive
         delete :archive, action: :unarchive

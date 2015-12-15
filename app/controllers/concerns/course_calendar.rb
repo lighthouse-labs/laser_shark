@@ -13,7 +13,11 @@ module CourseCalendar
   private
 
   def weekend?
-    !!(day =~ /(?<=w\d)e$/)
+    !!(day.to_s =~ /(?<=w\d)e$/)
+  end
+
+  def friday?
+    !!(today.to_s =~ /[w][1-8][d][5]/)
   end
 
   def day

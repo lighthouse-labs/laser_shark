@@ -3,4 +3,9 @@
 
   - teachers_on_duty.each do |teacher|
     = link_to teacher do
-      = image_tag avatar_for(teacher), id: "teacher_#{teacher.id}", class: teacher.busy? ? "busy" : nil
+      = image_tag avatar_for(teacher), { \
+        id: "teacher_#{teacher.id}", \
+        title: teacher.full_name, \
+        class: teacher.busy? ? "busy" : nil, \
+        data: {toggle: 'tooltip', placement: "bottom"} \
+      }

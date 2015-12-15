@@ -2,26 +2,9 @@
 // Tables
 // --------------------------------------------------
 
-.table {
+.table, .table-feedbacks {
   font-size: floor($component-font-size-base * 1.067); // 16px
   
-  // Cells
-  > thead,
-  > tbody,
-  > tfoot {
-    > tr {
-      > th,
-      > td {
-        padding: 9px 25px;
-        line-height: 1.231; // ~19.7px
-        border-top: 2px solid $table-border-color;
-      }
-      > th {
-        color: mix($brand-primary, white, 85%);
-        border-bottom: 2px solid $table-border-color;
-      }
-    }
-  }
   [class*="fui-"] {
     vertical-align: baseline;
     font-size: 20px;
@@ -43,6 +26,47 @@
     }
   }
   img { vertical-align: top; }
+}
+
+.table {
+  // Cells
+  > thead,
+  > tbody,
+  > tfoot {
+    > tr {
+      > th,
+      > td {
+        padding: 9px 25px;
+        line-height: 1.231; // ~19.7px
+        border-top: 2px solid $table-border-color;
+      }
+      > th {
+        color: mix($brand-primary, white, 85%);
+        border-bottom: 2px solid $table-border-color;
+      }
+    }
+  }
+
+}
+
+.table-feedbacks {
+  // Cells
+  > thead,
+  > tbody,
+  > tfoot {
+    > tr {
+      > th,
+      > td {
+        padding: 5px;
+        line-height: 1.231; // ~19.7px
+        border-top: 2px solid $table-border-color;
+      }
+      > th {
+        color: mix($brand-primary, white, 85%);
+        border-bottom: 2px solid $table-border-color;
+      }
+    }
+  }
 }
 
 // Bordered table

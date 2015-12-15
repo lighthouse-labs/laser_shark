@@ -1,4 +1,4 @@
-= form_tag admin_dayfeedbacks_path, method: 'get' do 
+= form_tag admin_day_feedbacks_path, method: 'get' do 
 
   = select_tag :program_id, options_from_collection_for_select(Program.all.order('name'), "id", "name", params[:program_id]), :prompt => 'All Programs', class: "form-control admin-feedback-dropdown"
   | &nbsp;

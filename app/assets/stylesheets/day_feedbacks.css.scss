@@ -114,11 +114,6 @@
   display: inline-block;
 }
 
-.admin-feedback-button {
-  height: 35px;
-  line-height: 0.5;
-}
-
 .archive-confirm-button {
   display: none;
   width: 72px;
@@ -133,7 +128,11 @@
 }
 
 .day-feedback-date {
-  width: 140px;
+  width: 75px;
+}
+
+.day-feedback-text {
+  width: 500px;
 }
 
 .admin-feedback-date-select {
@@ -142,4 +141,23 @@
   font-size: 12px;
   line-height: 1.0;
   display: inline-block;
+ }
+
+ .admin-edit-day-feedback-notes-text-area {
+  border: none;
+ }
+
+ .download-csv-button, .download-xls-button {
+  float: right;
+  display: inline-block;
+  a {
+    color: white;
+  }
+ }
+ .download-csv-button {
+  margin: 13px 0;
+ }
+ .download-xls-button {
+  margin-top: 13px;
+  margin-right: 5px;
  }
