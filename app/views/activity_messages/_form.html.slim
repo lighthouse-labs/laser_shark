@@ -1,6 +1,45 @@
 = form.input :kind, label: false, placeholder: 'Type of update', collection: ActivityMessage::KINDS, prompt: 'Select a type'
 = form.input :subject, label: false, placeholder: "Subject (don't include 'WxDy')"
-= form.input :body, label: false, placeholder: 'Message body (for students and teachers to see)', input_html: { rows: 10 }
-= form.input :teacher_notes, label: false, placeholder: 'Teacher notes (for teachers only). Explain how it went so next teacher can learn from it and adapt and change as necessary. Any and all tips please!', input_html: { rows: 5 }
+
+h4 Body
+pre#body_content style="display:none" = @message.body
+#body-editor.editor
+
+h4 Teacher Notes (any tips for future teachers)
+pre#notes_content style="display:none" = @message.teacher_notes
+#notes-editor.editor
+
+= form.input :body, as: :hidden
+= form.input :teacher_notes, as: :hidden
+
 = form.input :cohort_id, collection: ([@cohort] + Cohort.most_recent.all).uniq, prompt: 'Select a cohort'
-= form.input :for_students
+= form.input :for_students, label: false, inline_label: true
+
+- content_for :end_of_body do
+  css:
+    .editor {
+      width: 100%;
+      height: 300px;
+      margin-bottom: 10px;
+    }
+  javascript:
+    function initEditors() {
+      var bodyEditor = ace.edit("body-editor");
+      bodyEditor.setTheme("ace/theme/monokai");
+      bodyEditor.getSession().setMode("ace/mode/markdown");
+      bodyEditor.setValue($('#body_content').text())
+      var notesEditor = ace.edit("notes-editor");
+      notesEditor.setTheme("ace/theme/monokai");
+      notesEditor.getSession().setMode("ace/mode/markdown");
+      notesEditor.setValue($('#notes_content').text())
+
+      $('form').submit(function(evt) {
+        evt.preventDefault();
+        
+        $('#activity_message_body').val(bodyEditor.getValue());
+        $('#activity_message_teacher_notes').val(notesEditor.getValue());
+        this.submit();
+      });
+    }
+    $(initEditors); // regular document ready
+

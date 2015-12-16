@@ -4,7 +4,7 @@ tr
   td = cohort.location.name
   td = cohort.code
   td 
-    = link_to cohort.students.active.count, [cohort, :students]
+    = link_to cohort.students.active.count, admin_students_path(:cohort_id => cohort.id)
   
   td = cohort_status(cohort)
   td

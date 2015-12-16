@@ -14,8 +14,14 @@
 //= require jquery_ujs
 //= require bootstrap-sprockets
 //= require flat-ui-pro
-//= require ace
-//= require mustache
+
+//= require default
+
+//= require ace-rails-ap
+//= require ace/theme-monokai
+//= require ace/mode-markdown
+//= require theme-monokai
+
 //= require jquery.raty
 //= require readmore
 //= require jquery.googlecalreader-1.1.min
@@ -31,6 +37,7 @@
 
 //= require components
 //= require_tree ./presenters
+//= require_tree ./admin
 //= require navigation
 //= require april1
 //= require feedbacks
