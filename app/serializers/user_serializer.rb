@@ -7,6 +7,7 @@ class UserSerializer < ActiveModel::Serializer
     :email,
     :first_name, 
     :last_name,
+    :full_name,
     :github_username,
     :avatar_url,
     :busy,
