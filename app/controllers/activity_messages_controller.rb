@@ -23,11 +23,13 @@ class ActivityMessagesController < ApplicationController
       user: current_user,
       day: @activity.day
     }))
+    @message.body << "\n" + day_activity_url(@activity.day, @activity)
     if @message.save
       notice = "Message Created."
       notice << " Students notified" if @message.for_students?
       redirect_to day_activity_path(@activity.day, @activity), notice: notice
     else
+      @message.body.gsub!("\n#{day_activity_url(@activity.day, @activity)}", "")
       render :new
     end
   end

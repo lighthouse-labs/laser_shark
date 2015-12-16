@@ -8,7 +8,8 @@ class Admin::CurriculumFeedbacksController < Admin::BaseController
     params[:completed?] = 'true' if params[:completed].nil?
     
     @feedbacks = Feedback.curriculum_feedbacks.filter_by(filter_by_params).order(order)
-    @rating = @feedbacks.average(:rating).to_f.round(2)
+
+    @rating = @feedbacks.average_rating
     @paginated_feedbacks = @feedbacks.page(params[:page]).per(DEFAULT_PER)
 
     respond_to do |format|
@@ -18,7 +19,6 @@ class Admin::CurriculumFeedbacksController < Admin::BaseController
         headers['Content-Disposition'] = 'attachment; filename=curriculum_feedbacks.xls'
       end
     end
-
   end
 
   private
