@@ -25,11 +25,12 @@
         dt
           | Contact
         dd
-          ul.list-inline
-            = teacher_presenter.github_info  
-            = teacher_presenter.twitter_info
-            = teacher_presenter.slack_info
-            = teacher_presenter.skype_info
+          div.teacher-contact-holder
+            ul.list-inline
+              = teacher_presenter.github_info  
+              = teacher_presenter.twitter_info
+              = teacher_presenter.slack_info
+              = teacher_presenter.skype_info
 
 .modal.fade id="teacher_feedback_modal"
   .modal-dialog

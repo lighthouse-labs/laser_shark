@@ -1,7 +1,7 @@
 @import 'flat-ui-pro/variables';
 @import 'bootstrap';
-@import 'flat-ui-pro';
 @import "font-awesome";
+@import 'flat-ui-pro';
 
 // Fix issue with .select form flat-ui CC
 
@@ -10,5 +10,13 @@ div.form-group.select {
 }
 
 .navbar-nav > li > a {
+  padding: 15px 10px;
+}
+
+.navbar-nav > li > a.on-duty-link {
+  padding: 15px 15px;
+}
+
+.navbar-nav > li > a.off-duty-link {
   padding: 15px 15px;
 }

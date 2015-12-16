@@ -7,7 +7,7 @@ div.col-md-12.incomplete-activity-details-row
       div class=("#{activity.type.downcase} " + 'activity')
         .icon.icon-type title=activity.type
           i class=(icon_for(activity))
-        - if (activity.type != 'Lecture' && activity.type != 'Test')
+        - if activity.display_duration?
           .time.time-duration
             br
             = duration activity

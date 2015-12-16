@@ -31,15 +31,27 @@
     .student-heading {
       font-size: 250%;
       margin: .125em 0;
+
+      small {
+        color: #888;
+        font-style: italic;
+        font-size: 0.5em;
+
+        .label {
+          margin-left: 5px;
+          font-size: 0.5em;
+          font-style: normal;
+        }
+      }
     }
     .student-remote {
       background: $brand-danger;
       color: white;
-      display: block;
       font-size: 85%;
       font-weight: bold;
       text-align: center;
       text-transform: uppercase;
+      margin-left: 10px;
     }
     .student-cohort {
       margin-top: -.25em;

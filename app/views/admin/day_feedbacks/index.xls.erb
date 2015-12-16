@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:o="urn:schemas-microsoft-com:office:office"
+  xmlns:x="urn:schemas-microsoft-com:office:excel"
+  xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:html="http://www.w3.org/TR/REC-html40">
+  <Worksheet ss:Name="DayFeedbacks">
+    <Table>
+      <Row>
+        <Cell><Data ss:Type="String">Curriculum Day</Data></Cell>
+        <Cell><Data ss:Type="String">Mood</Data></Cell>
+        <Cell><Data ss:Type="String">Feedback Text</Data></Cell>
+        <Cell><Data ss:Type="String">Created Date</Data></Cell>
+        <Cell><Data ss:Type="String">Archived Date</Data></Cell>
+        <Cell><Data ss:Type="String">Notes</Data></Cell>
+        <Cell><Data ss:Type="String">Student First Name</Data></Cell>
+        <Cell><Data ss:Type="String">Student Last Name</Data></Cell>
+        <Cell><Data ss:Type="String">Location</Data></Cell>
+      </Row>
+    <% @day_feedbacks.each do |day_feedback| %>
+      <Row>
+        <Cell><Data ss:Type="String"><%= day_feedback.day.upcase %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= day_feedback.mood %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= day_feedback.text %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= day_feedback.created_at %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= day_feedback.archived_at %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= day_feedback.notes %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= day_feedback.student.first_name %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= day_feedback.student.last_name %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= day_feedback.student.cohort.location.name %></Data></Cell>
+      </Row>
+    <% end %>
+    </Table>
+  </Worksheet>
+</Workbook>

@@ -12,7 +12,7 @@ table.table.table-feedbacks
       th.admin-curriculum-feedback-date-column = sortable "updated_at", "Updated"
 
   tbody
-    - @feedbacks.each do |feedback|
+    - @paginated_feedbacks.each do |feedback|
       - present feedback do |feedback_presenter|
         tr
           td = feedback_presenter.upcased_day
@@ -32,4 +32,6 @@ table.table.table-feedbacks
                   article.read-more = feedback_presenter.notes
 
             td
-= paginate @feedbacks, :window => 2
+= paginate @paginated_feedbacks, :window => 2
+= link_to "Download CSV", admin_curriculum_feedbacks_path(params.merge(format: "csv")), :class => "btn btn-success download-csv-button", :method => :get
+= link_to "Download XLS", admin_curriculum_feedbacks_path(params.merge(format: "xls")), :class => "btn btn-success download-xls-button", :method => :get

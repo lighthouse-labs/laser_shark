@@ -24,7 +24,7 @@ class SessionsController < ApplicationController
         redirect_to :root
       end
     else
-      redirect_to [:new, :registration]
+      redirect_to [:edit, :profile]
     end
   end
 
