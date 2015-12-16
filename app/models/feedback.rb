@@ -22,7 +22,7 @@ class Feedback < ActiveRecord::Base
   scope :lecture, -> { teacher_feedbacks.where(feedbackable_type: ['Activity']) }
   scope :assistance, -> { where(feedbackable_type: 'Assistance') }
   scope :direct, -> { where(feedbackable_type: nil) }
-  
+
   scope :filter_by_program, -> (program_id) {
     includes(student: {cohort: :program}).
     where(programs: {id: program_id}).
@@ -80,6 +80,27 @@ class Feedback < ActiveRecord::Base
     else
       result.pending
     end  
+  end
+
+  def self.average_rating
+    average(:rating).to_f.round(2)
+
+  end
+
+  def self.to_csv
+    student_attributes = ['first_name', 'last_name']
+    feedbackable_attributes = ['name', 'day', 'type']
+    feedback_attributes = ['rating','created_at']
+    location_attributes = ['name']
+    CSV.generate do |csv|
+      csv << ['Student First Name', 'Student Last Name', 'Activity Name', 'Activity Day', 'Activity Type', 'Rating', 'Created Date', 'Location']
+      all.each do |feedback|
+        csv << (feedback.student.attributes.values_at(*student_attributes) + 
+                feedback.feedbackable.attributes.values_at(*feedbackable_attributes) +
+                feedback.attributes.values_at(*feedback_attributes) + 
+                feedback.student.cohort.location.attributes.values_at(*location_attributes))
+      end
+    end
   end
 
 end

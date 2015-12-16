@@ -25,15 +25,13 @@
   color: #798795;
   font-size: 24px;
   line-height: 24px;
-  margin-bottom: 20px;
   padding: 0 60px 0 140px;
   position: relative;
+  margin-bottom: 20px;
+
   &:hover {
     box-shadow: 0 0 0 3px $gray;
     .name {
-      color: $gray-light;
-    }
-    .location {
       color: $gray-light;
     }
   }
@@ -56,6 +54,16 @@
       font-size: .6em;
     }
   }
+  .icon-calendar-description-button {
+    right: 0;
+    .fa-chevron-down {
+      color: $green-sea;
+    }
+    .fa-chevron-down:hover {
+      color: $gray-light;
+      cursor: pointer;
+    }
+  }
   .icon-type {
     left: 0;
   }
@@ -64,9 +72,19 @@
     overflow: hidden;
     padding: 28px 0;
   }
-  .location {
+  .calendar-event-location {
     color: $green-sea;
     font-size: 16px;
+  }
+  .calendar-event-name {
+    color: $green-sea;
+    font-size: 24px;
+    padding: 28px 0;
+  }
+  .calendar-event-name-with-location {
+    color: $green-sea;
+    font-size: 24px;
+    padding: 20px 0;
   }
   .time {
     color: white;
@@ -81,7 +99,35 @@
     width: 50px;
   }
   .time-duration {
-    font-size: 0.7em;
+    font-size: 0.6em;
   }
 }
 
+.description-container {
+  font-size: 16px;
+  padding: 2px 0;
+  display: none;
+  margin-top: -20px;
+  background-color: #2c3e50;
+  color: #798795;
+  border-radius: 0px 0px 6px 6px;
+}
+.description-details {
+  color: $green-sea;
+
+  margin-left: 140px;
+  padding: 10px 55px 10px 0px;
+}
+
+.description-open {
+  border-bottom: 1px solid black;
+  border-radius: 6px 6px 0px 0px;
+}
+
+.calendar {
+  margin-bottom: 20px;
+
+  .activity:hover {
+    box-shadow: none;
+  }
+}

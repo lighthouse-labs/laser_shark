@@ -7,10 +7,13 @@ hr
   = render "form", f: f
 
   h3 Instructions
-  #instructions-editor.editor = @activity.instructions
+  pre#instructions_content style="display:none" = @activity.instructions
+
+  #instructions-editor.editor
 
   h3 Teacher Notes
-  #notes-editor.editor = @activity.teacher_notes
+  pre#notes_content style="display:none" = @activity.teacher_notes
+  #notes-editor.editor
 
   .actions.well
     = f.submit 'Update', class: 'btn btn-primary', style: 'margin-right: 10px;'
@@ -35,8 +38,12 @@ hr
         instructionsEditor.getSession().setMode("ace/mode/markdown");
         notesEditor.getSession().setMode("ace/mode/markdown");
 
+        instructionsEditor.setValue($('#instructions_content').text())
+        notesEditor.setValue($('#notes_content').text())
+
         $('#activity-form').submit(function(evt) {
           evt.preventDefault();
+          
           $('#activity-instructions').val(instructionsEditor.getValue());
           $('#activity-notes').val(notesEditor.getValue());
           this.submit();

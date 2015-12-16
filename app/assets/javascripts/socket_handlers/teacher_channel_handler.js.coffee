@@ -48,16 +48,19 @@ class window.TeacherChannelHandler
       img = document.createElement('img')
       img.id = 'teacher_' + teacher.id
       img.src = teacher.avatar_url
+      img.title = teacher.full_name
+      img.setAttribute("data-placement", "bottom")
 
       link = document.createElement('a')
       link.href = "/teachers/" + teacher.id
-
+      
       link.appendChild(img)
 
       if teacher.busy
         img.className = 'busy'
 
       $('.teacher-holder').append(link)
+      $(img).tooltip()
 
   removeTeacherFromSidebar: (teacher) ->
     $('.teacher-holder').find('#teacher_' + teacher.id).remove()

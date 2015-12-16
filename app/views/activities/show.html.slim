@@ -18,24 +18,14 @@ section.activity-details
           .input-group.duration
             .input-group-addon
               i.fa.fa-clock-o
-              - if weekend?
-                | &nbsp;Duration
-              - else
-                | &nbsp;Time
+              | &nbsp;Time
             .form-control
-              - if weekend?
-                = duration_in_hours(@activity.duration)
-                | h
-              - elsif @activity.type != 'Lecture'
-                = duration_in_hours(@activity.duration)
-                | &nbsp;hours   
+              - if weekend? || setup? || (@activity.display_duration?)
+                = duration(@activity)
               - else
                 = integer_time_to_s(@activity.start_time)
                 | &nbsp;to&nbsp;
                 = integer_time_to_s(@activity.end_time)
-                | &nbsp;(
-                = duration_in_hours(@activity.duration)
-                | h)
 
     - if @activity.gist_url?
       .actions
@@ -45,8 +35,6 @@ section.activity-details
               i.fa.fa-github.fa-1
             span.form-control
               = @activity.gist_url
-
-
 
     div.clearfix
       - if teacher?
@@ -178,11 +166,11 @@ section.activity-details
                 = msg.cohort.name
 
           .contents
-            = simple_format msg.body
+            == markdown msg.body
             - if teacher? && msg.teacher_notes?
               .teacher-notes 
                 h5 Teacher (Internal) Notes
-                = simple_format msg.teacher_notes
+                == markdown msg.teacher_notes
 
           - if teacher? && current_user == msg.user
             .actions
@@ -194,4 +182,3 @@ section.activity-details
 .modal.fade id="feedback_modal"
   .modal-dialog
     .modal-content
-

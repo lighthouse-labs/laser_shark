@@ -18,54 +18,17 @@ class Admin::TeacherStatsController < Admin::BaseController
   end
 
   def assistance
-    @assistances = @teacher.teaching_assistances.completed
-
-    @daily_stats = @assistances.group('1').order('1').pluck("date_trunc('week', assistances.created_at)::date, COUNT(id)")
-
-    @overall_stats = {
-      total_count: @assistances.count,
-      average_l_score: @assistances.average(:rating).to_f.round(2)
-    }
-
+    render json: @teacher, serializer: TeacherAssistanceStatsSerializer
   end
 
   def feedback
-    avg_col = "ROUND(AVG(rating::numeric), 2)::float"
-    cols = "feedbacks.created_at::date, #{avg_col}"
-
-    feedback = Feedback.teacher_feedbacks.completed
-    
-    @overall_stats = {
-      mentor_average: feedback.filter_by_teacher(@teacher.id).assistance.pluck(avg_col),
-      mentor_total: feedback.filter_by_teacher(@teacher.id).assistance.count,
-
-      lecture_average: feedback.filter_by_teacher(@teacher.id).lecture.pluck(avg_col),
-      lecture_total: feedback.filter_by_teacher(@teacher.id).lecture.count,
-
-      direct_average: feedback.filter_by_teacher(@teacher.id).direct.pluck(avg_col),
-      direct_total: feedback.filter_by_teacher(@teacher.id).direct.count
-    }
-
-    series = feedback.group('1').order('1')
-
-    @series = {
-      lecture: {
-        teacher: series.lecture.filter_by_teacher(@teacher.id).pluck(cols),
-        everyone: series.lecture.pluck(cols)
-      },
-      mentor: {
-        teacher: series.assistance.filter_by_teacher(@teacher.id).pluck(cols),
-        everyone: series.assistance.pluck(cols)
-      }
-    }
+    render json: @teacher, serializer: TeacherFeedbackStatsSerializer
   end
 
   private
 
   def require_teacher
     @teacher = Teacher.find params[:id]
-
   end
-
-
+  
 end
