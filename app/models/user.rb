@@ -30,8 +30,14 @@ class User < ActiveRecord::Base
     joins(:activity_submissions).where(activity_submissions: { activity: activity }) 
   }
 
-  validates :uid,   presence: true
-  validates :token, presence: true
+  validates :uid,             presence: true
+  validates :token,           presence: true
+  validates :first_name,      presence: true
+  validates :last_name,       presence: true
+  validates :phone_number,    presence: true
+  validates :email,           email: true
+  validates :location_id,     presence: true
+  validates :github_username, presence: true
 
   def prospect?
     true
