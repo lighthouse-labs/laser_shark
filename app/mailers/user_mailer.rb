@@ -1,4 +1,6 @@
 class UserMailer < ActionMailer::Base
+
+  add_template_helper(ActivitiesHelper)
   
   default from: ENV['EMAIL_SENDER']
 

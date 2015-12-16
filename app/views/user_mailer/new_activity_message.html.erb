@@ -1,6 +1,6 @@
 <h2><%= @message.subject %></h2>
 
-<%= simple_format @message.body %>
+<%= raw markdown(@message.body) %>
 
 <hr>
 

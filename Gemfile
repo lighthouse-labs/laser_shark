@@ -19,7 +19,7 @@ gem 'puma'
 gem 'kaminari'
 gem 'readmorejs-rails'
 gem 'best_in_place', github: 'bernat/best_in_place'
-
+gem 'ace-rails-ap'
 
 gem 'simple_form', '3.1.0.rc1'
 gem 'slim-rails'
