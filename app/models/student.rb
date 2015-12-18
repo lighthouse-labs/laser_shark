@@ -27,4 +27,8 @@ class Student < User
     !prepping? && cohort.finished?
   end
 
+  def mentor
+    Teacher.find(mentor_id) if mentor_id
+  end
+
 end
