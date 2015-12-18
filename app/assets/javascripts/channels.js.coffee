@@ -22,6 +22,9 @@ window.connectToTeachersSocket = ->
 
 $ ->
   App.userChannel = App.cable.subscriptions.create("UserChannel", 
+    connected: ->
+      console.log("connected to user socket")
+
     requestAssistance: (reason) ->
       @perform 'request_assistance', reason: reason
 

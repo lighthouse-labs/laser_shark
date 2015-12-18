@@ -100,6 +100,8 @@ LaserShark::Application.routes.draw do
     end
   end
 
+  resources :sockets_stress_tests, only: [:index]
+
   # To test 500 error notifications on production
   get 'error-test' => 'test_errors#create'
 
