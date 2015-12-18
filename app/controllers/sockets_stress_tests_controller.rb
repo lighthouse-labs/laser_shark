@@ -12,6 +12,6 @@ class SocketsStressTestsController < ApplicationController
   private
 
   def authenticate_test_header
-    redirect_to(:root, alert: 'Not allowed') unless request.headers["HTTP_SOCKETS_STRESS_TOKEN"] == 'sockets4321'
+    redirect_to(:root, alert: 'Not allowed') unless params[:sockets_stress_token] == "sockets4321" #request.headers["HTTP_SOCKETS_STRESS_TOKEN"] == 'sockets4321'
   end
 end
