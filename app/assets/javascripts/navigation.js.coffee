@@ -1,7 +1,6 @@
 $ ->
 
   $('.request-assistance-button').click (e) ->
-    console.log('clicked')
     e.preventDefault()
     reason = $(@).closest('form').find('textarea').val()
     window.App.userChannel.requestAssistance(reason)

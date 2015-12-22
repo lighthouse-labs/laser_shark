@@ -3,7 +3,18 @@ class SocketsStressTestsController < ApplicationController
   before_action :authenticate_test_header
 
   def index
-    @current_user = Cohort.is_active.order("RANDOM()").first.students.active.order("RANDOM()").first
+    @current_user = Student.create!(
+      uid: rand(1..1000), 
+      token: rand(1..1000), 
+      first_name: Faker::Name.first_name, 
+      last_name: Faker::Name.last_name, 
+      email: Faker::Internet.email,
+      phone_number: Faker::PhoneNumber.phone_number,
+      location_id: 2,
+      cohort_id: 22,
+      github_username: Faker::Name.first_name,
+      completed_registration: true
+    )
     session[:user_id] = @current_user.id
     cookies.signed[:user_id] = @current_user.id
     redirect_to(:root)

@@ -118,7 +118,12 @@ var RequestQueue = React.createClass({
         }
       },
       disconnected: function() {
-        $('.reconnect-holder').show()
+        $('.reconnect-holder').delay(300).show(0);
+      },
+      connected: function() {
+        if ($('.reconnect-holder').is(':visible')) {
+          $('.reconnect-holder').hide();
+        }
       }
     });
   },

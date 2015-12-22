@@ -22,9 +22,11 @@ window.connectToTeachersSocket = ->
 
 $ ->
   App.userChannel = App.cable.subscriptions.create("UserChannel", 
-    connected: ->
-      console.log("connected to user socket")
 
+    connected: ->
+      if $('.reconnect-holder').is(':visible')
+        $('.reconnect-holder').hide()
+    
     requestAssistance: (reason) ->
       @perform 'request_assistance', reason: reason
 
@@ -36,5 +38,5 @@ $ ->
       handler.processResponse()
 
     disconnected: ->
-      $('.reconnect-holder').show()
+      $('.reconnect-holder').delay(300).show(0)
   )
