@@ -82,10 +82,20 @@
   display: inline;
 }
 
-pre code {
-  -moz-user-select: none;
-  -webkit-user-select: none;
-  -ms-user-select: none;
+pre { 
+  // http://stackoverflow.com/questions/10374171/how-to-make-twitter-bootstraps-pre-blocks-scroll-horizontally
+  overflow-y: auto;
+  word-wrap: normal;
+  
+  code {
+    overflow-wrap: normal;
+    white-space: pre;
+    word-wrap: normal;
+
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+  }
 }
 
 .allow-select {
