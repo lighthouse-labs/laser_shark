@@ -1,4 +1,4 @@
-div.col-md-12.incomplete-activity-details-row
+.col-md-12.search-results-details-row
 
   h4.col-md-1.activity-week #{activity.day.upcase}
 
@@ -26,8 +26,3 @@ div.col-md-12.incomplete-activity-details-row
             i.fa.fa-square-o
         .name
           = activity.name
-
-  .col-md-1
-    - if !activity.allow_submissions?
-      button.btn.incomplete-activity-submit-button data-activity-id="#{activity.id}" data-activity-type="#{activity.type}"
-        i.fa.fa-check data-activity-id="#{activity.id}" data-activity-type="#{activity.type}"

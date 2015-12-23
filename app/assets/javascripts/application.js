@@ -17,8 +17,11 @@
 
 //= require default
 
-//= require ace
-//= require mustache
+//= require ace-rails-ap
+//= require ace/theme-monokai
+//= require ace/mode-markdown
+//= require theme-monokai
+
 //= require jquery.raty
 //= require readmore
 //= require jquery.googlecalreader-1.1.min
@@ -30,6 +33,7 @@
 
 //= require channels
 //= require_tree ./socket_handlers/
+//= require admin
 
 //= require components
 //= require_tree ./presenters

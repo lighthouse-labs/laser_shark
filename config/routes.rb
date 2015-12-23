@@ -37,6 +37,7 @@ LaserShark::Application.routes.draw do
   end
 
   resources :incomplete_activities, only: [:index]
+  resources :search_activities, only: [:index]
 
   resources :assistances, only: [:destroy] do
     member do
@@ -54,7 +55,7 @@ LaserShark::Application.routes.draw do
 
   resources :activities, only: [] do
     resource :activity_submission, only: [:create, :destroy]
-    resources :messages, only: [:new, :edit, :update, :create, :index], controller: 'activity_messages'
+    resources :messages, controller: 'activity_messages'
     resources :recordings, only: [:new, :create]
   end
 

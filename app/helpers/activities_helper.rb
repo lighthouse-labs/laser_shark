@@ -17,7 +17,13 @@ module ActivitiesHelper
 
   def duration activity
     duration = activity.duration
-    duration < 60 ? duration.to_s << 'm' : duration_in_hours(duration) << "h"
+    if duration <= 60
+      'Short'
+    elsif duration >= 180
+      'Long'
+    else
+      'Medium'
+    end
   end
 
   def icon_for(activity)
