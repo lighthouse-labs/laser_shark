@@ -1,0 +1,22 @@
+= form_for @student, html: {method: :put} do |f|
+
+  .modal-header
+    button type="button" class="close" data-dismiss="modal" aria-label="Close"
+      span aria-hidden="true" 
+        | &times;
+    h4.modal-title Update Student
+
+  .modal-body
+    | Mentor:
+    br
+    = select_tag 'mentor_id', options_from_collection_for_select(@mentors, 'id', 'full_name', @student.mentor_id), include_blank: "No mentor", class: 'form-control'
+    br
+
+    | Cohort:
+    br
+    = select_tag 'cohort_id', options_from_collection_for_select(@cohorts, 'id', 'name', @student.cohort_id), class: 'form-control'
+    br
+
+  .modal-footer
+    button.btn.btn-default type="button" data-dismiss="modal" Close
+    = f.submit "Save", class: "btn btn-success"

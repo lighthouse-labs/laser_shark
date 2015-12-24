@@ -24,6 +24,11 @@ class Teacher < User
     end
   end
 
+  def self.mentors(location)
+    where( {mentor: true} ).
+    where( {location: location} )
+  end
+
   def can_access_day?(day)
     true
   end

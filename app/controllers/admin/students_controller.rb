@@ -1,14 +1,10 @@
 class Admin::StudentsController < Admin::BaseController
-  before_action :load_student, only: [:reactivate, :deactivate, :update]
+  before_action :load_student, except: [:index]
+  before_action :load_cohort, only: [:index]
 
   def index
-    if params[:cohort_id]
-      @current_cohort = Cohort.find(params[:cohort_id])
-      @students = @current_cohort.students
-    else
-      @students = Student.all
-    end
-    @cohorts = Cohort.is_active
+    redirect_to admin_cohorts_path, notice: 'Must select a cohort' unless params[:cohort_id]
+    @students = @current_cohort.students
   end
 
   def reactivate
@@ -22,14 +18,31 @@ class Admin::StudentsController < Admin::BaseController
   end
 
   def update
-    @cohort = Cohort.find(params[:cohort_id])
-    @student.update(cohort: @cohort)
+    # Need to show errors if student save doesnt work
+    @student.update(student_params)
     render nothing: true if @student.save
+  end
+
+  def modal_content
+    @cohorts = Cohort.is_active
+    @mentors = Teacher.mentors(@student.cohort.location)
+    render layout: false
   end
 
   private
 
   def load_student
     @student = Student.find(params[:id])
+  end
+
+  def load_cohort
+    @current_cohort = Cohort.find(params[:cohort_id])
+  end
+
+  def student_params
+    params.require(:student).permit(
+      :mentor_id,
+      :cohort_id
+    )
   end
 end

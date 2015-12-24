@@ -71,6 +71,8 @@ LaserShark::Application.routes.draw do
   resources :teachers, only: [:index, :show] do
     member do 
       get :feedback
+      post :remove_mentorship
+      post :add_mentorship
     end
   end
 
@@ -81,6 +83,7 @@ LaserShark::Application.routes.draw do
       member do 
         post :reactivate
         post :deactivate 
+        get :modal_content
       end
     end
     resources :teacher_stats, only: [:index, :show] do 
