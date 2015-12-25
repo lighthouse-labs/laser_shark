@@ -18,9 +18,8 @@ class Admin::StudentsController < Admin::BaseController
   end
 
   def update
-    # Need to show errors if student save doesnt work
     @student.update(student_params)
-    render nothing: true if @student.save
+    redirect_to :back if @student.save
   end
 
   def modal_content
