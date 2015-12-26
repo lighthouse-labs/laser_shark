@@ -1,11 +1,18 @@
-.student-page-top-row {
-  height: 200px;
+.student-profile-picture {
+  margin-right: 50px;
+  margin-bottom: 25px;
 }
-
 .student-bio {
   font-size: 15px;
+  clear: both;
+  border-top: 1px solid gainsboro;
+  .student-bio-text {
+    padding: 5px;
+  }
 }
 
 .student-page-parent-container {
   margin-top: 25px;
+  width: 75%;
+  margin: auto;
 }

@@ -12,8 +12,8 @@ table.table
     - @students.each do |student|
       - present student, UserPresenter do |student_presenter|
         tr
-          td = student_presenter.image_for_index_page
-          td = student_presenter.full_name
+          td = link_to student_presenter.image_for_index_page, student_path(student)
+          td = link_to student_presenter.full_name, student_path(student)
           td = student_presenter.email
           td = student_presenter.phone_number
           td = student_presenter.github_info
