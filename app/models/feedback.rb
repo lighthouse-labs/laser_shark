@@ -56,7 +56,7 @@ class Feedback < ActiveRecord::Base
     end
    }
 
-  validates :rating, presence: true, on: :update 
+  # validates :rating, presence: true, on: :update 
 
   def self.filter_by(options)
     location_id = options[:teacher_location_id] || options[:student_location_id]
