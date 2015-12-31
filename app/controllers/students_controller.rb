@@ -14,6 +14,8 @@ class StudentsController < ApplicationController
 
   def show
     @student = Student.find(params[:id])
+    @code_reviews = @student.completed_code_reviews
+    @activity_submissions = @student.activity_submissions.requires_code_submission.last(10)
   end
 
   private

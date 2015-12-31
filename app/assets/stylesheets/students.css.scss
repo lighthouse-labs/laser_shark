@@ -1,18 +1,90 @@
+.student-page-parent-container {
+  width: 75%;
+  margin: 25px auto auto auto;
+}
+
 .student-profile-picture {
   margin-right: 50px;
   margin-bottom: 25px;
 }
+
+.student-name {
+  margin-top: 0px;
+}
+
+.student-quirky-fact {
+  font-size: 14px;
+}
+
+.student-info {
+  margin-top: 3px;
+  font-size: 14px;
+}
+
+.student-social-media {
+  float: left;
+  div {
+    margin-top: 4px;
+  }
+}
+
+.student-contact-info {
+  float: right;
+  div {
+    margin-top: 4px;
+  }
+}
+
 .student-bio {
   font-size: 15px;
   clear: both;
   border-top: 1px solid gainsboro;
+  margin-bottom: 10px;
+  margin-top: 10px;
   .student-bio-text {
-    padding: 5px;
+    padding: 0px 5px 5px 5px;
   }
 }
 
-.student-page-parent-container {
-  margin-top: 25px;
-  width: 75%;
-  margin: auto;
+.student-code-reviews-holder {
+  border-top: 1px solid gainsboro; 
+  border-bottom: 1px solid gainsboro; 
+  font-size: 14px;
 }
+
+.student-code-reviews-holder > .student-code-review-info:not(:last-child) {
+  border-bottom: 2px dashed gainsboro;
+}
+
+.code-reviews-header {
+  clear: both;
+}
+
+.code-reviews-title {
+  float: left;
+  font-size: 24px;
+}
+
+.add-code-review-button {
+  float: right;
+}
+
+.student-code-review-details {
+  float: left;
+  margin-top: 5px;
+}
+
+.code-review-activity-name {
+  font-weight: bold;
+}
+
+.code-reviewer-avatar {
+  float: right;
+  margin-top: 6px;
+}
+
+.student-code-review-body {
+  clear: both;
+}
+
+

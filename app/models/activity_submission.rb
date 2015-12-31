@@ -14,6 +14,12 @@ class ActivitySubmission < ActiveRecord::Base
     Time.now
   end
 
+  scope :requires_code_submission, -> {
+    includes(:activity).
+    where(activities: {allow_submissions: true}).
+    references(:activity)
+  }
+
   validates :user_id, uniqueness: { scope: :activity_id,
     message: "only one submission per activity" }
 

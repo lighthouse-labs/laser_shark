@@ -27,4 +27,11 @@ class Student < User
     !prepping? && cohort.finished?
   end
 
+  def completed_code_reviews
+    assistance_requests.where(type: 'CodeReviewRequest').where.not(assistance_requests: {assistance_id: nil})
+  end
+
+  def activites_with_github_submission
+    self.activity_submissions
+  end
 end

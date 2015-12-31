@@ -1,15 +1,50 @@
 - present @student do |student_presenter|
-  div.student-page-parent-container
+  .student-page-parent-container
     .col-md-3.student-profile-picture
       = student_presenter.image_for_show_page
-    .col-md-5
-      h5 = student_presenter.full_name
-      div.student-contact-info
-      ul
-        = student_presenter.github_info
-        = student_presenter.slack_info
-        = student_presenter.skype_info
-        = student_presenter.twitter_info
-    .cold-md-9.student-bio
+    .col-md-7
+      h5.student-name = student_presenter.full_name
+      .student-quirky-fact = student_presenter.quirky_fact
+      .student-info
+        .student-social-media
+          div = student_presenter.github_info
+          div = student_presenter.slack_info
+          div = student_presenter.skype_info
+          div = student_presenter.twitter_info
+        .student-contact-info
+          div = student_presenter.email
+          div = student_presenter.phone_number
+
+    .col-md-12.student-bio
       h6 Student Bio:
       div.student-bio-text = student_presenter.bio
+
+    .col-md-12.student-code-reviews-holder
+      .code-reviews-header
+        .code-reviews-title Code Reviews:
+        .btn.btn-primary.btn-sm.code-reviews-add-button
+        | + Code Review
+      - @code_reviews.each do |code_review|
+        .student-code-review-info
+          .student-code-review-details
+            div.code-review-activity-name = code_review.activity_submission.activity.name
+            div = code_review.created_at.to_date
+          .code-reviewer-avatar 
+            = image_tag(avatar_for(code_review.assistance.assistor), size: '75x75')
+          .student-code-review-body
+            ul
+              li 
+                | Score: 
+                = code_review.assistance.rating
+                | /4
+              li
+                | Teacher Notes:
+                br
+                = code_review.assistance.notes
+              li
+                | Student Notes:
+                br
+    .col-md-12.student-activity-submissions-holder
+      h6 Activity Submissions:
+      - @activity_submissions.each do |activity_submission|
+        = activity_submission.github_url

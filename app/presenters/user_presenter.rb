@@ -8,7 +8,11 @@ class UserPresenter < BasePresenter
   end
 
   def image_for_show_page
-    h.image_tag(avatar_for, size: '200x200')
+    if user.type == 'Teacher'
+      h.image_tag(avatar_for, size: '200x200')
+    else
+      h.image_tag(avatar_for, size: '230x230')
+    end
   end
   
   def github_info
@@ -29,7 +33,13 @@ class UserPresenter < BasePresenter
 
   def twitter_info
     if user.twitter.present?
-      content_tag :li do
+      if user.type == 'Teacher'
+        content_tag :li do
+          link_to "https://twitter.com/#{user.twitter}", target: "_blank" do
+            image_tag('twitter-icon.png') + " " + user.twitter
+          end
+        end
+      else
         link_to "https://twitter.com/#{user.twitter}", target: "_blank" do
           image_tag('twitter-icon.png') + " " + user.twitter
         end
@@ -39,7 +49,11 @@ class UserPresenter < BasePresenter
 
   def slack_info
     if user.slack.present?
-      content_tag :li do
+      if user.type == 'Teacher'
+        content_tag :li do
+          image_tag('slack-icon.png') + " " + user.slack  
+        end
+      else
         image_tag('slack-icon.png') + " " + user.slack  
       end
     end
@@ -47,7 +61,11 @@ class UserPresenter < BasePresenter
 
   def skype_info
     if user.skype.present?
-      content_tag :li do
+      if user.type == 'Teacher'
+        content_tag :li do
+          image_tag('skype-icon.png') + " " + user.skype
+        end
+      else
         image_tag('skype-icon.png') + " " + user.skype
       end
     end
