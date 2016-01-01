@@ -19,19 +19,19 @@
       h6 Student Bio:
       div.student-bio-text = student_presenter.bio
 
-    .col-md-12.student-code-reviews-holder
-      .code-reviews-header
-        .code-reviews-title Code Reviews:
-        .btn.btn-primary.btn-sm.code-reviews-add-button
-        | + Code Review
+    .col-md-12.student-activities-holder
+      .student-section-header
+        .student-section-title Code Reviews:
+        .btn.btn-primary.btn-sm.student-add-review-button
+          | + Code Review
       - @code_reviews.each do |code_review|
-        .student-code-review-info
-          .student-code-review-details
-            div.code-review-activity-name = code_review.activity_submission.activity.name
-            div = code_review.created_at.to_date
+        .student-activity-info
+          .student-activity-details
+            .student-activity-name = code_review.activity_submission.activity.name
+            = code_review.created_at.to_date
           .code-reviewer-avatar 
             = image_tag(avatar_for(code_review.assistance.assistor), size: '75x75')
-          .student-code-review-body
+          .student-activity-body
             ul
               li 
                 | Score: 
@@ -44,7 +44,28 @@
               li
                 | Student Notes:
                 br
-    .col-md-12.student-activity-submissions-holder
-      h6 Activity Submissions:
-      - @activity_submissions.each do |activity_submission|
-        = activity_submission.github_url
+    .col-md-12.student-activities-holder
+      .student-section-header
+          .student-section-title Recent Assistances:
+          .btn.btn-primary.btn-sm.student-add-assistance-button
+            | + Assistance
+      - @assistance_requests.each do |assistance_request|
+        .student-activity-info
+          .student-activity-details
+            .student-activity-name = assistance_request.reason
+            = assistance_request.created_at.to_date
+          .code-reviewer-avatar 
+            = image_tag(avatar_for(assistance_request.assistor), size: '75x75')
+          .student-activity-body
+            ul
+              li 
+                | Score: 
+                = assistance_request.assistance.rating
+                | /4
+              li
+                | Teacher Notes:
+                br
+                = assistance_request.assistance.notes
+              li
+                | Student Notes:
+                br

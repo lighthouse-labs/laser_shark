@@ -31,6 +31,10 @@ class Student < User
     assistance_requests.where(type: 'CodeReviewRequest').where.not(assistance_requests: {assistance_id: nil})
   end
 
+  def assistances_received
+    assistance_requests.where.not(type: 'CodeReviewRequest').where.not(assistance_requests: {assistance_id: nil})
+  end
+
   def activites_with_github_submission
     self.activity_submissions
   end

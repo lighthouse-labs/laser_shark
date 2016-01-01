@@ -46,35 +46,40 @@
   }
 }
 
-.student-code-reviews-holder {
+.student-activities-holder {
   border-top: 1px solid gainsboro; 
   border-bottom: 1px solid gainsboro; 
   font-size: 14px;
 }
 
-.student-code-reviews-holder > .student-code-review-info:not(:last-child) {
+.student-activities-holder > .student-activity-info:not(:last-child) {
   border-bottom: 2px dashed gainsboro;
 }
 
-.code-reviews-header {
-  clear: both;
+.student-section-header {
+  margin-top: 5px;
 }
 
-.code-reviews-title {
+.student-section-title {
   float: left;
   font-size: 24px;
+  margin-bottom: 5px;
 }
 
-.add-code-review-button {
+.student-add-review-button {
   float: right;
 }
 
-.student-code-review-details {
+.student-activity-info {
+  clear: both;
+}
+
+.student-activity-details {
   float: left;
   margin-top: 5px;
 }
 
-.code-review-activity-name {
+.student-activity-name {
   font-weight: bold;
 }
 
@@ -83,7 +88,7 @@
   margin-top: 6px;
 }
 
-.student-code-review-body {
+.student-activity-body {
   clear: both;
 }
 
