@@ -8,7 +8,6 @@ class Admin::CurriculumFeedbacksController < Admin::BaseController
     params[:completed?] = 'true' if params[:completed].nil?
     
     @feedbacks = Feedback.curriculum_feedbacks.filter_by(filter_by_params).order(order)
-
     @rating = @feedbacks.average_rating
     @paginated_feedbacks = @feedbacks.page(params[:page]).per(DEFAULT_PER)
 

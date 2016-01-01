@@ -82,11 +82,6 @@ class Feedback < ActiveRecord::Base
     end  
   end
 
-  def self.average_rating
-    average(:rating).to_f.round(2)
-
-  end
-
   def self.to_csv
     student_attributes = ['first_name', 'last_name']
     feedbackable_attributes = ['name', 'day', 'type']
@@ -101,6 +96,10 @@ class Feedback < ActiveRecord::Base
                 feedback.student.cohort.location.attributes.values_at(*location_attributes))
       end
     end
+  end
+
+  def self.average_rating
+    average(:rating).to_f.round(2)
   end
 
 end
