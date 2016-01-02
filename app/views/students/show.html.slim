@@ -2,6 +2,9 @@
   .student-page-parent-container
     .col-md-3.student-profile-picture
       = student_presenter.image_for_show_page
+      .student-cohort
+        |Cohort:&nbsp
+        = student_presenter.cohort.name
     .col-md-7
       h5.student-name = student_presenter.full_name
       .student-quirky-fact = student_presenter.quirky_fact
@@ -14,17 +17,22 @@
         .student-contact-info
           div = student_presenter.email
           div = student_presenter.phone_number
+          div
+            |Mentor: 
+          /   = link_to @student.mentor.full_name, teacher_path(@student.mentor)
 
     .col-md-12.student-bio
       h6 Student Bio:
-      div.student-bio-text = student_presenter.bio
+      .student-bio-text = student_presenter.bio
+    .col-md-12.student-objectives
+      h6 Objectives:
 
     .col-md-12.student-activities-holder
       .student-section-header
-        .student-section-title Code Reviews:
-        .btn.btn-primary.btn-sm.student-add-review-button
+        .student-section-title Code Reviews&nbsp(#{@code_reviews.count}):
+        .btn.btn-primary.btn-sm.student-add-activity-button
           | + Code Review
-      - @code_reviews.each do |code_review|
+      - @code_reviews.last(10).reverse.each do |code_review|
         .student-activity-info
           .student-activity-details
             .student-activity-name = code_review.activity_submission.activity.name
@@ -34,7 +42,7 @@
           .student-activity-body
             ul
               li 
-                | Score: 
+                | Rating: 
                 = code_review.assistance.rating
                 | /4
               li
@@ -46,26 +54,33 @@
                 br
     .col-md-12.student-activities-holder
       .student-section-header
-          .student-section-title Recent Assistances:
-          .btn.btn-primary.btn-sm.student-add-assistance-button
+          .student-section-title Assistances&nbsp(#{@assistance_requests.count}):
+          .btn.btn-primary.btn-sm.student-add-activity-button
             | + Assistance
-      - @assistance_requests.each do |assistance_request|
+          .btn.btn-primary.btn-sm.student-all-assistances-button
+            .student-assistances-link = link_to 'View all', student_assistances_path(@student)
+      - @assistance_requests.last(10).reverse.each do |assistance_request|
         .student-activity-info
           .student-activity-details
             .student-activity-name = assistance_request.reason
             = assistance_request.created_at.to_date
           .code-reviewer-avatar 
-            = image_tag(avatar_for(assistance_request.assistor), size: '75x75')
+            = image_tag(avatar_for(assistance_request.assistance.assistor), size: '75x75')
           .student-activity-body
             ul
-              li 
-                | Score: 
-                = assistance_request.assistance.rating
-                | /4
-              li
-                | Teacher Notes:
-                br
-                = assistance_request.assistance.notes
-              li
-                | Student Notes:
-                br
+              - if assistance_request.assistance.try(:rating)
+                li 
+                  | Rating: 
+                  = assistance_request.assistance.rating
+                  | /4
+              - else
+                li
+                  | Rating not provided
+              - if assistance_request.assistance.try(:notes)
+                li
+                  | Teacher Notes:
+                  br
+                  = assistance_request.assistance.notes
+              - else
+                li
+                  | Notes not provided

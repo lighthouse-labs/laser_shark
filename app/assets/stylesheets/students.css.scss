@@ -8,6 +8,10 @@
   margin-bottom: 25px;
 }
 
+.student-cohort {
+  font-size: 12px;
+}
+
 .student-name {
   margin-top: 0px;
 }
@@ -46,6 +50,12 @@
   }
 }
 
+.student-objectives {
+  font-size: 15px;
+  border-top: 1px solid gainsboro;
+  margin-bottom: 10px;
+}
+
 .student-activities-holder {
   border-top: 1px solid gainsboro; 
   border-bottom: 1px solid gainsboro; 
@@ -66,8 +76,17 @@
   margin-bottom: 5px;
 }
 
-.student-add-review-button {
+.student-add-activity-button {
   float: right;
+}
+
+.student-all-assistances-button {
+  margin-right: 5px;
+  float: right;
+}
+
+.student-assistances-link > a {
+  color: white;
 }
 
 .student-activity-info {

@@ -33,7 +33,7 @@ LaserShark::Application.routes.draw do
   end
 
   resources :students, only: [:index, :show] do
-    resources :assistances, only: [:create]
+    resources :assistances, only: [:index, :create]
   end
 
   resources :incomplete_activities, only: [:index]

@@ -2,6 +2,10 @@ class AssistancesController < ApplicationController
 
   before_filter :teacher_required
 
+  def index
+    @student = Student.find(params[:student_id])
+  end
+
   def create
     @student = Student.find params[:student_id]
     assistance = Assistance.new(:assistor => current_user, :assistee => @student)
