@@ -111,15 +111,12 @@ class User < ActiveRecord::Base
   class << self
     def authenticate_via_github(auth)
       @user = where(uid: auth["uid"]).first
-      if @user
-        @user
-      else
-        @user = new
-        @user.uid = auth["uid"]
-        set_attributes_from_oauth(@user, auth)
-        @user.save(validate: false)
-        @user
-      end
+      return @user if @user
+      @user = new
+      @user.uid = auth["uid"]
+      @user.save(validate: false)
+      @user.update_columns(attributes_from_oauth(auth))
+      @user
     end
 
     private
@@ -133,17 +130,6 @@ class User < ActiveRecord::Base
         avatar_url: auth["info"]["image"],
         email: auth["info"]["email"]
       }
-    end
-
-    def set_attributes_from_oauth(user, auth)
-      attributes = attributes_from_oauth(auth)
-      user.token = attributes[:token]
-      user.github_username = attributes[:github_username]
-      user.first_name = attributes[:first_name]
-      user.last_name = attributes[:last_name]
-      user.avatar_url = attributes[:avatar_url]
-      user.email = attributes[:email]
-      return user
     end
   end
 
