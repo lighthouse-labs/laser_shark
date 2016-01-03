@@ -98,11 +98,9 @@ class ApplicationController < ActionController::Base
   helper_method :pending_feedbacks
 
   def assign_as_student_to_cohort(cohort)
-    # current_user.cohort = cohort
-    # current_user.type = 'Student'
-    # current_user.save!
-    current_user.update_column(:cohort_id, cohort.id)
-    current_user.update_column(:type, 'Student')
+    current_user.cohort = cohort
+    current_user.type = 'Student'
+    current_user.save!
     flash[:notice] = "Welcome, you have student access to #{cohort.name}!"
   end
 
@@ -117,9 +115,8 @@ class ApplicationController < ActionController::Base
   end
 
   def make_teacher
-    # current_user.type = 'Teacher'
-    # current_user.save!
-    current_user.update_column(:type, 'Teacher')
+    current_user.type = 'Teacher'
+    current_user.save!
     AdminMailer.new_teacher_joined(current_user).deliver
     flash[:notice] = "Welcome, you have teacher access!"
   end
