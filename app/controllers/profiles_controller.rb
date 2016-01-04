@@ -39,7 +39,8 @@ class ProfilesController < ApplicationController
       :skype,
       :slack,
       :company_name,
-      :company_url
+      :company_url,
+      :custom_avatar
     )
   end
 
