@@ -3,6 +3,8 @@
 <p>
   STUDENT: <%= @feedback.student.full_name %>
   <br>
+  LOCATION: <%= @feedback.student.location.try :name %>
+  <br>
   HOST: <%= link_to @host, @host %>
   <br>
   PROGRAM: <%= @feedback.student.cohort.program.name %>

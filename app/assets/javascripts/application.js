@@ -18,6 +18,12 @@
 //= require ace-rails-ap
 //= require ace/theme-monokai
 //= require ace/mode-markdown
+//= require default
+//= require ace-rails-ap
+//= require ace/theme-monokai
+//= require ace/mode-markdown
+//= require theme-monokai
+
 //= require jquery.raty
 //= require readmore
 //= require jquery.googlecalreader-1.1.min
