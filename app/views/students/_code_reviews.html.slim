@@ -1,0 +1,28 @@
+.col-md-12.student-objectives
+  h6 Objectives:
+
+.col-md-12.student-activities-holder
+  .student-section-header
+    .student-section-title Code Reviews&nbsp;(#{@code_reviews.count}):
+    .btn.btn-primary.btn-sm.student-add-activity-button
+      | + Code Review
+  - @code_reviews.last(10).reverse.each do |code_review|
+    .student-activity-info
+      .student-activity-details
+        .student-activity-name = code_review.activity_submission.activity.name
+        = code_review.created_at.to_date
+      .code-reviewer-avatar 
+        = image_tag(avatar_for(code_review.assistance.assistor), size: '75x75')
+      .student-activity-body
+        ul
+          li 
+            | Rating: 
+            = code_review.assistance.rating
+            | /4
+          li
+            | Teacher Notes:
+            br
+            = code_review.assistance.notes
+          li
+            | Student Notes:
+            br

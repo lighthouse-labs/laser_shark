@@ -1,0 +1,6 @@
+.col-md-12.all-assistances-holder
+  .student-section-heaader
+    h3.all-assistances-title Assistances&nbsp;(#{@assistance_requests_count}):
+    .btn.btn-primary.btn-sm.student-add-activity-button
+      | + Assistance
+  = render 'students/assistance_requests', :collection => @assistance_requests, student: @student

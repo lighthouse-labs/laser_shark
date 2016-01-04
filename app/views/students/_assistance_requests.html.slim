@@ -1,0 +1,27 @@
+- @assistance_requests.each do |assistance_request|
+  .student-activity-info
+    .student-activity-details
+      .student-activity-name
+        |Reason for assistance:&nbsp;
+        = assistance_request.reason
+      = assistance_request.created_at.to_date
+    .code-reviewer-avatar 
+      = image_tag(avatar_for(assistance_request.assistance.assistor), size: '75x75')
+    .student-activity-body
+      ul
+        - if assistance_request.assistance.try(:rating)
+          li 
+            | Rating: 
+            = assistance_request.assistance.rating
+            | /4
+        - else
+          li
+            | Rating not provided
+        - if assistance_request.assistance.try(:notes)
+          li
+            | Teacher Notes:
+            br
+            = assistance_request.assistance.notes
+        - else
+          li
+            | Notes not provided

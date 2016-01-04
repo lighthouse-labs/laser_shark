@@ -111,4 +111,15 @@
   clear: both;
 }
 
+.all-assistances-holder {
+  font-size: 14px;
+}
 
+.all-assistances-title {
+  float: left;
+  margin-top: 0px;
+}
+
+.all-assistances-holder > .student-activity-info:not(:last-child) {
+  border-bottom: 2px dashed gainsboro;
+}

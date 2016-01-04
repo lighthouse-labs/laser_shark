@@ -16,6 +16,8 @@ class StudentsController < ApplicationController
     @student = Student.find(params[:id])
     @code_reviews = @student.completed_code_reviews
     @assistance_requests = @student.assistances_received
+    @assistance_requests_count = @assistance_requests.count
+    @assistance_requests = @assistance_requests.last(10).reverse
     @activity_submissions = @student.activity_submissions.requires_code_submission
   end
 

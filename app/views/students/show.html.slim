@@ -24,63 +24,13 @@
     .col-md-12.student-bio
       h6 Student Bio:
       .student-bio-text = student_presenter.bio
-    .col-md-12.student-objectives
-      h6 Objectives:
 
+    = render 'code_reviews', :collection => @code_reviews
     .col-md-12.student-activities-holder
       .student-section-header
-        .student-section-title Code Reviews&nbsp(#{@code_reviews.count}):
-        .btn.btn-primary.btn-sm.student-add-activity-button
-          | + Code Review
-      - @code_reviews.last(10).reverse.each do |code_review|
-        .student-activity-info
-          .student-activity-details
-            .student-activity-name = code_review.activity_submission.activity.name
-            = code_review.created_at.to_date
-          .code-reviewer-avatar 
-            = image_tag(avatar_for(code_review.assistance.assistor), size: '75x75')
-          .student-activity-body
-            ul
-              li 
-                | Rating: 
-                = code_review.assistance.rating
-                | /4
-              li
-                | Teacher Notes:
-                br
-                = code_review.assistance.notes
-              li
-                | Student Notes:
-                br
-    .col-md-12.student-activities-holder
-      .student-section-header
-          .student-section-title Assistances&nbsp(#{@assistance_requests.count}):
+          .student-section-title Assistances&nbsp;(#{@assistance_requests_count}):
           .btn.btn-primary.btn-sm.student-add-activity-button
             | + Assistance
           .btn.btn-primary.btn-sm.student-all-assistances-button
             .student-assistances-link = link_to 'View all', student_assistances_path(@student)
-      - @assistance_requests.last(10).reverse.each do |assistance_request|
-        .student-activity-info
-          .student-activity-details
-            .student-activity-name = assistance_request.reason
-            = assistance_request.created_at.to_date
-          .code-reviewer-avatar 
-            = image_tag(avatar_for(assistance_request.assistance.assistor), size: '75x75')
-          .student-activity-body
-            ul
-              - if assistance_request.assistance.try(:rating)
-                li 
-                  | Rating: 
-                  = assistance_request.assistance.rating
-                  | /4
-              - else
-                li
-                  | Rating not provided
-              - if assistance_request.assistance.try(:notes)
-                li
-                  | Teacher Notes:
-                  br
-                  = assistance_request.assistance.notes
-              - else
-                li
-                  | Notes not provided
+      = render 'assistance_requests', :collection => @assistance_requests, student: @student
