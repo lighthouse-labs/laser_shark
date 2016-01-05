@@ -29,7 +29,7 @@
     .col-md-12.student-activities-holder
       .student-section-header
           .student-section-title Assistances&nbsp;(#{@assistance_requests_count}):
-          .btn.btn-primary.btn-sm.student-add-activity-button
+          .btn.btn-primary.btn-sm.student-add-activity-button  data-toggle="modal" data-target="#assistance_modal"
             | + Assistance
           .btn.btn-primary.btn-sm.student-all-assistances-button
             .student-assistances-link = link_to 'View all', student_assistances_path(@student)

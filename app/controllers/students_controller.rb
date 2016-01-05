@@ -19,6 +19,7 @@ class StudentsController < ApplicationController
     @assistance_requests_count = @assistance_requests.count
     @assistance_requests = @assistance_requests.last(10).reverse
     @activity_submissions = @student.activity_submissions.requires_code_submission
+    @assistance = Assistance.new(assistor: current_user, assistee: @student)
   end
 
   private

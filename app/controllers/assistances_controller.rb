@@ -9,29 +9,13 @@ class AssistancesController < ApplicationController
   end
 
   def create
-    @student = Student.find params[:student_id]
-    assistance = Assistance.new(:assistor => current_user, :assistee => @student)
-    status = assistance.save ? 200 : 400
-    respond_to do |format|
-      format.json { render(:nothing => true, :status => status) }
-      format.all { redirect_to(assistance_requests_path) }
+    @student = Student.find(params[:student_id])
+    @assistance_request = AssistanceRequest.new(requestor: @student, reason: "Offline assistance requested")
+    if @assistance_request.save
+      @assistance_request.start_assistance(current_user)
+      @assistance = @assistance_request.reload.assistance
+      # @assistance.end(params[:assistance][:notes], params[:assistance][:rating])
     end
-  end
-
-  def end
-    assistance = Assistance.find(params[:id].to_i)
-    status = assistance.end(params[:assistance][:notes], params[:assistance][:rating].to_i) ? 200 : 400
-
-    respond_to do |format|
-      format.json { render(:nothing => true, :status => status) }
-      format.all { redirect_to(assistance_requests_path) }
-    end
-  end
-
-  def destroy
-    assistance = Assistance.find(params[:id].to_i)
-    assistance.destroy
-    redirect_to assistance_requests_path
   end
 
   private

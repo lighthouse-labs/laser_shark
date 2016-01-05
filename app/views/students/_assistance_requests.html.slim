@@ -24,4 +24,38 @@
             = assistance_request.assistance.notes
         - else
           li
-            | Notes not provided
+            | Teacher notes not provided
+
+.modal.fade id='assistance_modal'
+  .modal-dialog
+    .modal-content
+      .modal-header
+        button type="button" class="close" data-dismiss="modal"
+          span aria-hidden="true"
+            |&times
+          .sr-only
+            |Close
+        h4 class="modal-title"
+          |Notes
+      = form_for @assistance, url: student_assistances_path(@student, @assistance), method: :post  do |f|
+        .modal-body
+          .form-group
+            = f.text_area :notes, placeholder: "How did the assistance go?", class: 'form-control'
+            / textarea id="assistance_notes" name="assistance[notes]" class="form-control" placeholder="How did the assistance go?"
+        /   .form-group
+        /     label for="assistance_rating"
+        /       |Rating
+        /     select.form-control id="assistance_rating" name="assistance[rating]"
+        /       option value="1"
+        /         |1 - Needs improvement
+        /       option value="2"
+        /         |2 - Fair
+        /       option value="3" selected="selected"
+        /         |3 - Good
+        /       option value="4"
+        /         |4 - Excellent
+        .modal-footer
+          button.btn.btn-default type="button" data-dismiss="modal" 
+            |Cancel
+          button.btn.btn-primary type="button" class="btn btn-primary" data-dismiss="modal" onclick="submit()"
+            |End Assistance        
