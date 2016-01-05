@@ -1,9 +1,9 @@
 class ProfilesController < ApplicationController
 
-  before_action :require_user, only: [:edit, :update]
+  before_action :load_user, only: [:edit, :update]
 
   def update
-    if @user.completed_registration == false && @user.update(profile_params)
+    if !@user.completed_registration && @user.update(profile_params)
       @user.update(completed_registration: true)
       if session[:invitation_code]
         apply_invitation_code(session[:invitation_code])
@@ -19,7 +19,7 @@ class ProfilesController < ApplicationController
 
   private
 
-  def require_user
+  def load_user
     @user = current_user
   end
 
@@ -39,7 +39,8 @@ class ProfilesController < ApplicationController
       :skype,
       :slack,
       :company_name,
-      :company_url
+      :company_url,
+      :custom_avatar
     )
   end
 

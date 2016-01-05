@@ -15,9 +15,10 @@ html
   body
     header
       == render 'layouts/navigation'
-      == render 'layouts/search'
+
     main.container[role="main"]
       == render 'layouts/messages'
+      == render 'layouts/search'
 
       - if current_user && (current_user.is_a?(Teacher) || current_user.is_a?(Student))
         = render "layouts/teachers_holder"
