@@ -14,6 +14,16 @@ class TeacherPresenter < UserPresenter
       link_to "Feedback", '#', id: "teacher_feedback_button", class: 'btn btn-primary', data: {toggle: 'modal', target: '#teacher_feedback_modal', teacher_id: teacher.id}
     end
   end
+
+  def twitter_info
+    content_tag :li do
+      twitter_link
+    end
+  end
+
+  def image_for_show_page
+    avatar_of_side_length(200)
+  end
   
   protected
 

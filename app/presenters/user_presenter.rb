@@ -4,16 +4,18 @@ class UserPresenter < BasePresenter
   delegate :full_name, :email, :phone_number, :quirky_fact, :bio, :specialties, :company_name, :company_url, :slack, :skype, :type, to: :user
 
   def image_for_index_page
-    h.image_tag(avatar_for, size: '100x100')
+    avatar_of_side_length(100)
   end
 
   def image_for_show_page
-    if user.type == 'Teacher'
-      h.image_tag(avatar_for, size: '200x200')
-    else
-      h.image_tag(avatar_for, size: '230x230')
-    end
+    avatar_of_side_length(230)
   end
+
+  def avatar_of_side_length(side_length)
+    h.image_tag(avatar_for, size: "#{side_length}x#{side_length}")
+  end
+
+  ## Clean up social media methods
   
   def github_info
     if user.github_username.present?
@@ -31,20 +33,8 @@ class UserPresenter < BasePresenter
     end
   end
 
-  def twitter_info
-    if user.twitter.present?
-      if user.type == 'Teacher'
-        content_tag :li do
-          link_to "https://twitter.com/#{user.twitter}", target: "_blank" do
-            image_tag('twitter-icon.png') + " " + user.twitter
-          end
-        end
-      else
-        link_to "https://twitter.com/#{user.twitter}", target: "_blank" do
-          image_tag('twitter-icon.png') + " " + user.twitter
-        end
-      end
-    end
+  def twitter_info 
+    twitter_link
   end
 
   def slack_info
@@ -68,6 +58,13 @@ class UserPresenter < BasePresenter
       else
         image_tag('skype-icon.png') + " " + user.skype
       end
+    end
+  end
+
+  def twitter_link
+    return unless user.twitter.present?
+    link_to "https://twitter.com/#{user.twitter}", target: "_blank" do
+      image_tag('twitter-icon.png') + " " + user.twitter
     end
   end
   
