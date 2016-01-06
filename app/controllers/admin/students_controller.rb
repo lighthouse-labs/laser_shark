@@ -8,18 +8,18 @@ class Admin::StudentsController < Admin::BaseController
   end
 
   def reactivate
-    @student.reactivate
-    render nothing: true if @student.save
+    @student.reactivate!
+    render nothing: true 
   end
 
   def deactivate
-    @student.deactivate
-    render nothing: true if @student.save
+    @student.deactivate!
+    render nothing: true
   end
 
   def update
-    @student.update(student_params)
-    redirect_to :back if @student.save
+    @student.update!(student_params)
+    redirect_to :back
   end
 
   def modal_content
