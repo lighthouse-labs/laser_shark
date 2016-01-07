@@ -10,7 +10,7 @@ class UserChannel < ApplicationCable::Channel
     ar = AssistanceRequest.new(:requestor => current_user, reason: data["reason"])
     ar.save
 
-    ActionCable.server.broadcast "assistance", {
+    ActionCable.server.broadcast "assistance-#{current_user.cohort.location.name}", {
       type: "AssistanceRequest",
       object: AssistanceRequestSerializer.new(ar, root: false).as_json
     }
@@ -21,7 +21,7 @@ class UserChannel < ApplicationCable::Channel
   def cancel_assistance
     ar = current_user.assistance_requests.where(type: nil).open_or_in_progress_requests.newest_requests_first.first
     if ar && ar.cancel
-      ActionCable.server.broadcast "assistance", {
+      ActionCable.server.broadcast "assistance-#{current_user.cohort.location.name}", {
         type: "CancelAssistanceRequest",
         object: AssistanceRequestSerializer.new(ar, root: false).as_json
       }
