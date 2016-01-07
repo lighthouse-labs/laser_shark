@@ -115,10 +115,12 @@ class ApplicationController < ActionController::Base
   end
 
   def make_teacher
-    current_user.type = 'Teacher'
-    current_user.save!
-    AdminMailer.new_teacher_joined(current_user).deliver
-    flash[:notice] = "Welcome, you have teacher access!"
+    unless teacher?
+      current_user.type = 'Teacher'
+      current_user.save!
+      AdminMailer.new_teacher_joined(current_user).deliver
+      flash[:notice] = "Welcome, you have teacher access!"
+    end
   end
 
   def set_timezone

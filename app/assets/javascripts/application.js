@@ -22,7 +22,6 @@
 //= require ace-rails-ap
 //= require ace/theme-monokai
 //= require ace/mode-markdown
-//= require theme-monokai
 
 //= require jquery.raty
 //= require readmore

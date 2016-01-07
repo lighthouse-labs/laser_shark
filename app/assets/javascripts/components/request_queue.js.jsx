@@ -18,7 +18,6 @@ var RequestQueue = React.createClass({
 
   componentDidMount: function() {
     this.loadQueue();
-    this.subscribeToSocket();
     this.requestNotificationPermission();
   },
 
@@ -55,7 +54,8 @@ var RequestQueue = React.createClass({
   },
   
   loadQueue: function() {
-    $.getJSON("/assistance_requests/queue?location=" + this.state.location.name, this.requestSuccess)  
+    $.getJSON("/assistance_requests/queue?location=" + this.state.location.name, this.requestSuccess);
+    this.subscribeToSocket();
   },
 
   requestSuccess: function(response) {
@@ -69,7 +69,10 @@ var RequestQueue = React.createClass({
 
   subscribeToSocket: function() {
     var that = this;
-    App.assistance = App.cable.subscriptions.create("AssistanceChannel", {
+    if(App.assistance)
+      App.assistance.unsubscribe();
+
+    App.assistance = App.cable.subscriptions.create({ channel: "AssistanceChannel", location: this.state.location.name }, {
       rejected: function() {
         window.location.reload()
       },
@@ -118,7 +121,12 @@ var RequestQueue = React.createClass({
         }
       },
       disconnected: function() {
-        $('.reconnect-holder').show()
+        $('.reconnect-holder').delay(500).show(0)
+      },
+      connected: function() {
+        if ($('.reconnect-holder').is(':visible')) {
+          $('.reconnect-holder').hide()
+        }
       }
     });
   },
