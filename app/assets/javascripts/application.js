@@ -14,13 +14,10 @@
 //= require jquery_ujs
 //= require bootstrap-sprockets
 //= require flat-ui-pro
-
 //= require default
-
 //= require ace-rails-ap
 //= require ace/theme-monokai
 //= require ace/mode-markdown
-//= require theme-monokai
 
 //= require jquery.raty
 //= require readmore
