@@ -90,3 +90,13 @@ Some ruby code herecode
 ???
 ```
 
+or 
+
+```
+???ruby-selectable
+Some ruby code herecode
+Some ruby code herecode
+Some ruby code herecode
+???
+```
+
