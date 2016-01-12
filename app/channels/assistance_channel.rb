@@ -1,13 +1,13 @@
 class AssistanceChannel < ApplicationCable::Channel  
 
   def subscribed
-    stream_from "assistance"
+    stream_from "assistance-#{params[:location]}"
   end
 
   def start_assisting(data)
     ar = AssistanceRequest.find(data["request_id"])
     if ar.start_assistance(current_user)
-      ActionCable.server.broadcast "assistance", {
+      ActionCable.server.broadcast "assistance-#{ar.requestor.cohort.location.name}", {
         type: "AssistanceStarted",
         object: AssistanceSerializer.new(ar.reload.assistance, root: false).as_json
       }
@@ -24,7 +24,7 @@ class AssistanceChannel < ApplicationCable::Channel
     assistance = Assistance.find data["assistance_id"]
     assistance.end(data["notes"], data["rating"].to_i)
 
-    ActionCable.server.broadcast "assistance", {
+    ActionCable.server.broadcast "assistance-#{assistance.assistance_request.requestor.cohort.location.name}", {
       type: "AssistanceEnded",
       object: AssistanceSerializer.new(assistance, root: false).as_json
     }
@@ -37,7 +37,7 @@ class AssistanceChannel < ApplicationCable::Channel
   def cancel_assistance_request(data)
     ar = AssistanceRequest.find data["request_id"]
     if ar && ar.cancel
-      ActionCable.server.broadcast "assistance", {
+      ActionCable.server.broadcast "assistance-#{ar.requestor.cohort.location.name}", {
         type: "CancelAssistanceRequest",
         object: AssistanceRequestSerializer.new(ar, root: false).as_json
       }
@@ -50,7 +50,7 @@ class AssistanceChannel < ApplicationCable::Channel
   def stop_assisting(data)
     assistance = Assistance.find data["assistance_id"]
     if assistance && assistance.destroy
-      ActionCable.server.broadcast "assistance", {
+      ActionCable.server.broadcast "assistance-#{assistance.assistance_request.requestor.cohort.location.name}", {
         type: "StoppedAssisting",
         object: AssistanceSerializer.new(assistance).as_json
       }
@@ -68,7 +68,7 @@ class AssistanceChannel < ApplicationCable::Channel
       assistance = assistance_request.reload.assistance
       assistance.end(data["notes"], data["rating"])
       
-      ActionCable.server.broadcast "assistance", {
+      ActionCable.server.broadcast "assistance-#{assistance_request.requestor.cohort.location.name}", {
         type: "OffineAssistanceCreated",
         object: UserSerializer.new(student).as_json
       }

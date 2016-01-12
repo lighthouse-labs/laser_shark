@@ -26,6 +26,7 @@ class window.RequestButtonPresenter
 
   assistanceRequested: (position) ->
     @ar_create.addClass('hidden')
+    console.log @ar_create_button
     @ar_cancel.removeClass('hidden') 
     @ar_cancel_button.text('No. ' + position + ' in Request Queue')
     @ar_cancel_button.tooltip()
