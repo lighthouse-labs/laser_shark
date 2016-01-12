@@ -1,5 +1,12 @@
 var RequestModal = React.createClass({
 
+  getInitialState: function(){
+    return {
+      notesValid: true,
+      ratingValid: true
+    }
+  },
+
   open: function() {
     $(this.refs.modal).modal()
   },
@@ -8,11 +15,26 @@ var RequestModal = React.createClass({
     $(this.refs.modal).modal('hide')
   },
 
+  formIsValid: function(){
+    var notes = this.refs.notes.value;
+    var rating = this.refs.rating.value;
+
+    var notesValid = notes === '' ? false : true
+    var ratingValid = rating === '' ? false : true
+
+    this.setState({
+      notesValid: notesValid,
+      ratingValid: ratingValid
+    })
+
+    return notesValid && ratingValid
+  },
+
   endAssistance: function() {
     var notes = this.refs.notes.value;
     var rating = this.refs.rating.value;
 
-    if(rating === '')
+    if(!this.formIsValid())
       return
 
     this.close()
@@ -54,7 +76,7 @@ var RequestModal = React.createClass({
 
               { assistanceRequest ? this.renderReason(assistanceRequest) : null }
 
-              <div className="form-group">
+              <div className={this.state.notesValid ? "form-group" : "form-group has-error"}>
                 <textarea 
                   className="form-control" 
                   placeholder="How did the assistance go?"
@@ -62,7 +84,7 @@ var RequestModal = React.createClass({
                 </textarea>
               </div>
 
-              <div className="form-group">
+              <div className={this.state.ratingValid ? "form-group" : "form-group has-error"}>
                 <label>Rating</label>
                 <select 
                   className="form-control" 
