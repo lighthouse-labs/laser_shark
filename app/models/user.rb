@@ -55,16 +55,16 @@ class User < ActiveRecord::Base
     false
   end
 
-  def deactivate
-    self.deactivated_at = Time.now
+  def deactivate!
+    update! deactivated_at: Time.now
   end
 
   def deactivated?
     self.deactivated_at?
   end
 
-  def reactivate
-    self.deactivated_at = nil
+  def reactivate!
+    update! deactivated_at: nil
   end
 
   def unlocked?(day)

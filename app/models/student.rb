@@ -39,4 +39,14 @@ class Student < User
   def activites_with_github_submission
     self.activity_submissions
   end
+  
+  # def mentor
+  #   if mentor_id
+  #     @teacher = Teacher.find(mentor_id)
+  #     @teacher.full_name if @teacher.mentor?
+  #   else
+  #     'No Mentor'
+  #   end
+  # end
+
 end
