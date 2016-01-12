@@ -12,6 +12,9 @@ var RequestModal = React.createClass({
     var notes = this.refs.notes.value;
     var rating = this.refs.rating.value;
 
+    if(rating === '')
+      return
+
     this.close()
 
     if(this.props.assistance)
@@ -63,12 +66,13 @@ var RequestModal = React.createClass({
                 <label>Rating</label>
                 <select 
                   className="form-control" 
-                  defaultValue="3"
-                  ref="rating">
-                    <option value="1">Needs improvement</option>
-                    <option value="2">Fair</option>
-                    <option value="3">Good</option>
-                    <option value="4">Excellent</option>
+                  ref="rating"
+                  required="true">
+                    <option value=''>Please Select</option>
+                    <option value="1">Struggling</option>
+                    <option value="2">Slightly behind</option>
+                    <option value="3">On track</option>
+                    <option value="4">Excellent (Needs stretch)</option>
                 </select>
               </div>
             </div>
