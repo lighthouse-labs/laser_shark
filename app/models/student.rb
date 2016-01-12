@@ -3,6 +3,7 @@ class Student < User
   belongs_to :cohort
   has_many :day_feedbacks, foreign_key: :user_id
   has_many :feedbacks
+  has_one :mentor, class_name: 'Teacher', foreign_key: 'mentor_id'
   
   scope :in_active_cohort, -> { joins(:cohort).merge(Cohort.is_active) }
   scope :has_open_requests, -> {

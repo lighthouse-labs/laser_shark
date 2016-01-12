@@ -19,7 +19,7 @@
           div = student_presenter.phone_number
           div
             |Mentor: 
-          /   = link_to @student.mentor.full_name, teacher_path(@student.mentor)
+            = link_to @student.mentor.full_name, teacher_path(@student.mentor_id)
 
     .col-md-12.student-bio
       h6 Student Bio:
