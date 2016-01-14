@@ -19,8 +19,8 @@ var RequestModal = React.createClass({
     var notes = this.refs.notes.value;
     var rating = this.refs.rating.value;
 
-    var notesValid = notes === '' ? false : true
-    var ratingValid = rating === '' ? false : true
+    var notesValid = (notes !== '');
+    var ratingValid = (rating !== '');
 
     this.setState({
       notesValid: notesValid,
