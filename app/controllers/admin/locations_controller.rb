@@ -39,11 +39,8 @@ class Admin::LocationsController < Admin::BaseController
   def location_params
     params.require(:location).permit(
       :name,
-      :start_date,
-      :code,
-      :program_id,
-      :location_id,
-      :teacher_email_group
+      :timezone,
+      :calendar
     )
   end
 
