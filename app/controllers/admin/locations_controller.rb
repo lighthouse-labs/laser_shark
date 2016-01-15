@@ -13,7 +13,7 @@ class Admin::LocationsController < Admin::BaseController
   def edit
   end
 
-  def create 
+  def create
     @location = Location.new(location_params)
     if @location.save
       redirect_to [:edit, :admin, @location], notice: 'Created!'
