@@ -1,0 +1,1 @@
+TIMEZONE_NAMES = ActiveSupport::TimeZone.all.map { |timezone| timezone.name }
