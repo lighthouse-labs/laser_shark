@@ -110,7 +110,13 @@ class User < ActiveRecord::Base
 
   class << self
     def authenticate_via_github(auth)
-      where(uid: auth["uid"]).first_or_create(attributes_from_oauth(auth))
+      @user = where(uid: auth["uid"]).first
+      return @user if @user
+      @user = new
+      @user.uid = auth["uid"]
+      @user.save(validate: false)
+      @user.update_columns(attributes_from_oauth(auth))
+      @user
     end
 
     private

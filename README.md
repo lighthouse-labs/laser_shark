@@ -69,23 +69,24 @@ Ask the teachers for the `activites_seed.rb` which has some activities that can 
 
   
 \`\`\`ruby-selectable
-
 Some selectable text
-
+Some selectable text
+Some selectable text
 \`\`\`
 
 \`\`\`selectable
-
-Some selectable text
-
+Some selectable text here
+Some selectable text here
+Some selectable text here
 \`\`\`
 
 **To make a toggleable answer section:**
 
+```
+???ruby
+Some ruby code herecode
+Some ruby code herecode
+Some ruby code herecode
 ???
-*line break*
-\`\`\`Some regular Markdown\`\`\`
-*line break*
-???
-
+```
 
