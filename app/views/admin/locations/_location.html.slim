@@ -6,4 +6,4 @@ tr
   td
     = link_to 'Edit', [:edit, :admin, location]
   td
-    = link_to 'Delete', [:admin, location], method: :delete
+    = link_to 'Delete', [:admin, location], method: :delete, data: { confirm: "Are you sure?" }
