@@ -14,11 +14,15 @@ class StudentsController < ApplicationController
 
   def show
     @student = Student.find(params[:id])
-    @code_reviews = @student.completed_code_reviews
-    @assistance_requests = @student.assistances_received
+    @code_reviews = @student.completed_code_review_requests
+    @assistance_requests = @student.completed_assistance_requests
     @assistance_requests_count = @assistance_requests.count
     @assistance_requests = @assistance_requests.last(10).reverse
     @activity_submissions = @student.activity_submissions.requires_code_submission
+    @assistance = Assistance.new(assistor: current_user, assistee: @student)
+  end
+
+  def new_assistance_modal
     @assistance = Assistance.new(assistor: current_user, assistee: @student)
   end
 

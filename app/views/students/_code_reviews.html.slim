@@ -4,8 +4,6 @@
 .col-md-12.student-activities-holder
   .student-section-header
     .student-section-title Code Reviews&nbsp;(#{@code_reviews.count}):
-    .btn.btn-primary.btn-sm.student-add-activity-button
-      | + Code Review
   - @code_reviews.last(10).reverse.each do |code_review|
     .student-activity-info
       .student-activity-details

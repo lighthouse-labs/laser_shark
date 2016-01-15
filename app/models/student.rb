@@ -3,7 +3,6 @@ class Student < User
   belongs_to :cohort
   has_many :day_feedbacks, foreign_key: :user_id
   has_many :feedbacks
-  has_one :mentor, class_name: 'Teacher', foreign_key: 'mentor_id'
   
   scope :in_active_cohort, -> { joins(:cohort).merge(Cohort.is_active) }
   scope :has_open_requests, -> {
@@ -28,25 +27,32 @@ class Student < User
     !prepping? && cohort.finished?
   end
 
-  def completed_code_reviews
-    assistance_requests.where(type: 'CodeReviewRequest').where.not(assistance_requests: {assistance_id: nil})
+  def completed_code_review_requests
+    assistance_requests.where(type: 'CodeReviewRequest').where.not(assistance_requests: {assistance_id: nil}).includes(:assistance)
   end
 
-  def assistances_received
-    assistance_requests.where(type: nil).where.not(assistance_requests: {assistance_id: nil})
+  def completed_assistance_requests
+    assistance_requests.where(type: nil).where.not(assistance_requests: {assistance_id: nil}).includes(:assistance)
   end
 
   def activites_with_github_submission
     self.activity_submissions
   end
-  
-  # def mentor
-  #   if mentor_id
-  #     @teacher = Teacher.find(mentor_id)
-  #     @teacher.full_name if @teacher.mentor?
-  #   else
-  #     'No Mentor'
-  #   end
-  # end
 
+  def l_score
+    @code_review_requests = completed_code_review_requests
+    @assistance_requests = completed_assistance_requests
+
+    @code_review_requests_total = @code_review_requests.count
+    @assistance_requests_total = @assistance_requests.count
+
+    if (@code_review_requests_total + @assistance_requests_total > 0)
+      @code_review_requests_rating_sum = @code_review_requests.inject(0){ |total, code_review_request| total + (code_review_request.assistance.rating || 3) }
+      @assistance_requests_rating_sum = @assistance_requests.inject(0){ |total, assistance_request| total + (assistance_request.assistance.rating || 3) }
+      ((@code_review_requests_rating_sum + @assistance_requests_rating_sum).to_f/(@code_review_requests_total + @assistance_requests_total)).round(1)
+    else  
+      return 'No score yet'       
+    end
+  end
+  
 end

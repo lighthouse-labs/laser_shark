@@ -39,21 +39,10 @@
           |Notes
       = form_for @assistance, url: student_assistances_path(@student, @assistance), method: :post  do |f|
         .modal-body
+          .form-group = f.text_area :notes, placeholder: "How did the assistance go?", class: 'form-control'
           .form-group
-            = f.text_area :notes, placeholder: "How did the assistance go?", class: 'form-control'
-            / textarea id="assistance_notes" name="assistance[notes]" class="form-control" placeholder="How did the assistance go?"
-        /   .form-group
-        /     label for="assistance_rating"
-        /       |Rating
-        /     select.form-control id="assistance_rating" name="assistance[rating]"
-        /       option value="1"
-        /         |1 - Needs improvement
-        /       option value="2"
-        /         |2 - Fair
-        /       option value="3" selected="selected"
-        /         |3 - Good
-        /       option value="4"
-        /         |4 - Excellent
+            |Rating
+            = f.select :rating, [['Needs improvement', 1], ['Fair', 2], ['Good', 3], ['Excellent', 4]], {selected: 3}, class: 'form-control'
         .modal-footer
           button.btn.btn-default type="button" data-dismiss="modal" 
             |Cancel

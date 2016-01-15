@@ -7,6 +7,7 @@
         = student_presenter.cohort.name
     .col-md-7
       h5.student-name = student_presenter.full_name
+
       .student-quirky-fact = student_presenter.quirky_fact
       .student-info
         .student-social-media
@@ -15,11 +16,17 @@
           div = student_presenter.skype_info
           div = student_presenter.twitter_info
         .student-contact-info
-          div = student_presenter.email
-          div = student_presenter.phone_number
+          div
+            |L* Score:&nbsp;
+            = student_presenter.l_score
+            |/4
           div
             |Mentor: 
-            = link_to @student.mentor.full_name, teacher_path(@student.mentor_id)
+            = student_presenter.mentor_full_name
+          div
+            |Phone:&nbsp;
+            = student_presenter.phone_number
+          div = student_presenter.email
 
     .col-md-12.student-bio
       h6 Student Bio:

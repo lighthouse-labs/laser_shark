@@ -13,6 +13,9 @@ class User < ActiveRecord::Base
   has_many :activity_submissions
   has_many :submitted_activities, through: :activity_submissions, source: :activity
 
+  belongs_to :mentor, class_name: 'User', foreign_key: 'mentor_id'
+  has_many :mentees, class_name: 'User', foreign_key: 'mentor_id'
+
   scope :order_by_last_assisted_at, -> {
     order("last_assisted_at ASC NULLS FIRST")
   }
