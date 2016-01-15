@@ -1,6 +1,6 @@
 class Admin::LocationsController < Admin::BaseController
   
-  before_action :require_location, only: [:edit, :update]
+  before_action :require_location, only: [:edit, :update, :destroy]
 
   def index
     @locations = Location.all
@@ -28,6 +28,15 @@ class Admin::LocationsController < Admin::BaseController
     else
       render :edit
     end
+  end
+
+  def destroy
+    if @location.destroy
+      flash[:notice] = "Location #{@location.name} deleted."
+    else
+      flash[:notice] = "Unable to delete location #{@location.name}."
+    end
+    redirect_to [:admin, :locations]
   end
 
   private
