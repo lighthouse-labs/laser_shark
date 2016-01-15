@@ -1,0 +1,17 @@
+h1 Locations
+hr
+
+.actions.well
+  = link_to 'New Location', [:new, :admin, :location], class: 'btn btn-default'
+
+
+table.table
+  thead
+    tr
+      th Name
+      th Timezone
+      th Google Calender
+      th 
+
+  tbody
+    = render @locations
