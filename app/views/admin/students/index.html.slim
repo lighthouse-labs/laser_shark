@@ -10,6 +10,7 @@ table.table
       th Registered?
       th Cohort
       th 
+      th 
   tbody
     - @students.each do |student|
       tr data-id='#{student.id}'
@@ -31,3 +32,4 @@ table.table
               | Deactivate
             .btn.btn-primary.btn-xs.student-reactivate-button.hidden-button
               | Reactivate
+        td = link_to 'Edit', [:edit, :admin, student]
