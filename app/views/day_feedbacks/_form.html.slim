@@ -1,6 +1,6 @@
 = form_for(@day_feedback, url: day_feedbacks_path(@day), id: "feedback-form", html: {class: "" }) do |f|
   fieldset
-    legend Use this form to provide feedback about #{@day.to_s.upcase}'s curriculum, TA support and overall experience.
+    legend Use this form to provide feedback about #{@day.today? ? 'TODAY' : @day.to_s.upcase}'s curriculum, TA support and overall experience.
     only
     - if @day_feedback && @day_feedback.errors.any?
       .alert.alert-error
