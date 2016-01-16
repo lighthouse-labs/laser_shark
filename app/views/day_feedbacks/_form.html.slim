@@ -1,6 +1,6 @@
 = form_for(@day_feedback, url: day_feedbacks_path(@day), id: "feedback-form", html: {class: "" }) do |f|
   fieldset
-    legend Use this form to provide feedback about TODAY's curriculum, TA support and overall experience.
+    legend Use this form to provide feedback about #{@day.to_s.upcase}'s curriculum, TA support and overall experience.
     only
     - if @day_feedback && @day_feedback.errors.any?
       .alert.alert-error
@@ -27,5 +27,9 @@
       = f.text_area :text, placeholder: "Your feedback comments here", size: "24x6", class: "form-control"
 
     div align="left"
-      .actions
-        = f.submit 'Submit Feedback', class: "btn btn-danger btn-lg"
+      - if @day.today?
+        .actions
+          = f.submit 'Submit Feedback', class: "btn btn-danger btn-lg"
+      - else
+        .actions
+          = f.submit 'Submit Feedback', class: "btn btn-danger btn-lg", data: { confirm: "You are submitting feedback for #{@day.to_s.upcase}"}
