@@ -8,6 +8,11 @@ class CohortsController < ApplicationController
     redirect_to day_path('today'), notice: "Switched to #{@cohort.name} cohort!"
   end
 
+  def code_reviews
+    @current_cohort = Cohort.find(params[:id])
+    @students = @current_cohort.students
+  end 
+
   protected
 
   def require_teacher

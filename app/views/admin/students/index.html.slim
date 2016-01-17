@@ -19,7 +19,7 @@ table.table
         td = student.github_username
         td = completed_registration?(student)
         td
-          = select_tag :cohort_id, options_from_collection_for_select(@cohorts, "id", "name", student.cohort.id), class: "form-control admin-student-cohort-selector"
+          = select_tag :cohort_id, options_from_collection_for_select(@cohorts, "id", "name", (student.try(:cohort).try(:id) || 1)), class: "form-control admin-student-cohort-selector"
         td 
           - if student.deactivated?
             .btn.btn-primary.btn-xs.student-reactivate-button

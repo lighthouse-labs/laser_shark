@@ -1,0 +1,36 @@
+h3
+  |Cohort:&nbsp;
+  = @current_cohort.name
+br
+
+table.table.code-review-table
+  thead
+    tr
+      th Student
+      th  
+      th
+      th
+      th
+      th
+      th
+      th
+      th
+      th
+      th
+      th
+      th
+      th
+      th
+      th
+      th
+  tbody
+    - @students.each do |student|
+      tr
+        td 
+          = student.full_name
+          |&nbsp;
+          |(#{student.code_reviews_l_score}/4)
+        - student.completed_code_review_requests.each do |code_review|
+          td
+            button.view-code-review-button
+              |View

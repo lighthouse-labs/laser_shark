@@ -61,6 +61,9 @@ LaserShark::Application.routes.draw do
 
   resources :cohorts, only: [] do
     resources :students, only: [:index]    # cohort_students_path(@cohort)
+    member do 
+      get :code_reviews
+    end
     put :switch_to, on: :member
   end
 
