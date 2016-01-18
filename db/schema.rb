@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151126203655) do
+ActiveRecord::Schema.define(version: 20160117045933) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -91,6 +91,7 @@ ActiveRecord::Schema.define(version: 20151126203655) do
     t.datetime "updated_at"
     t.integer  "assistee_id"
     t.integer  "rating"
+    t.text     "student_notes"
   end
 
   create_table "cohorts", force: :cascade do |t|
@@ -105,18 +106,6 @@ ActiveRecord::Schema.define(version: 20151126203655) do
   end
 
   add_index "cohorts", ["program_id"], name: "index_cohorts_on_program_id", using: :btree
-
-  create_table "comments", force: :cascade do |t|
-    t.text     "content"
-    t.integer  "commentable_id"
-    t.string   "commentable_type", limit: 255
-    t.integer  "user_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "comments", ["commentable_id", "commentable_type"], name: "index_comments_on_commentable_id_and_commentable_type", using: :btree
-  add_index "comments", ["user_id"], name: "index_comments_on_user_id", using: :btree
 
   create_table "day_feedbacks", force: :cascade do |t|
     t.string   "mood",                limit: 255
@@ -191,6 +180,14 @@ ActiveRecord::Schema.define(version: 20151126203655) do
     t.datetime "updated_at"
   end
 
+  create_table "teacher_shifts", force: :cascade do |t|
+    t.date    "date"
+    t.integer "number"
+    t.integer "location_id"
+    t.integer "teacher_id"
+    t.string  "type"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string   "first_name",             limit: 255
     t.string   "last_name",              limit: 255
@@ -222,6 +219,8 @@ ActiveRecord::Schema.define(version: 20151126203655) do
     t.string   "specialties",            limit: 255
     t.integer  "location_id"
     t.boolean  "on_duty",                            default: false
+    t.integer  "mentor_id"
+    t.boolean  "is_mentor",                          default: false
   end
 
   add_index "users", ["cohort_id"], name: "index_users_on_cohort_id", using: :btree

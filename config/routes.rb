@@ -42,6 +42,7 @@ LaserShark::Application.routes.draw do
   resources :assistances, only: [:destroy] do
     member do
       post :end
+      get :code_review_assistance_modal
     end
   end
 

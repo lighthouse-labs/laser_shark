@@ -28,6 +28,18 @@ class AssistancesController < ApplicationController
     redirect_to assistance_requests_path
   end
 
+  def update
+    # Currently update only happens if a user wants to edit a code review request,
+    # not a normal assistance request
+    @code_review_assistance = Assistance.find(params[:id])
+
+  end
+
+  def code_review_assistance_modal
+    @code_review_assistance = Assistance.find(params[:id])
+    render layout: false
+  end
+
   private
 
   def teacher_required
