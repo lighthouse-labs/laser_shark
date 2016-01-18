@@ -27,10 +27,11 @@ class Admin::StudentsController < Admin::BaseController
 
   def update
     if @student.update(student_params)
-      redirect_to [:edit, :admin, @student], notice: 'Updated!'
+      render nothing: true if request.xml_http_request?
+      redirect_to [:edit, :admin, @student], notice: 'Updated!' unless request.xml_http_request?
     else
       render :edit
-    end    
+    end
   end
 
   private
