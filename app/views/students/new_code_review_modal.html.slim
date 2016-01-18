@@ -1,0 +1,16 @@
+= form_for @assistance, url: student_assistances_path(@student, @assistance), method: :post  do |f|
+  .modal-header
+    button type="button" class="close" data-dismiss="modal" aria-label="Close"
+      span aria-hidden="true" 
+        | &times;
+    h4.modal-title New Code Review
+  .modal-body
+    .form-group = select_tag :activity_submission_id, options_from_collection_for_select(@activity_submissions, "id", "name"), class: 'form-control', :prompt => "Please choose an activity"
+    .form-group = f.text_area :notes, placeholder: "Please provide some teacher (internal) notes", class: 'form-control'
+    .form-group = f.text_area :student_notes, placeholder: "Please provide some student notes. These will be sent to the student.", class: 'form-control'
+    .form-group  
+     |Rating
+     = f.select :rating, [['Needs improvement', 1], ['Fair', 2], ['Good', 3], ['Excellent', 4]], {selected: 3}, class: 'form-control'
+  .modal-footer
+    button.btn.btn-default type="button" data-dismiss="modal" Close
+    = f.submit "Submit", class: "btn btn-success", id: "modal-submit-button"

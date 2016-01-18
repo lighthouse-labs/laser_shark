@@ -1,7 +1,7 @@
 class AssistancesController < ApplicationController
 
   before_filter :teacher_required
-  before_filter :load_student
+  before_filter :load_student, except: [:view_code_review_modal]
 
   def index
     @assistance_requests = @student.completed_assistance_requests.reverse
@@ -11,22 +11,19 @@ class AssistancesController < ApplicationController
   end
 
   def create
-
     if params[:activity_submission_id] 
-
-      create code code_review
-
+      @assistance_request = CodeReviewRequest.new(requestor: @student, activity_submission_id: params[:activity_submission_id])
     else
       @assistance_request = AssistanceRequest.new(requestor: @student, reason: "Offline assistance requested")
-      @assistance_request.save!
-      @assistance_request.start_assistance(current_user)
-      @assistance = @assistance_request.reload.assistance
-      @assistance.end(params[:assistance][:notes], params[:assistance][:rating])
     end
+    @assistance_request.save!
+    @assistance_request.start_assistance(current_user)
+    @assistance = @assistance_request.reload.assistance
+    @assistance.end(params[:assistance][:notes], params[:assistance][:rating].to_i, params[:assistance][:student_notes])
     redirect_to :back
   end
 
-  def code_review_assistance_modal
+  def view_code_review_modal
     @code_review_assistance = Assistance.find(params[:id])
     render layout: false
   end

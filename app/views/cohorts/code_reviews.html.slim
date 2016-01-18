@@ -31,27 +31,3 @@ table.table.code-review-table
 .modal.fade id='new_code_review_modal'
   .modal-dialog
     .modal-content.new-modal-content    
-      = form_for @assistance,   
-        .modal-header
-          button type="button" class="close" data-dismiss="modal" aria-label="Close"
-            span aria-hidden="true" 
-              | &times;
-          h4.modal-title New Code Review
-
-        .modal-body
-
-          .code-review-rating
-            | Rating: #{@code_review_assistance.rating}/4
-
-          div
-            | Teacher (Internal) Notes:
-          .code-review-teacher-notes
-            = @code_review_assistance.notes
-
-          div
-            | Student Notes:
-          .code-review-teacher-notes
-            = @code_review_assistance.student_notes
-
-        .modal-footer
-          button.btn.btn-default type="button" data-dismiss="modal" Close

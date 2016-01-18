@@ -1,7 +1,8 @@
 class StudentsController < ApplicationController
 
   before_action :disallow_unless_enrolled
-  before_action :teacher_required, only: [:show]
+  before_action :teacher_required, only: [:show, :new_code_review_modal]
+  Activities_ = Struct.new(:id, :name)
 
   def index
     if teacher?
@@ -14,6 +15,13 @@ class StudentsController < ApplicationController
 
   def show
     @student = Student.find(params[:id])
+  end
+
+  def new_code_review_modal
+    @student = Student.find(params[:id])
+    @activity_submissions = @student.activity_submissions.order(created_at: :desc).with_github_url.map{|e| Activities_.new(e.id,e.activity.name) }
+    @assistance = Assistance.new(assistor: current_user, assistee: @student)
+    render layout: false
   end
 
   private

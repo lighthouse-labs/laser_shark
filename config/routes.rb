@@ -33,10 +33,9 @@ LaserShark::Application.routes.draw do
   end
 
   resources :students, only: [:index, :show] do
-    resources :assistances, only: [:create] do 
-      member do 
-        
-      end
+    resources :assistances, only: [:create]
+    member do 
+      get :new_code_review_modal
     end
   end
 
@@ -46,7 +45,7 @@ LaserShark::Application.routes.draw do
   resources :assistances, only: [:destroy] do
     member do
       post :end
-      get :code_review_assistance_modal
+      get :view_code_review_modal
     end
   end
 
