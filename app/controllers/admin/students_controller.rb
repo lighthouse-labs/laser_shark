@@ -46,7 +46,6 @@ class Admin::StudentsController < Admin::BaseController
       :unlocked_until_day,
       :cohort_id
     )
-
   end
 
   def load_student
