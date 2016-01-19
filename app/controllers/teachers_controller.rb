@@ -14,16 +14,16 @@ class TeachersController < ApplicationController
 
   def remove_mentorship
     if admin?
-      @teacher.mentor = false
-      @teacher.save
+      @teacher.is_mentor = false
+      @teacher.save!
     end
     render nothing: true
   end
 
   def add_mentorship
     if admin?
-      @teacher.mentor = true
-      @teacher.save
+      @teacher.is_mentor = true
+      @teacher.save!
     end
     render nothing: true
   end
