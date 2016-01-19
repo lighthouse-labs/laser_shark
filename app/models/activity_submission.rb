@@ -28,6 +28,14 @@ class ActivitySubmission < ActiveRecord::Base
     references(:activity)
   }
 
+  scope :not_code_reviewed, -> {
+    where(code_review_request: nil)
+  }
+  
+  def code_reviewed?
+    self.try(:code_review_request).try(:assistance)
+  end
+
   private
 
   def github_url_required?

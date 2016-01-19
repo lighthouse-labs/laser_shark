@@ -18,27 +18,46 @@ $ ->
       method: 'GET').done (info) ->
         modal.find('.new-modal-content').html(info)  
         initializeMarkdownEditor()
-        bindValidationsToForm()
+        validateForm()
 
   initializeMarkdownEditor = ->
-    studentNotesEditor = ace.edit("student-notes")
-    studentNotesEditor.setTheme("ace/theme/monokai")
-    studentNotesEditor.getSession().setMode("ace/mode/markdown")
-    studentNotesEditor.setValue('Please enter some feedback (in markdown) to be emailed to the student')
+    window.studentNotesEditor = ace.edit("student-notes")
+    window.studentNotesEditor.setTheme("ace/theme/monokai")
+    window.studentNotesEditor.getSession().setMode("ace/mode/markdown")
+    window.studentNotesEditor.setValue('Please enter some feedback (in markdown) to be emailed to the student')
 
     $('#new_assistance').submit (e) ->
       e.preventDefault()
-      # $('#assistance_notes').val(teacherNotesEditor.getValue())
-      # $('#assistance_student_notes').val(studentNotesEditor.getValue())
-      # this.submit()
+      $('#assistance_student_notes').val(window.studentNotesEditor.getValue())
+      this.submit()
 
-  bindValidationsToForm = ->
+  validateForm = ->
     $('#new-code-review-submit-button').on 'click', (e) ->
-      error_messages = []
+      errrorMessages = []
 
-      activity = $('#activity_submission_id').val()
-      if activity == ''
+      activity = $('#activity_submission_id')
+      studentNotes = window.studentNotesEditor.getValue()
+      teacherNotes = $('#assistance_notes')
+
+      if activity.val() == ''
+        errrorMessages.push('You must choose an activity to code review')
+        activity.addClass('new-code-review-form-error')
+      else if activity.hasClass('new-code-review-form-error')
+        activity.removeClass('new-code-review-form-error')
+
+      if studentNotes == 'Please enter some feedback (in markdown) to be emailed to the student' or studentNotes == ''
+        errrorMessages.push('Student notes cannot be blank')
+
+      if teacherNotes.val() == ''
+        errrorMessages.push('Teacher notes cannot be blank')
+        teacherNotes.addClass('new-code-review-form-error')
+      else if teacherNotes.hasClass('new-code-review-form-error')
+        teacherNotes.removeClass('new-code-review-form-error')
+
+      if errrorMessages.length > 0
         e.preventDefault()
-        error_messages.push('Please choose an activity to code review')
-
-      console.log error_messages
+        $('.error-message').remove()
+        errrorMessages.forEach (message) ->
+          messageDiv = $('<div class="error-message">*' + message + '*</div>')
+          messageDiv.css('color', 'tomato')
+          messageDiv.prependTo '.modal-body'

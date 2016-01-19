@@ -5,13 +5,19 @@
         | &times;
     h4.modal-title New Code Review
   .modal-body
+    label
+      | Activity
     .form-group = select_tag :activity_submission_id, options_from_collection_for_select(@activity_submissions, "id", "name"), class: 'form-control', :prompt => "Please choose an activity"
-    #teacher-notes.editor
+    label
+      | Student notes
     #student-notes.editor
-    .form-group = f.text_area :notes, style: 'display: none;'
+    label
+      |Teacher notes
+    .form-group = f.text_area :notes, placeholder: 'Please enter some teacher (internal) notes', class: 'form-control'
     .form-group = f.text_area :student_notes, style: 'display: none;'
     .form-group  
-     |Rating
+     label
+      |Rating
      = f.select :rating, [['Needs improvement', 1], ['Fair', 2], ['Good', 3], ['Excellent', 4]], {selected: 3}, class: 'form-control'
   .modal-footer
     button.btn.btn-default type="button" data-dismiss="modal" Close
