@@ -14,7 +14,7 @@ table.table.code-review-table
       tr
         td 
           = student.full_name
-          |&nbsp;
+          br
           |(#{student.code_reviews_l_score}/4)
         - student.completed_code_review_requests.each do |code_review|
           td

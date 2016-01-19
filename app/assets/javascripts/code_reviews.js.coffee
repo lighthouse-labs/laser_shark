@@ -17,21 +17,14 @@ $ ->
       url: '/students/' + studentID + '/new_code_review_modal'
       method: 'GET').done (info) ->
         modal.find('.new-modal-content').html(info)  
-        initEditors()
+        initializeMarkdownEditor()
         bindValidationsToForm()
 
-  initEditors = ->
-    teacherNotesEditor = ace.edit("teacher-notes")
+  initializeMarkdownEditor = ->
     studentNotesEditor = ace.edit("student-notes")
-
-    teacherNotesEditor.setTheme("ace/theme/monokai")
     studentNotesEditor.setTheme("ace/theme/monokai")
-
-    teacherNotesEditor.getSession().setMode("ace/mode/markdown")
     studentNotesEditor.getSession().setMode("ace/mode/markdown")
-
-    teacherNotesEditor.setValue('Please enter some teacher (internal) notes')
-    studentNotesEditor.setValue('Please enter some feedback to be emailed to the student')
+    studentNotesEditor.setValue('Please enter some feedback (in markdown) to be emailed to the student')
 
     $('#new_assistance').submit (e) ->
       e.preventDefault()
