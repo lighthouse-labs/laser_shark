@@ -13,6 +13,11 @@ class Teacher < User
     where(id: teacher_id)
   }
 
+  scope :mentors, -> (location) {
+    where(is_mentor: true).
+    where(location: location)
+  }
+
   validates :bio,             presence: true, length: { maximum: 1000 }
   validates :quirky_fact,     presence: true
   validates :specialties,     presence: true
@@ -22,11 +27,6 @@ class Teacher < User
       attribute = k.gsub("_id", "")
       result = result.send("filter_by_#{attribute}", v)
     end
-  end
-
-  def self.mentors(location)
-    where( {mentor: true} ).
-    where( {location: location} )
   end
 
   def can_access_day?(day)
