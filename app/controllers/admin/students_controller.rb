@@ -8,7 +8,7 @@ class Admin::StudentsController < Admin::BaseController
     else
       @students = Student.all
     end
-    @cohorts = Cohort.is_active
+    @cohorts = Cohort.most_recent
   end
 
   def reactivate

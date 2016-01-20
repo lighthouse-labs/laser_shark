@@ -1,0 +1,10 @@
+- present @student do |student_presenter|
+  div.student-page-parent-container
+    .col-md-3.student-page-top-row
+      = student_presenter.image_for_show_page
+    .col-md-4.student-page-top-row
+      h4 = student_presenter.full_name
+    .cold-md-5.student-page-top-row.student-bio
+      |Bio:
+      br
+      = student_presenter.bio

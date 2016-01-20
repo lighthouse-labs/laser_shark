@@ -32,8 +32,11 @@ LaserShark::Application.routes.draw do
     end
   end
 
-  resources :students, only: [:index] do
+  resources :students, only: [:index, :show] do
     resources :assistances, only: [:create]
+    member do 
+      get :new_code_review_modal
+    end
   end
 
   resources :incomplete_activities, only: [:index]
@@ -42,6 +45,7 @@ LaserShark::Application.routes.draw do
   resources :assistances, only: [:destroy] do
     member do
       post :end
+      get :view_code_review_modal
     end
   end
 
@@ -61,6 +65,9 @@ LaserShark::Application.routes.draw do
 
   resources :cohorts, only: [] do
     resources :students, only: [:index]    # cohort_students_path(@cohort)
+    member do 
+      get :code_reviews
+    end
     put :switch_to, on: :member
   end
 

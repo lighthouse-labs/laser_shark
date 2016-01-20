@@ -11,5 +11,14 @@ class UserMailer < ActionMailer::Base
           to: @message.cohort.teacher_email_group || ENV['INSTRUCTOR_EMAIL_GROUP'] || ENV['EMAIL_SENDER'], 
           bcc: students.pluck(:email)
   end
+
+  def new_code_review_message(code_review)
+    @message = code_review.student_notes
+    student = code_review.assistee
+    reviewer = code_review.assistor.full_name
+    mail  subject: "Notes from your code review with #{reviewer} on @{code_review.created_at.to_date} ", 
+          to: student.email,
+          cc: reviewer.email
+  end
   
 end

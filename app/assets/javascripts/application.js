@@ -49,3 +49,4 @@
 //= require incomplete_activities
 //= require activities
 //= require reconnect_holder
+//= require code_reviews

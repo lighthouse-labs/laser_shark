@@ -66,6 +66,17 @@ nav.navbar.navbar-inverse.navbar-fixed-top role="navigation"
               i.fa.fa-fw.fa-list-ol
               span.non-tablet-label
                 | Queue
+          li.dropdown
+            = link_to '#', :class => 'dropdown-toggle', :'data-toggle' => 'dropdown', title: 'Students'
+              i.fa.fa-fw.fa-list
+              span.non-tablet-label
+                | Code Reviews
+              b.caret
+            span.dropdown-arrow
+            ul.dropdown-menu
+              - code_review_cohorts.each do |cohort|
+                li
+                  = link_to cohort_link(cohort), code_reviews_cohort_path(cohort)
         - if admin?
           li.dropdown
             = link_to '#', :class => 'dropdown-toggle', :'data-toggle' => 'dropdown', title: 'Admin'

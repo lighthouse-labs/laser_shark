@@ -19,9 +19,10 @@ class Assistance < ActiveRecord::Base
 
   RATING_BASELINE = 3
 
-  def end(notes, rating = nil)
+  def end(notes, rating = nil, student_notes = nil)
     self.notes = notes
     self.rating = rating
+    self.student_notes = student_notes
     self.end_at = Time.now
     self.save
     self.assistee.last_assisted_at = Time.now
