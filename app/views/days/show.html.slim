@@ -22,7 +22,11 @@
         = @cohort_feedback[:sad]
 
 = render "days/info", day: day if day.info
-= render partial: 'activities/activity', collection: @activities
+
+- if current_user.can_access_day?(day)
+  = render partial: 'activities/activity', collection: @activities
+- else
+  = render partial: 'activities/disabled', collection: @activities, as: :activity
 
 - if teacher?
   = link_to new_day_activity_path(day)
