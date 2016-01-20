@@ -1,4 +1,4 @@
-class AssistancesController < ApplicationController
+class CodeReviewController < ApplicationController
 
   before_filter :teacher_required
   before_filter :load_student, except: [:view_code_review_modal]
@@ -11,7 +11,7 @@ class AssistancesController < ApplicationController
   end
 
   def create
-    @assistance_request = AssistanceRequest.new(requestor: @student, reason: "Offline assistance requested")
+    @assistance_request = CodeReviewRequest.new(requestor: @student, activity_submission_id: params[:activity_submission_id])
     @assistance_request.save!
     @assistance_request.start_assistance(current_user)
     @assistance = @assistance_request.reload.assistance
