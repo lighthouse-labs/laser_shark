@@ -25,6 +25,10 @@
   font-size: 14px;
 }
 
+.code-review-table > thead > tr > th, .code-review-table > tbody > tr > td {
+  padding: 7px 0px;
+}
+
 .new-code-review-form-error {
   border-color: tomato;
 }

@@ -20,7 +20,7 @@ class AssistancesController < ApplicationController
     @assistance_request.start_assistance(current_user)
     @assistance = @assistance_request.reload.assistance
     @assistance.end(params[:assistance][:notes], params[:assistance][:rating].to_i, params[:assistance][:student_notes])
-    UserMailer.new_code_review_message(@assistance) if params[:activity_submission_id]
+    UserMailer.new_code_review_message(@assistance).deliver if params[:activity_submission_id]
     redirect_to :back
   end
 

@@ -15,10 +15,10 @@ class UserMailer < ActionMailer::Base
   def new_code_review_message(code_review)
     @message = code_review.student_notes
     student = code_review.assistee
-    reviewer = code_review.assistor.full_name
-    mail  subject: "Notes from your code review with #{reviewer} on @{code_review.created_at.to_date} ", 
+    @reviewer = code_review.assistor
+    mail  subject: "Notes from your code review with #{@reviewer.full_name} on {@code_review.created_at.to_date} ", 
           to: student.email,
-          cc: reviewer.email
+          cc: @reviewer.email
   end
   
 end

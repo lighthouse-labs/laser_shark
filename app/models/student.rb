@@ -34,7 +34,7 @@ class Student < User
   def code_reviews_l_score
     completed_code_reviews = completed_code_review_requests
     if completed_code_reviews.length > 0
-      (completed_code_reviews.inject(0){|sum, code_review| sum+= code_review.assistance.rating})/(completed_code_reviews.length.to_f).round(1)
+      ((completed_code_reviews.inject(0){|sum, code_review| sum+= code_review.assistance.rating})/completed_code_reviews.length.to_f).round(1)
     else
       'N/A'
     end
