@@ -1,6 +1,7 @@
 class DaysController < ApplicationController
 
   include CourseCalendar # concern
+  skip_before_action :allowed_day?, only: :show
 
   def show
     @activities = Activity.chronological.for_day(day)
