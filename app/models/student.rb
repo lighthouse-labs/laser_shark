@@ -3,7 +3,7 @@ class Student < User
   belongs_to :cohort
   has_many :day_feedbacks, foreign_key: :user_id
   has_many :feedbacks
-  
+
   scope :in_active_cohort, -> { joins(:cohort).merge(Cohort.is_active) }
   scope :has_open_requests, -> {
     joins(:assistance_requests).
@@ -34,7 +34,9 @@ class Student < User
   def code_reviews_l_score
     completed_code_reviews = completed_code_review_requests
     if completed_code_reviews.length > 0
-      ((completed_code_reviews.inject(0){|sum, code_review| sum+= code_review.assistance.rating})/completed_code_reviews.length.to_f).round(1)
+      # exclude nil values from ratings.
+      ratings = completed_code_reviews.map(&:assistance).map { |e| e.rating if e }.reject(&:nil?)
+      ((ratings.inject(0){|sum, rating| sum+= rating})/ratings.length.to_f).round(1)
     else
       'N/A'
     end

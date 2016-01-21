@@ -20,10 +20,10 @@ class AssistancesController < ApplicationController
     redirect_to :back
   end
 
-  def view_code_review_modal
-    @code_review_assistance = Assistance.find(params[:id])
-    render layout: false
-  end
+  # def view_code_review_modal
+  #   @code_review_assistance = Assistance.find(params[:id])
+  #   render layout: false
+  # end
 
   private
 

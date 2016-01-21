@@ -15,7 +15,7 @@ class StudentsController < ApplicationController
 
   def new_code_review_modal
     @activity_submissions = @student.non_code_reviewed_activity_submissions
-    @assistance = Assistance.new(assistor: current_user, assistee: @student)
+    @assistance = CodeReview.new(assistor: current_user, assistee: @student)
     render layout: false
   end
 
