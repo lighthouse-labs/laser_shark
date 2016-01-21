@@ -106,7 +106,10 @@ var RequestQueue = React.createClass({
             that.handleAssistanceStarted(data.object);
             break;
           case "AssistanceEnded":
-            that.removeFromQueue(data.object.assistance_request)
+            that.handleAssistanceEnd(data.object.assistance_request)
+            break;
+          case "OffineAssistanceCreated":
+            that.updateLastAssisted(data.object);
             break;
           case "StoppedAssisting":
             that.removeFromQueue(data.object.assistance_request);
@@ -173,6 +176,18 @@ var RequestQueue = React.createClass({
     this.removeFromCodeReviews(assistanceRequest);
   },
 
+  updateLastAssisted: function(student) {
+    var students = this.state.students
+    var ind = this.getStudentIndex(student);
+    if (ind > -1) {
+      var studentToUpdate = students[ind]
+      studentToUpdate.last_assisted_at = new Date;
+      students[ind] = studentToUpdate
+      this.setState({students: students})
+    }
+
+  },
+
   handleAssistanceStarted: function(assistance) {
     this.removeAssistanceFromRequests(assistance.assistance_request);
     this.removeFromCodeReviews(assistance.assistance_request);
@@ -181,6 +196,11 @@ var RequestQueue = React.createClass({
       activeAssistances.push(assistance);
       this.setState({activeAssistances: activeAssistances});
     }
+  },
+
+  handleAssistanceEnd: function(assistance) {
+    this.removeFromQueue(assistance)
+    this.updateLastAssisted(assistance.requestor)
   },
 
   removeAssistanceFromRequests: function(assistanceRequest) {
@@ -229,6 +249,15 @@ var RequestQueue = React.createClass({
     });
 
     return ids.indexOf(assistanceRequest.id);
+  },
+
+  getStudentIndex: function(student) {
+    var students = this.state.students;
+    var ids = students.map(function(s){
+      return s.id;
+    });
+
+    return ids.indexOf(student.id);
   },
 
   locationChanged: function(event) {
