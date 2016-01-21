@@ -1,11 +1,11 @@
-$ ->    
+$ ->
 
   $('#view_code_review_modal').on 'show.bs.modal', (event) ->
     button = $(event.relatedTarget)
     codeReviewAssistanceId = button.data('code-review-assistance-id')
     modal = $(this)
     $.ajax(
-      url: '/assistances/' + codeReviewAssistanceId + '/view_code_review_modal'
+      url: '/code_reviews/' + codeReviewAssistanceId + '/view_code_review_modal'
       method: 'GET').done (info) ->
         modal.find('.view-modal-content').html(info)
 
@@ -16,7 +16,7 @@ $ ->
     $.ajax(
       url: '/students/' + studentID + '/new_code_review_modal'
       method: 'GET').done (info) ->
-        modal.find('.new-modal-content').html(info)  
+        modal.find('.new-modal-content').html(info)
         initializeMarkdownEditor()
         validateForm()
 
@@ -26,9 +26,9 @@ $ ->
     window.studentNotesEditor.getSession().setMode("ace/mode/markdown")
     window.studentNotesEditor.setValue('Please enter some feedback (in markdown) to be emailed to the student')
 
-    $('#new_assistance').submit (e) ->
+    $('#new_code_review').submit (e) ->
       e.preventDefault()
-      $('#assistance_student_notes').val(window.studentNotesEditor.getValue())
+      $('#code_review_student_notes').val(window.studentNotesEditor.getValue())
       this.submit()
 
   validateForm = ->
@@ -37,7 +37,7 @@ $ ->
 
       activity = $('#activity_submission_id')
       studentNotes = window.studentNotesEditor.getValue()
-      teacherNotes = $('#assistance_notes')
+      teacherNotes = $('#code_review_notes')
 
       if activity.val() == ''
         errrorMessages.push('You must choose an activity to code review')
