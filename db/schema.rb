@@ -192,37 +192,37 @@ ActiveRecord::Schema.define(version: 20160122233034) do
   end
 
   create_table "users", force: :cascade do |t|
-    t.string   "first_name",              limit: 255
-    t.string   "last_name",               limit: 255
-    t.string   "email",                   limit: 255
-    t.string   "phone_number",            limit: 255
-    t.string   "twitter",                 limit: 255
-    t.string   "skype",                   limit: 255
-    t.string   "uid",                     limit: 255
-    t.string   "token",                   limit: 255
+    t.string   "first_name",             limit: 255
+    t.string   "last_name",              limit: 255
+    t.string   "email",                  limit: 255
+    t.string   "phone_number",           limit: 255
+    t.string   "twitter",                limit: 255
+    t.string   "skype",                  limit: 255
+    t.string   "uid",                    limit: 255
+    t.string   "token",                  limit: 255
     t.boolean  "completed_registration"
-    t.string   "github_username",         limit: 255
-    t.string   "avatar_url",              limit: 255
+    t.string   "github_username",        limit: 255
+    t.string   "avatar_url",             limit: 255
     t.integer  "cohort_id"
-    t.string   "type",                    limit: 255
-    t.string   "custom_avatar",           limit: 255
-    t.string   "unlocked_until_day",      limit: 255
+    t.string   "type",                   limit: 255
+    t.string   "custom_avatar",          limit: 255
+    t.string   "unlocked_until_day",     limit: 255
     t.datetime "last_assisted_at"
     t.datetime "deactivated_at"
-    t.string   "slack",                   limit: 255
-    t.boolean  "remote",                              default: false
+    t.string   "slack",                  limit: 255
+    t.boolean  "remote",                             default: false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "code_review_percent",                 default: 80
-    t.boolean  "admin",                               default: false, null: false
-    t.string   "company_name",            limit: 255
-    t.string   "company_url",             limit: 255
+    t.integer  "code_review_percent",                default: 80
+    t.boolean  "admin",                              default: false, null: false
+    t.string   "company_name",           limit: 255
+    t.string   "company_url",            limit: 255
     t.text     "bio"
-    t.string   "quirky_fact",             limit: 255
-    t.string   "specialties",             limit: 255
+    t.string   "quirky_fact",            limit: 255
+    t.string   "specialties",            limit: 255
     t.integer  "location_id"
-    t.boolean  "on_duty",                             default: false
-    t.boolean  "receive_feedback_emails",             default: false
+    t.boolean  "on_duty",                            default: false
+    t.boolean  "receive_feedback_email",             default: false
   end
 
   add_index "users", ["cohort_id"], name: "index_users_on_cohort_id", using: :btree

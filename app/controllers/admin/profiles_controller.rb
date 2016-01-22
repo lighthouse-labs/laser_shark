@@ -22,7 +22,7 @@ class Admin::ProfilesController < Admin::BaseController
         :phone_number,
         :email,
         :location_id,
-        :receive_feedback_emails
+        :receive_feedback_email
       )
   end
 
