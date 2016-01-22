@@ -1,0 +1,27 @@
+- if @user.errors.full_messages.any?
+  .alert.alert-error
+    strong Please correct the following errors:
+    - @user.errors.full_messages.each do |msg|
+      li = msg
+  hr
+
+/ = f.error_notification
+
+.form-group
+  .col-sm-offset-3.col-sm-9
+
+= f.input :first_name, label: 'First Name'
+= f.input :last_name, label: 'Last Name'
+= f.input :phone_number, label: 'Phone Number'
+= f.input :github_username
+= f.input :location_id, collection: Location.all.order(:name), label: 'Location'
+
+- if teacher?
+
+  = f.input :bio, as: :text, input_html: { maxlength: 1000 }
+  = f.input :quirky_fact
+  = f.input :specialties, label: 'Programming Specialties'
+
+.form-group
+  .col-sm-offset-3.col-sm-9
+    = f.button :submit, 'Update'
