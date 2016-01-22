@@ -15,15 +15,9 @@ class AssistancesController < ApplicationController
     @assistance_request.save!
     @assistance_request.start_assistance(current_user)
     @assistance = @assistance_request.reload.assistance
-    @assistance.end(params[:assistance][:notes], params[:assistance][:rating].to_i, params[:assistance][:student_notes])
-    UserMailer.new_code_review_message(@assistance).deliver if params[:activity_submission_id]
+    @assistance.end(params[:assistance][:notes], params[:assistance][:rating].to_i)
     redirect_to :back
   end
-
-  # def view_code_review_modal
-  #   @code_review_assistance = Assistance.find(params[:id])
-  #   render layout: false
-  # end
 
   private
 

@@ -2,6 +2,7 @@ class SessionsController < ApplicationController
   skip_before_action :authenticate_user, only: [:new, :create]
 
   def new
+    binding.pry
     if current_user
       redirect_to day_path('today')
     end

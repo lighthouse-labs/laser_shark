@@ -1,24 +1,55 @@
 .modal-header
   button type="button" class="close" data-dismiss="modal" aria-label="Close"
-    span aria-hidden="true" 
+    span aria-hidden="true"
       | &times;
-  h4.modal-title Code Review Details
+  h4.modal-title Code Review by
+                <small><i>#{current_user.first_name + ' ' + current_user.last_name}</i></small>
+  .container-teacher
+    img src="#{current_user.avatar_url}" class='teacher-avatar'
 
 .modal-body
-
   .code-review-rating
-    | Rating: #{@code_review_assistance.rating}/4
+    | <b class='heading'>Rating:</b> #{@code_review_assistance.rating}/4
 
-  div
-    | Teacher (Internal) Notes:
   .code-review-teacher-notes
-    = @code_review_assistance.notes
+    - if @code_review_assistance.notes.empty?
+      | No observations provided about code submitted.
+    - else
+      | <b class='heading'>Observations:</b>
+      .indented
+        = @code_review_assistance.notes
 
-  div
-    | Student Notes:
   .code-review-teacher-notes
-    - if @code_review_assistance.try(:student_notes)
-      == markdown @code_review_assistance.student_notes 
-  
+    - if @code_review_assistance.try(:student_notes) && !@code_review_assistance.empty?
+      .email-feedback
+        | <b class='heading'>Email feedback</b> <small> provided to <i>#{@student.first_name + ' ' + @student.last_name}</i></small>
+      .indented
+        <br>
+        .feedback
+          == markdown @code_review_assistance.student_notes
+    - else
+      | No Email feedback provided to: <small><i>#{@student.first_name + ' ' + @student.last_name}</i></small>
+
 .modal-footer
   button.btn.btn-default type="button" data-dismiss="modal" Close
+
+- content_for :'modal-body' do
+css:
+  .teacher-avatar {
+    width: 80px;
+    height: 80px;
+  }
+  .modal-body {
+    clear: both;
+  }
+  .indented {
+    text-align: start;
+    text-indent: 1em;
+  }
+  .heading {
+    text-decoration: underline;
+    font-size: 18px;
+  }
+  .feedback p {
+    line-spacing: 0em;
+  }

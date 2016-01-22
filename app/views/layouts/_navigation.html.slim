@@ -88,14 +88,14 @@ nav.navbar.navbar-inverse.navbar-fixed-top role="navigation"
             ul.dropdown-menu
               li
                 = link_to 'Cohorts', admin_cohorts_path
-              li 
+              li
                 = link_to 'Curriculum Feedback', admin_curriculum_feedbacks_path
-              li 
+              li
                 = link_to 'Teacher Feedback', admin_teacher_feedbacks_path
               li
-                = link_to 'Day Feedback', admin_day_feedbacks_path  
+                = link_to 'Day Feedback', admin_day_feedbacks_path
               li
-                = link_to 'Teacher Stats', admin_teacher_stats_path  
+                = link_to 'Teacher Stats', admin_teacher_stats_path
       ul.nav.navbar-nav.navbar-right
         - if teacher? && !cohorts.empty?
           li.dropdown.cohort
@@ -136,7 +136,7 @@ nav.navbar.navbar-inverse.navbar-fixed-top role="navigation"
               li
                 = link_to 'Edit profile', edit_profile_path
               li
-                = link_to 'Sign Out', session_path, :method => :delete, class: "sign-out-link" 
+                = link_to 'Sign Out', session_path, :method => :delete, class: "sign-out-link"
           -if teacher?
             li.teacher-duty
               span

@@ -12,13 +12,13 @@ table.table.code-review-table
   tbody
     - @students.each do |student|
       tr
-        td 
+        td
           = student.full_name
           br
           |(#{student.code_reviews_l_score}/4)
         - student.completed_code_review_requests.each do |code_review|
           td
-            .btn.btn-warning.btn-sm.view-code-review-button  data-toggle="modal" data-target="#view_code_review_modal" data-code-review-assistance-id="#{code_review.assistance.id}"
+            .btn.btn-warning.btn-sm.view-code-review-button  data-toggle="modal" data-target="#view_code_review_modal" data-code-review-assistance-id="#{code_review.assistance.id}" data-code-review-assistee-id="#{student.id}"
               | View
         td
           .btn.btn-primary.btn-sm.new-code-review-button  data-toggle="modal" data-target="#new_code_review_modal" data-student-id="#{student.id}"
@@ -26,8 +26,8 @@ table.table.code-review-table
 
 .modal.fade id='view_code_review_modal'
   .modal-dialog
-    .modal-content.view-modal-content    
+    .modal-content.view-modal-content
 
 .modal.fade id='new_code_review_modal'
   .modal-dialog
-    .modal-content.new-modal-content    
+    .modal-content.new-modal-content

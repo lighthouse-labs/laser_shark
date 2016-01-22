@@ -3,9 +3,10 @@ $ ->
   $('#view_code_review_modal').on 'show.bs.modal', (event) ->
     button = $(event.relatedTarget)
     codeReviewAssistanceId = button.data('code-review-assistance-id')
+    codeReviewAssisteeId = button.data('code-review-assistee-id')
     modal = $(this)
     $.ajax(
-      url: '/code_reviews/' + codeReviewAssistanceId + '/view_code_review_modal'
+      url: '/code_reviews/' + codeReviewAssistanceId + '/view_code_review_modal?assistee-id=' + codeReviewAssisteeId
       method: 'GET').done (info) ->
         modal.find('.view-modal-content').html(info)
 
