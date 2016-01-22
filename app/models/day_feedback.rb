@@ -82,7 +82,15 @@ class DayFeedback < ActiveRecord::Base
   private
 
   def notify_admin
-    AdminMailer.new_day_feedback(self).deliver
+    admins = User.where(admin: true, receive_feedback_email: true).where.not(email: nil)
+
+    if admins.blank?
+      AdminMailer.new_day_feedback(self).deliver
+    else
+      admins.each do |admin|
+        AdminMailer.new_day_feedback(self, admin.email).deliver
+      end
+    end
   end
 
   def self.filter_by(options)
