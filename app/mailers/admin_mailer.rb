@@ -8,11 +8,10 @@ class AdminMailer < ActionMailer::Base
     mail subject: 'New Teacher Joined'
   end
 
-  def new_day_feedback(feedback, admins)
+  def new_day_feedback(feedback, admin_emails)
     @feedback = feedback
-    to = ENV['SUPER_ADMIN_EMAIL'] if admins.empty?
     @host = ENV['HOST']
-    mail subject: "Student Feedback (#{feedback.day}) [\##{feedback.id}]", reply_to: feedback.student.email, to: to
+    mail subject: "Student Feedback (#{feedback.day}) [\##{feedback.id}]", reply_to: feedback.student.email, bcc: admin_emails
   end
 
 end
