@@ -6,16 +6,16 @@ class AssistanceRequestsController < ApplicationController
   def index
     @all_locations = Location.where("id IN (?)", Cohort.all.map(&:location_id).uniq).map{|l| LocationSerializer.new(l, root: false).as_json}
 
-    render component: "RequestQueue", 
+    render component: "RequestQueue",
       props: {
         locations: @all_locations,
         user: UserSerializer.new(current_user).as_json
-      }, 
+      },
       layout: "assistance"
   end
 
   def queue
-    my_active_assistances = Assistance.assisted_by(current_user).currently_active
+    my_active_assistances = Assistance.joins(:assistance_request).assisted_by(current_user).currently_active
     requests = AssistanceRequest.where(type: nil).open_requests.oldest_requests_first.requestor_cohort_in_locations([params[:location]])
     code_reviews = CodeReviewRequest.open_requests.oldest_requests_first.requestor_cohort_in_locations([params[:location]])
     all_students = Student.in_active_cohort.active.order_by_last_assisted_at.cohort_in_locations([params[:location]])
@@ -47,7 +47,7 @@ class AssistanceRequestsController < ApplicationController
       format.all { redirect_to(assistance_requests_path) }
     end
   end
-  
+
   def destroy
     ar = AssistanceRequest.find params[:id]
     status = ar.try(:cancel) ? 200 : 409
