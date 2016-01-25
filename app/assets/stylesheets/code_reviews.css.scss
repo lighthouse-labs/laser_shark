@@ -1,12 +1,12 @@
 .code-review-rating {
   padding-bottom: 10px;
-  border-bottom: 1px;
+  border-bottom: 1px dashed gainsboro;
 }
 
 .code-review-teacher-notes {
   margin-top: 10px;
   margin-bottom: 10px;
-  border-bottom: 1px;
+  border-bottom: 1px dashed gainsboro;
   font-size: 14px;
 }
 
@@ -15,6 +15,7 @@
 }
 
 .view-code-review-button {
+  display: block;
 }
 
 .code-review-button-holder {
@@ -26,12 +27,8 @@
 }
 
 .code-review-table > thead > tr > th, .code-review-table > tbody > tr > td {
-  padding: 0px;
-  line-height: 0px; // ~19.7px
-  border-top: 0px;
-  border-bottom: 0;
-  border: 0px;
-  margin: 0px;
+  padding: 7px 3px;
+
 }
 
 .new-code-review-form-error {

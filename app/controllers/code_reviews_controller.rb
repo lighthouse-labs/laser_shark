@@ -25,7 +25,9 @@ class CodeReviewsController < ApplicationController
   end
 
   def load_student
-    @student = Student.find(params["assistee-id"])
+    id = params["student_id"] || params["assistee-id"]
+    puts "the id is: #{id}"
+    @student = Student.find(id)
   end
 
 end

@@ -20,7 +20,7 @@
         = @code_review_assistance.notes
 
   .code-review-teacher-notes
-    - if @code_review_assistance.try(:student_notes) && !@code_review_assistance.empty?
+    - if @code_review_assistance.try(:student_notes)
       .email-feedback
         | <b class='heading'>Email feedback</b> <small> provided to <i>#{@student.first_name + ' ' + @student.last_name}</i></small>
       .indented
