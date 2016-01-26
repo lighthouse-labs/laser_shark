@@ -15,7 +15,7 @@ class AssistanceRequestsController < ApplicationController
   end
 
   def queue
-    my_active_assistances = Assistance.joins(:assistance_request).assisted_by(current_user).currently_active
+    my_active_assistances = Assistance.assisted_by(current_user).currently_active
     requests = AssistanceRequest.where(type: nil).open_requests.oldest_requests_first.requestor_cohort_in_locations([params[:location]])
     code_reviews = CodeReviewRequest.open_requests.oldest_requests_first.requestor_cohort_in_locations([params[:location]])
     all_students = Student.in_active_cohort.active.order_by_last_assisted_at.cohort_in_locations([params[:location]])

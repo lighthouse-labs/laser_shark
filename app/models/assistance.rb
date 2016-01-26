@@ -9,9 +9,8 @@ class Assistance < ActiveRecord::Base
   before_create :set_start_at
 
   scope :currently_active, -> {
-    includes(:assistance_request).
-    where("assistance_requests.canceled_at IS NULL AND assistances.end_at IS NULL").
-    references(:assistance_request)
+    joins(:assistance_request).
+    where("assistance_requests.canceled_at IS NULL AND assistances.end_at IS NULL")
   }
   scope :completed, -> { where('assistances.end_at IS NOT NULL') }
   scope :order_by_start, -> { order(:start_at) }
