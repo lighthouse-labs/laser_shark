@@ -43,7 +43,6 @@ gem 'default_value_for'
 gem 'carrierwave'
 gem 'mini_magick'
 gem 'fog'
-gem 'remotipart', '~> 1.2'
 
 # gem 'airbrake' # errors going to errbit actually. See errbit.rb
 gem "sentry-raven"

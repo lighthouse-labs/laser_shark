@@ -415,7 +415,6 @@ GEM
       railties (>= 3.2, < 5.0)
     redcarpet (3.3.3)
     redis (3.2.1)
-    remotipart (1.2.1)
     rspec (2.14.1)
       rspec-core (~> 2.14.0)
       rspec-expectations (~> 2.14.0)
@@ -548,7 +547,6 @@ DEPENDENCIES
   react-rails (~> 1.4.1)
   readmorejs-rails
   redcarpet
-  remotipart (~> 1.2)
   rspec-rails (= 2.14.2)
   rubyzip (>= 1.0.0)
   sass-rails (~> 4.0.2)
