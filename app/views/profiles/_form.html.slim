@@ -4,10 +4,11 @@
     - @user.errors.full_messages.each do |msg|
       li = msg
   hr
-
 / = f.error_notification
 .form-group
   .col-sm-offset-3.col-sm-9
+    div.alert.alert-error.invalid-image-selection
+      | Invalid image file selected.
     div.avatar-format
       = image_tag avatar_for(@user) if avatar_for(@user)
     div.col-sm-4.upload-button
@@ -40,40 +41,5 @@
     = f.button :submit, 'Update'
 
 - content_for :end_of_body do
-  css:
-    .avatar-format img {
-      width: 250px;
-      height: 250px;
-    }
   javascript:
-
-    function loadAvatar() {
-      // TODO: click handlers should be in separate functions.
-      // Always load the last file that was valid
-      //
-      var img = $('.avatar-format img');
-
-      $('#user_custom_avatar').on('click', function(e){
-        var source = $('img')[0].src;
-        console.log(source);
-        $('#user_custom_avatar').off('click')
-
-        $('#user_custom_avatar').change({source: source}, function(e){
-          var file = e.target.files[0];
-          var reader = new FileReader();
-
-          if (file && file.type.match('image.*')) {
-            // Consume file and trigger onloadend callback
-            reader.readAsDataURL(file);
-          } else {
-            // Reset invalid file to empty as if change avatar didn't happened
-            $('[name="user[custom_avatar]"]').val('');
-            // img.attr('src', e.data.source);
-          }
-          reader.onloadend = function (e) {
-            img.attr('src', reader.result);
-          }
-        });
-      });
-    }
-    $(loadAvatar);
+    $(Profile.manageAvatarLoading);
