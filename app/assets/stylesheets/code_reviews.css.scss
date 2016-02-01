@@ -34,3 +34,31 @@
 .new-code-review-form-error {
   border-color: tomato;
 }
+
+// Styling for view_code_review_modal.html
+.teacher-avatar {
+  width: 80px;
+  height: 80px;
+}
+.modal-body {
+  clear: both;
+}
+.indented {
+  text-align: start;
+  text-indent: 1em;
+}
+.heading {
+  text-decoration: underline;
+  font-size: 18px;
+}
+.feedback p {
+  line-spacing: 0em;
+}
+
+// Styling for new_code_review_modal.html
+.editor {
+  width: 100%;
+  height: 250px;
+  margin: auto;
+  margin-bottom: 20px;
+}
