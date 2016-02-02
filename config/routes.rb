@@ -1,7 +1,11 @@
 LaserShark::Application.routes.draw do
 
   namespace :admin do
-  get 'category/create'
+  get 'category/index'
+  end
+
+  namespace :admin do
+  post 'category/create'
   end
 
   namespace :admin do
@@ -13,7 +17,7 @@ LaserShark::Application.routes.draw do
   end
 
   namespace :admin do
-  get 'category/delete'
+  post 'category/delete'
   end
 
   match "/websocket", :to => ActionCable.server, via: [:get, :post]
@@ -31,8 +35,8 @@ LaserShark::Application.routes.draw do
   resource :session, :only => [:new, :destroy]
   # resource :registration, only: [:new, :create]
   resource :profile, only: [:edit, :update]
-  resources :feedbacks, only: [:index, :update] do 
-    member do 
+  resources :feedbacks, only: [:index, :update] do
+    member do
       get :modal_content
     end
   end
@@ -85,7 +89,7 @@ LaserShark::Application.routes.draw do
   resources :streams, only: [:index, :show]
 
   resources :teachers, only: [:index, :show] do
-    member do 
+    member do
       get :feedback
     end
   end
@@ -93,13 +97,13 @@ LaserShark::Application.routes.draw do
   # ADMIN
   namespace :admin do
     root to: 'dashboard#show'
-    resources :students, only: [:index, :update] do 
-      member do 
+    resources :students, only: [:index, :update] do
+      member do
         post :reactivate
-        post :deactivate 
+        post :deactivate
       end
     end
-    resources :teacher_stats, only: [:index, :show] do 
+    resources :teacher_stats, only: [:index, :show] do
       member do
         get :assistance
         get :feedback
@@ -109,8 +113,8 @@ LaserShark::Application.routes.draw do
     resources :feedbacks, except: [:edit, :update, :destroy]
     resources :teacher_feedbacks, only: [:index]
     resources :curriculum_feedbacks, only: [:index]
-    resources :day_feedbacks, except: [:destroy] do 
-      member do 
+    resources :day_feedbacks, except: [:destroy] do
+      member do
         post :archive
         delete :archive, action: :unarchive
       end
