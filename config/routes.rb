@@ -1,5 +1,21 @@
 LaserShark::Application.routes.draw do
 
+  namespace :admin do
+  get 'category/create'
+  end
+
+  namespace :admin do
+  get 'category/read'
+  end
+
+  namespace :admin do
+  get 'category/update'
+  end
+
+  namespace :admin do
+  get 'category/delete'
+  end
+
   match "/websocket", :to => ActionCable.server, via: [:get, :post]
 
   get '/i/:code', to: 'invitations#show' # student/teacher invitation handler
