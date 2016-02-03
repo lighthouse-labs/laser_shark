@@ -21,6 +21,18 @@ class Activity < ActiveRecord::Base
   has_many :activities_outcomes
   has_many :outcomes, through: :activities_outcomes
 
+  def children
+    outcomes
+  end
+
+  def self.child_name
+    'outcome'
+  end
+
+  def text
+    name
+  end
+
   # Given the start_time and duration, return the end_time
   def end_time
     hours = start_time / 100

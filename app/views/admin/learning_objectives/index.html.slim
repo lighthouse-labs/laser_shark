@@ -5,11 +5,15 @@
         .row.learning-objectives-row
           .col-xs-8.vertical-align
             .div
-              h2 == controller_name.titlecase
+              = link_to 'parent',
+                        generic_parent_show_path,
+                        method: :get
+              h2 == heading
           .col-xs-1.vertical-align.outcomes-glyph
             .div
+              br
               = link_to '',
-                        admin_category_index_path,
+                        generic_index_path,
                         class: "fui-plus outcomes-glyph-heading",
                         method: :post
   .panel-body
@@ -19,7 +23,7 @@
             .row.learning-objectives-row
               .col-xs-8.vertical-align
                 = link_to data.text,
-                          generic_create_path(data),
+                          generic_show_path(data),
                           class: :"outcomes-body",
                           method: :get
               .col-xs-1.vertical-align.outcomes-glyph
