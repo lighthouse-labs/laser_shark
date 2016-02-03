@@ -1,23 +1,7 @@
 LaserShark::Application.routes.draw do
-
   namespace :admin do
-  get 'category/index'
-  end
-
-  namespace :admin do
-  post 'category/create'
-  end
-
-  namespace :admin do
-  get 'category/read'
-  end
-
-  namespace :admin do
-  get 'category/update'
-  end
-
-  namespace :admin do
-  post 'category/delete'
+    resources :category
+    resources :skill
   end
 
   match "/websocket", :to => ActionCable.server, via: [:get, :post]

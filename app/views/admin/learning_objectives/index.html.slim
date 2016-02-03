@@ -1,0 +1,29 @@
+.panel.panel-default
+  .panel-heading
+    .container
+      section
+        .row.learning-objectives-row
+          .col-xs-8.vertical-align
+            .div
+              h2 == controller_name.titlecase
+          .col-xs-1.vertical-align.outcomes-glyph
+            .div
+              = link_to '',
+                        admin_category_index_path,
+                        class: "fui-plus outcomes-glyph-heading",
+                        method: :post
+  .panel-body
+    .container
+      section
+        - @data.each do |data|
+            .row.learning-objectives-row
+              .col-xs-8.vertical-align
+                = link_to data.text,
+                          generic_create_path(data),
+                          class: :"outcomes-body",
+                          method: :get
+              .col-xs-1.vertical-align.outcomes-glyph
+                = link_to '',
+                          generic_delete_path(data),
+                          class: "fui-cross outcomes-body",
+                          method: :delete
