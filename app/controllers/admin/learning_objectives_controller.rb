@@ -5,7 +5,7 @@ class Admin::LearningObjectivesController < ApplicationController
   before_action :set_instance, only: [:destroy, :edit, :show]
   before_action :load_all
 
-  helper_method :generic_parent_show_path, :generic_show_path,
+  helper_method :generic_parent_path, :generic_show_path,
                 :generic_delete_path, :generic_index_path, :heading
 
   def index
@@ -42,13 +42,15 @@ class Admin::LearningObjectivesController < ApplicationController
     end
   end
 
-  def generic_parent_show_path
-    if params[:action] == 'index'
-      self.send("admin_#{@model_parent_name}_index_path")
-    elsif controller_name == 'category'
-      self.send("admin_category_index_path")
+  def generic_parent_path
+    if parameters[:action] == 'index'
+      self.send("admin_#{@model_parent_name.pluralize}_path")
+    elsif controller_name == 'categories'
+      self.send("admin_categories_path")
     else
-      self.send("admin_#{@model_parent_name}_path", @instance_model.my_parent)
+      if @instance_model.my_parent
+        self.send("admin_#{@model_parent_name.singularize}_path", @instance_model.my_parent)
+      end
     end
   end
 
@@ -61,7 +63,7 @@ class Admin::LearningObjectivesController < ApplicationController
   end
 
   def generic_index_path
-    self.send("admin_#{@model_name}_index_path")
+    self.send("admin_#{@model_name.pluralize}_path")
   end
 
   def set_id
@@ -73,7 +75,7 @@ class Admin::LearningObjectivesController < ApplicationController
   end
 
   def set_model
-    @Model = controller_name.titlecase.constantize
+    @Model = controller_name.titlecase.singularize.constantize
   end
 
   def set_name_model
@@ -82,7 +84,7 @@ class Admin::LearningObjectivesController < ApplicationController
     else
       @model_name = @Model.name.downcase
     end
-    @model_parent_name = @Model.parental_name
+    @model_parent_name = @Model.my_parent_name
   end
 
   def parameters

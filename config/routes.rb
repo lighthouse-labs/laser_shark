@@ -1,12 +1,5 @@
 LaserShark::Application.routes.draw do
 
-  namespace :admin do
-    resources :category
-    resources :skill
-    resources :outcome
-    resources :activity
-  end
-
   match "/websocket", :to => ActionCable.server, via: [:get, :post]
 
   get '/i/:code', to: 'invitations#show' # student/teacher invitation handler
@@ -106,6 +99,11 @@ LaserShark::Application.routes.draw do
         delete :archive, action: :unarchive
       end
     end
+
+    resources :categories
+    resources :skills
+    resources :outcomes
+    resources :activities
   end
 
   # To test 500 error notifications on production

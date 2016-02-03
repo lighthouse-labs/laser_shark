@@ -2,10 +2,10 @@ class Category < ActiveRecord::Base
   has_many :skills
 
   def my_parent
-    no_parent
+    nil
   end
 
-  def self.parental_name
+  def self.my_parent_name
     'category'
   end
 
@@ -17,7 +17,4 @@ class Category < ActiveRecord::Base
     'skill'
   end
 
-  def no_parent
-    self
-  end
 end

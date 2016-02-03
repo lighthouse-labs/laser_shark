@@ -3,10 +3,10 @@ class Skill < ActiveRecord::Base
   has_many :outcomes
 
   def my_parent
-    self.category
+    category
   end
 
-  def self.parental_name
+  def self.my_parent_name
     'category'
   end
 

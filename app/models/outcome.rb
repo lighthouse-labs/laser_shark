@@ -7,7 +7,7 @@ class Outcome < ActiveRecord::Base
     skill
   end
 
-  def self.parental_name
+  def self.my_parent_name
     "skill"
   end
 
