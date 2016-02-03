@@ -1,7 +1,9 @@
 LaserShark::Application.routes.draw do
+
   namespace :admin do
     resources :category
     resources :skill
+    resources :outcome
   end
 
   match "/websocket", :to => ActionCable.server, via: [:get, :post]
