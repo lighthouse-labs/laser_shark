@@ -4,18 +4,23 @@
       section
         .row.learning-objectives-row
           .col-xs-8.vertical-align
-            .div
-              = link_to 'parent',
+            h2
+              = link_to heading,
                         generic_parent_path,
                         method: :get
-              h2 == heading
-          .col-xs-1.vertical-align.outcomes-glyph
+          .vertical-align.outcomes-glyph
             .div
-              br
               = link_to '',
-                        generic_index_path,
+                        generic_create_path,
                         class: "fui-plus outcomes-glyph-heading",
                         method: :post
+          / - if is_controller_action_show?
+          /   .vertical-align.outcomes-glyph
+          /     .div
+          /       = link_to (image_tag ("flat-ui-pro/icons/pencils.svg"), :class => 'edit-glyph-heading'),
+          /                 generic_heading_update_path(@instance_model),
+          /                 class: "outcomes-glyph-heading",
+          /                 method: :put
   .panel-body
     .container
       section
@@ -26,8 +31,51 @@
                           generic_show_path(data),
                           class: :"outcomes-body",
                           method: :get
-              .col-xs-1.vertical-align.outcomes-glyph
+              .vertical-align.outcomes-glyph
                 = link_to '',
                           generic_delete_path(data),
                           class: "fui-cross outcomes-body",
                           method: :delete
+              .vertical-align.outcomes-glyph.updater
+                = link_to (image_tag "flat-ui-pro/icons/pencils.svg", :class => 'edit-glyph'),
+                          '#learning-objectives-update-modal',
+                          class: "outcomes-body",
+                          data: { toggle: "modal", href: generic_update_path(data) }
+
+
+                / = link_to (image_tag ("flat-ui-pro/icons/pencils.svg"), :class => 'edit-glyph'),
+                /           generic_update_path(data),
+                /           class: "outcomes-body",
+                /           method: :put
+                / .btn.outcomes-body data-toggle="modal" data-target="#learning-objectives-update-modal"
+                /   = image_tag ("flat-ui-pro/icons/pencils.svg"), :class => 'edit-glyph'
+
+.modal.fade#learning-objectives-update-modal
+  .modal-dialog
+    .modal-content
+      .modal-header
+        button.close type='button' data-dismiss='modal'
+          span aria-hidden='true'
+            | &times;
+          span.sr-only
+            | Close
+        h4.modal-title
+          |
+      = form_tag '/assistance_requests', method: 'post', remote: true, id: 'assistance-request-form'
+        .modal-body
+          .form-group
+            = text_area_tag(:reason, nil, placeholder: 'What do you need assistance with?', class: 'form-control')
+        .modal-footer
+          button.btn.btn-default type='button' data-dismiss='modal'
+            | Cancel
+          = submit_tag 'Request Assistance', class: 'btn btn-primary request-assistance-button', data: {dismiss: 'modal'}
+
+javascript:
+  function genericUpdate() {
+    $('.vertical-align.outcomes-glyph.updater').click(function(e) {
+      console.log($(this).data('href'));
+      $(".modal-title").text('hello world');
+      debugger;
+    });
+  }
+  $(genericUpdate);
