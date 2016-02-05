@@ -21,22 +21,6 @@ class Activity < ActiveRecord::Base
   has_many :activities_outcomes
   has_many :outcomes, through: :activities_outcomes
 
-  def my_parent
-    nil
-  end
-
-  def self.my_parent_name
-    'outcome'
-  end
-
-  def children
-    outcomes
-  end
-
-  def self.child_name
-    'outcome'
-  end
-
   def text
     name
   end
