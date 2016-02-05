@@ -24,10 +24,10 @@ class Admin::ActivitiesController < ApplicationController
   #   end
   # end
 
-  # def destroy
-  #   @activity.destroy
-  #   redirect_to [:admin, @category, @skill, @outcome]
-  # end
+  def destroy
+    @outcome.activities.delete(@activity)
+    redirect_to [:admin, @category, @skill, @outcome]
+  end
 
   private
 
