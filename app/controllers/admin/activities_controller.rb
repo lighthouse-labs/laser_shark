@@ -7,22 +7,11 @@ class Admin::ActivitiesController < ApplicationController
     @activities = Activity.all
   end
 
-  # def edit
-  # end
-
   def create
     @activities = Activity.find(activity_params[:ids])
     @outcome.activities += @activities
     redirect_to [:admin, @category, @skill, @outcome]
   end
-
-  # def update
-  #   if @activity.update(activity_params)
-  #     redirect_to [:admin, @category, @skill, @outcome]
-  #   else
-  #     render :edit
-  #   end
-  # end
 
   def destroy
     @outcome.activities.delete(@activity)
