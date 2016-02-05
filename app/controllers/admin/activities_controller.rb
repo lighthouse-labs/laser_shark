@@ -27,7 +27,7 @@ class Admin::ActivitiesController < ApplicationController
   end
 
   def activity_params
-    {ids: filtered_params[:ids].tap {|e| e.delete ""}}
+    {ids: filtered_params[:ids].tap {|e| e.delete ""}} # on account of a bug with collection_select, '' is always included
   end
 
   def filtered_params
