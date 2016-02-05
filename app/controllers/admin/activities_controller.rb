@@ -3,10 +3,6 @@ class Admin::ActivitiesController < ApplicationController
   before_action :load_parents
   before_action :require_activity, only: [:edit, :update, :destroy]
 
-  def index
-    @activities = Activity.all
-  end
-
   def create
     @activities = Activity.find(activity_params[:ids])
     @outcome.activities += @activities
