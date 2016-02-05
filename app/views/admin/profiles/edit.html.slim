@@ -1,0 +1,8 @@
+h1 Edit Your Details
+
+/ Note: most of the markup here will get improved/fixed. Consider it temporary
+
+div
+  = simple_form_for @user, as: :user, url: admin_profile_path, method: :patch, html: {class: 'form-horizontal' }, wrapper: :horizontal_input_group do |f|
+  
+    = render 'form', f: f

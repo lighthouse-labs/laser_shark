@@ -1,0 +1,22 @@
+- if @user.errors.full_messages.any?
+  .alert.alert-error
+    strong Please correct the following errors:
+    - @user.errors.full_messages.each do |msg|
+      li = msg
+  hr
+
+/ = f.error_notification
+
+.form-group
+  .col-sm-offset-3.col-sm-9
+
+= f.input :first_name, label: 'First Name'
+= f.input :last_name, label: 'Last Name'
+= f.input :phone_number, label: 'Phone Number'
+= f.input :email
+= f.input :location_id, collection: Location.all.order(:name), label: 'Location'
+= f.input :receive_feedback_email, collection: [true, false], label: 'Receive Feedback Emails'
+
+.form-group
+  .col-sm-offset-3.col-sm-9
+    = f.button :submit, 'Update'

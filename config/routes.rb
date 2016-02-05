@@ -77,6 +77,7 @@ LaserShark::Application.routes.draw do
   # ADMIN
   namespace :admin do
     root to: 'dashboard#show'
+    resource :profile, only: [:edit, :update]
     resources :students, only: [:index, :update] do 
       member do 
         post :reactivate
