@@ -24,7 +24,7 @@ table.table
             | Close
         h4.modal-title
           |
-      = form_tag admin_category_skill_outcome_activities_path(@parent.skill.category, @parent.skill, @parent), method: 'post', id: 'create-outcome_activity-modal-input' do
+      = form_tag admin_category_skill_outcome_add_to_outcome_path(@parent.skill.category, @parent.skill, @parent), method: 'post', id: 'create-outcome_activity-modal-input' do
         .modal-body
           .form-group
             = collection_select :activity, :ids, @activities, :id, :text, {}, multiple: true

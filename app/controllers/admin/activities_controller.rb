@@ -3,7 +3,7 @@ class Admin::ActivitiesController < ApplicationController
   before_action :load_parents
   before_action :require_activity, only: [:edit, :update, :destroy]
 
-  def create
+  def add_to_outcome
     @activities = Activity.find(activity_params[:ids])
     @outcome.activities += @activities
     redirect_to [:admin, @category, @skill, @outcome]

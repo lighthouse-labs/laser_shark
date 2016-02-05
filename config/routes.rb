@@ -103,7 +103,8 @@ LaserShark::Application.routes.draw do
     resources :categories do
       resources :skills do
         resources :outcomes do
-          resources :activities
+          resources :activities, only: [:destroy]
+            post '/add_to_outcome' => 'activities#add_to_outcome'
         end
       end
     end
