@@ -1,0 +1,8 @@
+tr
+  td = link_to outcome.text,
+               admin_category_skill_outcome_path(outcome.skill.category, outcome.skill, outcome),
+               method: :get
+  td
+    = link_to 'Edit', edit_admin_category_skill_outcome_path(outcome.skill.category, outcome.skill, outcome)
+  td
+    = link_to 'Delete', admin_category_skill_outcome_path(outcome.skill.category, outcome.skill, outcome), method: 'delete'

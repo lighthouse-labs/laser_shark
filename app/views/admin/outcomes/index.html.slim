@@ -1,0 +1,36 @@
+= render_breadcrumbs
+
+h1 outcomes
+hr
+
+.actions.well
+  .btn.btn-primary.btn-sm.create-outcome-modal-button data-toggle="modal" data-target="#create-outcome-modal"
+    | New Outcome
+
+table.table
+  thead
+    tr
+      th Content
+
+  tbody
+    = render @outcomes
+
+.modal.fade#create-outcome-modal
+  .modal-dialog
+    .modal-content.create-outcome-modal
+      .modal-header
+        button.close type='button' data-dismiss='modal'
+          span aria-hidden='true'
+            | &times;
+          span.sr-only
+            | Close
+        h4.modal-title
+          |
+      = form_tag admin_category_skill_outcomes_path, method: 'post', id: 'create-outcome-modal-input' do
+        .modal-body
+          .form-group
+            = text_area_tag("outcome[text]", nil, placeholder: 'enter new outcome', required: true, class: 'form-control')
+        .modal-footer
+          button.btn.btn-default type='button' data-dismiss='modal'
+            | Cancel
+          = submit_tag 'New Outcome', class: 'btn btn-primary create-outcome-button'

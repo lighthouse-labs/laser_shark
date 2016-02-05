@@ -1,0 +1,13 @@
+= render_breadcrumbs
+
+h1 Edit Skill: #{@skill.text}
+hr
+
+= simple_form_for [:admin, @skill.category, @skill],
+  html: { class: 'form-horizontal' }, wrapper: :horizontal_form do |f|
+
+  = render f
+
+  .actions.well
+    = f.submit 'Update', class: 'btn btn-primary', style: 'margin-right: 10px;'
+    = link_to '&laquo; Cancel'.html_safe, [:admin, @skill.category]

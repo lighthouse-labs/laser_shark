@@ -1,5 +1,6 @@
 class Category < ActiveRecord::Base
   has_many :skills
+  accepts_nested_attributes_for :skills
 
   def my_parent
     nil

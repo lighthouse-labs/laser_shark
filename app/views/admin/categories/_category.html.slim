@@ -1,0 +1,8 @@
+tr
+  td = link_to category.text,
+               admin_category_path(category),
+               method: :get
+  td
+    = link_to 'Edit', edit_admin_category_path(category)
+  td
+    = link_to 'Delete', admin_category_path(category), method: 'delete'

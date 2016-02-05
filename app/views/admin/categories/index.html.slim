@@ -1,0 +1,36 @@
+= render_breadcrumbs
+
+h1 Categories
+hr
+
+.actions.well
+  .btn.btn-primary.btn-sm.create-category-modal-button data-toggle="modal" data-target="#create-category-modal"
+    | New Category
+
+table.table
+  thead
+    tr
+      th Content
+
+  tbody
+    = render @categories
+
+.modal.fade#create-category-modal
+  .modal-dialog
+    .modal-content.create-category-modal
+      .modal-header
+        button.close type='button' data-dismiss='modal'
+          span aria-hidden='true'
+            | &times;
+          span.sr-only
+            | Close
+        h4.modal-title
+          |
+      = form_tag admin_categories_path, method: 'post', id: 'create-category-modal-input' do
+        .modal-body
+          .form-group
+            = text_area_tag("category[text]", nil, placeholder: 'enter new category', required: true, class: 'form-control')
+        .modal-footer
+          button.btn.btn-default type='button' data-dismiss='modal'
+            | Cancel
+          = submit_tag 'New Category', class: 'btn btn-primary create-category-button'

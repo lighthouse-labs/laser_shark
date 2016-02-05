@@ -55,6 +55,8 @@ gem 'aws-sdk-core'
 
 gem 'faker'
 
+gem "breadcrumbs_on_rails"
+
 group :development do
   gem 'pry'
   gem 'spring'

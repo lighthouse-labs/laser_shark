@@ -100,10 +100,13 @@ LaserShark::Application.routes.draw do
       end
     end
 
-    resources :categories
-    resources :skills
-    resources :outcomes
-    resources :activities
+    resources :categories do
+      resources :skills do
+        resources :outcomes do
+          resources :activities
+        end
+      end
+    end
   end
 
   # To test 500 error notifications on production
