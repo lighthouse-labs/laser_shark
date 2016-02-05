@@ -1,9 +1,6 @@
 class Admin::OutcomesController < ApplicationController
-  add_breadcrumb 'categories', :admin_categories_path
-  add_breadcrumb 'skills', :admin_category_skills_path
-  add_breadcrumb 'outcomes', :admin_category_skill_outcomes_path
-  # add_breadcrumb 'activities', :admin_category_skill_outcome_activities_path
 
+  before_action :load_parents
   before_action :require_outcome, only: [:show, :edit, :update, :destroy]
 
   def index
@@ -18,7 +15,7 @@ class Admin::OutcomesController < ApplicationController
     @outcome = Outcome.new(outcome_params)
     if @outcome.save
       @skill.outcomes << @outcome
-      redirect_to "/admin/categories/#{@skill.category.id}/skills/#{@skill.id}"
+      redirect_to [:admin, @category, @skill]
     else
       render :new
     end
@@ -26,7 +23,7 @@ class Admin::OutcomesController < ApplicationController
 
   def update
     if @outcome.update(outcome_params)
-      redirect_to "/admin/categories/#{@outcome.skill.category.id}/skills/#{@outcome.skill.id}"
+      redirect_to [:admin, @category, @skill]
     else
       render :edit
     end
@@ -34,7 +31,7 @@ class Admin::OutcomesController < ApplicationController
 
   def destroy
     @outcome.destroy
-    redirect_to "/admin/categories/#{@outcome.skill.category.id}/skills/#{@outcome.skill.id}"
+    redirect_to [:admin, @category, @skill]
   end
 
   def show
@@ -44,8 +41,14 @@ class Admin::OutcomesController < ApplicationController
   end
 
   private
+
+  def load_parents
+    @category = Category.find params[:category_id]
+    @skill = @category.skills.find params[:skill_id]
+  end
+
   def require_outcome
-    @outcome = Outcome.find params[:id]
+    @outcome = @skill.outcomes.find params[:id]
   end
 
   def outcome_params
