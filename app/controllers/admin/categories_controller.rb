@@ -1,8 +1,4 @@
 class Admin::CategoriesController < ApplicationController
-  add_breadcrumb 'categories', :admin_categories_path
-  # add_breadcrumb 'skills', :admin_category_skills_path
-  # add_breadcrumb 'outcomes', :admin_category_skill_outcomes_path
-  # add_breadcrumb 'activities', :admin_category_skill_outcome_activities_path
 
   before_action :require_category, only: [:show, :edit, :update, :destroy]
 
@@ -16,7 +12,7 @@ class Admin::CategoriesController < ApplicationController
   def create
     @category = Category.new(category_params)
     if @category.save
-      redirect_to action: "index"
+      redirect_to [:admin, :categories]
     else
       render :new
     end
@@ -24,7 +20,7 @@ class Admin::CategoriesController < ApplicationController
 
   def update
     if @category.update(category_params)
-      redirect_to action: "index"
+      redirect_to [:admin, :categories]
     else
       render :edit
     end
@@ -37,10 +33,11 @@ class Admin::CategoriesController < ApplicationController
 
   def destroy
     @category.destroy
-    redirect_to action: "index"
+    redirect_to [:admin, :categories]
   end
 
   private
+
   def require_category
     @category = Category.find params[:id]
   end
