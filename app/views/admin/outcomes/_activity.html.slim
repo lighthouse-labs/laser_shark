@@ -1,0 +1,9 @@
+tr
+  td = activity.name
+  td = activity.type
+  td = activity.day
+  td = activity.code_review_percent
+  td
+    = link_to 'Delete',
+              admin_category_skill_outcome_activity_path(@parent.skill.category, @parent.skill, @parent, activity),
+              method: 'delete'

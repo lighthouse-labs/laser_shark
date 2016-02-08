@@ -18,6 +18,9 @@ class Activity < ActiveRecord::Base
   has_many :recordings, -> { order(created_at: :desc) }
   has_many :feedbacks, as: :feedbackable
 
+  has_many :activities_outcomes, dependent: :destroy
+  has_many :outcomes, through: :activities_outcomes
+
   # Given the start_time and duration, return the end_time
   def end_time
     hours = start_time / 100

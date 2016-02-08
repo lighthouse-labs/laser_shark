@@ -1,0 +1,62 @@
+ul.breadcrumb
+  li = link_to 'categories',
+               [:admin, :categories],
+               method: :get
+  li = link_to @category.text,
+               [:admin, @category],
+               method: :get
+  li skills
+
+  li = link_to @skill.text,
+               [:admin, @category, @skill],
+               method: :get
+  li outcomes
+
+  li = link_to @outcome.text,
+               [:admin, @category, @skill, @outcome],
+               method: :get
+  li activities
+
+h1 = @parent.text
+hr
+
+.actions.well
+  .btn.btn-primary.btn-sm.create-outcome_activity-modal-button data-toggle="modal" data-target="#create-outcome_activity-modal"
+    | Add Activities
+
+table.table
+  thead
+    tr
+      th Content
+      th Type
+      th Day
+      th Code Review %
+
+  tbody
+    = render partial: 'activity', collection: @children
+
+.modal.fade#create-outcome_activity-modal
+  .modal-dialog
+    .modal-content.create-outcome_activity-modal
+      .modal-header
+        button.close type='button' data-dismiss='modal'
+          span aria-hidden='true'
+            | &times;
+          span.sr-only
+            | Close
+        h4.modal-title
+          |
+      = form_tag admin_category_skill_outcome_add_to_outcome_path(@parent.skill.category, @parent.skill, @parent), method: 'post', id: 'create-outcome_activity-modal-input' do
+        .modal-body
+          .form-group
+            .ui-widget
+              label for="search-bar-input"
+              = text_field_tag 'activity[id]', params[:query], id: 'search-bar-input-display', class: 'form-control ui-autocomplete-input', placeholder: 'Activity....'
+              = text_field_tag 'activity[id]', params[:query], id: 'search-bar-input-selection', class: 'form-control', type: "hidden"
+            .activities-autocomplete-selections.ui-autocomplete#menu
+        .modal-footer
+          button.btn.btn-default type='button' data-dismiss='modal'
+            | Cancel
+          = submit_tag 'Select Activity', class: 'btn btn-primary create-outcome_activity-button'
+
+javascript:
