@@ -1,3 +1,22 @@
+ul.breadcrumb
+  li = link_to 'categories',
+               [:admin, :categories],
+               method: :get
+  li = link_to @category.text,
+               [:admin, @category],
+               method: :get
+  li skills
+
+  li = link_to @skill.text,
+               [:admin, @category, @skill],
+               method: :get
+  li outcomes
+
+  li = link_to @outcome.text,
+               [:admin, @category, @skill, @outcome],
+               method: :get
+  li activities
+
 h1 = @parent.text
 hr
 
@@ -9,6 +28,9 @@ table.table
   thead
     tr
       th Content
+      th Type
+      th Day
+      th Code Review %
 
   tbody
     = render partial: 'activity', collection: @children
@@ -27,7 +49,7 @@ table.table
       = form_tag admin_category_skill_outcome_add_to_outcome_path(@parent.skill.category, @parent.skill, @parent), method: 'post', id: 'create-outcome_activity-modal-input' do
         .modal-body
           .form-group
-            = collection_select :activity, :ids, @activities, :id, :text, {}, multiple: true
+            = collection_select :activity, :ids, @activities, :id, :name, {}, multiple: true
         .modal-footer
           button.btn.btn-default type='button' data-dismiss='modal'
             | Cancel

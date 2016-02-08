@@ -1,3 +1,17 @@
+ul.breadcrumb
+  li = link_to 'categories',
+               [:admin, :categories],
+               method: :get
+  li = link_to @category.text,
+               [:admin, @category],
+               method: :get
+  li skills
+
+  li = link_to @skill.text,
+               [:admin, @category, @skill],
+               method: :get
+  li outcomes
+
 h1 = @parent.text
 hr
 
