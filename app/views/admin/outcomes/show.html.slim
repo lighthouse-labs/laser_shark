@@ -49,8 +49,14 @@ table.table
       = form_tag admin_category_skill_outcome_add_to_outcome_path(@parent.skill.category, @parent.skill, @parent), method: 'post', id: 'create-outcome_activity-modal-input' do
         .modal-body
           .form-group
-            = collection_select :activity, :ids, @activities, :id, :name, {}, multiple: true
+            .ui-widget
+              label for="search-bar-input"
+              = text_field_tag 'activity[id]', params[:query], id: 'search-bar-input-display', class: 'form-control ui-autocomplete-input', placeholder: 'Activity....'
+              = text_field_tag 'activity[id]', params[:query], id: 'search-bar-input-selection', class: 'form-control', type: "hidden"
+            .activities-autocomplete-selections.ui-autocomplete#menu
         .modal-footer
           button.btn.btn-default type='button' data-dismiss='modal'
             | Cancel
-          = submit_tag 'Select Activities', class: 'btn btn-primary create-outcome_activity-button'
+          = submit_tag 'Select Activity', class: 'btn btn-primary create-outcome_activity-button'
+
+javascript:

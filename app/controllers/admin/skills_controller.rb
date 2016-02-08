@@ -16,7 +16,7 @@ class Admin::SkillsController < ApplicationController
       @category.skills << @skill
       redirect_to [:admin, @category]
     else
-      render :nothing => true, :status => 400
+      render :edit
     end
   end
 
@@ -24,7 +24,7 @@ class Admin::SkillsController < ApplicationController
     if @skill.update(skill_params)
       redirect_to [:admin, @category]
     else
-      render :nothing => true, :status => 400
+      render :edit
     end
   end
 

@@ -4,8 +4,8 @@ class Admin::ActivitiesController < ApplicationController
   before_action :require_activity, only: [:edit, :update, :destroy]
 
   def add_to_outcome
-    @activities = Activity.find(activity_params[:ids])
-    @outcome.activities += @activities
+    @activity = Activity.find(activity_params[:id])
+    @outcome.activities << @activity
     redirect_to [:admin, @category, @skill, @outcome]
   end
 
@@ -27,10 +27,10 @@ class Admin::ActivitiesController < ApplicationController
   end
 
   def activity_params
-    {ids: filtered_params[:ids].tap {|e| e.delete ""}} # on account of a bug with collection_select, '' is always included
+    filtered_params #{ids: filtered_params[:ids].tap {|e| e.delete ""}} # on account of a bug with collection_select, '' is always included
   end
 
   def filtered_params
-    params.require(:activity).permit(:ids => [])
+    params.require(:activity).permit(:id)
   end
 end

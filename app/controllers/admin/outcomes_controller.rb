@@ -1,7 +1,7 @@
 class Admin::OutcomesController < ApplicationController
 
   before_action :load_parents
-  before_action :require_outcome, only: [:show, :edit, :update, :destroy]
+  before_action :require_outcome, only: [:show, :edit, :update, :destroy, :autocomplete]
 
   def index
     @outcomes = Outcome.all
@@ -17,7 +17,7 @@ class Admin::OutcomesController < ApplicationController
       @skill.outcomes << @outcome
       redirect_to [:admin, @category, @skill]
     else
-      render :new
+      render :edit
     end
   end
 
@@ -37,7 +37,28 @@ class Admin::OutcomesController < ApplicationController
   def show
     @parent = @outcome
     @children = @outcome.activities
-    @activities = Activity.all - @children
+    @activities = (Activity.all - @outcome.activities).map do |activity|
+      activity.name
+    end.to_json
+  end
+
+  def autocomplete
+    activities = (Activity.all - @outcome.activities).map do |activity|
+      {
+        id: activity.id,
+        name: activity.name,
+        value: (activity.name + ' ' + activity.day rescue activity.name),
+        type: activity.type,
+        day: activity.day,
+      }
+    end
+
+    respond_to do |format|
+      format.html
+      format.json {
+        render json: activities #.map {|e| e[:name] }.sort
+      }
+    end
   end
 
   private
@@ -48,7 +69,7 @@ class Admin::OutcomesController < ApplicationController
   end
 
   def require_outcome
-    @outcome = @skill.outcomes.find params[:id]
+    @outcome = @skill.outcomes.find params[:id] || params[:outcome_id]
   end
 
   def outcome_params

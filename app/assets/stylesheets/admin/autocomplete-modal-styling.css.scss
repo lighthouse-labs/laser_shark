@@ -1,0 +1,38 @@
+.activities-autocomplete-selections .ui-widget-content {
+  background: #fff;
+  font-size: .9em;
+  padding: .5em 0;
+  border-color: #ddd;
+  box-shadow: 0 .1em .2em rgba(187, 187, 187, 0.64);
+  line-height: 1.2;
+  max-height: 20em;
+  overflow: hidden;
+  overflow-y: auto;
+}
+
+.activities-autocomplete-selections  .ui-menu-item {
+  font-family: 'Helvetica Neue', Helvetica, sans-serif;
+  border: 0;
+  padding-bottom: 1em;
+  border-left: 5px solid transparent;
+}
+
+.activities-autocomplete-selections .ui-state-focus {
+  background: #fff;
+  border-left-color: #08c;
+  font-weight: 300;
+}
+
+.activities-autocomplete-selections .ui-menu-item .activity-display {
+  display: block;
+  font-size: .8em;
+  color: #aaa;
+  margin-top: .6em;
+  letter-spacing: 1px;
+}
+
+.activities-autocomplete-selections .ui-state-focus .activity-display {
+  color: #08c;
+}
+
+.ui-autocomplete { z-index:3; }

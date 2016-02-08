@@ -14,7 +14,7 @@ class Admin::CategoriesController < ApplicationController
     if @category.save
       redirect_to [:admin, :categories]
     else
-      render :new
+      render :edit
     end
   end
 
