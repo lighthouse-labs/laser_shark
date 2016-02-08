@@ -1,0 +1,11 @@
+tr
+  td = link_to skill.text,
+               admin_category_skill_path(skill.category, skill),
+               method: :get
+  td
+    = link_to 'Edit', edit_admin_category_skill_path(skill.category, skill)
+  td
+    = link_to 'Delete',
+              admin_category_skill_path(skill.category, skill),
+              data: { confirm: "This delete will cascade all the way through it's children. \nAre you sure you want to delete?" },
+              method: 'delete'

@@ -1,0 +1,43 @@
+ul.breadcrumb
+  li = link_to 'categories',
+               [:admin, :categories],
+               method: :get
+  li = link_to @category.text,
+               [:admin, @category],
+               method: :get
+  li skills
+
+h1 = @parent.text
+hr
+
+.actions.well
+  .btn.btn-primary.btn-sm.create-category-skill-modal-button data-toggle="modal" data-target="#create-category-skill-modal"
+    | New Skill
+
+table.table
+  thead
+    tr
+      th Content
+
+  tbody
+    = render @children
+
+.modal.fade#create-category-skill-modal
+  .modal-dialog
+    .modal-content.create-category-skill-modal
+      .modal-header
+        button.close type='button' data-dismiss='modal'
+          span aria-hidden='true'
+            | &times;
+          span.sr-only
+            | Close
+        h4.modal-title
+          |
+      = form_tag admin_category_skills_path(@parent), method: 'post', id: 'create-category-skill-modal-input' do
+        .modal-body
+          .form-group
+            = text_area_tag("skill[text]", nil, placeholder: 'enter new skill', required: true, class: 'form-control')
+        .modal-footer
+          button.btn.btn-default type='button' data-dismiss='modal'
+            | Cancel
+          = submit_tag 'New Skill', class: 'btn btn-primary create-category-skill-button'

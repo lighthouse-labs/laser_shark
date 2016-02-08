@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151126203655) do
+ActiveRecord::Schema.define(version: 20160202163904) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -33,6 +33,13 @@ ActiveRecord::Schema.define(version: 20151126203655) do
     t.string   "revisions_gistid",    limit: 255
     t.integer  "code_review_percent",             default: 60
     t.boolean  "allow_feedback",                  default: true
+  end
+
+  create_table "activities_outcomes", force: :cascade do |t|
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.integer  "outcome_id"
+    t.integer  "activity_id"
   end
 
   create_table "activity_messages", force: :cascade do |t|
@@ -91,6 +98,18 @@ ActiveRecord::Schema.define(version: 20151126203655) do
     t.datetime "updated_at"
     t.integer  "assistee_id"
     t.integer  "rating"
+    t.text     "student_notes"
+  end
+
+  create_table "categories", force: :cascade do |t|
+    t.string   "text"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "code_reviews", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "cohorts", force: :cascade do |t|
@@ -106,18 +125,6 @@ ActiveRecord::Schema.define(version: 20151126203655) do
 
   add_index "cohorts", ["program_id"], name: "index_cohorts_on_program_id", using: :btree
 
-  create_table "comments", force: :cascade do |t|
-    t.text     "content"
-    t.integer  "commentable_id"
-    t.string   "commentable_type", limit: 255
-    t.integer  "user_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "comments", ["commentable_id", "commentable_type"], name: "index_comments_on_commentable_id_and_commentable_type", using: :btree
-  add_index "comments", ["user_id"], name: "index_comments_on_user_id", using: :btree
-
   create_table "day_feedbacks", force: :cascade do |t|
     t.string   "mood",                limit: 255
     t.string   "title",               limit: 255
@@ -132,7 +139,7 @@ ActiveRecord::Schema.define(version: 20151126203655) do
   end
 
   create_table "day_infos", force: :cascade do |t|
-    t.string   "day",         limit: 255
+    t.string   "day"
     t.text     "description"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -145,19 +152,36 @@ ActiveRecord::Schema.define(version: 20151126203655) do
     t.integer  "style_rating"
     t.text     "notes"
     t.integer  "feedbackable_id"
-    t.string   "feedbackable_type", limit: 255
+    t.string   "feedbackable_type"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.float    "rating"
   end
 
+  create_table "learning_objectives", force: :cascade do |t|
+    t.string   "category"
+    t.string   "title"
+    t.string   "description"
+    t.string   "keywords"
+    t.string   "priority"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
   create_table "locations", force: :cascade do |t|
-    t.string   "name",             limit: 255
+    t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "calendar",         limit: 255
-    t.string   "timezone",         limit: 255
-    t.boolean  "has_code_reviews",             default: true
+    t.string   "calendar"
+    t.string   "timezone"
+    t.boolean  "has_code_reviews", default: true
+  end
+
+  create_table "outcomes", force: :cascade do |t|
+    t.string   "text"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer  "skill_id"
   end
 
   create_table "programs", force: :cascade do |t|
@@ -167,7 +191,7 @@ ActiveRecord::Schema.define(version: 20151126203655) do
     t.datetime "updated_at"
     t.string   "recordings_folder", limit: 255
     t.string   "recordings_bucket", limit: 255
-    t.string   "tag",               limit: 255
+    t.string   "tag"
   end
 
   create_table "recordings", force: :cascade do |t|
@@ -182,6 +206,15 @@ ActiveRecord::Schema.define(version: 20151126203655) do
     t.string   "title",          limit: 255
     t.string   "presenter_name", limit: 255
   end
+
+  create_table "skills", force: :cascade do |t|
+    t.string   "text"
+    t.integer  "category_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  add_index "skills", ["category_id"], name: "index_skills_on_category_id", using: :btree
 
   create_table "streams", force: :cascade do |t|
     t.string   "title",       limit: 255
@@ -215,15 +248,18 @@ ActiveRecord::Schema.define(version: 20151126203655) do
     t.datetime "updated_at"
     t.integer  "code_review_percent",                default: 80
     t.boolean  "admin",                              default: false, null: false
-    t.string   "company_name",           limit: 255
-    t.string   "company_url",            limit: 255
+    t.string   "company_name"
+    t.string   "company_url"
     t.text     "bio"
-    t.string   "quirky_fact",            limit: 255
-    t.string   "specialties",            limit: 255
+    t.string   "quirky_fact"
+    t.string   "specialties"
     t.integer  "location_id"
     t.boolean  "on_duty",                            default: false
+    t.integer  "mentor_id"
+    t.boolean  "is_mentor",                          default: false
   end
 
   add_index "users", ["cohort_id"], name: "index_users_on_cohort_id", using: :btree
 
+  add_foreign_key "skills", "categories"
 end
