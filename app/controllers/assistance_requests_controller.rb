@@ -6,12 +6,19 @@ class AssistanceRequestsController < ApplicationController
   def index
     @all_locations = Location.where("id IN (?)", Cohort.all.map(&:location_id).uniq).map{|l| LocationSerializer.new(l, root: false).as_json}
 
-    render component: "RequestQueue", 
+    render component: "RequestQueue",
       props: {
         locations: @all_locations,
         user: UserSerializer.new(current_user).as_json
-      }, 
+      },
       layout: "assistance"
+  end
+
+  def create
+    ar = AssistanceRequest.new(:requestor => current_user, reason: assistance_request_params[:reason])
+    ar.save
+
+    Pusher.trigger('UserChannel', 'AssistanceRequested', object: current_user.position_in_queue  )
   end
 
   def queue
@@ -47,7 +54,7 @@ class AssistanceRequestsController < ApplicationController
       format.all { redirect_to(assistance_requests_path) }
     end
   end
-  
+
   def destroy
     ar = AssistanceRequest.find params[:id]
     status = ar.try(:cancel) ? 200 : 409
@@ -59,6 +66,9 @@ class AssistanceRequestsController < ApplicationController
   end
 
   private
+  def assistance_request_params
+    params.permit(:reason)
+  end
 
   def selected_cohort_locations
     locations_cookie = cookies[:cohort_locations]

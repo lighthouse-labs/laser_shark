@@ -12,7 +12,7 @@ class window.UserChannelHandler
         presenter.render()
 
   userConnected: ->
-    window.current_user = @object
+    # window.current_user = @object
 
     # Connect to the teachers socket when we know the user has connected
     window.connectToTeachersSocket()

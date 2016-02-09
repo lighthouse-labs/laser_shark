@@ -1,9 +1,16 @@
 $ ->
 
   $('.request-assistance-button').click (e) ->
-    e.preventDefault()
+    # e.preventDefault()
     reason = $(@).closest('form').find('textarea').val()
-    window.App.userChannel.requestAssistance(reason)
+    $.ajax
+      url: '/assistance_requests'
+      dataType: 'json'
+      type: 'post'
+      data: reason: reason
+      success: (data) ->
+        console.log(data, 'hello world')
+    # window.App.userChannel.requestAssistance(reason)
 
   $('.cancel-request-assistance-button').click (e) ->
     e.preventDefault()
@@ -27,14 +34,14 @@ $ ->
     $('.on-duty-link').removeClass('hidden')
 
   $('.sign-out-link').click (e) ->
-    window.App.teacherChannel.offDuty()    
+    window.App.teacherChannel.offDuty()
 
   $('#search-activities-button').click (e) ->
     $('#search-form').slideToggle(250, 'swing', focusOnSearchField)
 
   focusOnSearchField = ->
     inputField = $('#search-form').find('.search-input-field').find('input')
-    if !(inputField.is(':hidden')) 
+    if !(inputField.is(':hidden'))
       inputField.focus()
 
   if window.location.pathname == '/search_activities'
