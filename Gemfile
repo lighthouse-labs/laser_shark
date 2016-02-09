@@ -28,6 +28,7 @@ gem 'font-awesome-rails'
 gem 'compass-rails'
 
 gem 'actioncable', github: "rails/actioncable"
+gem 'pusher'
 
 gem 'email_validator'
 

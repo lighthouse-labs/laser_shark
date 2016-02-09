@@ -8,6 +8,8 @@ html
     == stylesheet_link_tag 'application', :media => 'all'
     link href="//vjs.zencdn.net/4.11/video-js.css" rel="stylesheet"
     script src="//vjs.zencdn.net/4.11/video.js"
+    script src="//js.pusher.com/3.0/pusher.min.js"
+    debugger
     == javascript_include_tag 'application'
     == csrf_meta_tags
     == favicon_link_tag 'compass_favicon.ico'
@@ -34,3 +36,6 @@ html
           == yield
 
     == yield :end_of_body
+
+javascript:
+  window.current_user = #{raw current_user.to_json}

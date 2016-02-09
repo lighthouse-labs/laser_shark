@@ -7,9 +7,9 @@ class window.TeacherChannelHandler
     switch @type
       when "UserConnected"
         @userConnected()
-      when "TeacherOnDuty" 
+      when "TeacherOnDuty"
         @teacherOnDuty()
-      when "TeacherOffDuty" 
+      when "TeacherOffDuty"
         @teacherOffDuty()
       when "TeacherBusy"
         @teacherBusy()
@@ -37,7 +37,7 @@ class window.TeacherChannelHandler
 
   teacherInLocation: (teacher) ->
     if current_user
-      if current_user.type is 'Teacher' 
+      if current_user.type is 'Teacher'
         return current_user.location.id is teacher.location.id
       else
         if current_user.cohort
@@ -64,4 +64,3 @@ class window.TeacherChannelHandler
   removeTeacherFromSidebar: (teacher) ->
     $('.teacher-holder').find('#teacher_' + teacher.id).remove()
 
-  
