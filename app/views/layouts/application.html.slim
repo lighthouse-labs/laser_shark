@@ -39,3 +39,4 @@ html
 
 javascript:
   window.current_user = #{raw current_user.to_json}
+  window.pusher = new Pusher("#{raw ENV['PUSHER_KEY']}")
