@@ -147,54 +147,6 @@ var RequestQueue = React.createClass({
         $('.reconnect-holder').hide();
       }
     });
-
-    // App.assistance = App.cable.subscriptions.create({ channel: "AssistanceChannel", location: this.state.location.name }, {
-    //   rejected: function() {
-    //   },
-    //   startAssisting: function(request) {
-    //   },
-    //   endAssistance: function(assistance, notes, rating) {
-    //   },
-    //   providedAssistance: function(student, notes, rating) {
-    //   },
-    //   cancelAssistanceRequest: function(request) {
-    //   },
-    //   stopAssisting: function(assistance) {
-    //   },
-    //   received: function(data) {
-    //     switch(data.type) {
-    //       case "AssistanceRequest":
-    //         that.handleAssistanceRequest(data.object);
-    //         break;
-    //       case "CodeReviewRequest":
-    //         that.handleCodeReviewRequest(data.object);
-    //         break;
-    //       case "CancelAssistanceRequest":
-    //         that.removeFromQueue(data.object)
-    //         break;
-    //       case "AssistanceStarted":
-    //         that.handleAssistanceStarted(data.object);
-    //         break;
-    //       case "AssistanceEnded":
-    //         that.removeFromQueue(data.object.assistance_request)
-    //         break;
-    //       case "StoppedAssisting":
-    //         that.removeFromQueue(data.object.assistance_request);
-
-    //         var assistanceRequest = data.object.assistance_request;
-    //         if(assistanceRequest.activity_submission)
-    //           that.handleCodeReviewRequest(assistanceRequest);
-    //         else
-    //           that.handleAssistanceRequest(assistanceRequest);
-
-    //         break;
-    //     }
-    //   },
-    //   disconnected: function() {
-    //   },
-    //   connected: function() {
-    //   }
-    // });
   },
 
   handleAssistanceRequest: function(assistanceRequest) {

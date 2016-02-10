@@ -3,15 +3,10 @@ namespace :teachers do
   task on_duty_reset: :environment do
     Teacher.where(on_duty: true).each do |teacher|
       teacher.update(on_duty: false)
-      # Not tested.
-      Pusher.trigger "teachers", 'received', {
+      Pusher.trigger "TeacherChannel", 'received', {
         type: "TeacherOffDuty",
         object: UserSerializer.new(teacher).as_json
       }
-      # ActionCable.server.broadcast "teachers", {
-      #   type: "TeacherOffDuty",
-      #   object: UserSerializer.new(teacher).as_json
-      # }
     end
   end
 end
