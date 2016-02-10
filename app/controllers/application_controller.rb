@@ -16,18 +16,20 @@ class ApplicationController < ActionController::Base
 
   def teacher_available(teacher)
     if teacher.teaching_assistances.currently_active.empty?
-      ActionCable.server.broadcast "teachers", {
-        type: "TeacherAvailable",
-        object: UserSerializer.new(teacher).as_json
-      }
+      Pusher.trigger 'TeacherChannel',
+                     'received', {
+                        type: "TeacherAvailable",
+                        object: UserSerializer.new(teacher).as_json
+                      }
     end
   end
 
   def teacher_busy(teacher)
-    ActionCable.server.broadcast "teachers", {
-      type: "TeacherBusy",
-      object: UserSerializer.new(teacher).as_json
-    }
+    Pusher.trigger 'TeacherChannel',
+                   'received', {
+                     type: "TeacherBusy",
+                     object: UserSerializer.new(teacher).as_json
+                   }
   end
 
   def authenticate_user
