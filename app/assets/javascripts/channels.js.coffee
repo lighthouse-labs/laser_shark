@@ -1,28 +1,11 @@
 window.App = {};
 
-# This is a hack because the asset pipeline doesn't respect the ENV['HOST'] when doing a precompile for production
-host = window.location.hostname;
-if window.location.port isnt ""
-  host += ":#{window.location.port}"
-
-App.cable = Cable.createConsumer('ws://' + host + '/websocket');
-
 window.connectToTeachersSocket = ->
   App.teacherChannel = pusher.subscribe('TeacherChannel')
   App.teacherChannel.bind('received', (data) ->
     h = new TeacherChannelHandler data
     h.processResponse()
   )
-
-  # App.teacherChannel = App.cable.subscriptions.create("TeacherChannel",
-  #   onDuty: ->
-  #     @perform 'on_duty'
-
-  #   offDuty: ->
-  #     @perform 'off_duty'
-
-  #   received: (data) ->
-  # )
 
 $ ->
   App.userChannel = pusher.subscribe('UserChannel' + window.current_user.id)
@@ -54,16 +37,3 @@ $ ->
     url: '/assistance_requests/subscribed'
     dataType: 'json'
     type: 'put'
-
-  # App.userChannel = App.cable.subscriptions.create("UserChannel",
-
-  #   connected: ->
-
-  #   requestAssistance: (reason) ->
-
-  #   cancelAssistanceRequest: ->
-
-  #   received: (data) ->
-
-  #   disconnected: ->
-  # )
