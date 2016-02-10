@@ -9,6 +9,9 @@ html
     == javascript_include_tag 'application', 'data-turbolinks-track' => true
     == csrf_meta_tags
     == favicon_link_tag 'compass_favicon.ico'
+
+    script src="//js.pusher.com/3.0/pusher.min.js"
+
     == yield :head
   body
     header
@@ -20,3 +23,7 @@ html
       == yield
 
     == yield :end_of_body
+
+javascript:
+  window.current_user = #{raw current_user.to_json}
+  window.pusher = new Pusher("#{raw ENV['PUSHER_KEY']}")

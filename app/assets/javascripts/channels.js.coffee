@@ -8,17 +8,23 @@ if window.location.port isnt ""
 App.cable = Cable.createConsumer('ws://' + host + '/websocket');
 
 window.connectToTeachersSocket = ->
-  App.teacherChannel = App.cable.subscriptions.create("TeacherChannel",
-    onDuty: ->
-      @perform 'on_duty'
-
-    offDuty: ->
-      @perform 'off_duty'
-
-    received: (data) ->
-      handler = new TeacherChannelHandler data
-      handler.processResponse()
+  console.log('***************window.connectToTeachersSocket = ->')
+  App.teacherChannel = pusher.subscribe('TeacherChannel')
+  App.teacherChannel.bind('received', (data) ->
+    debugger
+    handler = new TeacherChannelHandler data
+    handler.processResponse()
   )
+
+  # App.teacherChannel = App.cable.subscriptions.create("TeacherChannel",
+  #   onDuty: ->
+  #     @perform 'on_duty'
+
+  #   offDuty: ->
+  #     @perform 'off_duty'
+
+  #   received: (data) ->
+  # )
 
 $ ->
   App.userChannel = pusher.subscribe('UserChannel' + window.current_user.id)
