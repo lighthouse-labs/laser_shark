@@ -44,7 +44,7 @@ class CurriculumDay
     return false unless @cohort
     return false if @cohort.start_date > Date.current
     if CURRICULUM_UNLOCKING == 'weekly'
-      self.date.cweek <= today.date.cweek
+      self.date.cweek <= today.date.cweek || self.date.year < today.date.year
     else # assume daily
       self.date <= today.date
     end
