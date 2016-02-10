@@ -26,18 +26,12 @@ $ ->
       dataType: 'json'
       type: 'put'
 
-    $('.on-duty-link').addClass('hidden')
-    $('.off-duty-link').removeClass('hidden')
-
   $('.off-duty-link').click (e) ->
     e.preventDefault()
     $.ajax
       url: '/off_duty'
       dataType: 'json'
       type: 'delete'
-
-    $('.off-duty-link').addClass('hidden')
-    $('.on-duty-link').removeClass('hidden')
 
   $('.sign-out-link').click (e) ->
     window.App.teacherChannel.offDuty()
