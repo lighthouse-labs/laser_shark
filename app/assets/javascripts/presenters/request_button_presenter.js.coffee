@@ -9,7 +9,7 @@ class window.RequestButtonPresenter
 
   render: ->
     switch @type
-      when "AssistanceRequested" then @assistanceRequested(@object) 
+      when "AssistanceRequested" then @assistanceRequested(@object)
       when "AssistanceStarted" then @assistanceStarted(@object)
       when "AssistanceEnded" then @assistanceEnded()
       when "QueueUpdate" then @updateQueuePosition(@object)
@@ -26,7 +26,7 @@ class window.RequestButtonPresenter
 
   assistanceRequested: (position) ->
     @ar_create.addClass('hidden')
-    @ar_cancel.removeClass('hidden') 
+    @ar_cancel.removeClass('hidden')
     @ar_cancel_button.text('No. ' + position + ' in Request Queue')
     @ar_cancel_button.tooltip()
 

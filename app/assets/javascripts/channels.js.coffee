@@ -21,23 +21,19 @@ window.connectToTeachersSocket = ->
   )
 
 $ ->
-  App.userChannel = pusher.subscribe('UserChannel') #+ window.current_user.id)
+  App.userChannel = pusher.subscribe('UserChannel' + window.current_user.id)
   App.userChannel.bind('connected', ->
     if $('.reconnect-holder').is(':visible')
        $('.reconnect-holder').hide()
   )
 
-  # App.userChannel.bind('requestAssistance', (reason) ->
-  #   debugger
-  #   @perform 'request_assistance', reason: reason
-  # )
-
-  # App.userChannel.bind('cancelAssistanceRequest', ->
-  #   @perform 'cancel_assistance'
-  # )
-
   App.userChannel.bind('AssistanceRequested', (data) ->
     handler = new UserChannelHandler { type: 'AssistanceRequested', object: data.object}
+    handler.processResponse()
+  )
+
+  App.userChannel.bind('AssistanceEnded', ->
+    handler = new UserChannelHandler { type: 'AssistanceEnded' }
     handler.processResponse()
   )
 

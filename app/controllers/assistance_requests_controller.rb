@@ -18,7 +18,19 @@ class AssistanceRequestsController < ApplicationController
     ar = AssistanceRequest.new(:requestor => current_user, reason: assistance_request_params[:reason])
     ar.save
 
-    Pusher.trigger('UserChannel', 'AssistanceRequested', object: current_user.position_in_queue  )
+    Pusher.trigger("UserChannel#{current_user.id}",
+                   'AssistanceRequested',
+                   object: current_user.position_in_queue  )
+  end
+
+  def cancel
+    ar = current_user.assistance_requests.where(type: nil).open_or_in_progress_requests.newest_requests_first.first
+    if ar && ar.cancel
+      Pusher.trigger("UserChannel#{current_user.id}", 'AssistanceEnded', {})
+
+      teacher_available(ar.assistance.assistor) if ar.assistance
+      update_students_in_queue(ar.requestor.cohort.location.name)
+    end
   end
 
   def queue

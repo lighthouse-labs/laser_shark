@@ -1,23 +1,23 @@
 $ ->
 
   $('.request-assistance-button').click (e) ->
-    # e.preventDefault()
+    e.preventDefault()
     reason = $(@).closest('form').find('textarea').val()
     $.ajax
       url: '/assistance_requests'
       dataType: 'json'
       type: 'post'
       data: reason: reason
-      success: (data) ->
-        console.log(data, 'hello world')
-    # window.App.userChannel.requestAssistance(reason)
 
   $('.cancel-request-assistance-button').click (e) ->
     e.preventDefault()
     e.stopPropagation()
 
     if confirm("Are you sure you want to withdraw this assistance request?")
-      window.App.userChannel.cancelAssistanceRequest()
+      $.ajax
+        url: '/assistance_requests/cancel'
+        dataType: 'json'
+        type: 'delete'
 
   $('.on-duty-link').click (e) ->
     e.preventDefault()
