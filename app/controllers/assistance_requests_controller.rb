@@ -20,27 +20,38 @@ class AssistanceRequestsController < ApplicationController
   end
 
   def create
-    ar = AssistanceRequest.new(:requestor => current_user, reason: assistance_request_params[:reason])
+    ar = AssistanceRequest.new(requestor: current_user,
+                               reason: assistance_request_params[:reason])
     ar.save
 
-    # Pusher.trigger("assistance-#{ar.requestor.cohort.location.name}", {
-    #   type: "AssistanceStarted",
-    #   object: AssistanceSerializer.new(ar.reload.assistance, root: false).as_json
-    # }
+    Pusher.trigger("assistance-#{current_user.cohort.location.name}",
+                   'received', {
+                    type: "AssistanceRequest",
+                    object: AssistanceRequestSerializer.new(ar, root: false).as_json
+                  })
 
     Pusher.trigger("UserChannel#{current_user.id}",
                    'AssistanceRequested',
                    object: current_user.position_in_queue  )
+    head :ok, content_type: "text/html"
   end
 
   def cancel
     ar = current_user.assistance_requests.where(type: nil).open_or_in_progress_requests.newest_requests_first.first
     if ar && ar.cancel
+
+      Pusher.trigger("assistance-#{current_user.cohort.location.name}",
+                     'received', {
+                      type: "CancelAssistanceRequest",
+                      object: AssistanceRequestSerializer.new(ar, root: false).as_json
+                    })
+
       Pusher.trigger("UserChannel#{current_user.id}", 'AssistanceEnded', {})
 
       teacher_available(ar.assistance.assistor) if ar.assistance
       update_students_in_queue(ar.requestor.cohort.location.name)
     end
+    head :ok, content_type: "text/html"
   end
 
   def queue

@@ -52,7 +52,7 @@ var RequestQueue = React.createClass({
 
     }
   },
-  
+
   loadQueue: function() {
     $.getJSON("/assistance_requests/queue?location=" + this.state.location.name, this.requestSuccess);
     this.subscribeToSocket();
@@ -67,68 +67,134 @@ var RequestQueue = React.createClass({
     });
   },
 
+  perform: function(action, data) {
+    var url = '/assistances/' + action;
+    $.ajax({
+      url: url,
+      dataType: 'json',
+      data: data,
+      type: 'put'
+    });
+  },
+
   subscribeToSocket: function() {
     var that = this;
     if(App.assistance)
       App.assistance.unsubscribe();
 
-    App.assistance = App.cable.subscriptions.create({ channel: "AssistanceChannel", location: this.state.location.name }, {
-      rejected: function() {
-        window.location.reload()
-      },
-      startAssisting: function(request) {
-        this.perform('start_assisting', {request_id: request.id})
-      },
-      endAssistance: function(assistance, notes, rating) {
-        this.perform('end_assistance', {assistance_id: assistance.id, notes: notes, rating: rating})
-      },
-      providedAssistance: function(student, notes, rating) {
-        this.perform('provided_assistance', {student_id: student.id, notes: notes, rating: rating})
-      },
-      cancelAssistanceRequest: function(request) {
-        this.perform('cancel_assistance_request', {request_id: request.id})
-      },
-      stopAssisting: function(assistance) {
-        this.perform('stop_assisting', {assistance_id: assistance.id})
-      },
-      received: function(data) {
-        switch(data.type) {
-          case "AssistanceRequest":
-            that.handleAssistanceRequest(data.object);
-            break;
-          case "CodeReviewRequest":
-            that.handleCodeReviewRequest(data.object);
-            break;
-          case "CancelAssistanceRequest":
-            that.removeFromQueue(data.object)
-            break;
-          case "AssistanceStarted":
-            that.handleAssistanceStarted(data.object);
-            break;
-          case "AssistanceEnded":
-            that.removeFromQueue(data.object.assistance_request)
-            break;
-          case "StoppedAssisting":
-            that.removeFromQueue(data.object.assistance_request);
+    App.assistance = pusher.subscribe('assistance-' + this.state.location.name);
 
-            var assistanceRequest = data.object.assistance_request;
-            if(assistanceRequest.activity_submission)
-              that.handleCodeReviewRequest(assistanceRequest);
-            else
-              that.handleAssistanceRequest(assistanceRequest);
+    App.assistance.bind('rejected', function() {
+      window.location.reload();
+    });
 
-            break;
-        }
-      },
-      disconnected: function() {
-        $('.reconnect-holder').delay(500).show(0)
-      },
-      connected: function() {
-        if ($('.reconnect-holder').is(':visible')) {
-          $('.reconnect-holder').hide()
-        }
+    App.assistance.startAssisting = function(request){
+      that.perform('start_assisting', {request_id: request.id})
+    };
+
+    App.assistance.endAssistance = function(assistance, notes, rating){
+      that.perform('end_assistance', {assistance_id: assistance.id, notes: notes, rating: rating})
+    };
+
+    App.assistance.providedAssistance = function(student, notes, rating){
+      that.perform('provided_assistance', {student_id: student.id, notes: notes, rating: rating})
+    };
+
+    App.assistance.cancelAssistanceRequest = function(request){
+      that.perform('cancel_assistance_request', {request_id: request.id})
+    };
+
+    App.assistance.stopAssisting = function(assistance) {
+      that.perform('stop_assisting', {assistance_id: assistance.id})
+    };
+
+    App.assistance.bind('received', function(data) {
+      switch(data.type) {
+        case "AssistanceRequest":
+          that.handleAssistanceRequest(data.object);
+          break;
+        case "CodeReviewRequest":
+          that.handleCodeReviewRequest(data.object);
+          break;
+        case "CancelAssistanceRequest":
+          that.removeFromQueue(data.object)
+          break;
+        case "AssistanceStarted":
+          that.handleAssistanceStarted(data.object);
+          break;
+        case "AssistanceEnded":
+          that.removeFromQueue(data.object.assistance_request)
+          break;
+        case "StoppedAssisting":
+          that.removeFromQueue(data.object.assistance_request);
+
+          var assistanceRequest = data.object.assistance_request;
+          if(assistanceRequest.activity_submission)
+            that.handleCodeReviewRequest(assistanceRequest);
+          else
+            that.handleAssistanceRequest(assistanceRequest);
+
+          break;
       }
     });
+
+    App.assistance.bind('disconnected', function() {
+      $('.reconnect-holder').delay(500).show(0);
+    })
+
+    App.assistance.bind('connected', function() {
+      if ($('.reconnect-holder').is(':visible')) {
+        $('.reconnect-holder').hide();
+      }
+    });
+
+    // App.assistance = App.cable.subscriptions.create({ channel: "AssistanceChannel", location: this.state.location.name }, {
+    //   rejected: function() {
+    //   },
+    //   startAssisting: function(request) {
+    //   },
+    //   endAssistance: function(assistance, notes, rating) {
+    //   },
+    //   providedAssistance: function(student, notes, rating) {
+    //   },
+    //   cancelAssistanceRequest: function(request) {
+    //   },
+    //   stopAssisting: function(assistance) {
+    //   },
+    //   received: function(data) {
+    //     switch(data.type) {
+    //       case "AssistanceRequest":
+    //         that.handleAssistanceRequest(data.object);
+    //         break;
+    //       case "CodeReviewRequest":
+    //         that.handleCodeReviewRequest(data.object);
+    //         break;
+    //       case "CancelAssistanceRequest":
+    //         that.removeFromQueue(data.object)
+    //         break;
+    //       case "AssistanceStarted":
+    //         that.handleAssistanceStarted(data.object);
+    //         break;
+    //       case "AssistanceEnded":
+    //         that.removeFromQueue(data.object.assistance_request)
+    //         break;
+    //       case "StoppedAssisting":
+    //         that.removeFromQueue(data.object.assistance_request);
+
+    //         var assistanceRequest = data.object.assistance_request;
+    //         if(assistanceRequest.activity_submission)
+    //           that.handleCodeReviewRequest(assistanceRequest);
+    //         else
+    //           that.handleAssistanceRequest(assistanceRequest);
+
+    //         break;
+    //     }
+    //   },
+    //   disconnected: function() {
+    //   },
+    //   connected: function() {
+    //   }
+    // });
   },
 
   handleAssistanceRequest: function(assistanceRequest) {
@@ -154,7 +220,7 @@ var RequestQueue = React.createClass({
         }
       );
     }
-  }, 
+  },
 
   handleCodeReviewRequest: function(codeReviewRequest) {
     var codeReviews = this.state.codeReviews;
@@ -224,7 +290,7 @@ var RequestQueue = React.createClass({
 
   getRequestIndex: function(assistanceRequest) {
     var requests = this.state.requests;
-    var ids = requests.map(function(r){ 
+    var ids = requests.map(function(r){
       return r.id;
     });
 
@@ -244,13 +310,13 @@ var RequestQueue = React.createClass({
       return (
         <div id="cohort-locations">
           Cohort locations:
-          { 
+          {
             this.props.locations.map(function(location) {
               return (
                 <label key={location.id}>
-                  <input 
-                    type="radio" 
-                    value={location.name} 
+                  <input
+                    type="radio"
+                    value={location.name}
                     checked={that.state.location.id == location.id}
                     onChange={that.locationChanged} />
                     { location.name }

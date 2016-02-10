@@ -24,12 +24,14 @@ class window.TeacherChannelHandler
   teacherOnDuty: ->
     if @teacherInLocation(@object)
       @addTeacherToSidebar(@object)
-      @handleBtnOnOffDuty()
+      $('.on-duty-link').toggleClass('hidden')
+      $('.off-duty-link').toggleClass('hidden')
 
   teacherOffDuty: ->
     if @teacherInLocation(@object)
       @removeTeacherFromSidebar(@object)
-      @handleBtnOnOffDuty()
+      $('.off-duty-link').toggleClass('hidden')
+      $('.on-duty-link').toggleClass('hidden')
 
   teacherBusy: ->
     $('.teacher-holder').find('#teacher_' + @object.id).addClass('busy')
@@ -66,6 +68,3 @@ class window.TeacherChannelHandler
   removeTeacherFromSidebar: (teacher) ->
     $('.teacher-holder').find('#teacher_' + teacher.id).remove()
 
-  handleBtnOnOffDuty: ->
-    $('.off-duty-link').toggleClass('hidden')
-    $('.on-duty-link').toggleClass('hidden')

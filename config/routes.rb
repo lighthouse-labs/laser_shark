@@ -44,6 +44,13 @@ LaserShark::Application.routes.draw do
   resources :search_activities, only: [:index]
 
   resources :assistances, only: [:destroy] do
+    collection do
+      put '/start_assisting' => 'assistances#start_assisting'
+      put '/end_assistance' => 'assistances#end_assistance'
+      put '/cancel_assistance_request' => 'assistances#cancel_assistance_request'
+      put '/stop_assisting' => 'assistances#stop_assisting'
+      put '/provided_assistance' => 'assistances#provided_assistance'
+    end
     member do
       post :end
     end

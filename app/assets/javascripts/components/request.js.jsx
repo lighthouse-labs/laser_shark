@@ -17,7 +17,7 @@ var Request = React.createClass({
       App.assistance.cancelAssistanceRequest(this.props.request);
     }
   },
-  
+
   render: function() {
     var request = this.props.request;
     var student = request.requestor;
@@ -25,7 +25,7 @@ var Request = React.createClass({
     return (
       <RequestItem student={student} location={this.props.location}>
         <p className="assistance-timestamp">
-          Requested assistance: 
+          Requested assistance:
           <abbr className="timeago" title="{request.start_at}">
             <TimeAgo date={request.start_at} />
           </abbr>
