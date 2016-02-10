@@ -3,6 +3,11 @@ class AssistanceRequestsController < ApplicationController
   #before_action :selected_cohort_locations, only: [:index, :queue]
   before_filter :teacher_required, only: [:index, :destroy, :start_assistance, :end_assistance, :queue]
 
+  def subscribed
+    Pusher.trigger("UserChannel#{current_user.id}", 'received', {type: "UserConnected", object: UserSerializer.new(current_user).as_json})
+    head :ok, content_type: "text/html"
+  end
+
   def index
     @all_locations = Location.where("id IN (?)", Cohort.all.map(&:location_id).uniq).map{|l| LocationSerializer.new(l, root: false).as_json}
 
@@ -17,6 +22,11 @@ class AssistanceRequestsController < ApplicationController
   def create
     ar = AssistanceRequest.new(:requestor => current_user, reason: assistance_request_params[:reason])
     ar.save
+
+    # Pusher.trigger("assistance-#{ar.requestor.cohort.location.name}", {
+    #   type: "AssistanceStarted",
+    #   object: AssistanceSerializer.new(ar.reload.assistance, root: false).as_json
+    # }
 
     Pusher.trigger("UserChannel#{current_user.id}",
                    'AssistanceRequested',

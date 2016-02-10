@@ -21,11 +21,15 @@ LaserShark::Application.routes.draw do
     end
   end
 
+  put '/on_duty' => 'duties#on_duty'
+  delete '/off_duty' => 'duties#off_duty'
+
   resources :assistance_requests, only: [:index, :create, :destroy] do
     collection do
       delete :cancel
       get :status
       get :queue
+      put '/subscribed' => 'assistance_requests#subscribed'
     end
     member do
       post :start_assistance

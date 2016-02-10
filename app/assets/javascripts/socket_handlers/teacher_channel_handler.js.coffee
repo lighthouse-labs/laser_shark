@@ -22,10 +22,12 @@ class window.TeacherChannelHandler
         @addTeacherToSidebar(teacher)
 
   teacherOnDuty: ->
+    debugger
     if @teacherInLocation(@object)
       @addTeacherToSidebar(@object)
 
   teacherOffDuty: ->
+    debugger
     if @teacherInLocation(@object)
       @removeTeacherFromSidebar(@object)
 

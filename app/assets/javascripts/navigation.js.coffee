@@ -21,19 +21,20 @@ $ ->
 
   $('.on-duty-link').click (e) ->
     e.preventDefault()
-    # window.App.teacherChannel.onDuty()
     $.ajax
       url: '/on_duty'
       dataType: 'json'
-      type: 'post'
-      data: nil
+      type: 'put'
 
     $('.on-duty-link').addClass('hidden')
     $('.off-duty-link').removeClass('hidden')
 
   $('.off-duty-link').click (e) ->
     e.preventDefault()
-    # window.App.teacherChannel.offDuty()
+    $.ajax
+      url: '/off_duty'
+      dataType: 'json'
+      type: 'delete'
 
     $('.off-duty-link').addClass('hidden')
     $('.on-duty-link').removeClass('hidden')

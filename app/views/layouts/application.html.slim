@@ -38,5 +38,5 @@ html
     == yield :end_of_body
 
 javascript:
-  window.current_user = #{raw current_user.to_json}
+  window.current_user = #{raw UserSerializer.new(current_user).to_json}
   window.pusher = new Pusher("#{raw ENV['PUSHER_KEY']}")

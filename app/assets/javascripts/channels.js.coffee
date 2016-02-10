@@ -8,12 +8,10 @@ if window.location.port isnt ""
 App.cable = Cable.createConsumer('ws://' + host + '/websocket');
 
 window.connectToTeachersSocket = ->
-  console.log('***************window.connectToTeachersSocket = ->')
   App.teacherChannel = pusher.subscribe('TeacherChannel')
   App.teacherChannel.bind('received', (data) ->
-    debugger
-    handler = new TeacherChannelHandler data
-    handler.processResponse()
+    h = new TeacherChannelHandler data
+    h.processResponse()
   )
 
   # App.teacherChannel = App.cable.subscriptions.create("TeacherChannel",
@@ -46,6 +44,17 @@ $ ->
   App.userChannel.bind('disconnected', () ->
     $('.reconnect-holder').delay(500).show(0)
   )
+
+  App.userChannel.bind('received', (data) ->
+    handler = new UserChannelHandler data
+    handler.processResponse()
+  )
+
+  $.ajax
+    url: '/assistance_requests/subscribed'
+    dataType: 'json'
+    type: 'put'
+
   # App.userChannel = App.cable.subscriptions.create("UserChannel",
 
   #   connected: ->
