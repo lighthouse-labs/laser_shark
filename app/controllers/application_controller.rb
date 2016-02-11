@@ -18,15 +18,17 @@ class ApplicationController < ActionController::Base
 
   def update_students_in_queue(location)
     Student.has_open_requests.cohort_in_locations([location]).each do |student|
-      Pusher.trigger "UserChannel#{student.id}",
-                     "received",
-                     {type: "QueueUpdate", object: student.position_in_queue.as_json}
+      Pusher.trigger format_channel_name("UserChannel", student.id),
+                     "received", {
+                        type: "QueueUpdate",
+                        object: student.position_in_queue.as_json
+                     }
     end
   end
 
   def teacher_available(teacher)
     if teacher.teaching_assistances.currently_active.empty?
-      Pusher.trigger 'TeacherChannel',
+      Pusher.trigger format_channel_name('TeacherChannel'),
                      'received', {
                         type: "TeacherAvailable",
                         object: UserSerializer.new(teacher).as_json
@@ -35,7 +37,7 @@ class ApplicationController < ActionController::Base
   end
 
   def teacher_busy(teacher)
-    Pusher.trigger 'TeacherChannel',
+    Pusher.trigger format_channel_name('TeacherChannel'),
                    'received', {
                      type: "TeacherBusy",
                      object: UserSerializer.new(teacher).as_json
