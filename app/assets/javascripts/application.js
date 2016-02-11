@@ -27,6 +27,7 @@
 //= require react
 //= require react_ujs
 
+//= require webSocketsChannelHelpers
 //= require channels
 //= require_tree ./socket_handlers/
 //= require admin
