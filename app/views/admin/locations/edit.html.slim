@@ -1,0 +1,11 @@
+h1 Edit Location: #{@location.name}
+hr
+
+= simple_form_for [:admin, @location],
+  html: { class: 'form-horizontal' }, wrapper: :horizontal_form do |f|
+
+  = render f
+
+  .actions.well
+    = f.submit 'Update', class: 'btn btn-primary', style: 'margin-right: 10px;'
+    = link_to '&laquo; Cancel'.html_safe, [:admin, :locations]

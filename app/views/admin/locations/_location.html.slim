@@ -1,0 +1,9 @@
+tr
+  td = location.name
+  td = location.timezone
+  td = location.calendar
+  
+  td
+    = link_to 'Edit', [:edit, :admin, location]
+  td
+    = link_to 'Delete', [:admin, location], method: :delete, data: { confirm: "Are you sure?" }

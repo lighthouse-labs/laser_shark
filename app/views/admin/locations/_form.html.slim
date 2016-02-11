@@ -1,0 +1,10 @@
+- if form.object.errors.full_messages.any?
+  .alert.alert-error
+    strong Please correct the following errors:
+    - form.object.errors.full_messages.each do |msg|
+      li = msg
+  hr
+
+= form.input :name
+= form.input :timezone, collection: Location::TIMEZONE_NAMES
+= form.input :calendar

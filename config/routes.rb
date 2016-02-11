@@ -89,7 +89,8 @@ LaserShark::Application.routes.draw do
         get :feedback
       end
     end
-    resources :cohorts, except: [:destroy]
+    resources :cohorts, except: [:destroy, :show]
+    resources :locations, except: [:show]
     resources :feedbacks, except: [:edit, :update, :destroy]
     resources :teacher_feedbacks, only: [:index]
     resources :curriculum_feedbacks, only: [:index]
