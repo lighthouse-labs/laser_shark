@@ -4,10 +4,10 @@ class AssistancesController < ApplicationController
 
   def create
     @student = Student.find params[:student_id]
-    assistance = Assistance.new (
+    assistance = Assistance.new ({
                    :assistor => current_user,
                    :assistee => @student
-                 )
+                 })
     status = assistance.save ? 200 : 400
     respond_to do |format|
       format.json { render(:nothing => true, :status => status) }
@@ -131,10 +131,10 @@ class AssistancesController < ApplicationController
   def provided_assistance
     data = assistances_params
     student = Student.find data["student_id"]
-    assistance_request = AssistanceRequest.new (
+    assistance_request = AssistanceRequest.new ({
                            requestor: student,
                            reason: "Offline assistance requested"
-                         )
+                         })
 
     if assistance_request.save
       assistance_request.start_assistance(current_user)

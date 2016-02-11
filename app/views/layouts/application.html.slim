@@ -1,3 +1,4 @@
+
 doctype html
 html
   head
@@ -40,4 +41,7 @@ html
 javascript:
   window.current_user = #{raw UserSerializer.new(current_user).to_json}
   window.pusher = new Pusher("#{raw ENV['PUSHER_KEY']}")
-  window.APP_NAME = #{raw ENV['APP_NAME']}
+  window.APP_NAME = '#{raw ENV['APP_NAME']}'
+  formatChannelName = function (channel, id='') {
+    return [ APP_NAME, channel, id.toString() ].join('-')
+  }

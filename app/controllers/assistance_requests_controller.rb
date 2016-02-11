@@ -31,8 +31,8 @@ class AssistanceRequestsController < ApplicationController
   end
 
   def create
-    ar = AssistanceRequest.new(requestor: current_user,
-                               reason: assistance_request_params[:reason])
+    ar = AssistanceRequest.new({requestor: current_user,
+                               reason: assistance_request_params[:reason]})
 
     if ar.save
 
@@ -115,12 +115,12 @@ class AssistanceRequestsController < ApplicationController
                           .order_by_last_assisted_at
                           .cohort_in_locations([location])
 
-    render json: RequestQueueSerializer.new (
+    render json: RequestQueueSerializer.new({
                     assistances: my_active_assistances,
                     requests: requests,
                     code_reviews: code_reviews,
                     students: all_students
-                 ).as_json
+                 }).as_json
   end
 
   def status
@@ -171,9 +171,9 @@ class AssistanceRequestsController < ApplicationController
     # The length thing is a hacky/lazy of getting around a JSON parse exception - KV
     #   http://stackoverflow.com/questions/8390256/a-json-text-must-at-least-contain-two-octets
 
-    is_parsable? = locations_cookie && locations_cookie.to_s.length >= 2
+    is_parsable = locations_cookie && locations_cookie.to_s.length >= 2
 
-    @selected_locations = is_parsable? ? JSON.parse(locations_cookie) : []
+    @selected_locations = is_parsable ? JSON.parse(locations_cookie) : []
   end
 
   def teacher_required
