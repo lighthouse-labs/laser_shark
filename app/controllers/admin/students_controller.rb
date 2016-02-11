@@ -1,5 +1,6 @@
 class Admin::StudentsController < Admin::BaseController
   before_action :load_student, only: [:reactivate, :deactivate, :update, :edit]
+  before_action :prep_form, only: [:index, :edit]
 
   def index
     if params[:cohort_id]
@@ -8,11 +9,10 @@ class Admin::StudentsController < Admin::BaseController
     else
       @students = Student.all
     end
-    @cohorts = Cohort.is_active
+    
   end
 
   def edit
-    @cohorts = Cohort.is_active
   end
 
   def reactivate
@@ -27,9 +27,10 @@ class Admin::StudentsController < Admin::BaseController
 
   def update
     if @student.update(student_params)
-      render nothing: true if request.xml_http_request?
-      redirect_to [:edit, :admin, @student], notice: 'Updated!' unless request.xml_http_request?
+      render nothing: true if request.xhr?
+      redirect_to [:edit, :admin, @student], notice: 'Updated!' unless request.xhr?
     else
+      prep_form
       render :edit
     end
   end
@@ -50,5 +51,9 @@ class Admin::StudentsController < Admin::BaseController
 
   def load_student
     @student = Student.find(params[:id])
+  end
+
+  def prep_form
+    @cohorts = Cohort.is_active
   end
 end
