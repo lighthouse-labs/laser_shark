@@ -2,8 +2,8 @@ var RequestModal = React.createClass({
 
   getInitialState: function(){
     return {
-      notesValid: true,
-      ratingValid: true
+      notesValid: false,
+      ratingValid: false
     }
   },
 
@@ -15,19 +15,20 @@ var RequestModal = React.createClass({
     $(this.refs.modal).modal('hide')
   },
 
-  formIsValid: function(){
+  setNotesError: function(){
     var notes = this.refs.notes.value;
+    var notesValid = (notes.trim() !== '');
+    this.setState({ notesValid: notesValid })
+  },
+
+  setRatingError: function(){
     var rating = this.refs.rating.value;
-
-    var notesValid = (notes !== '');
     var ratingValid = (rating !== '');
+    this.setState({ ratingValid: ratingValid })
+  },
 
-    this.setState({
-      notesValid: notesValid,
-      ratingValid: ratingValid
-    })
-
-    return notesValid && ratingValid
+  formIsValid: function(){
+    return this.state.notesValid && this.state.ratingValid
   },
 
   endAssistance: function() {
@@ -77,7 +78,8 @@ var RequestModal = React.createClass({
               { assistanceRequest ? this.renderReason(assistanceRequest) : null }
 
               <div className={this.state.notesValid ? "form-group" : "form-group has-error"}>
-                <textarea 
+                <textarea
+                  onChange={this.setNotesError}
                   className="form-control" 
                   placeholder="How did the assistance go?"
                   ref="notes">
@@ -86,15 +88,16 @@ var RequestModal = React.createClass({
 
               <div className={this.state.ratingValid ? "form-group" : "form-group has-error"}>
                 <label>Rating</label>
-                <select 
+                <select
+                  onChange={this.setRatingError}
                   className="form-control" 
                   ref="rating"
                   required="true">
                     <option value=''>Please Select</option>
-                    <option value="1">Struggling</option>
-                    <option value="2">Slightly behind</option>
-                    <option value="3">On track</option>
-                    <option value="4">Excellent (Needs stretch)</option>
+                    <option value="1">L1 | Struggling</option>
+                    <option value="2">L2 | Slightly behind</option>
+                    <option value="3">L3 | On track</option>
+                    <option value="4">L4 | Excellent (Needs stretch)</option>
                 </select>
               </div>
             </div>
