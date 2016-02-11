@@ -8,9 +8,19 @@ class ApplicationController < ActionController::Base
 
   private
 
+  def permission_denied
+    head :unauthorized
+  end
+
+  def format_channel_name(channel, id='')
+    [ENV['APP_NAME'], channel, id.to_s].join('-')
+  end
+
   def update_students_in_queue(location)
     Student.has_open_requests.cohort_in_locations([location]).each do |student|
-      UserChannel.broadcast_to student, {type: "QueueUpdate", object: student.position_in_queue.as_json}
+      Pusher.trigger "UserChannel#{student.id}",
+                     "received",
+                     {type: "QueueUpdate", object: student.position_in_queue.as_json}
     end
   end
 
