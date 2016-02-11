@@ -19,8 +19,7 @@ LaserShark::Application.routes.draw do
     end
   end
 
-  put '/on_duty' => 'duties#on_duty'
-  delete '/off_duty' => 'duties#off_duty'
+  put '/toggleDutyState' => 'duties#toggleDutyState'
 
   resources :assistance_requests, only: [:index, :create, :destroy] do
     collection do

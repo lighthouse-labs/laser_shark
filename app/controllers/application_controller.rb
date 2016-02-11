@@ -13,7 +13,9 @@ class ApplicationController < ActionController::Base
   end
 
   def format_channel_name(channel, id='')
-    [ENV['APP_NAME'], channel, id.to_s].join('-')
+    s = [ENV['APP_NAME'], channel, id.to_s].join('-')
+    puts "**********************      #{s}"
+    s
   end
 
   def update_students_in_queue(location)

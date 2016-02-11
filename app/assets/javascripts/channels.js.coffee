@@ -15,16 +15,6 @@ $ ->
        $('.reconnect-holder').hide()
   )
 
-  # App.userChannel.bind('AssistanceRequested', (data) ->
-  #   handler = new UserChannelHandler { type: 'AssistanceRequested', object: data.object}
-  #   handler.processResponse()
-  # )
-
-  # App.userChannel.bind('AssistanceEnded', ->
-  #   handler = new UserChannelHandler { type: 'AssistanceEnded' }
-  #   handler.processResponse()
-  # )
-
   App.userChannel.bind('disconnected', () ->
     $('.reconnect-holder').delay(500).show(0)
   )

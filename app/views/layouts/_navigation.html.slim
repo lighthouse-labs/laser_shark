@@ -129,8 +129,8 @@ nav.navbar.navbar-inverse.navbar-fixed-top role="navigation"
           -if teacher?
             li.teacher-duty
               span
-                = link_to "Go on duty", '#', class: "on-duty-link navbar-btn btn btn-success #{'hidden' if current_user.on_duty?}"
-                = link_to "Go off duty", '#', class: "off-duty-link navbar-btn btn btn-danger #{'hidden' unless current_user.on_duty?}"
+                = link_to "Go on duty", '#', class: "duty-state-button on-duty-link navbar-btn btn btn-success #{'hidden' if current_user.on_duty?}"
+                = link_to "Go off duty", '#', class: "duty-state-button off-duty-link navbar-btn btn btn-danger #{'hidden' unless current_user.on_duty?}"
 
           - if current_user.active_student?
             li#assistance-request-module

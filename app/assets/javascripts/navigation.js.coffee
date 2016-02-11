@@ -19,19 +19,12 @@ $ ->
         dataType: 'json'
         type: 'delete'
 
-  $('.on-duty-link').click (e) ->
+  $('.duty-state-button').click (e) ->
     e.preventDefault()
     $.ajax
-      url: '/on_duty'
+      url: '/toggleDutyState'
       dataType: 'json'
       type: 'put'
-
-  $('.off-duty-link').click (e) ->
-    e.preventDefault()
-    $.ajax
-      url: '/off_duty'
-      dataType: 'json'
-      type: 'delete'
 
   $('.sign-out-link').click (e) ->
     window.App.teacherChannel.offDuty()
