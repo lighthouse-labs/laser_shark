@@ -34,7 +34,7 @@ class Admin::LocationsController < Admin::BaseController
     if @location.destroy
       flash[:notice] = "Location #{@location.name} deleted."
     else
-      flash[:notice] = "Unable to delete location #{@location.name}."
+      flash[:notice] = "Unable to delete location #{@location.name}. Cannot delete a Location with Cohorts."
     end
     redirect_to [:admin, :locations]
   end
