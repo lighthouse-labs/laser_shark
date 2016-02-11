@@ -82,7 +82,7 @@ var RequestQueue = React.createClass({
     if(App.assistance)
       App.assistance.unsubscribe();
 
-    channel = format_channel_name('assistance', this.state.location.name);
+    channel = formatChannelName('assistance', this.state.location.name);
     App.assistance = pusher.subscribe(channel)
 
     App.assistance.bind('rejected', function() {
