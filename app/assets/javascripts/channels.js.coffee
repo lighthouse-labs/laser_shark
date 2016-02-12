@@ -1,11 +1,21 @@
 window.App = {};
+# A counter as a temporary workaround of multiple TeacherChannel subscriptions to
+# be made.
+window.counter = 0;
 
 window.connectToTeachersSocket = ->
-  App.teacherChannel = pusher.subscribe(formatChannelName('TeacherChannel'))
-  App.teacherChannel.bind('received', (data) ->
-    h = new TeacherChannelHandler data
-    h.processResponse()
-  )
+  window.counter = window.counter + 1
+  if window.counter isnt 1
+    console.log('window.connectToTeachersSocket = -> executed: ' + window.counter + ' times')
+  else
+    channelName = formatChannelName('TeacherChannel')
+
+    App.teacherChannel = pusher.subscribe(channelName)
+
+    App.teacherChannel.bind('received', (data) ->
+      h = new TeacherChannelHandler data
+      h.processResponse()
+    )
 
 $ ->
   channel = formatChannelName('UserChannel', window.current_user.id)
