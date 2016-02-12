@@ -1,27 +1,26 @@
-= link_to day_activity_path(activity.day, activity)
-  div class=("#{activity.type.downcase} " + 'activity')
-    .icon.icon-type title=activity.type
-      i class=(icon_for(activity))
-    - if weekend? || setup? || (activity.display_duration?)
-      .time.time-duration
-        br
-        = duration activity
-        br
-    - else
-      .time
-        = integer_time_to_s activity.start_time
-        br
-        | to
-        br
-        = integer_time_to_s activity.end_time
-    .icon.icon-completion
-      -if student?
-        - if current_user.completed_activity?(activity)
-          i.fa.fa-check-square-o
-        - else
-          i.fa.fa-square-o
-      -if teacher?
-        .completed-activities  
-          = completed_students(activity)
-    .name
-      = activity.name
+div class=("#{activity.type.downcase} " + 'activity' + ( enabled ? '' : ' disabled' ))
+  .icon.icon-type title=activity.type
+    i class=(icon_for(activity))
+  - if weekend? || setup? || (activity.display_duration?)
+    .time.time-duration
+      br
+      = duration activity
+      br
+  - else
+    .time
+      = integer_time_to_s activity.start_time
+      br
+      | to
+      br
+      = integer_time_to_s activity.end_time
+  .icon.icon-completion
+    -if student?
+      - if current_user.completed_activity?(activity)
+        i.fa.fa-check-square-o
+      - else
+        i.fa.fa-square-o
+    -if teacher?
+      .completed-activities
+        = completed_students(activity)
+  .name
+    = activity.name

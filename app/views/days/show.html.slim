@@ -23,10 +23,7 @@
 
 = render "days/info", day: day if day.info
 
-- if current_user.can_access_day?(day)
-  = render partial: 'activities/activity', collection: @activities
-- else
-  = render partial: 'activities/disabled', collection: @activities, as: :activity
+= render partial: "activities/activities", locals: { activities: @activities, enabled: current_user.can_access_day?(day)}
 
 - if teacher?
   = link_to new_day_activity_path(day)

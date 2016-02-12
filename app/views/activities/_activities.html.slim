@@ -1,0 +1,6 @@
+- activities.each do |activity|
+  -if enabled
+    = link_to day_activity_path(activity.day, activity)
+      = render partial: 'activities/activity', locals: { activity: activity, enabled: enabled }
+  -else
+    = render partial: 'activities/activity', locals: { activity: activity, enabled: enabled }
