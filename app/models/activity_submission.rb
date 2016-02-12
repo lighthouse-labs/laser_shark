@@ -1,10 +1,10 @@
 class ActivitySubmission < ActiveRecord::Base
-  
+
   belongs_to :user
   belongs_to :activity
-  
+
   has_one :code_review_request, dependent: :destroy
-  
+
   #after_save :request_code_review
   after_create :create_feedback
   after_destroy :handle_submission_destroy
@@ -17,8 +17,8 @@ class ActivitySubmission < ActiveRecord::Base
   validates :user_id, uniqueness: { scope: :activity_id,
     message: "only one submission per activity" }
 
-  validates :github_url, 
-    presence: :true, 
+  validates :github_url,
+    presence: :true,
     format: { with: URI::regexp(%w(http https)), message: "must be a valid format" },
     if: :github_url_required?
 
@@ -53,7 +53,8 @@ class ActivitySubmission < ActiveRecord::Base
   end
 
   def handle_submission_destroy
-    ActionCable.server.broadcast "assistance", {
+    Pusher.trigger format_channel_name('assistance', self.user.location.name),
+    'received', {
       type: "CancelAssistanceRequest",
       object: AssistanceRequestSerializer.new(self.code_review_request, root: false).as_json
     }
