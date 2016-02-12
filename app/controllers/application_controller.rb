@@ -8,10 +8,48 @@ class ApplicationController < ActionController::Base
 
   private
 
+  def permission_denied
+    head :unauthorized
+  end
+
+  def format_channel_name(channel, id='')
+    s = [ENV['APP_NAME'], channel, id.to_s].join('-')
+    puts "**********************      #{s}"
+    s
+  end
+
+  def update_students_in_queue(location)
+    Student.has_open_requests.cohort_in_locations([location]).each do |student|
+      Pusher.trigger format_channel_name("UserChannel", student.id),
+                     "received", {
+                        type: "QueueUpdate",
+                        object: student.position_in_queue.as_json
+                     }
+    end
+  end
+
+  def teacher_available(teacher)
+    if teacher.teaching_assistances.currently_active.empty?
+      Pusher.trigger format_channel_name('TeacherChannel'),
+                     'received', {
+                        type: "TeacherAvailable",
+                        object: UserSerializer.new(teacher).as_json
+                      }
+    end
+  end
+
+  def teacher_busy(teacher)
+    Pusher.trigger format_channel_name('TeacherChannel'),
+                   'received', {
+                     type: "TeacherBusy",
+                     object: UserSerializer.new(teacher).as_json
+                   }
+  end
+
   def authenticate_user
     if !current_user
       session[:attempted_url] = request.url
-      redirect_to new_session_path, alert: 'Please login first!' 
+      redirect_to new_session_path, alert: 'Please login first!'
     elsif current_user.deactivated?
       session[:user_id] = nil
       redirect_to :root, alert: 'Your account has been deactivated. Please contact the admin if this is in error.'

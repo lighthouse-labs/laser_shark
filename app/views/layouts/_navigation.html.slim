@@ -77,14 +77,14 @@ nav.navbar.navbar-inverse.navbar-fixed-top role="navigation"
             ul.dropdown-menu
               li
                 = link_to 'Cohorts', admin_cohorts_path
-              li 
+              li
                 = link_to 'Curriculum Feedback', admin_curriculum_feedbacks_path
-              li 
+              li
                 = link_to 'Teacher Feedback', admin_teacher_feedbacks_path
               li
-                = link_to 'Day Feedback', admin_day_feedbacks_path  
+                = link_to 'Day Feedback', admin_day_feedbacks_path
               li
-                = link_to 'Teacher Stats', admin_teacher_stats_path  
+                = link_to 'Teacher Stats', admin_teacher_stats_path
       ul.nav.navbar-nav.navbar-right
         - if teacher? && !cohorts.empty?
           li.dropdown.cohort
@@ -125,12 +125,12 @@ nav.navbar.navbar-inverse.navbar-fixed-top role="navigation"
               li
                 = link_to 'Edit profile', edit_profile_path
               li
-                = link_to 'Sign Out', session_path, :method => :delete, class: "sign-out-link" 
+                = link_to 'Sign Out', session_path, :method => :delete, class: "sign-out-link"
           -if teacher?
             li.teacher-duty
               span
-                = link_to "Go on duty", '#', class: "on-duty-link navbar-btn btn btn-success #{'hidden' if current_user.on_duty?}"
-                = link_to "Go off duty", '#', class: "off-duty-link navbar-btn btn btn-danger #{'hidden' unless current_user.on_duty?}"
+                = link_to "Go on duty", '#', class: "duty-state-button on-duty-link navbar-btn btn btn-success #{'hidden' if current_user.on_duty?}"
+                = link_to "Go off duty", '#', class: "duty-state-button off-duty-link navbar-btn btn btn-danger #{'hidden' unless current_user.on_duty?}"
 
           - if current_user.active_student?
             li#assistance-request-module
@@ -163,11 +163,11 @@ nav.navbar.navbar-inverse.navbar-fixed-top role="navigation"
               | Close
           h4.modal-title
             | Reason for Assistance
-        = form_tag '/assistance_requests', method: 'post', remote: true, id: 'assistance-request-form'
-          .modal-body
-            .form-group
-              = text_area_tag(:reason, nil, placeholder: 'What do you need assistance with?', class: 'form-control')
-          .modal-footer
-            button.btn.btn-default type='button' data-dismiss='modal'
-              | Cancel
-            = submit_tag 'Request Assistance', class: 'btn btn-primary request-assistance-button', data: {dismiss: 'modal'}
+        = form_tag assistance_requests_path, method: 'post', id: 'assistance-request-form' do
+            .modal-body
+              .form-group
+                = text_area_tag(:reason, nil, placeholder: 'What do you need assistance with?', class: 'form-control')
+            .modal-footer
+              button.btn.btn-default type='button' data-dismiss='modal'
+                | Cancel
+              = submit_tag 'Request Assistance', class: 'btn btn-primary request-assistance-button', data: {dismiss: 'modal'}

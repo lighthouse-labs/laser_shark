@@ -1,42 +1,40 @@
 window.App = {};
-
-# This is a hack because the asset pipeline doesn't respect the ENV['HOST'] when doing a precompile for production
-host = window.location.hostname;
-if window.location.port isnt ""
-  host += ":#{window.location.port}"
-
-App.cable = Cable.createConsumer('ws://' + host + '/websocket');
+# A counter as a temporary workaround of multiple TeacherChannel subscriptions to
+# be made.
+window.counter = 0;
 
 window.connectToTeachersSocket = ->
-  App.teacherChannel = App.cable.subscriptions.create("TeacherChannel",
-    onDuty: ->
-      @perform 'on_duty'
+  window.counter = window.counter + 1
+  if window.counter isnt 1
+    console.log('window.connectToTeachersSocket = -> executed: ' + window.counter + ' times')
+  else
+    channelName = formatChannelName('TeacherChannel')
 
-    offDuty: ->
-      @perform 'off_duty'
+    App.teacherChannel = pusher.subscribe(channelName)
 
-    received: (data) ->
-      handler = new TeacherChannelHandler data
-      handler.processResponse()
-  )
+    App.teacherChannel.bind('received', (data) ->
+      h = new TeacherChannelHandler data
+      h.processResponse()
+    )
 
 $ ->
-  App.userChannel = App.cable.subscriptions.create("UserChannel", 
-
-    connected: ->
-      if $('.reconnect-holder').is(':visible')
-        $('.reconnect-holder').hide()
-
-    requestAssistance: (reason) ->
-      @perform 'request_assistance', reason: reason
-
-    cancelAssistanceRequest: ->
-      @perform 'cancel_assistance'
-    
-    received: (data) ->
-      handler = new UserChannelHandler data
-      handler.processResponse()
-
-    disconnected: ->
-      $('.reconnect-holder').delay(500).show(0)
+  channel = formatChannelName('UserChannel', window.current_user.id)
+  App.userChannel = pusher.subscribe(channel)
+  App.userChannel.bind('connected', ->
+    if $('.reconnect-holder').is(':visible')
+       $('.reconnect-holder').hide()
   )
+
+  App.userChannel.bind('disconnected', () ->
+    $('.reconnect-holder').delay(500).show(0)
+  )
+
+  App.userChannel.bind('received', (data) ->
+    handler = new UserChannelHandler data
+    handler.processResponse()
+  )
+
+  $.ajax
+    url: '/assistance_requests/subscribed'
+    dataType: 'json'
+    type: 'put'
