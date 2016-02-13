@@ -85,6 +85,8 @@ nav.navbar.navbar-inverse.navbar-fixed-top role="navigation"
                 = link_to 'Day Feedback', admin_day_feedbacks_path  
               li
                 = link_to 'Teacher Stats', admin_teacher_stats_path  
+              li
+                = link_to 'Students', admin_students_path
       ul.nav.navbar-nav.navbar-right
         - if teacher? && !cohorts.empty?
           li.dropdown.cohort
