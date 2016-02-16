@@ -26,9 +26,7 @@ LaserShark::Application.routes.draw do
 
   resources :assistance_requests, only: [:index, :create, :destroy] do
     collection do
-      get :status
       get :queue
-      put '/subscribed' => 'assistance_requests#subscribed'
     end
     member do
       post :start_assistance
@@ -41,10 +39,8 @@ LaserShark::Application.routes.draw do
   resources :incomplete_activities, only: [:index]
   resources :search_activities, only: [:index]
 
+  patch '/assistances/:id' => 'assistances#finalize', as: :finalize_assistance
   resources :assistances, only: [:destroy, :create] do
-    collection do
-      patch '/:id' => 'assistances#finalize'
-    end
   end
 
   # CONTENT BROWSING

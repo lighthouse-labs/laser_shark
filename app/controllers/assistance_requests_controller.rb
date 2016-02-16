@@ -4,16 +4,6 @@ class AssistanceRequestsController < ApplicationController
   before_filter :teacher_required, only: [ :index, :destroy, :start_assistance,
                                            :end_assistance, :queue ]
 
-  def subscribed
-    Pusher.trigger format_channel_name("UserChannel", current_user.id),
-                   'received', {
-                      type: "UserConnected",
-                      object: UserSerializer.new(current_user).as_json
-                    }
-
-    head :ok, content_type: "text/html"
-  end
-
   def index
     no_root =
     location_ids = Cohort.all.map(&:location_id).uniq

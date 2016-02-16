@@ -13,5 +13,5 @@ class window.UserChannelHandler
 
   userConnected: ->
     # Connect to the teachers socket when we know the user has connected
-    if(!App.teacherChannel || (App.teacherChannel && App.teacherChannel.consumer.connection.disconnected))
-      window.connectToTeachersSocket()
+    # if(!App.teacherChannel || (App.teacherChannel && App.teacherChannel.consumer.connection.disconnected))
+      # window.connectToTeachersSocket()

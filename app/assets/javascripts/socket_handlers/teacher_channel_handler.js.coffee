@@ -32,11 +32,9 @@ class window.TeacherChannelHandler
       @toggleDutyBtn()
 
   teacherBusy: ->
-    debugger
     $('.teacher-holder').find('#teacher_' + @object.id).addClass('busy')
 
   teacherAvailable: ->
-    debugger
     $('.teacher-holder').find('#teacher_' + @object.id).removeClass('busy')
 
   teacherInLocation: (teacher) ->
