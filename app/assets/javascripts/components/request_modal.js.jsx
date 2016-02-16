@@ -17,19 +17,19 @@ var RequestModal = React.createClass({
     if(this.props.assistance)
       App.assistance.endAssistance(this.props.assistance, notes, rating)
     else
-      App.assistance.providedAssistance(this.props.student, notes, rating)
+      App.assistance.renderOffline(this.props.student, notes, rating)
   },
 
   renderReason: function(assistanceRequest) {
     if(assistanceRequest.reason)
       return (
         <div className="form-group">
-          <b>Original reason:</b> 
+          <b>Original reason:</b>
           {assistanceRequest.reason}
         </div>
       )
   },
-  
+
   render: function() {
     var assistance = this.props.assistance;
 
@@ -52,8 +52,8 @@ var RequestModal = React.createClass({
               { assistanceRequest ? this.renderReason(assistanceRequest) : null }
 
               <div className="form-group">
-                <textarea 
-                  className="form-control" 
+                <textarea
+                  className="form-control"
                   placeholder="How did the assistance go?"
                   ref="notes">
                 </textarea>
@@ -61,8 +61,8 @@ var RequestModal = React.createClass({
 
               <div className="form-group">
                 <label>Rating</label>
-                <select 
-                  className="form-control" 
+                <select
+                  className="form-control"
                   defaultValue="3"
                   ref="rating">
                     <option value="1">Needs improvement</option>

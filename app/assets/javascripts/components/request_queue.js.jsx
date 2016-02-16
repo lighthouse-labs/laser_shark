@@ -67,16 +67,6 @@ var RequestQueue = React.createClass({
     });
   },
 
-  perform: function(action, data) {
-    var url = '/assistances/' + action;
-    $.ajax({
-      url: url,
-      dataType: 'json',
-      data: data,
-      type: 'put'
-    });
-  },
-
   subscribeToSocket: function() {
     var that = this;
     if(App.assistance)
@@ -89,24 +79,64 @@ var RequestQueue = React.createClass({
       window.location.reload();
     });
 
+    // Name corresponds to name of button
     App.assistance.startAssisting = function(request){
-      that.perform('start_assisting', {request_id: request.id})
+      var url = '/assistances/';
+      var data = { request_id: request.id };
+
+      $.ajax({
+        url: url,
+        dataType: 'json',
+        data: data,
+        type: 'post'
+      });
     };
 
+    // Name corresponds to name of button `Remove from queue`
+    App.assistance.removeAssistanceRequestFromQueue = function(request){
+      var url = '/assistance_requests/' + request.id + '/cancel';
+      var data = {};
+
+      $.ajax({
+        url: url,
+        dataType: 'json',
+        data: data,
+        type: 'patch'
+      });
+    };
+
+    // Name corresponds to name of button
     App.assistance.endAssistance = function(assistance, notes, rating){
-      that.perform('end_assistance', {assistance_id: assistance.id, notes: notes, rating: rating})
+      var url = '/assistances/' + assistance.id
+      var data = {notes: notes, rating: rating}
+
+      $.ajax({
+        url: url,
+        dataType: 'json',
+        data: data,
+        type: 'patch'
+      });
     };
 
-    App.assistance.providedAssistance = function(student, notes, rating){
-      that.perform('provided_assistance', {student_id: student.id, notes: notes, rating: rating})
+    // Name corresponds to name of button
+    App.assistance.cancelAssisting = function(assistance) {
+      var url = '/assistances/' + assistance.id;
+      $.ajax({
+        url: url,
+        type: 'delete'
+      });
     };
 
-    App.assistance.cancelAssistanceRequest = function(request){
-      that.perform('cancel_assistance_request', {request_id: request.id})
-    };
+    App.assistance.renderOffline = function(student, notes, rating){
+      var url = '/students/' + student.id + '/offline_assistance_request'
+      var data = { notes: notes, rating: rating }
 
-    App.assistance.stopAssisting = function(assistance) {
-      that.perform('stop_assisting', {assistance_id: assistance.id})
+      $.ajax({
+        url: url,
+        dataType: 'json',
+        data: data,
+        type: 'post'
+      });
     };
 
     App.assistance.bind('received', function(data) {

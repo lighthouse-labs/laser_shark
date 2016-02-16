@@ -26,16 +26,17 @@ class window.TeacherChannelHandler
       @addTeacherToSidebar(@object)
       @toggleDutyBtn()
 
-
   teacherOffDuty: ->
     if @teacherInLocation(@object)
       @removeTeacherFromSidebar(@object)
       @toggleDutyBtn()
 
   teacherBusy: ->
+    debugger
     $('.teacher-holder').find('#teacher_' + @object.id).addClass('busy')
 
   teacherAvailable: ->
+    debugger
     $('.teacher-holder').find('#teacher_' + @object.id).removeClass('busy')
 
   teacherInLocation: (teacher) ->

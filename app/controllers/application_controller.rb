@@ -56,6 +56,16 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def assistance_request_id
+    current_user.assistance_requests
+                .where(type: nil)
+                .open_or_in_progress_requests
+                .newest_requests_first
+                .first
+                .try(:id)
+  end
+  helper_method :assistance_request_id
+
   def set_raven_context
     if current_user
       Raven.user_context({

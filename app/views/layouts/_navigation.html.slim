@@ -134,8 +134,8 @@ nav.navbar.navbar-inverse.navbar-fixed-top role="navigation"
 
           - if current_user.active_student?
             li#assistance-request-module
-              span#cancel-assistance-request class="#{'hidden' unless current_user.waiting_for_assistance? || current_user.being_assisted?}"
-                = link_to cancel_assistance_requests_path, method: :delete, remote: true, class: 'navbar-btn btn btn-warning cancel-request-assistance-button', :'data-toggle' => 'tooltip', :'data-placement' => 'bottom', title: 'Cancel this Assistance Request' do
+              span#cancel-assistance-request data-id="#{assistance_request_id}" class="#{'hidden' unless current_user.waiting_for_assistance? || current_user.being_assisted?}"
+                = link_to '', remote: true, class: 'navbar-btn btn btn-warning cancel-request-assistance-button', :'data-toggle' => 'tooltip', :'data-placement' => 'bottom', title: 'Cancel this Assistance Request' do
                   - if current_user.being_assisted?
                     = "#{current_user.current_assistor.try(:full_name) || 'TA'} assisting"
                   - elsif current_user.waiting_for_assistance?

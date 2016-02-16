@@ -27,13 +27,13 @@ var Assistance = React.createClass({
       return (
         <div>
           <p>
-            <b>Activity:</b> 
+            <b>Activity:</b>
             <a href={activityUrl}>
               {assistanceRequest.activity_submission.activity.name}
             </a>
           </p>
           <p>
-            <b>Submission URL:</b> 
+            <b>Submission URL:</b>
             <a target="_blank" href={assistanceRequest.activity_submission.github_url}>
               {assistanceRequest.activity_submission.github_url}
             </a>
@@ -45,7 +45,7 @@ var Assistance = React.createClass({
 
   getContactInformation: function(student) {
     var contacts = [["Email/Screenhero", student.email], ["Slack", student.slack], ["Skype", student.skype]]
-    
+
     return contacts.filter(function(contact) {
       return contact[1] != null && contact[1] != "";
     });
@@ -53,15 +53,15 @@ var Assistance = React.createClass({
 
   renderCancelButton: function(text) {
     return (
-      <a className="btn btn-danger btn-lg" onClick={this.stopAssisting} disabled={this.state.disabled}>
+      <a className="btn btn-danger btn-lg" onClick={this.cancelAssisting} disabled={this.state.disabled}>
         Cancel {text}
       </a>
     )
   },
 
-  stopAssisting: function() {
+  cancelAssisting: function() {
     this.setState({diabled: true})
-    App.assistance.stopAssisting(this.props.assistance)
+    App.assistance.cancelAssisting(this.props.assistance)
   },
 
   openModal: function() {
@@ -72,7 +72,7 @@ var Assistance = React.createClass({
     var assistance = this.props.assistance;
     var assistanceRequest = assistance.assistance_request;
     var activitySubmission = assistanceRequest.activity_submission;
-    
+
     var student = assistance.assistee;
 
     return (
@@ -88,7 +88,7 @@ var Assistance = React.createClass({
         { this.renderSubmission() }
 
         <dl className="well">
-          { 
+          {
             this.getContactInformation(student).map(function(contact) {
               return(
                 <span key={contact[1]}>
@@ -96,7 +96,7 @@ var Assistance = React.createClass({
                   <dd>{contact[1]}</dd>
                 </span>
               )
-            }) 
+            })
           }
         </dl>
 

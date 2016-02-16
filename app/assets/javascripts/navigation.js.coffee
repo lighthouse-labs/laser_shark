@@ -8,23 +8,24 @@ $ ->
       dataType: 'json'
       type: 'post'
       data: reason: reason
+      success: (data, textStatus, request) ->
+        $('#cancel-assistance-request').attr('data-id', data.id)
 
   $('.cancel-request-assistance-button').click (e) ->
     e.preventDefault()
     e.stopPropagation()
-
     if confirm("Are you sure you want to withdraw this assistance request?")
       $.ajax
-        url: '/assistance_requests/cancel'
+        url: '/assistance_requests/' + $('#cancel-assistance-request').attr('data-id') + '/cancel'
         dataType: 'json'
-        type: 'delete'
+        type: 'patch'
 
   $('.duty-state-button').click (e) ->
     e.preventDefault()
     $.ajax
-      url: '/toggleDutyState'
+      url: '/teachers/' + window.current_user.id + '/toggleDutyState'
       dataType: 'json'
-      type: 'put'
+      type: 'patch'
 
   $('.sign-out-link').click (e) ->
     window.App.teacherChannel.offDuty()

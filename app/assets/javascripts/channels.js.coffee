@@ -5,17 +5,17 @@ window.counter = 0;
 
 window.connectToTeachersSocket = ->
   window.counter = window.counter + 1
-  if window.counter isnt 1
-    console.log('window.connectToTeachersSocket = -> executed: ' + window.counter + ' times')
-  else
-    channelName = formatChannelName('TeacherChannel')
+  # if window.counter isnt 1
+  console.log('window.connectToTeachersSocket = -> executed: ' + window.counter + ' times')
+  # else
+  channelName = formatChannelName('TeacherChannel')
 
-    App.teacherChannel = pusher.subscribe(channelName)
+  App.teacherChannel = pusher.subscribe(channelName)
 
-    App.teacherChannel.bind('received', (data) ->
-      h = new TeacherChannelHandler data
-      h.processResponse()
-    )
+  App.teacherChannel.bind('received', (data) ->
+    h = new TeacherChannelHandler data
+    h.processResponse()
+  )
 
 $ ->
   channel = formatChannelName('UserChannel', window.current_user.id)

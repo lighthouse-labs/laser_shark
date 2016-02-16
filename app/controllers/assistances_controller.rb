@@ -2,39 +2,15 @@ class AssistancesController < ApplicationController
 
   before_filter :teacher_required
 
+  # The creation of an Assistance is effected when
+  #   1- The student made an AssistanceRequest
+  #   2- TA presses the button `Start Assisting` for that same AssistanceRequest
+  #
   def create
-    @student = Student.find params[:student_id]
-    assistance = Assistance.new ({
-                   :assistor => current_user,
-                   :assistee => @student
-                 })
-    status = assistance.save ? 200 : 400
-    respond_to do |format|
-      format.json { render(:nothing => true, :status => status) }
-      format.all { redirect_to(assistance_requests_path) }
-    end
-  end
-
-  def end
-    assistance = Assistance.find(params[:id].to_i)
-    status = assistance.end(params[:assistance][:notes],
-                            params[:assistance][:rating].to_i) ? 200 : 400
-
-    respond_to do |format|
-      format.json { render(:nothing => true, :status => status) }
-      format.all { redirect_to(assistance_requests_path) }
-    end
-  end
-
-  def destroy
-    assistance = Assistance.find(params[:id].to_i)
-    assistance.destroy
-    redirect_to assistance_requests_path
-  end
-
-  def start_assisting
     data = assistances_params
     ar = AssistanceRequest.find(data["request_id"])
+
+    # #start_assistance is responsible for Assistance#create
     if ar.start_assistance(current_user)
       location_name = ar.requestor.cohort.location.name
       Pusher.trigger format_channel_name("assistance", location_name),
@@ -58,9 +34,11 @@ class AssistancesController < ApplicationController
     end
   end
 
-  def end_assistance
+  # After the Assistance has been #created, the TA will provide metrics regarding
+  # the assistance rendered and submit them by pressing the `End Assistance` button.
+  def finalize
     data = assistances_params
-    assistance = Assistance.find data["assistance_id"]
+    assistance = Assistance.find data["id"]
     assistance.end(data["notes"], data["rating"].to_i)
 
     location_name = assistance.assistance_request.requestor.cohort.location.name
@@ -80,33 +58,11 @@ class AssistancesController < ApplicationController
     head :ok, content_type: "text/html"
   end
 
-  def cancel_assistance_request
+  # After Assistance has been #created, when TA presses button `Cancel Assisting`
+  # #destroy gets called.
+  def destroy
     data = assistances_params
-    ar = AssistanceRequest.find data["request_id"]
-    if ar && ar.cancel
-
-      location_name = ar.requestor.cohort.location.name
-      Pusher.trigger format_channel_name("assistance", location_name),
-                     "received", {
-                        type: "CancelAssistanceRequest",
-                        object: AssistanceRequestSerializer.new(ar, root: false)
-                                                           .as_json
-                     }
-
-      Pusher.trigger format_channel_name("UserChannel", ar.requestor_id),
-                     'received',
-                     { type: "AssistanceEnded" }
-
-      update_students_in_queue(location_name)
-      head :ok, content_type: "text/html"
-    else
-      permission_denied
-    end
-  end
-
-  def stop_assisting
-    data = assistances_params
-    assistance = Assistance.find data["assistance_id"]
+    assistance = Assistance.find data["id"]
     if assistance && assistance.destroy
       location_name = assistance.assistance_request
                                 .requestor
@@ -128,36 +84,6 @@ class AssistancesController < ApplicationController
     end
   end
 
-  def provided_assistance
-    data = assistances_params
-    student = Student.find data["student_id"]
-    assistance_request = AssistanceRequest.new ({
-                           requestor: student,
-                           reason: "Offline assistance requested"
-                         })
-
-    if assistance_request.save
-      assistance_request.start_assistance(current_user)
-      assistance = assistance_request.reload.assistance
-      assistance.end(data["notes"], data["rating"])
-
-      location_name = assistance.assistance_request
-                                .requestor
-                                .cohort
-                                .location
-                                .name
-
-      Pusher.trigger format_channel_name("assistance", location_name),
-                     "received", {
-                       type: "OffineAssistanceCreated",
-                       object: UserSerializer.new(student).as_json
-                     }
-      head :ok, content_type: "text/html"
-    else
-      permission_denied
-    end
-  end
-
   private
 
   def teacher_required
@@ -165,6 +91,6 @@ class AssistancesController < ApplicationController
   end
 
   def assistances_params
-    params.permit(:student_id, :assistance_id, :request_id, :notes, :rating)
+    params.permit(:id, :request_id, :notes, :rating)
   end
 end
