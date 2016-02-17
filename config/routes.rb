@@ -19,11 +19,6 @@ LaserShark::Application.routes.draw do
     end
   end
 
-
-
-  patch '/assistance_requests/:id/cancel' => 'assistance_requests#cancel', as: 'cancel_assistance_request'
-  post '/students/:id/offline_assistance_request' => 'assistance_requests#render_offline', as: 'offline_assistance_request'
-
   resources :assistance_requests, only: [:index, :create, :destroy] do
     collection do
       get :queue
@@ -33,14 +28,15 @@ LaserShark::Application.routes.draw do
     end
   end
 
-
   resources :students, only: [:index]
 
   resources :incomplete_activities, only: [:index]
   resources :search_activities, only: [:index]
 
-  patch '/assistances/:id' => 'assistances#finalize', as: :finalize_assistance
-  resources :assistances, only: [:destroy, :create] do
+  resources :assistances, only: [:destroy, :create, :update] do
+    collection do 
+      post :provide_offline
+    end
   end
 
   # CONTENT BROWSING

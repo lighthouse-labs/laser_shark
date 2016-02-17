@@ -94,14 +94,14 @@ var RequestQueue = React.createClass({
 
     // Name corresponds to name of button `Remove from queue`
     App.assistance.removeAssistanceRequestFromQueue = function(request){
-      var url = '/assistance_requests/' + request.id + '/cancel';
+      var url = '/assistance_requests/' + request.id;
       var data = {};
 
       $.ajax({
         url: url,
         dataType: 'json',
         data: data,
-        type: 'patch'
+        type: 'delete'
       });
     };
 
@@ -128,8 +128,12 @@ var RequestQueue = React.createClass({
     };
 
     App.assistance.renderOffline = function(student, notes, rating){
-      var url = '/students/' + student.id + '/offline_assistance_request'
-      var data = { notes: notes, rating: rating }
+      var url = '/assistances/provide_offline'
+      var data = { 
+        student_id: student.id,
+        notes: notes, 
+        rating: rating 
+      }
 
       $.ajax({
         url: url,

@@ -7,7 +7,8 @@ $ ->
       url: '/assistance_requests'
       dataType: 'json'
       type: 'post'
-      data: reason: reason
+      data: 
+        reason: reason
       success: (data, textStatus, request) ->
         $('#cancel-assistance-request').attr('data-id', data.id)
 
@@ -16,9 +17,9 @@ $ ->
     e.stopPropagation()
     if confirm("Are you sure you want to withdraw this assistance request?")
       $.ajax
-        url: '/assistance_requests/' + $('#cancel-assistance-request').attr('data-id') + '/cancel'
+        url: '/assistance_requests/' + $('#cancel-assistance-request').attr('data-id')
         dataType: 'json'
-        type: 'patch'
+        type: 'delete'
 
   $('.duty-state-button').click (e) ->
     e.preventDefault()

@@ -11,6 +11,18 @@ class Student < User
     references(:assistance_requests)
   }
 
+  def self.send_queue_update_in_location(location)
+    Student.has_open_requests.cohort_in_locations([location]).each do |student|
+      Pusher.trigger(
+        SocketService.get_formatted_channel_name("UserChannel", student.id),
+        "received", {
+          type: "QueueUpdate",
+          object: student.position_in_queue.as_json
+        }
+      )
+    end
+  end
+
   def prepping?
     self.cohort.nil?
   end
@@ -26,5 +38,7 @@ class Student < User
   def alumni?
     !prepping? && cohort.finished?
   end
+
+
 
 end

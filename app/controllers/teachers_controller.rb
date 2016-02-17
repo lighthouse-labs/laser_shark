@@ -1,5 +1,7 @@
 class TeachersController < ApplicationController
 
+  before_action :authorize_teacher, only: :toggleDutyState
+
   def index
     @teachers = Teacher.all
     @locations = Location.all.order(:name).map(&:name)
@@ -16,24 +18,25 @@ class TeachersController < ApplicationController
   end
 
   def toggleDutyState
-    if current_user.is_a?(Teacher)
+    duty_status = !current_user.on_duty
+    current_user.update!(on_duty: duty_status)
 
-      duty_status = !current_user.on_duty
-      current_user.update!(on_duty: duty_status)
+    Pusher.trigger(
+      format_channel_name('TeacherChannel'), 
+      "received",
+      {
+        type: duty_status ? "TeacherOnDuty" : "TeacherOffDuty",
+        object: UserSerializer.new(current_user).as_json
+      }
+    )
 
-      Pusher.trigger format_channel_name('TeacherChannel'),
-                     'received', {
-                        type: duty_status ? "TeacherOnDuty" : "TeacherOffDuty",
-                        object: UserSerializer.new(current_user).as_json
-                     }
+    head :ok, content_type: "text/html"
+  end
 
-      head :ok, content_type: "text/html"
+  protected
 
-    else
-
-      permission_denied
-
-    end
+  def authorize_teacher
+    permission_denied unless current_user.is_a?(Teacher)
   end
 
 end

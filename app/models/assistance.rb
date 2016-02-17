@@ -7,6 +7,8 @@ class Assistance < ActiveRecord::Base
   validates :rating, numericality: { only_integer: true, greater_than_or_equal_to: 1, less_than_or_equal_to: 4, allow_nil: true }
 
   before_create :set_start_at
+  after_create :send_create_socket_messages
+  after_destroy :send_destroy_socket_messages
 
   scope :currently_active, -> {
     joins("LEFT OUTER JOIN assistance_requests ON assistance_requests.assistance_id = assistances.id").
@@ -32,6 +34,7 @@ class Assistance < ActiveRecord::Base
     self.assistee.save.tap do
       self.create_feedback(student: self.assistee, teacher: self.assistor)
       send_notes_to_slack
+      send_assistance_ended_socket_messages
     end
   end
 
@@ -74,4 +77,66 @@ class Assistance < ActiveRecord::Base
     rescue
     end
   end
+
+  def send_create_socket_messages
+    if self.assistance_request
+      location_name = self.assistee.cohort.location.name
+      
+      Pusher.trigger(
+        SocketService.get_formatted_channel_name("assistance", location_name),
+        "received", {
+          type: "AssistanceStarted",
+          object: AssistanceSerializer.new(self, root: false).as_json
+        }
+      )
+
+      Pusher.trigger(
+        SocketService.get_formatted_channel_name("UserChannel", self.assistee_id),
+        'received', {
+          type: "AssistanceStarted",
+          object: UserSerializer.new(self.assistor).as_json
+        }
+      )
+
+      self.assistor.send_web_socket_busy
+      Student.send_queue_update_in_location(location_name)
+    end
+  end
+
+  def send_destroy_socket_messages
+    location_name = self.assistee.cohort.location.name
+
+    Pusher.trigger(
+      SocketService.get_formatted_channel_name("assistance", location_name),
+      "received", {
+        type: "StoppedAssisting",
+        object: AssistanceSerializer.new(self).as_json
+      }
+    )
+
+    self.assistor.send_web_socket_available
+    Student.send_queue_update_in_location(location_name)
+  end
+
+  def send_assistance_ended_socket_messages
+    location_name = self.assistee.cohort.location.name
+    
+    Pusher.trigger(
+      SocketService.get_formatted_channel_name("assistance", location_name),
+      "received", {
+        type: "AssistanceEnded",
+        object: AssistanceSerializer.new(self, root: false).as_json
+      }
+    )
+    
+    Pusher.trigger(
+      SocketService.get_formatted_channel_name("UserChannel", self.assistee_id),
+       "received",
+      { type: "AssistanceEnded" }
+    )
+
+    self.assistor.send_web_socket_available
+  end
+
+
 end

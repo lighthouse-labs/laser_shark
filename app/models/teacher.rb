@@ -40,5 +40,25 @@ class Teacher < User
     self.teaching_assistances.currently_active.length > 0
   end
 
+  def send_web_socket_available
+    Pusher.trigger(
+      SocketService.get_formatted_channel_name('TeacherChannel'),
+      'received', {
+        type: "TeacherAvailable",
+        object: UserSerializer.new(self).as_json
+      }
+    )
+  end
+
+  def send_web_socket_busy
+    Pusher.trigger(
+      SocketService.get_formatted_channel_name('TeacherChannel'),
+      'received', {
+        type: "TeacherBusy",
+        object: UserSerializer.new(self).as_json
+      }
+    )
+  end
+
 
 end

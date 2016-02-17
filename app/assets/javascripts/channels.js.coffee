@@ -6,7 +6,7 @@ window.connectToTeachersSocket = ->
   App.teacherChannel = pusher.subscribe(channelName)
 
   App.teacherChannel.bind('received', (data) ->
-    h = new TeacherChannelHandler data
+    h = new TeacherChannelHandler(data)
     h.processResponse()
   )
 

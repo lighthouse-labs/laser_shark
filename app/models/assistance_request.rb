@@ -7,7 +7,9 @@ class AssistanceRequest < ActiveRecord::Base
 
   before_create :limit_one_per_user
   before_create :set_start_at
-
+  
+  after_create :send_create_socket_messages
+  
   scope :open_requests, -> { where(:canceled_at => nil).where(:assistance_id => nil) }
   scope :in_progress_requests, -> {
     includes(:assistance).
@@ -36,6 +38,7 @@ class AssistanceRequest < ActiveRecord::Base
 
   def cancel
     self.canceled_at = Time.now
+    send_destroy_socket_messages
     save
   end
 
@@ -78,6 +81,51 @@ class AssistanceRequest < ActiveRecord::Base
       errors.add :base, 'Limit one open/in progress request per user'
       false
     end
+  end
+
+  def send_create_socket_messages
+    location_name = self.requestor.cohort.location.name
+    serialized_ar = AssistanceRequestSerializer.new(self, root: false).as_json
+
+    Pusher.trigger(
+      SocketService.get_formatted_channel_name("assistance", location_name),
+      'received', {
+       type: "AssistanceRequest",
+       object: serialized_ar
+      }
+    )
+
+    Pusher.trigger(
+      SocketService.get_formatted_channel_name("UserChannel", self.requestor.id),
+      'received', {
+        type: 'AssistanceRequested',
+        object: self.requestor.position_in_queue
+      }
+    )
+  end
+
+  def send_destroy_socket_messages
+    location_name = self.requestor.cohort.location.name
+    serialized_ar = AssistanceRequestSerializer.new(self, root: false).as_json
+
+    Pusher.trigger(
+      SocketService.get_formatted_channel_name("assistance", location_name),
+      "received", {
+        type: "CancelAssistanceRequest",
+        object: serialized_ar
+      }
+    )
+
+    Pusher.trigger(
+      SocketService.get_formatted_channel_name("UserChannel", self.requestor_id),
+      'received',
+      { type: "AssistanceEnded" }
+    )
+
+    Student.send_queue_update_in_location(location_name)
+
+    # In case scenario -2 applies, make TA available again.
+    self.assistance.assistor.send_web_socket_available if self.assistance
   end
 
 end
