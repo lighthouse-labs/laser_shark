@@ -12,14 +12,6 @@ class ActivitySubmissionsController < ApplicationController
     if @activity_submission.save
       if params[:code_review]
         code_review = @activity_submission.create_code_review_request(requestor_id: current_user.id)
-
-        # => Send the code review to all teachers
-        Pusher.trigger format_channel_name("assistance", current_user.location.name),
-        'received',
-        {
-          type: "CodeReviewRequest",
-          object: CodeReviewSerializer.new(code_review, root: false).as_json
-        }
       end
       redirect_to :back
     else

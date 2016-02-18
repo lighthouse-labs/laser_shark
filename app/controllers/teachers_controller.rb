@@ -18,18 +18,7 @@ class TeachersController < ApplicationController
   end
 
   def toggleDutyState
-    duty_status = !current_user.on_duty
-    current_user.update!(on_duty: duty_status)
-
-    Pusher.trigger(
-      format_channel_name('TeacherChannel'), 
-      "received",
-      {
-        type: duty_status ? "TeacherOnDuty" : "TeacherOffDuty",
-        object: UserSerializer.new(current_user).as_json
-      }
-    )
-
+    current_user.toggleOnDuty
     head :ok, content_type: "text/html"
   end
 

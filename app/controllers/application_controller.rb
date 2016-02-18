@@ -12,10 +12,6 @@ class ApplicationController < ActionController::Base
     head :unauthorized
   end
 
-  def format_channel_name(channel, id='')
-    s = [ENV['APP_NAME'], channel, id.to_s].join('-')
-  end
-
   def authenticate_user
     if !current_user
       session[:attempted_url] = request.url
