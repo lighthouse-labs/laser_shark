@@ -1,6 +1,6 @@
 class Assistance < ActiveRecord::Base
 
-  include Assistance::Notifications
+  include Notifications::AssistanceNotifications
 
   has_one :assistance_request, dependent: :nullify
   belongs_to :assistor, :class_name => User

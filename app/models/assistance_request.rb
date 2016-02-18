@@ -1,6 +1,6 @@
 class AssistanceRequest < ActiveRecord::Base
 
-  include AssistanceRequest::Notifications
+  include Notifications::AssistanceRequestNotifications
 
   belongs_to :requestor, :class_name => User
   belongs_to :assistance, dependent: :delete
