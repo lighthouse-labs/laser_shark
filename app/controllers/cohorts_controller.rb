@@ -4,7 +4,6 @@ class CohortsController < ApplicationController
 
   def switch_to
     @cohort = Cohort.find params[:id]
-    session[:cohort_id] = @cohort.id
     current_user.selected_cohort = @cohort
 
     if current_user.save
