@@ -4,8 +4,14 @@ class CohortsController < ApplicationController
 
   def switch_to
     @cohort = Cohort.find params[:id]
-    session[:cohort_id] = @cohort.id
-    redirect_to day_path('today'), notice: "Switched to #{@cohort.name} cohort!"
+    current_user.selected_cohort = @cohort
+
+    if current_user.save
+      flash[:notice] = "Switched to #{@cohort.name} cohort!"
+    else
+      flash[:notice] = "Could not switch to #{@cohort.name} cohort!"
+    end
+    redirect_to day_path('today')
   end
 
   protected

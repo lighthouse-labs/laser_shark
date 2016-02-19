@@ -63,7 +63,8 @@ class ApplicationController < ActionController::Base
     if current_user
       location = current_user.location
       location = current_user.cohort.location if current_user.is_a?(Student)
-      Teacher.where(on_duty: true, location: location)
+      teachers = Teacher.where(on_duty: true)
+      (teachers.where(location: location) + teachers.joins(:selected_cohort).where(cohorts: { location_id: location })).uniq
     else
       []
     end
@@ -73,7 +74,7 @@ class ApplicationController < ActionController::Base
   def cohort
     # Teachers can switch to any cohort
     if teacher?
-      @cohort ||= Cohort.find_by(id: session[:cohort_id]) if session[:cohort_id]
+      @cohort ||= current_user.selected_cohort if current_user.selected_cohort
     end
     @cohort ||= current_user.try(:cohort) # Students have a cohort
     @cohort ||= Cohort.most_recent.first # If any cohorts exist, use the latest

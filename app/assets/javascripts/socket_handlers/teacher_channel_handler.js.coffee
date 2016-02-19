@@ -38,10 +38,10 @@ class window.TeacherChannelHandler
   teacherInLocation: (teacher) ->
     if current_user
       if current_user.type is 'Teacher' 
-        return current_user.location.id is teacher.location.id
+        return current_user.location.id is teacher.location.id || current_user.location.id is teacher.cohort.location.id
       else
         if current_user.cohort
-          return current_user.cohort.location.id is teacher.location.id
+          return current_user.cohort.location.id is teacher.location.id || current_user.cohort.location.id is teacher.cohort.location.id
 
   addTeacherToSidebar: (teacher) ->
     if $('.teacher-holder').find('#teacher_' + teacher.id).length is 0
@@ -63,5 +63,6 @@ class window.TeacherChannelHandler
 
   removeTeacherFromSidebar: (teacher) ->
     $('.teacher-holder').find('#teacher_' + teacher.id).remove()
+    $('.teacher-holder').find('a[href="/teachers/' + teacher.id + '"]').remove()
 
   
