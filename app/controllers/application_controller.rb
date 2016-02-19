@@ -63,7 +63,8 @@ class ApplicationController < ActionController::Base
     if current_user
       location = current_user.location
       location = current_user.cohort.location if current_user.is_a?(Student)
-      Teacher.where(on_duty: true, location: location)
+      teachers = Teacher.where(on_duty: true)
+      teachers.where(location: location) + teachers.joins(:selected_cohort).where(cohorts: { location_id: location })
     else
       []
     end

@@ -1,5 +1,7 @@
 class Teacher < User
 
+  belongs_to :selected_cohort, foreign_key: :selected_cohort_id, class_name: :Cohort
+
   has_many :feedbacks
 
   has_many :teaching_assistances, class_name: Assistance, foreign_key: :assistor_id
