@@ -87,6 +87,11 @@ class ApplicationController < ActionController::Base
   end
   helper_method :cohorts
 
+  def dropdown_cohorts
+    @dropdown_cohorts ||= Cohort.order(start_date: :desc).starts_between(Date.current - 2.months, Date.current + 2.weeks)
+  end
+  helper_method :dropdown_cohorts
+
   def streams
     @streams ||= Stream.order(:title)
   end

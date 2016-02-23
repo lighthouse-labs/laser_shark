@@ -19,6 +19,7 @@ class Cohort < ActiveRecord::Base
   scope :most_recent, -> { order(start_date: :desc) }
 
   scope :is_active, -> { where("cohorts.start_date >= ? AND cohorts.start_date <= ?", Date.current - 8.weeks, Date.current) }
+  scope :starts_between, -> (from, to){ where("cohorts.start_date >= ? AND cohorts.start_date <= ?", from, to) }
 
   def active?
     start_date >= (Date.current - 8.weeks) && start_date <= Date.current
