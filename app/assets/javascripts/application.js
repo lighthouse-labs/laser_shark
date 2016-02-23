@@ -10,6 +10,7 @@
 // Read Sprockets README (https://github.com/sstephenson/sprockets#sprockets-directives) for details
 // about supported directives.
 //
+//= require websocketsChannelHelpers
 //= require jquery
 //= require jquery_ujs
 //= require bootstrap-sprockets
@@ -24,7 +25,6 @@
 //= require jquery.googlecalreader-1.1.min
 //= require best_in_place
 //= require_tree ./polyfills/
-//= require cable
 //= require react
 //= require react_ujs
 

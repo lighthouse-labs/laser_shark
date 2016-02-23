@@ -8,15 +8,29 @@ class ApplicationController < ActionController::Base
 
   private
 
+  def permission_denied
+    head :unauthorized
+  end
+
   def authenticate_user
     if !current_user
       session[:attempted_url] = request.url
-      redirect_to new_session_path, alert: 'Please login first!' 
+      redirect_to new_session_path, alert: 'Please login first!'
     elsif current_user.deactivated?
       session[:user_id] = nil
       redirect_to :root, alert: 'Your account has been deactivated. Please contact the admin if this is in error.'
     end
   end
+
+  def assistance_request_id
+    current_user.assistance_requests
+                .where(type: nil)
+                .open_or_in_progress_requests
+                .newest_requests_first
+                .first
+                .try(:id)
+  end
+  helper_method :assistance_request_id
 
   def set_raven_context
     if current_user

@@ -12,12 +12,6 @@ class ActivitySubmissionsController < ApplicationController
     if @activity_submission.save
       if params[:code_review]
         code_review = @activity_submission.create_code_review_request(requestor_id: current_user.id)
-
-        # => Send the code review to all teachers
-        ActionCable.server.broadcast "assistance", {
-          type: "CodeReviewRequest",
-          object: CodeReviewSerializer.new(code_review, root: false).as_json
-        }
       end
       redirect_to :back
     else

@@ -1,4 +1,7 @@
 class AssistanceRequest < ActiveRecord::Base
+
+  include Notifications::AssistanceRequestNotifications
+
   belongs_to :requestor, :class_name => User
   belongs_to :assistance, dependent: :delete
   belongs_to :activity_submission
@@ -7,7 +10,7 @@ class AssistanceRequest < ActiveRecord::Base
 
   before_create :limit_one_per_user
   before_create :set_start_at
-
+  
   scope :open_requests, -> { where(:canceled_at => nil).where(:assistance_id => nil) }
   scope :in_progress_requests, -> {
     includes(:assistance).
@@ -36,6 +39,7 @@ class AssistanceRequest < ActiveRecord::Base
 
   def cancel
     self.canceled_at = Time.now
+    send_destroy_socket_messages
     save
   end
 

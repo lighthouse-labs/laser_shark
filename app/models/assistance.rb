@@ -1,4 +1,7 @@
 class Assistance < ActiveRecord::Base
+
+  include Notifications::AssistanceNotifications
+
   has_one :assistance_request, dependent: :nullify
   belongs_to :assistor, :class_name => User
   belongs_to :assistee, :class_name => User
@@ -7,7 +10,7 @@ class Assistance < ActiveRecord::Base
   validates :rating, numericality: { only_integer: true, greater_than_or_equal_to: 1, less_than_or_equal_to: 4, allow_nil: true }
 
   before_create :set_start_at
-
+  
   scope :currently_active, -> {
     joins("LEFT OUTER JOIN assistance_requests ON assistance_requests.assistance_id = assistances.id").
     where("assistance_requests.canceled_at IS NULL AND assistances.end_at IS NULL")
@@ -32,6 +35,7 @@ class Assistance < ActiveRecord::Base
     self.assistee.save.tap do
       self.create_feedback(student: self.assistee, teacher: self.assistor)
       send_notes_to_slack
+      send_assistance_ended_socket_messages
     end
   end
 
@@ -56,22 +60,4 @@ class Assistance < ActiveRecord::Base
     self.start_at = Time.now
   end
 
-  def send_notes_to_slack
-    post_to_slack(ENV['SLACK_CHANNEL'])
-    post_to_slack(ENV['SLACK_CHANNEL_REMOTE']) if self.assistee.remote
-  end
-
-  def post_to_slack(channel)
-    return if ENV['SLACK_TOKEN'].nil? || channel.nil?
-    options = {
-      username: self.assistor.github_username,
-      icon_url: self.assistor.avatar_url,
-      channel: channel
-    }
-    begin
-      poster = Slack::Poster.new('lighthouse', ENV['SLACK_TOKEN'], options)
-      poster.send_message("*Assisted #{self.assistee.full_name} for #{ ((self.end_at - self.start_at)/60).to_i } minutes*:\n #{self.notes}")
-    rescue
-    end
-  end
 end
