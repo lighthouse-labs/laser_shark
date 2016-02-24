@@ -2,8 +2,8 @@ var RequestModal = React.createClass({
 
   getInitialState: function(){
     return {
-      notesValid: false,
-      ratingValid: false
+      notesValid: true,
+      ratingValid: true
     }
   },
 
@@ -16,34 +16,44 @@ var RequestModal = React.createClass({
   },
 
   setNotesError: function(){
-    var notes = this.refs.notes.value;
-    var notesValid = (notes.trim() !== '');
-    this.setState({ notesValid: notesValid })
+    this.setState({ notesValid: this.notesIsValid() });
   },
 
   setRatingError: function(){
+    this.setState({ ratingValid: this.ratingIsValid() });
+  },
+
+  ratingIsValid: function(){
     var rating = this.refs.rating.value;
-    var ratingValid = (rating !== '');
-    this.setState({ ratingValid: ratingValid })
+    return ratingValid = (rating !== '');
+  },
+
+  notesIsValid: function(){
+    var notes = this.refs.notes.value;
+    return notesValid = (notes.trim() !== '');
   },
 
   formIsValid: function(){
-    return this.state.notesValid && this.state.ratingValid
+    return this.notesIsValid() && this.ratingIsValid();
   },
 
   endAssistance: function() {
     var notes = this.refs.notes.value;
     var rating = this.refs.rating.value;
 
-    if(!this.formIsValid())
-      return
+    if(!this.formIsValid()){
+      this.setNotesError();
+      this.setRatingError();
+      return;
+    }
 
-    this.close()
+    this.close();
 
-    if(this.props.assistance)
-      App.assistance.endAssistance(this.props.assistance, notes, rating)
-    else
-      App.assistance.providedAssistance(this.props.student, notes, rating)
+    if(this.props.assistance){
+      App.assistance.endAssistance(this.props.assistance, notes, rating);
+    } else {
+      App.assistance.providedAssistance(this.props.student, notes, rating);
+    }
   },
 
   renderReason: function(assistanceRequest) {
