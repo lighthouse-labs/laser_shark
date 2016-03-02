@@ -28,11 +28,11 @@ class Student < User
   end
 
   def completed_code_review_requests
-    assistance_requests.where(type: 'CodeReviewRequest').where.not(assistance_requests: {assistance_id: nil}).includes(:assistance)
+    assistance_requests.where(type: 'CodeReviewRequest').where.not(assistance_requests: {assistance_id: nil}).includes(:assistance).where.not(assistances: {rating: nil})
   end
 
   def completed_assistance_requests
-    assistance_requests.where(type: nil).where.not(assistance_requests: {assistance_id: nil}).includes(:assistance)
+    assistance_requests.where(type: nil).where.not(assistance_requests: {assistance_id: nil}).includes(:assistance).where.not(assistances: {rating: nil})
   end
 
   def activites_with_github_submission
