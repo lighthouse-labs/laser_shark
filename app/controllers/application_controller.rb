@@ -83,12 +83,12 @@ class ApplicationController < ActionController::Base
   helper_method :cohort
 
   def cohorts
-    @cohorts ||= Cohort.order(start_date: :desc)
+    @cohorts ||= Cohort.most_recent
   end
   helper_method :cohorts
 
   def dropdown_cohorts
-    @dropdown_cohorts ||= Cohort.order(start_date: :desc).starts_between(Date.current - 2.months, Date.current + 2.weeks)
+    @dropdown_cohorts = cohorts.starts_between(3.months.ago.to_date, 2.weeks.from_now.to_date).group_by(&:location)
   end
   helper_method :dropdown_cohorts
 
