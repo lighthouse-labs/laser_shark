@@ -15,8 +15,8 @@ table.table
     - @students.each do |student|
       tr data-id='#{student.id}'
         td = image_tag(avatar_for(student), {size:'100x100'})
-        td = student.full_name
-        td = student.email
+        td = link_to student.full_name, "http://#{ENV['LHL_CRM_HOST']}/admin/student_applications?converted=true&search=#{student.first_name}+#{student.last_name}", target: '_blank'
+        td = link_to student.email, "http://#{ENV['LHL_CRM_HOST']}/admin/student_applications?converted=true&search=#{student.email}", target: '_blank'
         td = student.github_username
         td = completed_registration?(student)
         td
