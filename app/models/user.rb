@@ -26,8 +26,8 @@ class User < ActiveRecord::Base
   scope :active, -> {
     where(deactivated_at: nil, completed_registration: true)
   }
-  scope :completed_activity, -> (activity) { 
-    joins(:activity_submissions).where(activity_submissions: { activity: activity }) 
+  scope :completed_activity, -> (activity) {
+    joins(:activity_submissions).where(activity_submissions: { activity: activity })
   }
 
   validates :uid,             presence: true
@@ -106,7 +106,7 @@ class User < ActiveRecord::Base
 
   def incomplete_activities
     Activity.where.not(id: self.activity_submissions.select(:activity_id)).where("day < ?", CurriculumDay.new(Date.today, cohort).to_s).order(:day).reverse
-  end 
+  end
 
   class << self
     def authenticate_via_github(auth)
