@@ -195,9 +195,7 @@ var RequestQueue = React.createClass({
     var students = this.state.students
     var ind = this.getStudentIndex(student);
     if (ind > -1) {
-      var studentToUpdate = students[ind]
-      studentToUpdate.last_assisted_at = new Date;
-      students[ind] = studentToUpdate
+      students[ind].last_assisted_at = new Date;
       this.setState({students: students})
     }
   },
