@@ -6,7 +6,7 @@ class TeacherChannel < ApplicationCable::Channel
 
   def on_duty
     if current_user.is_a?(Teacher)
-      current_user.update(on_duty: true)
+      current_user.update_columns(on_duty: true)
       ActionCable.server.broadcast channel_name, {
         type: "TeacherOnDuty",
         object: UserSerializer.new(current_user).as_json 
@@ -16,7 +16,7 @@ class TeacherChannel < ApplicationCable::Channel
 
   def off_duty
     if current_user.is_a?(Teacher)
-      current_user.update(on_duty: false)
+      current_user.update_columns(on_duty: false)
       ActionCable.server.broadcast channel_name, {
         type: "TeacherOffDuty",
         object: UserSerializer.new(current_user).as_json 
