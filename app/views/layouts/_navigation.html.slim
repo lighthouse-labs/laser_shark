@@ -46,9 +46,12 @@ nav.navbar.navbar-inverse.navbar-fixed-top role="navigation"
                 b.caret
               span.dropdown-arrow
               ul.dropdown-menu
-                - cohorts.each do |cohort|
-                  li
-                    = link_to cohort_link(cohort), cohort_students_path(cohort)
+                - dropdown_cohorts.each do |location, cohorts|
+                  li.divider-title = location.name
+                  li.divider[role="separator"]
+                  - cohorts.each do |c|
+                    li class=(c == cohort ? 'active' : '')
+                      = link_to cohort_link(c), cohort_students_path(c)
           - else
             li.dropdown
               = link_to students_path,title: 'Classmates'
@@ -95,18 +98,23 @@ nav.navbar.navbar-inverse.navbar-fixed-top role="navigation"
               li
                 = link_to 'Day Feedback', admin_day_feedbacks_path
               li
-                = link_to 'Teacher Stats', admin_teacher_stats_path
+                = link_to 'Teacher Stats', admin_teacher_stats_path  
+              li
+                = link_to 'Students', admin_students_path
       ul.nav.navbar-nav.navbar-right
-        - if teacher? && !cohorts.empty?
+        - if teacher? && !dropdown_cohorts.empty?
           li.dropdown.cohort
             = link_to '#', :class => 'dropdown-toggle', :'data-toggle' => 'dropdown', title: 'Cohort' do
               = cohort.name
               b.caret
             span.dropdown-arrow
             ul.dropdown-menu
-              - cohorts.each do |cohort|
-                li
-                  = link_to cohort.name, [:switch_to, cohort], method: :put
+              - dropdown_cohorts.each do |location, cohorts|
+                li.divider-title = location.name  
+                li.divider[role="separator"]
+                - cohorts.each do |c| 
+                  li class=(c == cohort ? 'active' : '')
+                    = link_to c.name, [:switch_to, c], method: :put
         - if current_user
           - if active_student?
             li

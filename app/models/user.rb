@@ -26,8 +26,8 @@ class User < ActiveRecord::Base
   scope :active, -> {
     where(deactivated_at: nil, completed_registration: true)
   }
-  scope :completed_activity, -> (activity) { 
-    joins(:activity_submissions).where(activity_submissions: { activity: activity }) 
+  scope :completed_activity, -> (activity) {
+    joins(:activity_submissions).where(activity_submissions: { activity: activity })
   }
 
   validates :uid,             presence: true
@@ -55,16 +55,16 @@ class User < ActiveRecord::Base
     false
   end
 
-  def deactivate
-    self.deactivated_at = Time.now
+  def deactivate!
+    update! deactivated_at: Time.now
   end
 
   def deactivated?
     self.deactivated_at?
   end
 
-  def reactivate
-    self.deactivated_at = nil
+  def reactivate!
+    update! deactivated_at: nil
   end
 
   def unlocked?(day)
@@ -106,7 +106,7 @@ class User < ActiveRecord::Base
 
   def incomplete_activities
     Activity.where.not(id: self.activity_submissions.select(:activity_id)).where("day < ?", CurriculumDay.new(Date.today, cohort).to_s).order(:day).reverse
-  end 
+  end
 
   def non_code_reviewed_activity_submissions
     @activities_struct = Struct.new(:id, :name)

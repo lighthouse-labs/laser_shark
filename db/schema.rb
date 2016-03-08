@@ -227,7 +227,7 @@ ActiveRecord::Schema.define(version: 20160126162225) do
     t.integer  "location_id"
     t.boolean  "on_duty",                            default: false
     t.integer  "mentor_id"
-    t.boolean  "is_mentor",                          default: false
+    t.boolean  "mentor",                             default: false
   end
 
   add_index "users", ["cohort_id"], name: "index_users_on_cohort_id", using: :btree

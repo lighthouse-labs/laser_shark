@@ -31,6 +31,19 @@
               = teacher_presenter.twitter_info
               = teacher_presenter.slack_info
               = teacher_presenter.skype_info
+        - if admin?
+          dt.teacher-mentor-status data-id='#{@teacher.id}'
+            | Mentor?
+          - if @teacher.mentor?
+            .btn.btn-warning.btn-xs.remove-mentor-button
+              | Remove
+            .btn.btn-primary.btn-xs.make-mentor-button.hidden-button
+              | Add
+          - else 
+            .btn.btn-warning.btn-xs.remove-mentor-button.hidden-button
+              | Remove
+            .btn.btn-primary.btn-xs.make-mentor-button
+              | Add
 
 .modal.fade id="teacher_feedback_modal"
   .modal-dialog

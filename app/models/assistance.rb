@@ -9,7 +9,7 @@ class Assistance < ActiveRecord::Base
   before_create :set_start_at
 
   scope :currently_active, -> {
-    joins("LEFT OUTER JOIN assistance_requests ON assistance_requests.assistance_id = assistances.id").
+    joins(:assistance_request).
     where("assistance_requests.canceled_at IS NULL AND assistances.end_at IS NULL")
   }
   scope :completed, -> { where('assistances.end_at IS NOT NULL') }
@@ -29,7 +29,7 @@ class Assistance < ActiveRecord::Base
     if assistance_request.instance_of?(CodeReviewRequest) && !rating.nil? && !assistee.code_review_percent.nil?
       assistee.code_review_percent += Assistance::RATING_BASELINE - rating
     end
-    
+
     self.assistee.save.tap do
       self.create_feedback(student: self.assistee, teacher: self.assistor)
       send_notes_to_slack
