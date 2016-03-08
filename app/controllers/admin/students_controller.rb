@@ -1,5 +1,6 @@
 class Admin::StudentsController < Admin::BaseController
-  before_action :load_student, only: [:reactivate, :deactivate, :update, :edit]
+  
+  before_action :load_student, only: [:reactivate, :deactivate, :update, :edit, :modal_content]
   before_action :prep_form, only: [:index, :edit]
 
   def index
@@ -13,26 +14,33 @@ class Admin::StudentsController < Admin::BaseController
   end
 
   def edit
+
   end
 
   def reactivate
-    @student.reactivate
-    render nothing: true if @student.save
+    @student.reactivate!
+    render nothing: true 
   end
 
   def deactivate
-    @student.deactivate
-    render nothing: true if @student.save
+    @student.deactivate!
+    render nothing: true
   end
 
   def update
     if @student.update(student_params)
       render nothing: true if request.xhr?
-      redirect_to [:edit, :admin, @student], notice: 'Updated!' unless request.xhr?
+      redirect_to :back
     else
       prep_form
       render :edit
     end
+  end
+
+  def modal_content
+    @cohorts = Cohort.is_active
+    @mentors = Teacher.mentors(@student.cohort.location)
+    render layout: false
   end
 
   private
@@ -45,6 +53,7 @@ class Admin::StudentsController < Admin::BaseController
       :github_username,
       :type,
       :unlocked_until_day,
+      :mentor_id,
       :cohort_id
     )
   end
@@ -53,7 +62,12 @@ class Admin::StudentsController < Admin::BaseController
     @student = Student.find(params[:id])
   end
 
+  def load_cohort
+    @current_cohort = Cohort.find(params[:cohort_id])
+  end
+
   def prep_form
     @cohorts = Cohort.is_active
   end
+
 end

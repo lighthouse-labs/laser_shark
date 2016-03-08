@@ -1,14 +1,15 @@
 - if !@current_cohort.nil?
     h3 = @current_cohort.name
+
 table.table
   thead
     tr
       th
       th Name
       th Email
-      th GitHub Username
       th Registered?
       th Cohort
+      th Mentor
       th 
       th 
   tbody
@@ -17,10 +18,12 @@ table.table
         td = image_tag(avatar_for(student), {size:'100x100'})
         td = student.full_name
         td = student.email
-        td = student.github_username
         td = completed_registration?(student)
+        td = student.cohort.name
+        td = student.mentor
         td
-          = select_tag :cohort_id, options_from_collection_for_select(@cohorts, "id", "name", student.cohort.id), class: "form-control admin-student-cohort-selector"
+          .btn.btn-primary.btn-xs.admin-student-edit-button data-toggle="modal" data-target="#student-actions-modal" data-student-id="#{student.id}"
+            | Edit Mentor
         td 
           - if student.deactivated?
             .btn.btn-primary.btn-xs.student-reactivate-button
@@ -33,3 +36,7 @@ table.table
             .btn.btn-primary.btn-xs.student-reactivate-button.hidden-button
               | Reactivate
         td = link_to 'Edit', [:edit, :admin, student]
+
+.modal.fade id="student-actions-modal"
+  .modal-dialog
+    .modal-content
