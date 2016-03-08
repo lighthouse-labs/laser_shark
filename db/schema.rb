@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151126203655) do
+ActiveRecord::Schema.define(version: 20151222204232) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -106,6 +106,18 @@ ActiveRecord::Schema.define(version: 20151126203655) do
 
   add_index "cohorts", ["program_id"], name: "index_cohorts_on_program_id", using: :btree
 
+  create_table "comments", force: :cascade do |t|
+    t.text     "content"
+    t.integer  "commentable_id"
+    t.string   "commentable_type", limit: 255
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "comments", ["commentable_id", "commentable_type"], name: "index_comments_on_commentable_id_and_commentable_type", using: :btree
+  add_index "comments", ["user_id"], name: "index_comments_on_user_id", using: :btree
+
   create_table "day_feedbacks", force: :cascade do |t|
     t.string   "mood",                limit: 255
     t.string   "title",               limit: 255
@@ -120,7 +132,7 @@ ActiveRecord::Schema.define(version: 20151126203655) do
   end
 
   create_table "day_infos", force: :cascade do |t|
-    t.string   "day"
+    t.string   "day",         limit: 255
     t.text     "description"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -133,19 +145,19 @@ ActiveRecord::Schema.define(version: 20151126203655) do
     t.integer  "style_rating"
     t.text     "notes"
     t.integer  "feedbackable_id"
-    t.string   "feedbackable_type"
+    t.string   "feedbackable_type", limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
     t.float    "rating"
   end
 
   create_table "locations", force: :cascade do |t|
-    t.string   "name"
+    t.string   "name",             limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "calendar"
-    t.string   "timezone"
-    t.boolean  "has_code_reviews", default: true
+    t.string   "calendar",         limit: 255
+    t.string   "timezone",         limit: 255
+    t.boolean  "has_code_reviews",             default: true
   end
 
   create_table "programs", force: :cascade do |t|
@@ -155,7 +167,7 @@ ActiveRecord::Schema.define(version: 20151126203655) do
     t.datetime "updated_at"
     t.string   "recordings_folder", limit: 255
     t.string   "recordings_bucket", limit: 255
-    t.string   "tag"
+    t.string   "tag",               limit: 255
   end
 
   create_table "recordings", force: :cascade do |t|
@@ -203,13 +215,15 @@ ActiveRecord::Schema.define(version: 20151126203655) do
     t.datetime "updated_at"
     t.integer  "code_review_percent",                default: 80
     t.boolean  "admin",                              default: false, null: false
-    t.string   "company_name"
-    t.string   "company_url"
+    t.string   "company_name",           limit: 255
+    t.string   "company_url",            limit: 255
     t.text     "bio"
-    t.string   "quirky_fact"
-    t.string   "specialties"
+    t.string   "quirky_fact",            limit: 255
+    t.string   "specialties",            limit: 255
     t.integer  "location_id"
     t.boolean  "on_duty",                            default: false
+    t.integer  "mentor_id"
+    t.boolean  "mentor",                             default: false
   end
 
   add_index "users", ["cohort_id"], name: "index_users_on_cohort_id", using: :btree

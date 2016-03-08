@@ -1,5 +1,12 @@
 var RequestModal = React.createClass({
 
+  getInitialState: function(){
+    return {
+      notesValid: true,
+      ratingValid: true
+    }
+  },
+
   open: function() {
     $(this.refs.modal).modal()
   },
@@ -8,16 +15,45 @@ var RequestModal = React.createClass({
     $(this.refs.modal).modal('hide')
   },
 
+  setNotesError: function(){
+    this.setState({ notesValid: this.notesIsValid() });
+  },
+
+  setRatingError: function(){
+    this.setState({ ratingValid: this.ratingIsValid() });
+  },
+
+  ratingIsValid: function(){
+    var rating = this.refs.rating.value;
+    return rating !== '';
+  },
+
+  notesIsValid: function(){
+    var notes = this.refs.notes.value;
+    return notes.trim() !== '';
+  },
+
+  formIsValid: function(){
+    return this.notesIsValid() && this.ratingIsValid();
+  },
+
   endAssistance: function() {
     var notes = this.refs.notes.value;
     var rating = this.refs.rating.value;
 
-    this.close()
+    if(!this.formIsValid()){
+      this.setNotesError();
+      this.setRatingError();
+      return;
+    }
 
-    if(this.props.assistance)
-      App.assistance.endAssistance(this.props.assistance, notes, rating)
-    else
-      App.assistance.providedAssistance(this.props.student, notes, rating)
+    this.close();
+
+    if(this.props.assistance){
+      App.assistance.endAssistance(this.props.assistance, notes, rating);
+    } else {
+      App.assistance.providedAssistance(this.props.student, notes, rating);
+    }
   },
 
   renderReason: function(assistanceRequest) {
@@ -51,24 +87,27 @@ var RequestModal = React.createClass({
 
               { assistanceRequest ? this.renderReason(assistanceRequest) : null }
 
-              <div className="form-group">
-                <textarea 
+              <div className={this.state.notesValid ? "form-group" : "form-group has-error"}>
+                <textarea
+                  onChange={this.setNotesError}
                   className="form-control" 
                   placeholder="How did the assistance go?"
                   ref="notes">
                 </textarea>
               </div>
 
-              <div className="form-group">
+              <div className={this.state.ratingValid ? "form-group" : "form-group has-error"}>
                 <label>Rating</label>
-                <select 
+                <select
+                  onChange={this.setRatingError}
                   className="form-control" 
-                  defaultValue="3"
-                  ref="rating">
-                    <option value="1">Needs improvement</option>
-                    <option value="2">Fair</option>
-                    <option value="3">Good</option>
-                    <option value="4">Excellent</option>
+                  ref="rating"
+                  required="true">
+                    <option value=''>Please Select</option>
+                    <option value="1">L1 | Struggling</option>
+                    <option value="2">L2 | Slightly behind</option>
+                    <option value="3">L3 | On track</option>
+                    <option value="4">L4 | Excellent (Needs stretch)</option>
                 </select>
               </div>
             </div>

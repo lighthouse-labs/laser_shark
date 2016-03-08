@@ -32,7 +32,7 @@ LaserShark::Application.routes.draw do
     end
   end
 
-  resources :students, only: [:index] do
+  resources :students, only: [:index, :show] do
     resources :assistances, only: [:create]
   end
 
@@ -71,16 +71,19 @@ LaserShark::Application.routes.draw do
   resources :teachers, only: [:index, :show] do
     member do 
       get :feedback
+      post :remove_mentorship
+      post :add_mentorship
     end
   end
 
   # ADMIN
   namespace :admin do
     root to: 'dashboard#show'
-    resources :students, only: [:index, :update] do 
+    resources :students, only: [:index, :update, :edit] do 
       member do 
         post :reactivate
         post :deactivate 
+        get :modal_content
       end
     end
     resources :teacher_stats, only: [:index, :show] do 
