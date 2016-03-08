@@ -25,12 +25,12 @@ var RequestModal = React.createClass({
 
   ratingIsValid: function(){
     var rating = this.refs.rating.value;
-    return ratingValid = (rating !== '');
+    return rating !== '';
   },
 
   notesIsValid: function(){
     var notes = this.refs.notes.value;
-    return notesValid = (notes.trim() !== '');
+    return notes.trim() !== '';
   },
 
   formIsValid: function(){
