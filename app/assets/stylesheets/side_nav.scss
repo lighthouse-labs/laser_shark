@@ -13,10 +13,13 @@ h3.date-heading {
   }
   .btn-incomplete-activites {
     @include button-variant($btn-default-color, $brand-info, $btn-info-hover-bg, $btn-info-active-bg);
-    margin-top: 4px;
     width: 174px;
+    @media (min-width: $screen-md-min) {
+      margin-top: 4px;
+    }
   }
 }
+
 .nav-week {
   @extend .pagination;
   @extend .pagination-minimal;

@@ -12,7 +12,8 @@ $ ->
 
   changeCohort = (studentID, cohortID) ->
     $.ajax
-      url: '/admin/students/' + studentID + '?cohort_id=' + cohortID
+      url: '/admin/students/' + studentID
+      data: { student: { cohort_id: cohortID } }
       type: 'PUT'
 
   $('.student-reactivate-button').click (e) ->
@@ -33,5 +34,3 @@ $ ->
     studentID = $(this).parents('td').parents('tr').data 'id'
     changeCohort(studentID, cohortID)
     $(this).parents('td').html('<div class="admin-student-cohort-changed"> Cohort changed to ' + newCohortName + '! </div>')
-
-

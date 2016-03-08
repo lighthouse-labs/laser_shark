@@ -44,7 +44,9 @@ class CurriculumDay
     return false unless @cohort
     return false if @cohort.start_date > Date.current
     if CURRICULUM_UNLOCKING == 'weekly'
-      self.date.cweek <= today.date.cweek
+      self.date.cweek <= today.date.cweek || self.date.year < today.date.year
+      # 53rd week can roll over into the new year, preventing access from remaining days of that week.
+      # if Jan 1st is a thursday, it will prevent access until the week ends.
     else # assume daily
       self.date <= today.date
     end
