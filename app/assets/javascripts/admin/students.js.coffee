@@ -12,7 +12,8 @@ $ ->
 
   changeCohort = (studentID, cohortID) ->
     $.ajax
-      url: '/admin/students/' + studentID + '?cohort_id=' + cohortID
+      url: '/admin/students/' + studentID
+      data: { student: { cohort_id: cohortID } }
       type: 'PUT'
 
   changeMentor = (studentID, mentorID) ->

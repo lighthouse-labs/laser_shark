@@ -20,16 +20,18 @@ class CompassMarkdownRenderer < Redcarpet::Render::HTML
       class_name += " allow-select" if ar.include?("selectable")
     end
     "<pre>" \
-      "<code class='#{class_name}'>#{html_escape(code)}</code>" \
+      "<code class='#{class_name}'>#{ERB::Util.html_escape(code)}</code>" \
     "</pre>"
   end
 
-  def postprocess(full_document)
-    match = Regexp.new(/\?\?\?(.*?)\?\?\?/m).match(full_document)
-    if match
-      full_document.gsub(match[0], generate_toggle_block(match[1]))
-    else
-      full_document
+  def preprocess(doc)
+    # raise full_document.inspect
+    regex = Regexp.new(/(^\?\?\?([a-zA-Z-]+)\s+(.*?)\s+^\?\?\?)/m)
+    # raise match[0].inspect if match
+    doc.gsub(regex) do
+      code = Regexp.last_match[3]
+      lang = Regexp.last_match[2]
+      generate_toggle_block(block_code(code, lang))
     end
   end
 
@@ -47,12 +49,12 @@ class CompassMarkdownRenderer < Redcarpet::Render::HTML
   end
 
   def generate_toggle_block(content)
-    "<div class='togglable-solution'>
-      <div class='alert alert-success answer' role='alert' style='display: none;'>
-        #{content}
-      </div>
-      <a class='btn btn-primary' onclick='$(this).closest(\".togglable-solution\").find(\".answer\").toggle();'>Toggle Answer</a>
-    </div>"
+    "<div class='togglable-solution'>" \
+    "<div class='alert alert-success answer' role='alert' style='display: none;'>" \
+    "#{content}" \
+    "</div>" \
+    "<a class='btn btn-primary' onclick='$(this).closest(\".togglable-solution\").find(\".answer\").toggle();'>Toggle Answer</a>" \
+    "</div>"
   end
   
 end

@@ -11,7 +11,7 @@ table.table
       th Cohort
       th Mentor
       th 
-      th
+      th 
   tbody
     - @students.each do |student|
       tr data-id='#{student.id}'
@@ -23,7 +23,7 @@ table.table
         td = student.mentor
         td
           .btn.btn-primary.btn-xs.admin-student-edit-button data-toggle="modal" data-target="#student-actions-modal" data-student-id="#{student.id}"
-            | Edit
+            | Edit Mentor
         td 
           - if student.deactivated?
             .btn.btn-primary.btn-xs.student-reactivate-button
@@ -35,6 +35,7 @@ table.table
               | Deactivate
             .btn.btn-primary.btn-xs.student-reactivate-button.hidden-button
               | Reactivate
+        td = link_to 'Edit', [:edit, :admin, student]
 
 .modal.fade id="student-actions-modal"
   .modal-dialog
