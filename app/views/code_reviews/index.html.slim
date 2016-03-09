@@ -7,8 +7,8 @@ table.table.code-review-table
   thead
     tr
       th Student
-      - 8.times do |i|
-        th.code-review-button-holder = "Week #{i + 1}"
+      - 12.times do |i|
+        th.code-review-button-holder = "Review #{i + 1}"
   tbody
     - @students.each do |student|
       tr
