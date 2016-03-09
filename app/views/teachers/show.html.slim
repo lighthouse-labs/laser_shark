@@ -34,7 +34,7 @@
         - if admin?
           dt.teacher-mentor-status data-id='#{@teacher.id}'
             | Mentor?
-          - if @teacher.mentor?
+          - if @teacher.is_mentor?
             .btn.btn-warning.btn-xs.remove-mentor-button
               | Remove
             .btn.btn-primary.btn-xs.make-mentor-button.hidden-button

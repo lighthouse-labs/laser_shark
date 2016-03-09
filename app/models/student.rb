@@ -30,7 +30,7 @@ class Student < User
   def mentor
     if mentor_id
       @teacher = Teacher.find(mentor_id)
-      @teacher.full_name if @teacher.mentor?
+      @teacher.full_name if @teacher.is_mentor?
     else
       'No Mentor'
     end
