@@ -52,7 +52,7 @@ var RequestQueue = React.createClass({
 
     }
   },
-  
+
   loadQueue: function() {
     $.getJSON("/assistance_requests/queue?location=" + this.state.location.name, this.requestSuccess);
     this.subscribeToSocket();
@@ -157,7 +157,7 @@ var RequestQueue = React.createClass({
         }
       );
     }
-  }, 
+  },
 
   handleCodeReviewRequest: function(codeReviewRequest) {
     var codeReviews = this.state.codeReviews;
@@ -241,7 +241,7 @@ var RequestQueue = React.createClass({
 
   getRequestIndex: function(assistanceRequest) {
     var requests = this.state.requests;
-    var ids = requests.map(function(r){ 
+    var ids = requests.map(function(r){
       return r.id;
     });
 
@@ -270,13 +270,13 @@ var RequestQueue = React.createClass({
       return (
         <div id="cohort-locations">
           Cohort locations:
-          { 
+          {
             this.props.locations.map(function(location) {
               return (
                 <label key={location.id}>
-                  <input 
-                    type="radio" 
-                    value={location.name} 
+                  <input
+                    type="radio"
+                    value={location.name}
                     checked={that.state.location.id == location.id}
                     onChange={that.locationChanged} />
                     { location.name }

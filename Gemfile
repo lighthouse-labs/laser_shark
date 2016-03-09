@@ -57,6 +57,7 @@ gem 'faker'
 
 group :development do
   gem 'pry'
+  gem 'pry-nav'
   gem 'spring'
   gem 'quiet_assets'
   gem 'rails_layout'

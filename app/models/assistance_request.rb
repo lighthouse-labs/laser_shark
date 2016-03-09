@@ -42,7 +42,7 @@ class AssistanceRequest < ActiveRecord::Base
   def start_assistance(assistor)
     return false if assistor.blank? || !self.assistance.blank?
     self.assistance = Assistance.new(:assistor => assistor, :assistee => self.requestor)
-    self.assistance.save
+    self.assistance.save!
   end
 
   def end_assistance(notes)
@@ -52,7 +52,7 @@ class AssistanceRequest < ActiveRecord::Base
 
   def cancel_assistance
     self.assistance = nil
-    self.save
+    self.save!
   end
 
   def open?
