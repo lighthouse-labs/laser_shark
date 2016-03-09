@@ -47,4 +47,5 @@
 //= require incomplete_activities
 //= require activities
 //= require reconnect_holder
+//= require profile
 //= require code_reviews
