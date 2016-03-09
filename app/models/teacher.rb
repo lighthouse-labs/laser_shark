@@ -25,7 +25,7 @@ class Teacher < User
   end
 
   def self.mentors(location)
-    where( {mentor: true} ).
+    where( {is_mentor: true} ).
     where( {location: location} )
   end
 

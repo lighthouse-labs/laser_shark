@@ -11,6 +11,7 @@ class CohortsController < ApplicationController
   def code_reviews
     @current_cohort = Cohort.find(params[:id])
     @students = @current_cohort.students
+    binding.pry
     @max_code_reviews_student = @students.max_by{|student| student.completed_code_review_requests.count}
     @assistance = Assistance.new(assistor: current_user, assistee: @student)
   end

@@ -22,7 +22,6 @@ table.table
         td = student.cohort.name
         td = student.mentor
         td
-          = select_tag :cohort_id, options_from_collection_for_select(@cohorts, "id", "name", (student.try(:cohort).try(:id) || 1)), class: "form-control admin-student-cohort-selector"
           .btn.btn-primary.btn-xs.admin-student-edit-button data-toggle="modal" data-target="#student-actions-modal" data-student-id="#{student.id}"
             | Edit Mentor
         td 
