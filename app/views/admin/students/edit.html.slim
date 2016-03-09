@@ -1,0 +1,17 @@
+h1 Edit Student: #{@student.first_name} #{@student.last_name}
+hr
+
+= simple_form_for [:admin, @student],
+  html: { class: 'form-horizontal' }, wrapper: :horizontal_form do |f|
+
+  = f.input :first_name
+  = f.input :last_name
+  = f.input :email
+  = f.input :github_username
+  = f.input :unlocked_until_day, placeholder: 'w#d#'
+  = f.input :cohort_id, collection: @cohorts
+  = f.input :type, collection: ['Teacher', 'Student']
+
+  .actions.well
+    = f.submit 'Update', class: 'btn btn-primary', style: 'margin-right: 10px;'
+    = link_to '&laquo; Cancel'.html_safe, [:admin, :students]
