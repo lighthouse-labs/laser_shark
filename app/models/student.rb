@@ -27,4 +27,13 @@ class Student < User
     !prepping? && cohort.finished?
   end
 
+  def mentor
+    if mentor_id
+      @teacher = Teacher.find(mentor_id)
+      @teacher.full_name if @teacher.mentor?
+    else
+      'No Mentor'
+    end
+  end
+
 end

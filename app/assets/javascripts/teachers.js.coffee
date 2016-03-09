@@ -31,3 +31,37 @@ $ ->
 
   $('.best_in_place').bind 'ajax:success', ->
     bind_readmore_to_feedbacks $(this).closest('.read-more')
+
+  # For modifying mentor status of teachers:
+
+  removeMentorship = (id, callback) ->
+    $.ajax
+      url: '/teachers/' + id + '/remove_mentorship'
+      type: 'POST'
+      success: callback
+
+  addMentorship = (id, callback) ->
+    $.ajax
+      url: '/teachers/' + id + '/add_mentorship'
+      type: 'POST'
+      success: callback
+
+  $('.remove-mentor-button').click (e) ->
+    that = this
+    $(this).attr('disabled', true)
+    id = $(this).siblings('.teacher-mentor-status').data 'id'
+    removeMentorship(id, -> 
+      $(that).css('display', 'none')
+      $(that).attr('disabled', false)
+      $(that).siblings('.make-mentor-button').css('display', 'inline-block')
+      )
+
+  $('.make-mentor-button').click (e) ->
+    that = this
+    $(this).attr('disabled', true)
+    id = $(this).siblings('.teacher-mentor-status').data 'id'
+    addMentorship(id, -> 
+      $(that).css('display', 'none')
+      $(that).attr('disabled', false)
+      $(that).siblings('.remove-mentor-button').css('display', 'inline-block')
+      )

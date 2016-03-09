@@ -5,7 +5,7 @@ class HomeController < ApplicationController
   def show
     if current_user
       redirect_to setup_path
-    else 
+    else
       redirect_to welcome_path
     end
   end
