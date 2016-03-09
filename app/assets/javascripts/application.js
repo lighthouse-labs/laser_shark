@@ -18,7 +18,6 @@
 //= require ace-rails-ap
 //= require ace/theme-monokai
 //= require ace/mode-markdown
-//= require theme-monokai
 
 //= require default
 
@@ -48,3 +47,4 @@
 //= require incomplete_activities
 //= require activities
 //= require reconnect_holder
+//= require code_reviews

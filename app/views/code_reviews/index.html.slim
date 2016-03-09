@@ -1,0 +1,33 @@
+h3
+  |Cohort:&nbsp;
+  = @cohort.name
+br
+
+table.table.code-review-table
+  thead
+    tr
+      th Student
+      - 12.times do |i|
+        th.code-review-button-holder = "Review #{i + 1}"
+  tbody
+    - @students.each do |student|
+      tr
+        td
+          = student.full_name
+          br
+          |(#{student.code_reviews_l_score} / 4)
+
+        - student.completed_code_review_requests.order("created_at ASC").each do |code_review|
+          td
+            = completed_review_button(code_review)
+        td
+          .btn.btn-default.btn-sm.new-code-review-button  data-toggle="modal" data-target="#new_code_review_modal" data-student-id="#{student.id}"
+            | + New
+
+.modal.fade id='view_code_review_modal'
+  .modal-dialog
+    .modal-content.view-modal-content
+
+.modal.fade id='new_code_review_modal'
+  .modal-dialog
+    .modal-content.new-modal-content
