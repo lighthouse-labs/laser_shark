@@ -34,16 +34,16 @@
         - if admin?
           dt.teacher-mentor-status data-id='#{@teacher.id}'
             | Mentor?
-          - if @teacher.is_mentor?
+          - if @teacher.mentor?
             .btn.btn-warning.btn-xs.remove-mentor-button
               | Remove
             .btn.btn-primary.btn-xs.make-mentor-button.hidden-button
               | Add
           - else 
             .btn.btn-warning.btn-xs.remove-mentor-button.hidden-button
-              | Remove
+              | Disable
             .btn.btn-primary.btn-xs.make-mentor-button
-              | Add
+              | Enable
 
 .modal.fade id="teacher_feedback_modal"
   .modal-dialog
