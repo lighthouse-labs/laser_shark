@@ -42,12 +42,12 @@ LaserShark::Application.routes.draw do
   resources :incomplete_activities, only: [:index]
   resources :search_activities, only: [:index]
 
-  resources :code_reviews, only: [:destroy] do
-    member do
-      post :end
-      get :view_code_review_modal
-    end
-  end
+  # resources :code_reviews, only: [:destroy] do
+  #   member do
+  #     post :end
+  #     get :view_code_review_modal
+  #   end
+  # end
 
   # CONTENT BROWSING
   resources :days, param: :number, only: [:show] do
@@ -65,9 +65,8 @@ LaserShark::Application.routes.draw do
 
   resources :cohorts, only: [] do
     resources :students, only: [:index]    # cohort_students_path(@cohort)
-    member do
-      get :code_reviews
-    end
+    resources :code_reviews
+
     put :switch_to, on: :member
   end
 

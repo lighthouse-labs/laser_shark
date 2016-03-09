@@ -1,27 +1,47 @@
 class CodeReviewsController < ApplicationController
 
   before_filter :teacher_required
-  before_filter :load_student
+  before_action :load_cohort
+  # before_filter :load_student
 
-  def create
-    @code_review_request = CodeReviewRequest.new(requestor: @student, activity_submission_id: params[:activity_submission_id])
-    @code_review_request.save!
-    @code_review_request.start_assistance(current_user)
-    @code_review = @code_review_request.reload.assistance
-    @code_review.end(params[:code_review][:notes], params[:code_review][:rating].to_i, params[:code_review][:student_notes])
-    UserMailer.new_code_review_message(@code_review).deliver if params[:activity_submission_id]
-    redirect_to :back
+  def index
+    @students = @cohort.students
   end
 
-  def view_code_review_modal
-    @code_review_assistance = CodeReview.find(params[:id])
-    render layout: false
+  def show
+    @code_review = Assistance.find(params[:id])
+    render :show_modal, layout: false
+  end
+
+  def new
+    @student = @cohort.students.find params[:student_id]
+    @activity_submissions = @student.non_code_reviewed_activity_submissions
+    @assistance = Assistance.new(assistor: current_user, assistee: @student)
+    render :new_modal, layout: false
+  end
+
+  def create
+    code_review_request = CodeReviewRequest.new(
+      requestor_id: params[:assistance][:assistee_id], 
+      activity_submission_id: params[:activity_submission_id]
+    )
+
+    code_review_request.save!
+    code_review_request.start_assistance(current_user)
+    code_review = code_review_request.reload.assistance
+    code_review.end(params[:assistance][:notes], params[:assistance][:rating].to_i, params[:assistance][:student_notes])
+
+    redirect_to :back
   end
 
   private
 
   def teacher_required
     redirect_to(:root, alert: 'Not allowed') unless teacher?
+  end
+
+  def load_cohort
+    @cohort = Cohort.find params[:cohort_id]
   end
 
   def load_student

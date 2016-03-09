@@ -28,6 +28,7 @@ class Assistance < ActiveRecord::Base
     self.assistee.last_assisted_at = Time.now
     if assistance_request.instance_of?(CodeReviewRequest) && !rating.nil? && !assistee.code_review_percent.nil?
       assistee.code_review_percent += Assistance::RATING_BASELINE - rating
+      UserMailer.new_code_review_message(self).deliver
     end
 
     self.assistee.save.tap do

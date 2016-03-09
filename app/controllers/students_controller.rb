@@ -13,12 +13,6 @@ class StudentsController < ApplicationController
     @students = @cohort.students.active
   end
 
-  def new_code_review_modal
-    @activity_submissions = @student.non_code_reviewed_activity_submissions
-    @assistance = CodeReview.new(assistor: current_user, assistee: @student)
-    render layout: false
-  end
-
   private
 
   def disallow_unless_enrolled
