@@ -8,7 +8,7 @@ table.table.code-review-table
     tr
       th Student
       - 12.times do |i|
-        th.code-review-button-holder = "Review #{i + 1}"
+        th.code-review-button-holder = i + 1
   tbody
     - @students.each do |student|
       tr
