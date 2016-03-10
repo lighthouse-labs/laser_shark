@@ -1,6 +1,9 @@
-- unless current_user.prepping? || current_user.prospect?
+- unless current_user.prepping? || current_user.prospect? || @activity.prep?
   - content_for :side_nav do
     == render 'layouts/side_nav'
+- if @activity.prep?
+  - content_for :prep_nav do
+    == render 'layouts/prep_nav'
 
 section.activity-details
   h1 = @activity.name
@@ -72,7 +75,7 @@ section.activity-details
               i.fa.fa-check
               | &nbsp;Submit
           = form_for @activity_submission, url: activity_activity_submission_path(@activity), method: :post, html: { class: 'form-inline activity-submission-form' }  do |f|
-            - if @activity.allow_submissions? && current_user.cohort.location.has_code_reviews?
+            - if @activity.allow_submissions? && (current_user.cohort && current_user.cohort.location.has_code_reviews?)
               | &nbsp;
               input name="github_url" type="hidden" id="hidden_github_url_input"
               input name="code_review" type="hidden" value="true"

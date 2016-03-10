@@ -46,6 +46,10 @@ class Activity < ActiveRecord::Base
     type != 'Lecture' && type != 'Test'
   end
 
+  def prep?
+    day.include?('prep')
+  end
+
   protected
 
   def add_revision_to_gist
