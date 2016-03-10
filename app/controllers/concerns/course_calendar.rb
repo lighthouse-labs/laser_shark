@@ -54,7 +54,7 @@ module CourseCalendar
   end
 
   def allowed_day?
-    return true if params[:day_number].include?("prep")
+    return true if params[:day_number] && params[:day_number].include?("prep")
     # return true if day == 'setup' # setup always allowed, for now - KV
     unless current_user.can_access_day?(day)
       if today?

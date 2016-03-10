@@ -18,6 +18,7 @@
 //= require ace-rails-ap
 //= require ace/theme-monokai
 //= require ace/mode-markdown
+//= require ace/mode-javascript
 //= require theme-monokai
 
 //= require default
