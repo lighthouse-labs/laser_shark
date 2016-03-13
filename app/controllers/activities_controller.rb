@@ -5,6 +5,7 @@ class ActivitiesController < ApplicationController
   before_action :require_activity, only: [:show, :edit, :update]
   before_action :teacher_required, only: [:new, :create, :edit, :update]
   before_action :check_if_day_unlocked, only: [:show]
+  before_action :load_activity_test, only: [:new, :edit]
 
   def new
     @activity = Activity.new(day: params[:day_number])
@@ -38,7 +39,7 @@ class ActivitiesController < ApplicationController
   end
 
   def edit
-    binding.pry
+    day
   end
 
   def update
@@ -64,7 +65,8 @@ class ActivitiesController < ApplicationController
       :day,
       :gist_url,
       :media_filename,
-      :code_review_percent
+      :code_review_percent,
+      activity_test_attributes: [:id, :test, :activity_id]
     )
   end
 
@@ -80,6 +82,10 @@ class ActivitiesController < ApplicationController
     if student?
       redirect_to day_path('today'), alert: 'Not allowed' unless @activity.day == params[:day_number]
     end
+  end
+
+  def load_activity_test
+    @activity_test = params[:id] ? require_activity.activity_test : ActivityTest.new
   end
 
 end

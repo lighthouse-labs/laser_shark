@@ -1,0 +1,35 @@
+- content_for :end_of_body do
+  css:
+    .editor {
+      width: 100%;
+      height: 300px;
+      margin-bottom: 10px;
+    }
+  javascript:
+    function initEditors() {
+      var instructionsEditor = ace.edit("instructions-editor");
+      var notesEditor = ace.edit("notes-editor");
+      var testEditor = ace.edit("test-editor");
+
+      instructionsEditor.setTheme("ace/theme/monokai");
+      notesEditor.setTheme("ace/theme/monokai");
+      testEditor.setTheme("ace/theme/monokai");
+
+      instructionsEditor.getSession().setMode("ace/mode/markdown");
+      notesEditor.getSession().setMode("ace/mode/markdown");
+      testEditor.getSession().setMode("ace/mode/javascript");
+
+      instructionsEditor.setValue($('#instructions_content').text())
+      notesEditor.setValue($('#notes_content').text())
+      testEditor.setValue($('#test_content').text())
+
+      $('#activity-form').submit(function(evt) {
+        evt.preventDefault();
+        
+        $('#activity-instructions').val(instructionsEditor.getValue());
+        $('#activity-notes').val(notesEditor.getValue());
+        $('#activity_activity_test_attributes_test').val(testEditor.getValue());
+        this.submit();
+      });
+    }
+    $(initEditors); // regular document ready

@@ -32,6 +32,7 @@ gem 'actioncable', github: "rails/actioncable"
 gem 'email_validator'
 
 gem 'redcarpet'
+gem 'teaspoon'
 
 gem 'omniauth'
 gem 'omniauth-github'

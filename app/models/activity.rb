@@ -17,6 +17,9 @@ class Activity < ActiveRecord::Base
   has_many :messages, -> { order(created_at: :desc) }, class_name: 'ActivityMessage'
   has_many :recordings, -> { order(created_at: :desc) }
   has_many :feedbacks, as: :feedbackable
+  
+  has_one :activity_test
+  accepts_nested_attributes_for :activity_test
 
   # Given the start_time and duration, return the end_time
   def end_time

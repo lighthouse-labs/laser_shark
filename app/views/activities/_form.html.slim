@@ -19,3 +19,5 @@ hr
 
 = f.hidden_field :instructions, id: 'activity-instructions'
 = f.hidden_field :teacher_notes, id: 'activity-notes'
+= f.simple_fields_for :activity_test, @activity_test do |test|
+  = test.hidden_field :test

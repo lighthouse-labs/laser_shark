@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151222204232) do
+ActiveRecord::Schema.define(version: 20160310220043) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -65,6 +65,11 @@ ActiveRecord::Schema.define(version: 20151222204232) do
   add_index "activity_submissions", ["activity_id"], name: "index_activity_submissions_on_activity_id", using: :btree
   add_index "activity_submissions", ["user_id"], name: "index_activity_submissions_on_user_id", using: :btree
 
+  create_table "activity_tests", force: :cascade do |t|
+    t.text    "test"
+    t.integer "activity_id"
+  end
+
   create_table "assistance_requests", force: :cascade do |t|
     t.integer  "requestor_id"
     t.integer  "assistor_id"
@@ -91,6 +96,12 @@ ActiveRecord::Schema.define(version: 20151222204232) do
     t.datetime "updated_at"
     t.integer  "assistee_id"
     t.integer  "rating"
+    t.text     "student_notes"
+  end
+
+  create_table "code_reviews", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "cohorts", force: :cascade do |t|
@@ -105,18 +116,6 @@ ActiveRecord::Schema.define(version: 20151222204232) do
   end
 
   add_index "cohorts", ["program_id"], name: "index_cohorts_on_program_id", using: :btree
-
-  create_table "comments", force: :cascade do |t|
-    t.text     "content"
-    t.integer  "commentable_id"
-    t.string   "commentable_type", limit: 255
-    t.integer  "user_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "comments", ["commentable_id", "commentable_type"], name: "index_comments_on_commentable_id_and_commentable_type", using: :btree
-  add_index "comments", ["user_id"], name: "index_comments_on_user_id", using: :btree
 
   create_table "day_feedbacks", force: :cascade do |t|
     t.string   "mood",                limit: 255
@@ -160,6 +159,15 @@ ActiveRecord::Schema.define(version: 20151222204232) do
     t.boolean  "has_code_reviews",             default: true
   end
 
+  create_table "objectives", force: :cascade do |t|
+    t.integer "activity_id"
+    t.integer "outcome_id"
+  end
+
+  create_table "outcomes", force: :cascade do |t|
+    t.string "description"
+  end
+
   create_table "programs", force: :cascade do |t|
     t.string   "name",              limit: 255
     t.text     "lecture_tips"
@@ -189,6 +197,14 @@ ActiveRecord::Schema.define(version: 20151222204232) do
     t.string   "wowza_id",    limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "teacher_shifts", force: :cascade do |t|
+    t.date    "date"
+    t.integer "number"
+    t.integer "location_id"
+    t.integer "teacher_id"
+    t.string  "type"
   end
 
   create_table "users", force: :cascade do |t|
@@ -223,7 +239,7 @@ ActiveRecord::Schema.define(version: 20151222204232) do
     t.integer  "location_id"
     t.boolean  "on_duty",                            default: false
     t.integer  "mentor_id"
-    t.boolean  "mentor",                             default: false
+    t.boolean  "is_mentor",                          default: false
   end
 
   add_index "users", ["cohort_id"], name: "index_users_on_cohort_id", using: :btree
