@@ -85,7 +85,11 @@ class ActivitiesController < ApplicationController
   end
 
   def load_activity_test
-    @activity_test = params[:id] ? require_activity.activity_test : ActivityTest.new
+    if params[:id] && require_activity.try(:activity_test)
+      @activity_test = require_activity.activity_test 
+    else
+      @activity_test = ActivityTest.new
+    end
   end
 
 end
