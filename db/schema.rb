@@ -117,6 +117,18 @@ ActiveRecord::Schema.define(version: 20160310220043) do
 
   add_index "cohorts", ["program_id"], name: "index_cohorts_on_program_id", using: :btree
 
+  create_table "comments", force: :cascade do |t|
+    t.text     "content"
+    t.integer  "commentable_id"
+    t.string   "commentable_type", limit: 255
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "comments", ["commentable_id", "commentable_type"], name: "index_comments_on_commentable_id_and_commentable_type", using: :btree
+  add_index "comments", ["user_id"], name: "index_comments_on_user_id", using: :btree
+
   create_table "day_feedbacks", force: :cascade do |t|
     t.string   "mood",                limit: 255
     t.string   "title",               limit: 255
@@ -159,15 +171,6 @@ ActiveRecord::Schema.define(version: 20160310220043) do
     t.boolean  "has_code_reviews",             default: true
   end
 
-  create_table "objectives", force: :cascade do |t|
-    t.integer "activity_id"
-    t.integer "outcome_id"
-  end
-
-  create_table "outcomes", force: :cascade do |t|
-    t.string "description"
-  end
-
   create_table "programs", force: :cascade do |t|
     t.string   "name",              limit: 255
     t.text     "lecture_tips"
@@ -197,14 +200,6 @@ ActiveRecord::Schema.define(version: 20160310220043) do
     t.string   "wowza_id",    limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
-  end
-
-  create_table "teacher_shifts", force: :cascade do |t|
-    t.date    "date"
-    t.integer "number"
-    t.integer "location_id"
-    t.integer "teacher_id"
-    t.string  "type"
   end
 
   create_table "users", force: :cascade do |t|
@@ -239,7 +234,7 @@ ActiveRecord::Schema.define(version: 20160310220043) do
     t.integer  "location_id"
     t.boolean  "on_duty",                            default: false
     t.integer  "mentor_id"
-    t.boolean  "is_mentor",                          default: false
+    t.boolean  "mentor",                             default: false
   end
 
   add_index "users", ["cohort_id"], name: "index_users_on_cohort_id", using: :btree

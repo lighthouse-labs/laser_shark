@@ -1,0 +1,37 @@
+#mocha {
+
+  margin-top: 50px;
+
+  .progress, .duration {
+    display: none;
+  }
+
+  ul {
+    list-style: none;
+  }
+
+  #mocha-report {
+
+    h1 {
+      font-size: 30px;
+    }
+
+    ul { 
+
+      h2 {
+        font-size: 15px;
+      }
+
+      a {
+        display: none;
+      }  
+
+      .error {
+        font-size: 9px;
+        color: red;
+        height: 31px;
+        overflow: hidden;
+      }
+    }
+  }
+}

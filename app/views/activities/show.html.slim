@@ -4,6 +4,7 @@
 - if @activity.prep?
   - content_for :prep_nav do
     == render 'layouts/prep_nav'
+    #mocha
 
 section.activity-details
   h1 = @activity.name
@@ -181,6 +182,8 @@ section.activity-details
                 i.fa.fa-edit
               = link_to activity_message_path(@activity, msg), method: :delete, confirm: 'Sure ,lad?', class: 'delete'
                 i.fa.fa-times
+
+  = render "prep_section", activity: @activity if @activity.prep?
 
 .modal.fade id="feedback_modal"
   .modal-dialog
