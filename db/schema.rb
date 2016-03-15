@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160202163904) do
+ActiveRecord::Schema.define(version: 20160310220043) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -71,6 +71,11 @@ ActiveRecord::Schema.define(version: 20160202163904) do
 
   add_index "activity_submissions", ["activity_id"], name: "index_activity_submissions_on_activity_id", using: :btree
   add_index "activity_submissions", ["user_id"], name: "index_activity_submissions_on_user_id", using: :btree
+
+  create_table "activity_tests", force: :cascade do |t|
+    t.text    "test"
+    t.integer "activity_id"
+  end
 
   create_table "assistance_requests", force: :cascade do |t|
     t.integer  "requestor_id"
@@ -139,7 +144,7 @@ ActiveRecord::Schema.define(version: 20160202163904) do
   end
 
   create_table "day_infos", force: :cascade do |t|
-    t.string   "day"
+    t.string   "day",         limit: 255
     t.text     "description"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -152,29 +157,24 @@ ActiveRecord::Schema.define(version: 20160202163904) do
     t.integer  "style_rating"
     t.text     "notes"
     t.integer  "feedbackable_id"
-    t.string   "feedbackable_type"
+    t.string   "feedbackable_type", limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
     t.float    "rating"
   end
 
-  create_table "learning_objectives", force: :cascade do |t|
-    t.string   "category"
-    t.string   "title"
-    t.string   "description"
-    t.string   "keywords"
-    t.string   "priority"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
-  end
-
   create_table "locations", force: :cascade do |t|
-    t.string   "name"
+    t.string   "name",             limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "calendar"
-    t.string   "timezone"
-    t.boolean  "has_code_reviews", default: true
+    t.string   "calendar",         limit: 255
+    t.string   "timezone",         limit: 255
+    t.boolean  "has_code_reviews",             default: true
+  end
+
+  create_table "objectives", force: :cascade do |t|
+    t.integer "activity_id"
+    t.integer "outcome_id"
   end
 
   create_table "outcomes", force: :cascade do |t|
@@ -191,7 +191,7 @@ ActiveRecord::Schema.define(version: 20160202163904) do
     t.datetime "updated_at"
     t.string   "recordings_folder", limit: 255
     t.string   "recordings_bucket", limit: 255
-    t.string   "tag"
+    t.string   "tag",               limit: 255
   end
 
   create_table "recordings", force: :cascade do |t|
@@ -224,6 +224,14 @@ ActiveRecord::Schema.define(version: 20160202163904) do
     t.datetime "updated_at"
   end
 
+  create_table "teacher_shifts", force: :cascade do |t|
+    t.date    "date"
+    t.integer "number"
+    t.integer "location_id"
+    t.integer "teacher_id"
+    t.string  "type"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string   "first_name",             limit: 255
     t.string   "last_name",              limit: 255
@@ -248,11 +256,11 @@ ActiveRecord::Schema.define(version: 20160202163904) do
     t.datetime "updated_at"
     t.integer  "code_review_percent",                default: 80
     t.boolean  "admin",                              default: false, null: false
-    t.string   "company_name"
-    t.string   "company_url"
+    t.string   "company_name",           limit: 255
+    t.string   "company_url",            limit: 255
     t.text     "bio"
-    t.string   "quirky_fact"
-    t.string   "specialties"
+    t.string   "quirky_fact",            limit: 255
+    t.string   "specialties",            limit: 255
     t.integer  "location_id"
     t.boolean  "on_duty",                            default: false
     t.integer  "mentor_id"
