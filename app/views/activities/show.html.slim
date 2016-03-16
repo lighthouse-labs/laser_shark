@@ -4,7 +4,13 @@
 - if @activity.prep?
   - content_for :prep_nav do
     == render 'layouts/prep_nav'
-    #mocha
+    #linter.hidden
+      h3 Lint Results
+      ul
+
+    #test_holder.hidden
+      h3 Test Results
+      #mocha
 
 section.activity-details
   h1 = @activity.name

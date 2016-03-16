@@ -20,6 +20,8 @@
 //= require ace/mode-markdown
 //= require ace/mode-javascript
 //= require theme-monokai
+//= require jslint
+//= require eslint
 
 //= require default
 
