@@ -4,8 +4,7 @@ $(function() {
     $('#search-bar-input-display').autocomplete({
       source: data,
       autoFocus: true,
-      select: select,
-      focus: focus
+      select: select
     }).autocomplete('instance')._renderItem = render;
     $( '#search-bar-input-display' ).autocomplete( "option", "appendTo", ".activities-autocomplete-selections" );
   }
@@ -28,12 +27,13 @@ $(function() {
         .appendTo(ul);
   }
 
-  $('#search-bar-input-display').click(function() {
+  $('#search-bar-input-display').on('keyup', function(event){
     $.ajax({
       dataType: 'json',
       method: 'GET',
-      url: window.location.pathname + '/autocomplete.json',
+      url: window.location.pathname + '/autocomplete.json?search_term=' + event.target.value,
       success: function (response) {
+        console.log(response)
         dataProvider(response.outcomes);
       },
       error: function (response) {
@@ -41,4 +41,37 @@ $(function() {
       }
     });
   });
+
+  // //setup before functions
+  // var typingTimer;                //timer identifier
+  // var doneTypingInterval = 2500;  //time in ms, 5 second for example
+  // var $input = $('#search-bar-input-display');
+
+  // //on keyup, start the countdown
+  // $input.on('keyup', function (event) {
+  //   clearTimeout(typingTimer);
+  //   typingTimer = setTimeout(doneTyping(event.target.value), doneTypingInterval);
+  // });
+
+  // //on keydown, clear the countdown 
+  // $input.on('keydown', function () {
+  //   clearTimeout(typingTimer);
+  // });
+
+  // //user is "finished typing," do something
+  // function doneTyping (value) {
+  //   $.ajax({
+  //     dataType: 'json',
+  //     method: 'GET',
+  //     url: window.location.pathname + '/autocomplete.json?search_term=' + value,
+  //     success: function (response) {
+  //       // console.log(response)
+  //       dataProvider(response.outcomes);
+  //     },
+  //     error: function (response) {
+  //       console.log('Autocomplete malfunctioned.', response)
+  //     }
+  //   });
+  // }
+
 });

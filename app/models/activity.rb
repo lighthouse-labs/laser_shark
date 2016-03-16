@@ -7,7 +7,7 @@ class Activity < ActiveRecord::Base
 
   scope :chronological, -> { order(:start_time) }
   scope :for_day, -> (day) { where(day: day.to_s) }
-  scope :search, -> (query) { where("lower(name) LIKE ?", "%"+query.downcase+"%") }
+  scope :search, -> (query) { where("lower(name) LIKE ? or lower(day) LIKE ?", "%"+query.downcase+"%", "%"+query.downcase+"%") }
 
   # Below hook should really be after_save (create and update)
   # However, when seeding/mass-creating activties, github API will return error
@@ -18,8 +18,8 @@ class Activity < ActiveRecord::Base
   has_many :recordings, -> { order(created_at: :desc) }
   has_many :feedbacks, as: :feedbackable
 
-  has_many :activities_outcomes, dependent: :destroy
-  has_many :outcomes, through: :activities_outcomes
+  has_many :activity_outcomes, dependent: :destroy
+  has_many :outcomes, through: :activity_outcomes
 
   # Given the start_time and duration, return the end_time
   def end_time

@@ -100,15 +100,27 @@ LaserShark::Application.routes.draw do
       end
     end
 
-    resources :categories do
-      resources :skills do
-        resources :outcomes do
-          get '/autocomplete' => 'outcomes#autocomplete'
-          resources :activities, only: [:destroy]
-            post '/add_to_outcome' => 'activities#add_to_outcome'
+    resources :categories do 
+      resources :outcomes do 
+        member do 
+          get :autocomplete
         end
       end
     end
+
+    resources :skills
+    resources :activity_outcomes
+    resources :outcome_skills
+
+    # resources :categories do
+    #   resources :skills do
+    #     resources :outcomes do
+    #       get '/autocomplete' => 'outcomes#autocomplete'
+    #       resources :activities, only: [:destroy]
+    #         post '/add_to_outcome' => 'activities#add_to_outcome'
+    #     end
+    #   end
+    # end
   end
 
   # To test 500 error notifications on production

@@ -6,9 +6,6 @@ class Admin::CategoriesController < ApplicationController
     @categories = Category.all
   end
 
-  def edit
-  end
-
   def create
     @category = Category.new(category_params)
     if @category.save
@@ -27,8 +24,7 @@ class Admin::CategoriesController < ApplicationController
   end
 
   def show
-    @parent = @category
-    @children = @category.skills
+    @outcomes = @category.outcomes
   end
 
   def destroy

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160310220043) do
+ActiveRecord::Schema.define(version: 20160315205656) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -35,13 +35,6 @@ ActiveRecord::Schema.define(version: 20160310220043) do
     t.boolean  "allow_feedback",                  default: true
   end
 
-  create_table "activities_outcomes", force: :cascade do |t|
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
-    t.integer  "outcome_id"
-    t.integer  "activity_id"
-  end
-
   create_table "activity_messages", force: :cascade do |t|
     t.integer  "user_id"
     t.integer  "cohort_id"
@@ -59,6 +52,13 @@ ActiveRecord::Schema.define(version: 20160310220043) do
   add_index "activity_messages", ["activity_id"], name: "index_activity_messages_on_activity_id", using: :btree
   add_index "activity_messages", ["cohort_id"], name: "index_activity_messages_on_cohort_id", using: :btree
   add_index "activity_messages", ["user_id"], name: "index_activity_messages_on_user_id", using: :btree
+
+  create_table "activity_outcomes", force: :cascade do |t|
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.integer  "outcome_id"
+    t.integer  "activity_id"
+  end
 
   create_table "activity_submissions", force: :cascade do |t|
     t.integer  "user_id"
@@ -177,11 +177,16 @@ ActiveRecord::Schema.define(version: 20160310220043) do
     t.integer "outcome_id"
   end
 
+  create_table "outcome_skills", force: :cascade do |t|
+    t.integer "outcome_id"
+    t.integer "skill_id"
+  end
+
   create_table "outcomes", force: :cascade do |t|
     t.string   "text"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.integer  "skill_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.integer  "category_id"
   end
 
   create_table "programs", force: :cascade do |t|

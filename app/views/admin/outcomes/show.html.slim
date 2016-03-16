@@ -5,19 +5,14 @@ ul.breadcrumb
   li = link_to @category.text,
                [:admin, @category],
                method: :get
-  li skills
+  li Outcomes
 
-  li = link_to @skill.text,
-               [:admin, @category, @skill],
-               method: :get
-  li outcomes
-
-  li = link_to @outcome.text,
+  li = link_to truncate(@outcome.text),
                [:admin, @category, @skill, @outcome],
                method: :get
-  li activities
+  li Activities
 
-h1 = @parent.text
+h5 = @outcome.text
 hr
 
 .actions.well
@@ -27,13 +22,12 @@ hr
 table.table
   thead
     tr
-      th Content
+      th Name
       th Type
       th Day
-      th Code Review %
 
   tbody
-    = render partial: 'activity', collection: @children
+    = render partial: 'activity', collection: @activities
 
 .modal.fade#create-outcome_activity-modal
   .modal-dialog
@@ -45,18 +39,16 @@ table.table
           span.sr-only
             | Close
         h4.modal-title
-          |
-      = form_tag admin_category_skill_outcome_add_to_outcome_path(@parent.skill.category, @parent.skill, @parent), method: 'post', id: 'create-outcome_activity-modal-input' do
-        .modal-body
-          .form-group
-            .ui-widget
-              label for="search-bar-input"
-              = text_field_tag 'activity[id]', params[:query], id: 'search-bar-input-display', class: 'form-control ui-autocomplete-input', placeholder: 'Activity....'
-              = text_field_tag 'activity[id]', params[:query], id: 'search-bar-input-selection', class: 'form-control', type: "hidden"
-            .activities-autocomplete-selections.ui-autocomplete#menu
-        .modal-footer
-          button.btn.btn-default type='button' data-dismiss='modal'
-            | Cancel
-          = submit_tag 'Select Activity', class: 'btn btn-primary create-outcome_activity-button'
-
-javascript:
+          | Add a new activity
+        = form_tag admin_activity_outcomes_path, method: 'post', id: 'create-outcome_activity-modal-input' do
+          .modal-body
+            .form-group
+              .ui-widget
+                label for="search-bar-input"
+                = text_field_tag 'activity[id]', params[:query], id: 'search-bar-input-display', class: 'form-control ui-autocomplete-input', placeholder: 'Enter an activity or day'
+                = text_field_tag 'activity[id]', params[:query], id: 'search-bar-input-selection', class: 'form-control', type: "hidden"
+              .activities-autocomplete-selections.ui-autocomplete#menu
+      .modal-footer
+        button.btn.btn-default type='button' data-dismiss='modal'
+          | Cancel
+        = submit_tag 'Add', class: 'btn btn-primary create-outcome_activity-button'

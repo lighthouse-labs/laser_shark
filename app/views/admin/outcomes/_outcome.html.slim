@@ -1,11 +1,11 @@
 tr
   td = link_to outcome.text,
-               admin_category_skill_outcome_path(outcome.skill.category, outcome.skill, outcome),
+               admin_category_outcome_path(outcome.category, outcome),
                method: :get
   td
-    = link_to 'Edit', edit_admin_category_skill_outcome_path(outcome.skill.category, outcome.skill, outcome)
+    = link_to 'Edit', edit_admin_category_outcome_path(outcome.category, outcome)
   td
     = link_to 'Delete',
-              admin_category_skill_outcome_path(outcome.skill.category, outcome.skill, outcome),
+              admin_category_outcome_path(outcome.category, outcome),
               data: { confirm: "This delete will cascade all the way through it's children. \nAre you sure you want to delete?" },
               method: 'delete'
