@@ -80,6 +80,13 @@ section.activity-details
                 i.fa.fa-check
                 | &nbsp;Submit & Code Review
 
+  - if !@activity.outcomes.empty?
+    h4
+      |Learning Objectives:
+    ul
+      - @activity.outcomes.each do |outcome|
+        li = outcome.text
+
   - if teacher?
     .collapse#student-progress
       table.table

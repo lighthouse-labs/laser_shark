@@ -5,10 +5,13 @@ ul.breadcrumb
   li = link_to @category.text,
                [:admin, @category],
                method: :get
-  li Outcomes
+
+  li = link_to 'Outcomes',
+               [:admin, @category],
+               method: :get
 
   li = link_to truncate(@outcome.text),
-               [:admin, @category, @skill, @outcome],
+               [:admin, @category, @outcome],
                method: :get
   li Activities
 
