@@ -7,9 +7,6 @@ class Admin::SkillsController < ApplicationController
     @skills = Skill.all
   end
 
-  def edit
-  end
-
   def create
     @skill = Skill.new(skill_params)
     if @skill.save

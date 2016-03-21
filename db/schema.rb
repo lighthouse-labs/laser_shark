@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160315205656) do
+ActiveRecord::Schema.define(version: 20160317205757) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -214,12 +214,10 @@ ActiveRecord::Schema.define(version: 20160315205656) do
 
   create_table "skills", force: :cascade do |t|
     t.string   "text"
-    t.integer  "category_id"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer  "outcome_id"
   end
-
-  add_index "skills", ["category_id"], name: "index_skills_on_category_id", using: :btree
 
   create_table "streams", force: :cascade do |t|
     t.string   "title",       limit: 255
@@ -274,5 +272,4 @@ ActiveRecord::Schema.define(version: 20160315205656) do
 
   add_index "users", ["cohort_id"], name: "index_users_on_cohort_id", using: :btree
 
-  add_foreign_key "skills", "categories"
 end

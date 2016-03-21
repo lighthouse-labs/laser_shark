@@ -11,34 +11,20 @@ h1 = @category.text
 hr
 
 .actions.well
-  .btn.btn-primary.btn-sm.create-category-outcome-modal-button data-toggle="modal" data-target="#create-category-outcome-modal"
+  .btn.btn-primary.btn-sm data-toggle="modal" data-target="#new-category-outcome-modal"
     | New Outcome
 
 table.table
   thead
     tr
-      th Content
+      th Outcome
+      th Skills
+      th Total Activities
 
   tbody
     = render @outcomes
 
-.modal.fade#create-category-outcome-modal
-  .modal-dialog
-    .modal-content.create-category-outcome-modal
-      .modal-header
-        button.close type='button' data-dismiss='modal'
-          span aria-hidden='true'
-            | &times;
-          span.sr-only
-            | Close
-        h4.modal-title
-          | Enter a new outcome
-      = form_tag admin_category_outcomes_path(@category), method: 'post', id: 'create-category-outcome-modal-input' do
+= render 'new_outcome_modal', outcome: Outcome.new, category: @category
 
-        .modal-body
-          .form-group
-            = text_area_tag("outcome[text]", nil, placeholder: 'Enter new outcome', required: true, class: 'form-control')
-        .modal-footer
-          button.btn.btn-default type='button' data-dismiss='modal'
-            | Cancel
-          = submit_tag 'Create', class: 'btn btn-primary create-category-outcome-button'
+- @outcomes.each do |outcome|
+  = render 'edit_outcome_modal', outcome: outcome

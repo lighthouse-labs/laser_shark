@@ -1,0 +1,19 @@
+.modal.fade id="category-modal"
+  .modal-dialog
+    .modal-content.create-category-outcome-modal
+      = form_for(@category, url: admin_categories_path(@category), html: {id: 'category-form', class: 'form-group'}) do |f|
+        .modal-header
+          button.close type='button' data-dismiss='modal'
+            span aria-hidden='true'
+              | &times;
+          h4.modal-title
+            | Category
+
+        .modal-body
+          .form-group
+            = f.label :text, "Name:"
+            = f.text_field :text, class: 'form-control'
+          
+        .modal-footer
+          button.btn.btn-default type='button' data-dismiss='modal' Cancel
+          = f.submit 'Create', class: 'btn btn-primary create-outcome-activity-button'

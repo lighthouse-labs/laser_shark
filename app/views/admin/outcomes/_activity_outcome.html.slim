@@ -1,0 +1,8 @@
+tr
+  td = activity_outcome.activity.name
+  td = activity_outcome.activity.type
+  td = activity_outcome.activity.day.upcase
+  td
+    = link_to 'Delete', 
+    admin_activity_outcome_path(activity_outcome), 
+    method: 'delete', class: 'btn btn-danger activity-outcome-button'

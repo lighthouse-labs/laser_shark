@@ -3,7 +3,8 @@ class Admin::CategoriesController < ApplicationController
   before_action :require_category, only: [:show, :edit, :update, :destroy]
 
   def index
-    @categories = Category.all
+    @categories = Category.all.includes(:outcomes)
+    @category = Category.new
   end
 
   def create
@@ -18,6 +19,7 @@ class Admin::CategoriesController < ApplicationController
   def update
     if @category.update(category_params)
       redirect_to [:admin, :categories]
+    # This needs to change
     else
       render :edit
     end
@@ -35,7 +37,7 @@ class Admin::CategoriesController < ApplicationController
   private
 
   def require_category
-    @category = Category.find params[:id]
+    @category = Category.includes(:outcomes).find params[:id]
   end
 
   def category_params
