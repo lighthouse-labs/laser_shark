@@ -1,5 +1,5 @@
 tr
-  td = activity_outcome.activity.name
+  td = link_to activity_outcome.activity.name, day_activity_path(activity_outcome.activity.day, activity_outcome.activity), method: :get
   td = activity_outcome.activity.type
   td = activity_outcome.activity.day.upcase
   td

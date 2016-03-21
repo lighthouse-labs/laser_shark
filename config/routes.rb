@@ -102,7 +102,6 @@ LaserShark::Application.routes.draw do
 
     #Outcomes CRUD
     resources :activity_outcomes
-    resources :skills
     resources :categories do 
       resources :outcomes do 
         member do 

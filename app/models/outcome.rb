@@ -4,8 +4,6 @@ class Outcome < ActiveRecord::Base
   has_many :skills
   has_many :activity_outcomes, dependent: :destroy
   has_many :activities, through: :activity_outcomes
-  # has_many :outcome_skills, dependent: :destroy
-  # has_many :skills, through: :outcome_skills
   
   accepts_nested_attributes_for :skills, allow_destroy: true
 

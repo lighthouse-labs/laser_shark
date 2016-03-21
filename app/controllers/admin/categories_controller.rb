@@ -17,12 +17,10 @@ class Admin::CategoriesController < ApplicationController
   end
 
   def update
-    if @category.update(category_params)
-      redirect_to [:admin, :categories]
-    # This needs to change
-    else
-      render :edit
+    if !@category.update(category_params)
+      flash[:notice] = "Category not updated: #{@category.errors.full_messages[0]}"
     end
+    redirect_to [:admin, :categories]
   end
 
   def show
