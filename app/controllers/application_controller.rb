@@ -86,13 +86,7 @@ class ApplicationController < ActionController::Base
     @cohorts ||= Cohort.most_recent
   end
   helper_method :cohorts
-
-  def code_review_cohorts
-    # The new code review process was started in Jan 2016
-    @code_review_cohorts ||= Cohort.where('start_date > ?', '01-01-2016')
-  end
-  helper_method :code_review_cohorts
-
+  
   def dropdown_cohorts
     @dropdown_cohorts = cohorts.starts_between(3.months.ago.to_date, 2.weeks.from_now.to_date).group_by(&:location)
   end

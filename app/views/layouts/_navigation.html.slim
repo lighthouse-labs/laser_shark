@@ -77,9 +77,12 @@ nav.navbar.navbar-inverse.navbar-fixed-top role="navigation"
               b.caret
             span.dropdown-arrow
             ul.dropdown-menu
-              - code_review_cohorts.each do |cohort|
-                li
-                  = link_to cohort_link(cohort), [cohort, :code_reviews]
+              - dropdown_cohorts.each do |location, cohorts|
+                li.divider-title = location.name  
+                li.divider[role="separator"]
+                - cohorts.each do |c| 
+                  li class=(c == cohort ? 'active' : '')
+                    = link_to c.name, [cohort, :code_reviews]
         - if admin?
           li.dropdown
             = link_to '#', :class => 'dropdown-toggle', :'data-toggle' => 'dropdown', title: 'Admin'

@@ -104,6 +104,10 @@ class User < ActiveRecord::Base
     "#{self.first_name} #{self.last_name}"
   end
 
+  def initials
+    "#{self.first_name.first}#{self.last_name.first}"
+  end
+
   def incomplete_activities
     Activity.where.not(id: self.activity_submissions.select(:activity_id)).where("day < ?", CurriculumDay.new(Date.today, cohort).to_s).order(:day).reverse
   end

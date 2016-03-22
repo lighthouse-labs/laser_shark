@@ -3,13 +3,19 @@
     span aria-hidden="true"
       | &times;
   h4.modal-title Code Review by
-                <small><i>#{@code_review.assistor.first_name + ' ' + @code_review.assistor.last_name}</i></small>
-  .container-teacher
-    img src="#{@code_review.assistor.avatar_url}" class='teacher-avatar'
+                <small>
+                  <i>#{@code_review.assistor.first_name + ' ' + @code_review.assistor.last_name}</i> - #{@code_review.created_at.to_date}
+                </small>
 
 .modal-body
-  .code-review-rating
-    | <b class='heading'>Rating:</b> #{@code_review.rating}/4
+  .row
+    .container-teacher.col-md-2
+      img src="#{@code_review.assistor.avatar_url}" class='teacher-avatar'
+
+    .col-md-10.activity-holder
+      = @code_review.assistance_request.activity_submission.activity.name
+      .code-review-rating
+        | <b class='heading'>Rating:</b> #{@code_review.rating} / 4
 
   .code-review-teacher-notes
     - if @code_review.notes.empty?

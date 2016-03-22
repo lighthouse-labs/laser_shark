@@ -14,22 +14,42 @@
   font-size: 14px;
 }
 
-.view-code-review-button {
-  display: block;
-}
-
-.code-review-button-holder {
-  text-align: center;
-}
-
 .code-review-table {
   max-width: 100%;
   font-size: 14px;
+
+  &> thead > tr > th, &> tbody > tr > td {
+    padding: 7px 3px;
+  }
+
+  thead {
+    .code-review-button-holder {
+      text-align: center;
+    }
+  }
+
+  tbody {
+    tr {
+      td {
+        .new-code-review-button {
+          height: 58px;
+          padding-top: 20px;
+        }
+
+        .view-code-review-button {
+          display: block;
+        }
+      }
+    }
+  }
 }
 
-.code-review-table > thead > tr > th, .code-review-table > tbody > tr > td {
-  padding: 7px 3px;
-
+#view_code_review_modal {
+  .modal-body {
+    .code-review-rating {
+      padding-top: 10px;
+    }
+  }
 }
 
 .new-code-review-form-error {
