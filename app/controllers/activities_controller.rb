@@ -2,7 +2,7 @@ class ActivitiesController < ApplicationController
 
   include CourseCalendar # concern
 
-  before_action :require_activity, only: [:show, :edit, :update]
+  before_action :require_activity, only: [:show, :edit, :update, :autocomplete]
   before_action :teacher_required, only: [:new, :create, :edit, :update]
   before_action :check_if_day_unlocked, only: [:show]
 
@@ -37,16 +37,17 @@ class ActivitiesController < ApplicationController
     end
   end
 
-  def edit
-
-  end
-
   def update
     if @activity.update(activity_params)
       redirect_to day_activity_path(@activity.day, @activity), notice: 'Updated!'
     else
       render :edit
     end
+  end
+
+  def autocomplete
+    @outcomes = (Outcome.search(params[:term]) - @activity.outcomes)
+    render json: ActivityAutocompleteSerializer.new(outcomes: @outcomes).outcomes.as_json, root: false
   end
 
   private

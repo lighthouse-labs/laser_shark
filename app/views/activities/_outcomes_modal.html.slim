@@ -1,0 +1,24 @@
+.modal.fade#edit-activity-outcomes-modal
+  .modal-dialog
+    .modal-content.create-outcome-activity-modal
+      .modal-header
+        button.close type='button' data-dismiss='modal'
+          span aria-hidden='true'
+            | &times;
+          span.sr-only
+            | Close
+        h4.modal-title
+          | Add an outcome
+        = form_tag admin_activity_outcomes_path, method: 'post', id: 'create-outcome-activity-modal-input' do
+          .modal-body
+            .form-group
+              .ui-widget
+                label for="search-bar-input"
+                = text_field_tag 'activity_outcome[outcome_name]', '', id: 'search-bar-input-display', class: 'form-control ui-autocomplete-input', placeholder: 'Search for outcome..'
+                = text_field_tag 'activity_outcome[activity_id]', @activity.id, type: "hidden"
+                = text_field_tag 'activity_outcome[outcome_id]', '', id: 'hidden-activity-id-field', type: "hidden"
+              .activities-autocomplete-selections.ui-autocomplete#menu
+          .modal-footer
+            button.btn.btn-default type='button' data-dismiss='modal'
+              | Cancel
+            = submit_tag 'Add', class: 'btn btn-primary create-outcome-activity-button'

@@ -2,9 +2,6 @@ class ActivitySerializer < ActiveModel::Serializer
 
   root false
   
-  attributes :id, :day, :name, :type, :value
+  attributes :id, :day, :name, :type
 
-  def value
-    (object.name + ' ' + object.day rescue object.name)
-  end
 end

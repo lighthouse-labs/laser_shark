@@ -13,7 +13,7 @@ $(function() {
     _initAutocomplete: function() {
       this._input
         .autocomplete({
-          source: window.location.pathname + "/autocomplete.json?",
+          source: window.location.pathname.replace("/edit", "") + "/autocomplete.json?",
           appendTo: '.activities-autocomplete-selections',
           select: $.proxy(this._select, this)
         })
@@ -21,17 +21,27 @@ $(function() {
     },
 
     _select: function(e, ui) {
-      this._input.val(ui.item.name + ' - ' + ui.item.day);
+      if (ui.item.day)
+        this._input.val(ui.item.name + ' - ' + ui.item.day);
+      else
+        this._input.val(ui.item.text);
+      
       this._hiddenAcitivityIdField.val(ui.item.id);
       return false;
     },
 
     _render: function(ul, item) {
-      var display = [
-        '<span class="activity-display activity-display-name">' + item.name + '</span>',
-        '<span class="activity-display activity-display-type">' + item.type + '</span>',
-        '<span class="activity-display activity-display-day">' + item.day + '</span>'
-      ];
+      // Check whether we are autocompleting activities or outcomes
+      if (item.day)
+        var display = [
+          '<span class="activity-display activity-display-name">' + item.name + '</span>',
+          '<span class="activity-display activity-display-type">' + item.type + '</span>',
+          '<span class="activity-display activity-display-day">' + item.day + '</span>'
+        ];
+      else
+        var display = [
+          '<span class="activity-display activity-display-name">' + item.text + '</span>',
+        ];
 
       return $('<li>').append(display.join('')).appendTo(ul);
     },

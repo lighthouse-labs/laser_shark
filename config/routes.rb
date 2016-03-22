@@ -47,7 +47,11 @@ LaserShark::Application.routes.draw do
 
   # CONTENT BROWSING
   resources :days, param: :number, only: [:show] do
-    resources :activities, only: [:new, :create, :show, :edit, :update]
+    resources :activities, only: [:new, :create, :show, :edit, :update] do 
+      member do 
+        get :autocomplete
+      end
+    end
     resources :feedbacks, only: [:create, :new], controller: :day_feedbacks
 
     resource :info, only: [:edit, :update], controller: 'day_infos'
