@@ -26,6 +26,10 @@
         display: none;
       }  
 
+      .pass {
+        color: $link-color;
+      }
+
       .error {
         font-size: 9px;
         color: red;

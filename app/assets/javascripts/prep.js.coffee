@@ -237,23 +237,37 @@ $ ->
     
       for result in results
         $li = $('<li>')
-        $li.text(result.message)
-        console.log($li)
+        $span = $('<span>').text(result.message)
+        $div = $('<div>').text("Line: " + result.line + ", Col: " + result.column);
 
+        $li.append($span).append($div);
         $('#linter ul').append($li)
 
       $('#linter').removeClass('hidden')
     else
       $('#linter').addClass('hidden')
 
+    results
+
+  submitTestResults = (lintResults, testResults) =>
+    if lintResults.length is 0 && testResults.failures is 0
+      console.log("submit successful answer")
+
   evaluateUserCode = (code) =>
-    runTestSuite(code);
-    runLinter(code);
+    try
+      lintResults = runLinter(code)
+      console.log(lintResults)
+      testResults = runTestSuite(code)
+      submitTestResults(lintResults, testResults)
+    catch err
+      $('#mocha').text("Your code has produced an error")
+      $('#test_holder').removeClass('hidden')
     
   if($('#prep_test_editor').length > 0)
-    testEditor = ace.edit("prep_test_editor");
-    testEditor.setTheme("ace/theme/monokai");
-    testEditor.getSession().setMode("ace/mode/javascript");
+    testEditor = ace.edit("prep_test_editor")
+    testEditor.setTheme("ace/theme/monokai")
+    testEditor.getSession().setMode("ace/mode/javascript")
+    testEditor.getSession().setTabSize(2)
 
     $('.run-test').click (e) =>
       $('#mocha').html('')
