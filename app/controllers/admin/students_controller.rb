@@ -10,11 +10,9 @@ class Admin::StudentsController < Admin::BaseController
     else
       @students = Student.all
     end
-    
   end
 
   def edit
-
   end
 
   def reactivate

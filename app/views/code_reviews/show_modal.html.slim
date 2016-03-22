@@ -1,0 +1,40 @@
+.modal-header
+  button type="button" class="close" data-dismiss="modal" aria-label="Close"
+    span aria-hidden="true"
+      | &times;
+  h4.modal-title Code Review by
+                <small>
+                  <i>#{@code_review.assistor.first_name + ' ' + @code_review.assistor.last_name}</i> - #{@code_review.created_at.to_date}
+                </small>
+
+.modal-body
+  .row
+    .container-teacher.col-md-2
+      img src="#{@code_review.assistor.avatar_url}" class='teacher-avatar'
+
+    .col-md-10.activity-holder
+      = @code_review.assistance_request.activity_submission.activity.name
+      .code-review-rating
+        | <b class='heading'>Rating:</b> #{@code_review.rating} / 4
+
+  .code-review-teacher-notes
+    - if @code_review.notes.empty?
+      | No observations provided about code submitted.
+    - else
+      | <b class='heading'>Observations:</b>
+      .indented
+        = @code_review.notes
+
+  .code-review-teacher-notes
+    - if @code_review.try(:student_notes)
+      .email-feedback
+        | <b class='heading'>Email feedback</b> <small> provided to <i>#{@code_review.assistee.first_name + ' ' + @code_review.assistee.last_name}</i></small>
+      .indented
+        <br>
+        .feedback
+          == markdown @code_review.student_notes
+    - else
+      | No Email feedback provided to: <small><i>#{@code_review.assistee.first_name + ' ' + @code_review.assistee.last_name}</i></small>
+
+.modal-footer
+  button.btn.btn-default type="button" data-dismiss="modal" Close

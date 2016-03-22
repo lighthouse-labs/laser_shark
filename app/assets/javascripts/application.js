@@ -19,7 +19,6 @@
 //= require ace/theme-monokai
 //= require ace/mode-markdown
 //= require ace/mode-javascript
-//= require theme-monokai
 //= require jslint
 //= require eslint
 
@@ -53,3 +52,5 @@
 //= require reconnect_holder
 
 //= require prep
+//= require profile
+//= require code_reviews

@@ -69,6 +69,20 @@ nav.navbar.navbar-inverse.navbar-fixed-top role="navigation"
               i.fa.fa-fw.fa-list-ol
               span.non-tablet-label
                 | Queue
+          li.dropdown
+            = link_to '#', :class => 'dropdown-toggle', :'data-toggle' => 'dropdown', title: 'Students'
+              i.fa.fa-fw.fa-list
+              span.non-tablet-label
+                | Code Reviews
+              b.caret
+            span.dropdown-arrow
+            ul.dropdown-menu
+              - dropdown_cohorts.each do |location, cohorts|
+                li.divider-title = location.name  
+                li.divider[role="separator"]
+                - cohorts.each do |c| 
+                  li class=(c == cohort ? 'active' : '')
+                    = link_to c.name, [cohort, :code_reviews]
         - if admin?
           li.dropdown
             = link_to '#', :class => 'dropdown-toggle', :'data-toggle' => 'dropdown', title: 'Admin'
@@ -80,12 +94,12 @@ nav.navbar.navbar-inverse.navbar-fixed-top role="navigation"
             ul.dropdown-menu
               li
                 = link_to 'Cohorts', admin_cohorts_path
-              li 
+              li
                 = link_to 'Curriculum Feedback', admin_curriculum_feedbacks_path
-              li 
+              li
                 = link_to 'Teacher Feedback', admin_teacher_feedbacks_path
               li
-                = link_to 'Day Feedback', admin_day_feedbacks_path  
+                = link_to 'Day Feedback', admin_day_feedbacks_path
               li
                 = link_to 'Teacher Stats', admin_teacher_stats_path  
               li
@@ -133,7 +147,7 @@ nav.navbar.navbar-inverse.navbar-fixed-top role="navigation"
               li
                 = link_to 'Edit profile', edit_profile_path
               li
-                = link_to 'Sign Out', session_path, :method => :delete, class: "sign-out-link" 
+                = link_to 'Sign Out', session_path, :method => :delete, class: "sign-out-link"
           -if teacher?
             li.teacher-duty
               span

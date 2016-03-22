@@ -22,6 +22,20 @@ class ActivitySubmission < ActiveRecord::Base
     format: { with: URI::regexp(%w(http https)), message: "must be a valid format" },
     if: :github_url_required?
 
+  scope :with_github_url, -> {
+    includes(:activity).
+    where(activities: {allow_submissions: true}).
+    references(:activity)
+  }
+
+  scope :not_code_reviewed, -> {
+    where(code_review_request: nil)
+  }
+  
+  def code_reviewed?
+    self.try(:code_review_request).try(:assistance)
+  end
+
   private
 
   def github_url_required?

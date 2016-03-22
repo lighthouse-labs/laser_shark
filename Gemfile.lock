@@ -361,6 +361,8 @@ GEM
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
       slop (~> 3.4)
+    pry-nav (0.2.4)
+      pry (>= 0.9.10, < 0.11.0)
     puma (2.15.3)
     quiet_assets (1.1.0)
       railties (>= 3.1, < 5.0)
@@ -542,6 +544,7 @@ DEPENDENCIES
   phantomjs
   poltergeist
   pry
+  pry-nav
   puma
   quiet_assets
   rails (= 4.2.4)
