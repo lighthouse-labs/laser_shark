@@ -11,7 +11,7 @@
           | Add an outcome
         = form_tag admin_activity_outcomes_path, method: 'post', id: 'create-outcome-activity-modal-input' do
           .modal-body
-            .form-group
+            .form-group id="activity_outcomes_modal_form_group"
               .ui-widget
                 label for="search-bar-input"
                 = text_field_tag 'activity_outcome[outcome_name]', '', id: 'search-bar-input-display', class: 'form-control ui-autocomplete-input', placeholder: 'Search for outcome..'
