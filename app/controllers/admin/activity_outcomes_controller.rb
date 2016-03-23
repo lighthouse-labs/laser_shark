@@ -1,4 +1,4 @@
-class Admin::ActivityOutcomesController < ApplicationController
+class Admin::ActivityOutcomesController < Admin::BaseController
 
   before_action :require_activity_outcome, only: [:update, :destroy]
 

@@ -1,7 +1,7 @@
 class Outcome < ActiveRecord::Base
 
   belongs_to :category
-  has_many :skills
+  has_many :skills, dependent: :destroy
   has_many :activity_outcomes, dependent: :destroy
   has_many :activities, through: :activity_outcomes
   

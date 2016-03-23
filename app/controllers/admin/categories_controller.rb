@@ -1,4 +1,4 @@
-class Admin::CategoriesController < ApplicationController
+class Admin::CategoriesController < Admin::BaseController
 
   before_action :require_category, only: [:show, :edit, :update, :destroy]
 

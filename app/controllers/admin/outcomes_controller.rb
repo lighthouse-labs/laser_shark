@@ -1,4 +1,4 @@
-class Admin::OutcomesController < ApplicationController
+class Admin::OutcomesController < Admin::BaseController
 
   before_action :require_outcome, except: [:index, :new, :create]
   before_action :require_category, except: [:index, :new]
@@ -19,14 +19,16 @@ class Admin::OutcomesController < ApplicationController
     @outcome = Outcome.new(outcome_params)
     @outcome.category = @category
     if !@outcome.save
-      flash[:notice] = "Outcome not created: #{@outcome.errors.full_messages[0]}"
+      errors = build_error_messages(@outcome).join(" - ")
+      flash[:notice] = "Outcome not created: - #{errors}"
     end
     redirect_to [:admin, @category]
   end
 
   def update
     if !@outcome.update(outcome_params)
-      flash[:notice] = "Outcome not updated: #{@outcome.errors.full_messages[0]}"
+      errors = build_error_messages(@outcome).join(" - ")
+      flash[:notice] = "Outcome not updated: - #{errors}"
     end
     redirect_to :back
   end
@@ -54,4 +56,17 @@ class Admin::OutcomesController < ApplicationController
   def outcome_params
     params.require(:outcome).permit(:text, skills_attributes: [:id, :text, :_destroy])
   end
+
+  def build_error_messages(outcome)
+    errors = []
+    errors << 'Outcome text is already taken' unless outcome.errors[:text].empty?
+    skill_errors = outcome.skills.select { |s| !s.valid? }
+    unless skill_errors.empty?
+      skill_errors.each do |skill|
+        errors << "Skill '#{skill.text}' is already assigned to another outcome"
+      end
+    end
+    errors
+  end
+
 end

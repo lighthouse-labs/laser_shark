@@ -22,10 +22,17 @@ $(function() {
     },
 
     _response: function (e, ui) {
-      if (ui.content.length == 0 && /days\/w[1-8][de][1-5]?\/activities\/\d+\/edit/.test(window.location.pathname)) {
+      if (this._isEmptyResponse(ui.content) && this._isOnEditActivityPage) {
         $('#activity_outcomes_modal_form_group').append('<p>Outcome does not found. <a href="/admin/categories">Click here to create a new outcome.</a></p>')
       }
+    },
 
+    _isEmptyResponse: function(response) {
+      return response.length == 0;
+    },
+
+    _isOnEditActivityPage: function() {
+      return /days\/w[1-8][de][1-5]?\/activities\/\d+\/edit/.test(window.location.pathname);
     },
 
     _select: function(e, ui) {
