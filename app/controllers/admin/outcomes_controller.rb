@@ -3,6 +3,14 @@ class Admin::OutcomesController < ApplicationController
   before_action :require_outcome, except: [:index, :new, :create]
   before_action :require_category, except: [:index, :new]
 
+  def index
+    if params[:outcome_text]
+      @outcomes = Outcome.search(params[:outcome_text])
+    else
+      @outcomes = Outcome.all
+    end
+  end
+
   def show
     @activity_outcomes = @outcome.activity_outcomes.includes(:activity)
   end

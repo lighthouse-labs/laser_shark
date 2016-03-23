@@ -105,6 +105,7 @@ LaserShark::Application.routes.draw do
     end
 
     #Outcomes CRUD
+    resources :outcomes
     resources :activity_outcomes
     resources :categories do 
       resources :outcomes do 

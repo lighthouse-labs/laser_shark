@@ -1,34 +1,24 @@
-h1 outcomes
-hr
+= form_tag admin_outcomes_path, class: 'form-inline', method: 'get' do 
 
-.actions.well
-  .btn.btn-primary.btn-sm.create-outcome-modal-button data-toggle="modal" data-target="#create-outcome-modal"
-    | New Outcome
+  .form-group
+    label for="outcome_text"
+      |Search:
+    input type='text' class='form-control' name='outcome_text' id='outcome_text' value=params[:outcome_text] placeholder='Enter search term'
+  
+  = submit_tag 'Filter', class: 'btn btn-primary'
+
+h1 All Outcomes
+hr
 
 table.table
   thead
     tr
-      th Content
+      th Outcome
+      th Skills
+      th Total Activities
 
   tbody
     = render @outcomes
 
-.modal.fade#create-outcome-modal
-  .modal-dialog
-    .modal-content.create-outcome-modal
-      .modal-header
-        button.close type='button' data-dismiss='modal'
-          span aria-hidden='true'
-            | &times;
-          span.sr-only
-            | Close
-        h4.modal-title
-          |
-      = form_tag admin_category_skill_outcomes_path, method: 'post', id: 'create-outcome-modal-input' do
-        .modal-body
-          .form-group
-            = text_area_tag("outcome[text]", nil, placeholder: 'enter new outcome', required: true, class: 'form-control')
-        .modal-footer
-          button.btn.btn-default type='button' data-dismiss='modal'
-            | Cancel
-          = submit_tag 'New Outcome', class: 'btn btn-primary create-outcome-button'
+- @outcomes.each do |outcome|
+  = render 'admin/categories/edit_outcome_modal', outcome: outcome
