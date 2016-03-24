@@ -4,7 +4,10 @@ LaserShark::Application.routes.draw do
 
   get '/i/:code', to: 'invitations#show' # student/teacher invitation handler
   # get 'prep'  => 'setup#show' # temporary
-  resources :prep, param: :number, :only => [:show]
+  resources :prep, controller: 'preps', :only => [:index, :new, :create, :show, :edit, :update] do 
+    resources :activities
+  end
+
   get 'setup' => 'setup#show' # temporary
 
   root to: 'home#show'

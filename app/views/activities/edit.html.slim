@@ -1,7 +1,7 @@
 h1 = "#{day.to_s.upcase}: #{@activity.name}"
 hr
 
-= simple_form_for @activity, as: :activity, url: day_activity_path(@day, @activity),
+= simple_form_for @activity, as: :activity, url: polymorphic_url([@parent, @activity]),
   html: { id: 'activity-form', class: 'form-horizontal' }, wrapper: :horizontal_form do |f|
 
   = render "form", f: f
@@ -21,6 +21,6 @@ hr
 
   .actions.well
     = f.submit 'Update', class: 'btn btn-primary', style: 'margin-right: 10px;'
-    = link_to '&laquo; Cancel'.html_safe, day_activity_path(@day, @activity)
+    = link_to '&laquo; Cancel'.html_safe, :back
 
   = render 'editor'

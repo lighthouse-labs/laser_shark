@@ -97,6 +97,11 @@ class ApplicationController < ActionController::Base
   end
   helper_method :streams
 
+  def preps
+    @preps ||= Prep.all
+  end
+  helper_method :preps
+
   def pending_feedbacks
     current_user.feedbacks.pending.reverse_chronological_order.where.not(feedbackable: nil).not_expired
   end

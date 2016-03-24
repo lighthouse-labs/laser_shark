@@ -6,16 +6,19 @@ class ActivitiesController < ApplicationController
   before_action :teacher_required, only: [:new, :create, :edit, :update]
   before_action :check_if_day_unlocked, only: [:show]
   before_action :load_activity_test, only: [:new, :edit]
+  before_action :load_day_or_section, only: [:new, :edit, :update]
 
   def new
     @activity = Activity.new(day: params[:day_number])
+    @activity.section = @section if @section
   end
 
   def create
     @activity = Activity.new(activity_params)
     if @activity.save(activity_params)
-      redirect_to day_activity_path(@activity.day, @activity), notice: 'Activity Created!'
+      handle_redirect("Activity Created!")
     else
+      load_day_or_section
       render :new
     end
   end
@@ -39,12 +42,12 @@ class ActivitiesController < ApplicationController
   end
 
   def edit
-    day
+
   end
 
   def update
     if @activity.update(activity_params)
-      redirect_to day_activity_path(@activity.day, @activity), notice: 'Updated!'
+      handle_redirect("Updated!")
     else
       render :edit
     end
@@ -63,6 +66,7 @@ class ActivitiesController < ApplicationController
       :allow_submissions,
       :allow_feedback,
       :day,
+      :section_id,
       :gist_url,
       :media_filename,
       :code_review_percent,
@@ -89,6 +93,23 @@ class ActivitiesController < ApplicationController
       @activity_test = require_activity.activity_test 
     else
       @activity_test = ActivityTest.new
+    end
+  end
+
+  def load_day_or_section
+    if params[:day_number]
+      @parent = :day
+    elsif slug = params[:prep_id]
+      @parent = Prep.find_by(slug: slug)
+      @section = @parent
+    end
+  end
+
+  def handle_redirect(notice)
+    if @activity.section
+      redirect_to prep_activity_path(@activity.section, @activity), notice: notice
+    else
+      redirect_to day_activity_path(@activity.day, @activity), notice: notice
     end
   end
 
