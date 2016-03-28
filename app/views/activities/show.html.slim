@@ -1,14 +1,6 @@
 - present @activity do |activity_presenter|
   = activity_presenter.render_sidenav
-
-  #linter.hidden
-    h3 Lint Results
-    ul
-
-  #test_holder.hidden
-    h3 Test Results
-    #mocha
-
+  
   section.activity-details
     h1 = activity_presenter.name
 

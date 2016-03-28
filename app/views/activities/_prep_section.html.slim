@@ -2,6 +2,28 @@
   == javascript_include_tag('https://cdnjs.cloudflare.com/ajax/libs/mocha/2.3.4/mocha.js')
   == javascript_include_tag('https://cdnjs.cloudflare.com/ajax/libs/chai/3.5.0/chai.js')
   
-#prep_test_editor.editor
+ul.nav.nav-tabs role="tablist"
+  li.active role="presentation"
+    a href="#code" role="tab" data-toggle="tab"
+      | Code
 
-button.run-test.btn.btn-success.btn-block Evaluate
+  li role="presentation"
+    a href="#results" role="tab" data-toggle="tab"
+      | Results
+
+
+.tab-content
+  .tab-pane.active id="code"
+    #prep_test_editor.editor
+    = hidden_field_tag :test_content, activity.activity_test.test
+
+    button.run-test.btn.btn-success.btn-block Evaluate
+
+  .tab-pane id="results"
+    #linter.hidden
+      h3 Lint Results
+      ul
+
+    #test_holder.hidden
+      h3 Test Results
+      #mocha

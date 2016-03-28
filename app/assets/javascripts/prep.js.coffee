@@ -216,18 +216,19 @@ $ ->
     expect = chai.expect
     assert = chai.assert
 
+    # Load the user code into a local variable
     eval("var userFunc = " + code)
-
-    describe "Addition", () =>
-      it "should add two positive numbers", () =>
-        expect(userFunc(1,2)).to.be.equal(3)
-
-      it "should add two negative numbers", () =>
-        expect(userFunc(-1,-2)).to.be.equal(-3)
+    
+    # Load the mocha tests
+    test_content = $('#test_content').val()
+    eval(test_content)
 
     $('#test_holder').removeClass('hidden')
 
+    # Run the test suite
     mocha.run()
+
+    $('a[href="#results"]').tab('show')
 
   runLinter = (code) =>
     results = eslint.verify(code, { rules: RULES })
@@ -238,7 +239,7 @@ $ ->
       for result in results
         $li = $('<li>')
         $span = $('<span>').text(result.message)
-        $div = $('<div>').text("Line: " + result.line + ", Col: " + result.column);
+        $div = $('<div>').text("Line: " + result.line + ", Col: " + result.column)
 
         $li.append($span).append($div);
         $('#linter ul').append($li)
@@ -256,7 +257,6 @@ $ ->
   evaluateUserCode = (code) =>
     try
       lintResults = runLinter(code)
-      console.log(lintResults)
       testResults = runTestSuite(code)
       submitTestResults(lintResults, testResults)
     catch err

@@ -1,14 +1,15 @@
-.panel-group id="accordion" role="tablist" aria-multiselectable="true"
+.panel-group.prep-menu id="accordion" role="tablist" aria-multiselectable="true"
   - preps.each do |prep|
     .panel.panel-default
       .panel-heading role="tab" id="headingOne"
         = link_to prep.name, prep_path(prep.slug), data: { parent: '#accordion'}
       .panel-collapse.collapse.in id=prep.slug role="tabpanel" aria-labelledby="headingOne"
         .panel-body
-          ul
+          ul.list-group
             - prep.activities.each do |activity|
-              li = link_to activity.name, [prep, activity]
+              li.list-group-item = link_to activity.name, [prep, activity]
 
-            li = link_to "Create Activity", [:new, prep, :activity] if teacher?
+            - if teacher?
+              li.list-group-item = link_to "Create Activity", [:new, prep, :activity]
 
   
