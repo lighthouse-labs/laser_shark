@@ -9,10 +9,8 @@
         .form-group
           .form-inline
             .left-actions
-              - if @previous_activity
-                = link_to '&laquo; Previous'.html_safe, day_activity_path(@activity.day, @previous_activity), class: 'btn btn-previous'
-              - if @next_activity
-                = link_to 'Next &raquo;'.html_safe, day_activity_path(@activity.day, @next_activity), class: 'btn btn-next'
+              = activity_presenter.previous_button
+              = activity_presenter.next_button
 
             .input-group.duration
               .input-group-addon
@@ -38,7 +36,7 @@
       div.clearfix
         - if teacher?
           button.btn.btn-activity.btn-info data-toggle="collapse" data-target="#student-progress"
-            = @activity.allow_submissions? ? "Submissions" : "Completions"
+            = activity_presenter.submissions_text
 
           = activity_presenter.edit_button
           = link_to '+ Video', new_activity_recording_path(@activity), class: 'btn btn-new-recording'
@@ -63,21 +61,7 @@
                 button.btn.btn-activity-complete-status data-toggle="modal" data-target="#feedback_modal" data-feedback-id="#{@feedback.id}"
                   | Feedback 
           - else
-            = form_for @activity_submission, url: activity_activity_submission_path(@activity), method: :post, html: { class: 'form-inline activity-submission-form' }  do |f|
-              - if @activity.allow_submissions?
-                input.form-control id="activity_submission_github_url" class="activity_submission_url" name="github_url" placeholder="Enter your Github repo or gist url" type="text"
-                | &nbsp;
-              button.btn.btn-activity-complete-status-no-code-review name="button" type="submit"
-                i.fa.fa-check
-                | &nbsp;Submit
-            = form_for @activity_submission, url: activity_activity_submission_path(@activity), method: :post, html: { class: 'form-inline activity-submission-form' }  do |f|
-              - if @activity.allow_submissions? && (current_user.cohort && current_user.cohort.location.has_code_reviews?)
-                | &nbsp;
-                input name="github_url" type="hidden" id="hidden_github_url_input"
-                input name="code_review" type="hidden" value="true"
-                button.btn.btn-activity-complete-status name="button" type="submit" id="student_submit_code_review_button"
-                  i.fa.fa-check
-                  | &nbsp;Submit & Code Review
+            = activity_presenter.submission_form
 
     - if teacher?
       .collapse#student-progress

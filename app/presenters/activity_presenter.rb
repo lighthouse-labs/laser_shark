@@ -17,8 +17,24 @@ class ActivityPresenter < BasePresenter
     end
   end
 
-  def render_prep_sidenav
-    
+  def previous_button
+    if @previous_activity
+      link_to '&laquo; Previous'.html_safe, day_activity_path(@activity.day, @previous_activity), class: 'btn btn-previous'
+    end
+  end
+
+  def next_button
+    if @next_activity
+      link_to 'Next &raquo;'.html_safe, day_activity_path(@activity.day, @next_activity), class: 'btn btn-next'
+    end
+  end
+
+  def submissions_text
+    activity.allow_submissions? ? "Submissions" : "Completions"
+  end
+
+  def submission_form
+    render "activity_submission_form"
   end
 
   def edit_button

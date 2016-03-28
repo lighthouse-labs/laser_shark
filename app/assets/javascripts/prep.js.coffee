@@ -225,10 +225,10 @@ $ ->
 
     $('#test_holder').removeClass('hidden')
 
+    $('a[href="#results"]').tab('show')
+
     # Run the test suite
     mocha.run()
-
-    $('a[href="#results"]').tab('show')
 
   runLinter = (code) =>
     results = eslint.verify(code, { rules: RULES })
@@ -250,7 +250,28 @@ $ ->
 
     results
 
-  submitTestResults = (lintResults, testResults) =>
+  submitTestResults = (code, lintResults, testResults) =>
+    results = {
+      lintResults: lintResults.length,
+      testFailures: testResults.failures,
+      testPasses: testResults.total - testResults.failures,
+      code: code
+    }
+
+    $('#activity_submission_data').val(JSON.stringify(results))
+    
+    $form = $('#new_activity_submission')
+    $.ajax(
+      url: $form.attr('action')
+      type: 'POST'
+      data: $form.serialize()
+      dataType: 'json'
+      success: (response) =>
+        # Reload the page because it's easier than changing a bunch of stuff
+        if response.finalized
+          window.location.reload()
+    )
+
     if lintResults.length is 0 && testResults.failures is 0
       console.log("submit successful answer")
 
@@ -258,7 +279,7 @@ $ ->
     try
       lintResults = runLinter(code)
       testResults = runTestSuite(code)
-      submitTestResults(lintResults, testResults)
+      submitTestResults(code, lintResults, testResults)
     catch err
       $('#mocha').text("Your code has produced an error")
       $('#test_holder').removeClass('hidden')
@@ -268,6 +289,7 @@ $ ->
     testEditor.setTheme("ace/theme/monokai")
     testEditor.getSession().setMode("ace/mode/javascript")
     testEditor.getSession().setTabSize(2)
+    testEditor.setValue($('#code_content').text())
 
     $('.run-test').click (e) =>
       $('#mocha').html('')

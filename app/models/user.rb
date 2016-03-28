@@ -93,7 +93,7 @@ class User < ActiveRecord::Base
   end
 
   def completed_activity?(activity)
-    submitted_activities.include?(activity)
+    !activity.section && submitted_activities.include?(activity)
   end
 
   def github_url(activity)

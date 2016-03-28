@@ -1,10 +1,15 @@
 class ActivitySubmission < ActiveRecord::Base
+
+  # => Serialize the data field
+  serialize :data
   
   belongs_to :user
   belongs_to :activity
   
   has_one :code_review_request, dependent: :destroy
   
+  before_create :check_data_for_finalized
+
   #after_save :request_code_review
   after_create :create_feedback
   after_destroy :handle_submission_destroy
@@ -14,8 +19,10 @@ class ActivitySubmission < ActiveRecord::Base
     Time.now
   end
 
-  validates :user_id, uniqueness: { scope: :activity_id,
-    message: "only one submission per activity" }
+  validates :user_id, uniqueness: { 
+    scope: :activity_id,
+    message: "only one submission per activity" 
+  }, if: Proc.new {|activity_submission| !activity_submission.activity.section}
 
   validates :github_url, 
     presence: :true, 
@@ -37,6 +44,15 @@ class ActivitySubmission < ActiveRecord::Base
   end
 
   private
+
+  def check_data_for_finalized
+    if self.data
+      # => TODO handle more than just prep data
+      if self.data["lintResults"].zero? && self.data["testFailures"].zero?
+        self.finalized = true
+      end
+    end
+  end
 
   def github_url_required?
     activity && activity.allow_submissions?

@@ -7,7 +7,9 @@
         .panel-body
           ul.list-group
             - prep.activities.each do |activity|
-              li.list-group-item = link_to activity.name, [prep, activity]
+              li.list-group-item 
+                = link_to activity.name, [prep, activity]
+                = content_tag(:i, nil, class: 'fa fa-check') if @last_submission && @last_submission.activity.eql?(activity) && @last_submission.finalized?
 
             - if teacher?
               li.list-group-item = link_to "Create Activity", [:new, prep, :activity]
