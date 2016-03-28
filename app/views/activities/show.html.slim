@@ -162,7 +162,12 @@
                 = link_to activity_message_path(@activity, msg), method: :delete, confirm: 'Sure ,lad?', class: 'delete'
                   i.fa.fa-times
 
-    = render "prep_section", activity: @activity if @activity.prep?
+    - if @activity.prep? && teacher?
+      h4 Test Content
+      pre
+        = @activity.activity_test.try(:test)
+
+    = render "prep_section", activity: @activity if @activity.prep? && !teacher?
 
   .modal.fade id="feedback_modal"
     .modal-dialog
