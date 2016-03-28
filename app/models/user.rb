@@ -93,7 +93,11 @@ class User < ActiveRecord::Base
   end
 
   def completed_activity?(activity)
-    !activity.section && submitted_activities.include?(activity)
+    if activity.section 
+      !activity_submissions.where(finalized: true, activity: activity).empty?
+    else
+      submitted_activities.include?(activity)
+    end
   end
 
   def github_url(activity)

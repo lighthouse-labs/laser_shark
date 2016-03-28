@@ -1,33 +1,4 @@
 - content_for :prep_nav do
-  == render 'layouts/prep_nav'
+  == render 'shared/menus/prep_side_menu'
 
-= render "days/info", day: day if day.info
-
-- @activities.each do |activity|
-  = link_to day_activity_path(activity.day, activity)
-    div class=("#{activity.type.downcase} " + 'activity')
-      .icon.icon-type title=activity.type
-        i class=(icon_for(activity))
-      .time.time-duration
-        br
-        = duration activity
-        br
-      .icon.icon-completion
-        -if student?
-          - if current_user.completed_activity?(activity)
-            i.fa.fa-check-square-o
-          - else
-            i.fa.fa-square-o
-        -if teacher?
-          .completed-activities  
-            = completed_students(activity)
-      .name
-        = activity.name
-        
-- if teacher?
-  = link_to new_day_activity_path(@module_number)
-    div class="activity"
-      .icon.icon-type
-        i.fa.fa-plus
-      .name
-        | New Activity
+= render "shared/menus/prep_activities", prep: @prep

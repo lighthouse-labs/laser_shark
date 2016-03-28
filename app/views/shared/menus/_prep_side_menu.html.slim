@@ -2,16 +2,9 @@
   - preps.each do |prep|
     .panel.panel-default
       .panel-heading role="tab" id="headingOne"
-        = link_to prep.name, prep_path(prep.slug), data: { parent: '#accordion'}
+        = link_to prep.name, '#', data: { parent: '#accordion'}
       .panel-collapse.collapse.in id=prep.slug role="tabpanel" aria-labelledby="headingOne"
         .panel-body
-          ul.list-group
-            - prep.activities.each do |activity|
-              li.list-group-item 
-                = link_to activity.name, [prep, activity]
-                = content_tag(:i, nil, class: 'fa fa-check') if @last_submission && @last_submission.activity.eql?(activity) && @last_submission.finalized?
-
-            - if teacher?
-              li.list-group-item = link_to "Create Activity", [:new, prep, :activity]
+          = render "shared/menus/prep_activities", prep: prep
 
   

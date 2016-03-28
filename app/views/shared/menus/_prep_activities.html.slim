@@ -1,0 +1,8 @@
+ ul.list-group
+  - prep.activities.each do |activity|
+    li.list-group-item 
+      = link_to activity.name, [prep, activity]
+      = content_tag(:i, nil, class: 'fa fa-check') if current_user.completed_activity?(activity)
+
+  - if teacher?
+    li.list-group-item = link_to "Create Activity", [:new, prep, :activity]
