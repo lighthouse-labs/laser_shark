@@ -250,36 +250,35 @@ $ ->
 
     results
 
-  submitTestResults = (code, lintResults, testResults) =>
-    results = {
-      lintResults: lintResults.length,
-      testFailures: testResults.failures,
-      testPasses: testResults.total - testResults.failures,
-      code: code
-    }
-
-    $('#activity_submission_data').val(JSON.stringify(results))
-    
-    $form = $('#new_activity_submission')
-    $.ajax(
-      url: $form.attr('action')
-      type: 'POST'
-      data: $form.serialize()
-      dataType: 'json'
-      success: (response) =>
-        # Reload the page because it's easier than changing a bunch of stuff
-        if response.finalized
-          window.location.reload()
-    )
-
-    if lintResults.length is 0 && testResults.failures is 0
-      console.log("submit successful answer")
+  submitTestResults = (code, lintResults, testRunner) ->
+    # When the test suite is done running, send a response
+    testRunner.on "end", () ->
+      results = {
+        lintResults: lintResults.length,
+        testFailures: @failures,
+        testPasses: @total - @failures,
+        code: code
+      }
+      
+      $('#activity_submission_data').val(JSON.stringify(results))
+      
+      $form = $('#new_activity_submission')
+      $.ajax(
+        url: $form.attr('action')
+        type: 'POST'
+        data: $form.serialize()
+        dataType: 'json'
+        success: (response) =>
+          # Reload the page because it's easier than changing a bunch of stuff
+          if response.finalized
+            window.location.reload()
+      )
 
   evaluateUserCode = (code) =>
     try
       lintResults = runLinter(code)
-      testResults = runTestSuite(code)
-      submitTestResults(code, lintResults, testResults)
+      testRunner = runTestSuite(code)
+      submitTestResults(code, lintResults, testRunner)
     catch err
       $('#mocha').text("Your code has produced an error")
       $('#test_holder').removeClass('hidden')
@@ -290,6 +289,9 @@ $ ->
     testEditor.getSession().setMode("ace/mode/javascript")
     testEditor.getSession().setTabSize(2)
     testEditor.setValue($('#code_content').text())
+
+    if $('#prep_test_editor').data('finalized')
+      testEditor.setReadOnly(true)
 
     $('.run-test').click (e) =>
       $('#mocha').html('')

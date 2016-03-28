@@ -3,6 +3,10 @@
   == javascript_include_tag('https://cdnjs.cloudflare.com/ajax/libs/chai/3.5.0/chai.js')
 
 - show_results = !@last_submission || (@last_submission && !@last_submission.finalized?)
+
+h3 
+  | Your Code 
+  = "(Completed)" if @last_submission.try(:finalized)
   
 ul.nav.nav-tabs role="tablist"
   li.active role="presentation"
@@ -18,7 +22,7 @@ ul.nav.nav-tabs role="tablist"
   .tab-pane.active id="code"
 
     code#code_content.hidden = @last_submission.data["code"] if @last_submission
-    #prep_test_editor.editor
+    #prep_test_editor.editor data-finalized="#{@last_submission.try(:finalized)}"
     = hidden_field_tag :test_content, activity.activity_test.test
     
     - if show_results
