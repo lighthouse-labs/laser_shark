@@ -6,7 +6,10 @@ class Activity < ActiveRecord::Base
   has_many :messages, -> { order(created_at: :desc) }, class_name: 'ActivityMessage'
   has_many :recordings, -> { order(created_at: :desc) }
   has_many :feedbacks, as: :feedbackable
-  
+
+  has_many :activity_outcomes, dependent: :destroy
+  has_many :outcomes, through: :activity_outcomes
+
   has_one :activity_test
   accepts_nested_attributes_for :activity_test
 
@@ -15,14 +18,14 @@ class Activity < ActiveRecord::Base
   validates :start_time, numericality: { only_integer: true }
   validates :day, presence: true, format: { with: DAY_REGEX, allow_blank: true }, if: Proc.new{|activity| activity.section.blank?}
 
+  scope :chronological, -> { order(:start_time) }
+  scope :for_day, -> (day) { where(day: day.to_s) }
+  scope :search, -> (query) { where("lower(name) LIKE :query or lower(day) LIKE :query", query: "%#{query.downcase}%") }
+
   # Below hook should really be after_save (create and update)
   # However, when seeding/mass-creating activties, github API will return error
   after_update :add_revision_to_gist
 
-  scope :chronological, -> { order(:start_time) }
-  scope :for_day, -> (day) { where(day: day.to_s) }
-  scope :search, -> (query) { where("lower(name) LIKE ?", "%"+query.downcase+"%") }
- 
   # Given the start_time and duration, return the end_time
   def end_time
     hours = start_time / 100

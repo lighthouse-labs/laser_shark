@@ -54,6 +54,13 @@ ActiveRecord::Schema.define(version: 20160328154937) do
   add_index "activity_messages", ["cohort_id"], name: "index_activity_messages_on_cohort_id", using: :btree
   add_index "activity_messages", ["user_id"], name: "index_activity_messages_on_user_id", using: :btree
 
+  create_table "activity_outcomes", force: :cascade do |t|
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.integer  "outcome_id"
+    t.integer  "activity_id"
+  end
+
   create_table "activity_submissions", force: :cascade do |t|
     t.integer  "user_id"
     t.integer  "activity_id"
@@ -102,6 +109,12 @@ ActiveRecord::Schema.define(version: 20160328154937) do
     t.text     "student_notes"
   end
 
+  create_table "categories", force: :cascade do |t|
+    t.string   "text"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "code_reviews", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -119,18 +132,6 @@ ActiveRecord::Schema.define(version: 20160328154937) do
   end
 
   add_index "cohorts", ["program_id"], name: "index_cohorts_on_program_id", using: :btree
-
-  create_table "comments", force: :cascade do |t|
-    t.text     "content"
-    t.integer  "commentable_id"
-    t.string   "commentable_type", limit: 255
-    t.integer  "user_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "comments", ["commentable_id", "commentable_type"], name: "index_comments_on_commentable_id_and_commentable_type", using: :btree
-  add_index "comments", ["user_id"], name: "index_comments_on_user_id", using: :btree
 
   create_table "day_feedbacks", force: :cascade do |t|
     t.string   "mood",                limit: 255
@@ -174,6 +175,23 @@ ActiveRecord::Schema.define(version: 20160328154937) do
     t.boolean  "has_code_reviews",             default: true
   end
 
+  create_table "objectives", force: :cascade do |t|
+    t.integer "activity_id"
+    t.integer "outcome_id"
+  end
+
+  create_table "outcome_skills", force: :cascade do |t|
+    t.integer "outcome_id"
+    t.integer "skill_id"
+  end
+
+  create_table "outcomes", force: :cascade do |t|
+    t.string   "text"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.integer  "category_id"
+  end
+
   create_table "programs", force: :cascade do |t|
     t.string   "name",              limit: 255
     t.text     "lecture_tips"
@@ -205,12 +223,27 @@ ActiveRecord::Schema.define(version: 20160328154937) do
     t.integer  "order"
   end
 
+  create_table "skills", force: :cascade do |t|
+    t.string   "text"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer  "outcome_id"
+  end
+
   create_table "streams", force: :cascade do |t|
     t.string   "title",       limit: 255
     t.string   "description", limit: 255
     t.string   "wowza_id",    limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "teacher_shifts", force: :cascade do |t|
+    t.date    "date"
+    t.integer "number"
+    t.integer "location_id"
+    t.integer "teacher_id"
+    t.string  "type"
   end
 
   create_table "users", force: :cascade do |t|

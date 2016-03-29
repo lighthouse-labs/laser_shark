@@ -1,0 +1,16 @@
+tr
+  td = link_to category.text,
+               admin_category_path(category),
+               method: :get
+
+  td = category.outcomes.count
+
+  td = category.outcomes.reduce(0) { |sum, outcome| sum += outcome.skills.count }
+
+  td = category.outcomes.reduce(0) { |sum, outcome| sum += outcome.activities.count }
+
+  td
+    = link_to 'Delete', admin_category_path(category),
+              data: { confirm: "This delete will cascade all the way through it's children. \nAre you sure you want to delete?" },
+              method: 'delete',
+              class: 'btn btn-danger btn-sm'

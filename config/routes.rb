@@ -55,7 +55,11 @@ LaserShark::Application.routes.draw do
 
   # CONTENT BROWSING
   resources :days, param: :number, only: [:show] do
-    resources :activities, only: [:new, :create, :show, :edit, :update]
+    resources :activities, only: [:new, :create, :show, :edit, :update] do 
+      member do 
+        get :autocomplete
+      end
+    end
     resources :feedbacks, only: [:create, :new], controller: :day_feedbacks
 
     resource :info, only: [:edit, :update], controller: 'day_infos'
@@ -112,6 +116,18 @@ LaserShark::Application.routes.draw do
         delete :archive, action: :unarchive
       end
     end
+
+    #Outcomes CRUD
+    resources :outcomes
+    resources :activity_outcomes
+    resources :categories do 
+      resources :outcomes do 
+        member do 
+          get :autocomplete
+        end
+      end
+    end
+
   end
 
   # To test 500 error notifications on production

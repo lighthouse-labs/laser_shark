@@ -16,6 +16,9 @@
 @import 'teachers';
 @import 'incomplete_activities';
 @import 'reconnect_holder';
+@import 'search';
+
+@import 'admin';
 @import 'admin/students';
 @import 'search';
 
@@ -26,3 +29,8 @@
 @import 'profile';
 @import 'students';
 @import 'code_reviews';
+
+@import 'admin/learning_objectives';
+@import 'admin/breadcrumb-adjustments';
+@import 'admin/autocomplete-modal-styling';
+@import 'admin/outcomes';

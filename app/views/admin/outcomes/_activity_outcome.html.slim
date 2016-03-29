@@ -1,0 +1,8 @@
+tr
+  td = link_to activity_outcome.activity.name, day_activity_path(activity_outcome.activity.day, activity_outcome.activity), method: :get
+  td = activity_outcome.activity.type
+  td = activity_outcome.activity.day.upcase
+  td
+    = link_to 'Delete', 
+    admin_activity_outcome_path(activity_outcome), 
+    method: 'delete', class: 'btn btn-danger activity-outcome-button'

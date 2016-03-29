@@ -1,0 +1,5 @@
+.modal.fade id="category-outcome-modal-#{outcome.id}"
+  .modal-dialog
+    .modal-content.create-category-outcome-modal
+      = render 'admin/outcomes/outcome_modal_form', outcome: outcome, category: @category || outcome.category
+      

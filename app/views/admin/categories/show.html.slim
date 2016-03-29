@@ -1,0 +1,30 @@
+ul.breadcrumb
+  li = link_to 'Categories',
+               [:admin, :categories],
+               method: :get
+  li = link_to @category.text,
+               [:admin, @category],
+               method: :get
+  li Outcomes
+
+h1 = @category.text
+hr
+
+.actions.well
+  .btn.btn-primary.btn-sm data-toggle="modal" data-target="#new-category-outcome-modal"
+    | New Outcome
+
+table.table
+  thead
+    tr
+      th Outcome
+      th Skills
+      th Total Activities
+
+  tbody
+    = render @outcomes
+
+= render 'new_outcome_modal', outcome: Outcome.new, category: @category
+
+- @outcomes.each do |outcome|
+  = render 'edit_outcome_modal', outcome: outcome
