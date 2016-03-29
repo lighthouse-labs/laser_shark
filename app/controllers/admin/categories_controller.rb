@@ -3,7 +3,7 @@ class Admin::CategoriesController < Admin::BaseController
   before_action :require_category, only: [:show, :edit, :update, :destroy]
 
   def index
-    @categories = Category.all.includes(:outcomes)
+    @categories = Category.all
     @category = Category.new
   end
 
@@ -16,6 +16,9 @@ class Admin::CategoriesController < Admin::BaseController
     end
   end
 
+  def show
+  end
+
   def update
     if !@category.update(category_params)
       flash[:notice] = "Category not updated: #{@category.errors.full_messages[0]}"
@@ -23,10 +26,7 @@ class Admin::CategoriesController < Admin::BaseController
     redirect_to [:admin, :categories]
   end
 
-  def show
-    @outcomes = @category.outcomes
-  end
-
+  
   def destroy
     @category.destroy
     redirect_to [:admin, :categories]
@@ -35,10 +35,10 @@ class Admin::CategoriesController < Admin::BaseController
   private
 
   def require_category
-    @category = Category.includes(:outcomes).find params[:id]
+    @category = Category.find params[:id]
   end
 
   def category_params
-    params.require(:category).permit(:text)
+    params.require(:category).permit(:name)
   end
 end

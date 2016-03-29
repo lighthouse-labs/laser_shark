@@ -1,8 +1,9 @@
 $ ->
   $('.outcome-skills-form').on 'click', '.remove_fields', (event) ->
     event.preventDefault()
-    $(this).prev('input[type=hidden]').val('true')
-    $(this).closest('fieldset').hide()
+
+    $(this).parent().prev().find('input[type=hidden]').val('true')
+    $(this).closest('.row').hide()
 
   $('.add_fields').on 'click', (event) ->
     event.preventDefault()

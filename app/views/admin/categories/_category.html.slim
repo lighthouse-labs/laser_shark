@@ -1,13 +1,13 @@
 tr
-  td = link_to category.text,
+  td = link_to category.name,
                admin_category_path(category),
                method: :get
 
-  td = category.outcomes.count
+  / td = category.outcomes.count
 
-  td = category.outcomes.reduce(0) { |sum, outcome| sum += outcome.skills.count }
+  / td = category.outcomes.reduce(0) { |sum, outcome| sum += outcome.skills.count }
 
-  td = category.outcomes.reduce(0) { |sum, outcome| sum += outcome.activities.count }
+  / td = category.outcomes.reduce(0) { |sum, outcome| sum += outcome.activities.count }
 
   td
     = link_to 'Delete', admin_category_path(category),

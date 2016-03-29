@@ -1,0 +1,34 @@
+ul.breadcrumb
+  li = link_to 'Categories', [:admin, :categories]
+  li = link_to @category.name, [:admin, @category]
+  li = link_to "Skills", [:admin, @category]
+  li = link_to truncate(@skill.name), [:admin, @category, @skill]
+  li Activities
+
+h5 = @skill.name
+ul.list-inline.skill-ul 
+  | Outcomes:
+  - @skill.outcomes.each do |outcome|
+    li.outcome-list 
+      = outcome.text
+      | &nbsp;
+hr
+
+.actions.well
+  .btn.btn-primary.btn-sm data-toggle="modal" data-target="#create-skill-activity-modal"
+    | Add Activity
+  .btn.btn-primary.btn-sm data-toggle="modal" data-target="#category-skill-modal-#{@skill.id}"
+    | Edit
+
+table.table
+  thead
+    tr
+      th Activity Name
+      th Type
+      th Day
+
+  tbody
+    / = render partial: 'activity_skill', collection: @activity_skills
+
+/ = render 'new_activity_skill_modal'
+= render 'admin/categories/edit_skill_modal', skill: @skill

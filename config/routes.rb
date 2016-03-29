@@ -18,6 +18,7 @@ LaserShark::Application.routes.draw do
   get '/auth/github', as: 'github_session'
   resource :session, :only => [:new, :destroy]
   # resource :registration, only: [:new, :create]
+
   resource :profile, only: [:edit, :update]
   resources :feedbacks, only: [:index, :update] do
     member do
@@ -121,7 +122,7 @@ LaserShark::Application.routes.draw do
     resources :outcomes
     resources :activity_outcomes
     resources :categories do 
-      resources :outcomes do 
+      resources :skills do 
         member do 
           get :autocomplete
         end
