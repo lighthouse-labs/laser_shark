@@ -1,6 +1,6 @@
 class QuizSubmission < ActiveRecord::Base
 
-  belongs_to :student
+  belongs_to :user
 
   has_many :answers, dependent: :destroy
 
