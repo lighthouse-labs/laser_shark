@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160330173036) do
+ActiveRecord::Schema.define(version: 20160330174038) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -71,9 +71,14 @@ ActiveRecord::Schema.define(version: 20160330173036) do
   add_index "activity_submissions", ["user_id"], name: "index_activity_submissions_on_user_id", using: :btree
 
   create_table "answers", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
+    t.integer  "option_id"
+    t.integer  "quiz_submission_id"
   end
+
+  add_index "answers", ["option_id"], name: "index_answers_on_option_id", using: :btree
+  add_index "answers", ["quiz_submission_id"], name: "index_answers_on_quiz_submission_id", using: :btree
 
   create_table "assistance_requests", force: :cascade do |t|
     t.integer  "requestor_id"
@@ -272,6 +277,8 @@ ActiveRecord::Schema.define(version: 20160330173036) do
   add_index "users", ["cohort_id"], name: "index_users_on_cohort_id", using: :btree
 
   add_foreign_key "activities", "quizzes"
+  add_foreign_key "answers", "options"
+  add_foreign_key "answers", "quiz_submissions"
   add_foreign_key "options", "questions"
   add_foreign_key "quiz_submissions", "quizzes"
   add_foreign_key "quiz_submissions", "users"
