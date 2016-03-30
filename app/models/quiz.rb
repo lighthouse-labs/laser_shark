@@ -1,7 +1,7 @@
 class Quiz < ActiveRecord::Base
   belongs_to :activity
 
-  has_many :submissions, dependent: :nullify
+  has_many :quiz_submissions, dependent: :nullify
 
   has_and_belongs_to_many :questions
 
