@@ -12,15 +12,3 @@ class window.AutoComplete
     )
 
     @input.autocomplete('instance')._renderItem = @args.render
-
-  select: (e, ui) ->
-
-  response: (e, ui) ->
-  
-
-
-
-
-
-
-

@@ -19,7 +19,5 @@ window.setupActivityAutoComplete = (input) ->
       false
   )
 
-
-
 $ ->
   window.setupActivityAutoComplete('.activity-outcomes-autocomplete-field')

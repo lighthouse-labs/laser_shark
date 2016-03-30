@@ -1,13 +1,6 @@
 ul.breadcrumb
-  li = link_to 'Categories',
-               [:admin, :categories],
-               method: :get
-
-  li = link_to @category.name,
-               [:admin, @category],
-               method: :get
-
-  li Outcomes
+  li = link_to 'Categories', [:admin, :categories]
+  li = @category.name
 
 h1 = @category.name
 hr

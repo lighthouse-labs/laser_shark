@@ -1,8 +1,5 @@
 tr
-  td = link_to category.name,
-               admin_category_path(category),
-               method: :get
-
+  td = link_to category.name, admin_category_path(category)
   td = category.skills.count
   td = category.skills.reduce(0) { |sum, skill| sum += skill.outcomes.count }
   td = category.skills.reduce(0) { |sum, skill| sum += skill.activities.count }
