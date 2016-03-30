@@ -2,6 +2,7 @@ class Skill < ActiveRecord::Base
 
   belongs_to :category
   has_many :outcomes, :dependent => :destroy
+  has_many :activities, through: :outcomes
 
   accepts_nested_attributes_for :outcomes, reject_if: Proc.new { |outcome| outcome[:text].blank? }, allow_destroy: true
   

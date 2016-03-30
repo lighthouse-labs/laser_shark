@@ -10,8 +10,8 @@
         h4.modal-title
           | Add a new activity
 
-        .modal-body
-          = form_for outcome, url: [:admin, outcome], method: 'put', id: 'create-outcome-activity-modal-input' do |f|
+        = form_for outcome, url: [:admin, outcome], method: 'put', id: 'create-outcome-activity-modal-input' do |f|
+          .modal-body
             = f.fields_for :activity_outcomes do |activity_fields|
               = render "admin/activity_outcomes/fields", f: activity_fields
                   

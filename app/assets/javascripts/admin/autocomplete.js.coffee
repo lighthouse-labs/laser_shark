@@ -2,17 +2,16 @@ class window.AutoComplete
 
   constructor: (args) ->
     @input = $(args.selector)
-    @url = args.url
-    @render = args.render
-
+    @args = args
     @initAutoComplete()
 
   initAutoComplete: ->
     @input.autocomplete(
-      source: @url
+      source: @args.url,
+      select: @args.select
     )
 
-    @input.autocomplete('instance')._renderItem = @render
+    @input.autocomplete('instance')._renderItem = @args.render
 
   select: (e, ui) ->
 

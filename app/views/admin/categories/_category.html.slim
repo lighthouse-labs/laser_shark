@@ -3,11 +3,9 @@ tr
                admin_category_path(category),
                method: :get
 
-  / td = category.outcomes.count
-
-  / td = category.outcomes.reduce(0) { |sum, outcome| sum += outcome.skills.count }
-
-  / td = category.outcomes.reduce(0) { |sum, outcome| sum += outcome.activities.count }
+  td = category.skills.count
+  td = category.skills.reduce(0) { |sum, skill| sum += skill.outcomes.count }
+  td = category.skills.reduce(0) { |sum, skill| sum += skill.activities.count }
 
   td
     = link_to 'Delete', admin_category_path(category),

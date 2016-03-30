@@ -1,8 +1,7 @@
 class Admin::OutcomesController < Admin::BaseController
 
-  before_action :require_outcome, except: [:index, :new, :create]
-  before_action :require_category, except: [:index, :new]
-
+  before_action :load_outcome, except: [:index, :new, :create]
+  
   def index
     @outcomes = Outcome
     @outcomes = @outcomes.search params[:outcome_text] unless params[:outcome_text].blank?
@@ -13,50 +12,24 @@ class Admin::OutcomesController < Admin::BaseController
     end
   end
 
-  def show
-    @activity_outcomes = @outcome.activity_outcomes.includes(:activity)
-  end
-
-  def create
-    @outcome = Outcome.new(outcome_params)
-    @outcome.category = @category
-    if !@outcome.save
-      errors = build_error_messages(@outcome).join(" - ")
-      flash[:notice] = "Outcome not created: - #{errors}"
-    end
-    redirect_to [:admin, @category]
-  end
-
   def update
-    if !@outcome.update(outcome_params)
-      errors = build_error_messages(@outcome).join(" - ")
-      flash[:notice] = "Outcome not updated: - #{errors}"
-    end
+    @outcome.update(outcome_params)
     redirect_to :back
-  end
-
-  def destroy
-    @outcome.destroy
-    redirect_to [:admin, @category, @skill]
-  end
-
-  def autocomplete
-    @activities = (Activity.search(params[:term]) - @outcome.activities)
-    render json: OutcomeAutocompleteSerializer.new(activities: @activities).activities.as_json, root: false
   end
 
   private
 
-  def require_outcome
-    @outcome = Outcome.includes(:skills).find(params[:id])
-  end
-
-  def require_category
-    @category = Category.find(params[:category_id])
+  def load_outcome
+    @outcome = Outcome.find(params[:id])
   end
 
   def outcome_params
-    params.require(:outcome).permit(:text, skills_attributes: [:id, :text, :_destroy])
+    params.require(:outcome).permit(
+      :text, 
+      activity_outcomes_attributes: [
+        :id, :activity_id, :_destroy
+      ]
+    )
   end
 
   def build_error_messages(outcome)
