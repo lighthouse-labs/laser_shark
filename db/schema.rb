@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160330170218) do
+ActiveRecord::Schema.define(version: 20160330171721) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -33,8 +33,10 @@ ActiveRecord::Schema.define(version: 20160330170218) do
     t.string   "revisions_gistid"
     t.integer  "code_review_percent", default: 60
     t.boolean  "allow_feedback",      default: true
+    t.integer  "quiz_id"
   end
 
+  add_index "activities", ["quiz_id"], name: "index_activities_on_quiz_id", using: :btree
   add_index "activities", ["start_time"], name: "index_activities_on_start_time", using: :btree
 
   create_table "activity_messages", force: :cascade do |t|
@@ -266,6 +268,7 @@ ActiveRecord::Schema.define(version: 20160330170218) do
 
   add_index "users", ["cohort_id"], name: "index_users_on_cohort_id", using: :btree
 
+  add_foreign_key "activities", "quizzes"
   add_foreign_key "quiz_submissions", "quizzes"
   add_foreign_key "quiz_submissions", "users"
 end
