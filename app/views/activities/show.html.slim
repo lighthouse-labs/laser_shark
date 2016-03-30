@@ -107,7 +107,7 @@ section.activity-details
 
   - if @activity.type == "QuizActivity"
     - if @activity.quiz
-      a href="/quiz/show/#{@activity.type.quiz.id}" Take the  quiz.
+      a href="/quiz_submissions/new/#{@activity.quiz.id}" Take the  quiz.
     - else
       a href="#" Take the  quiz.
 

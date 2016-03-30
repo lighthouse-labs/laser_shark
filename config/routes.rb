@@ -1,5 +1,11 @@
 LaserShark::Application.routes.draw do
 
+  get 'quiz_submissions/new/:id', to: 'quiz_submissions#new'
+
+  get 'quiz_submissions/create'
+
+  get 'quiz_submissions/show'
+
   resources :quizzes, only: [:show]
 
   match "/websocket", :to => ActionCable.server, via: [:get, :post]
