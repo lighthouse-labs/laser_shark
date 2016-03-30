@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160330171721) do
+ActiveRecord::Schema.define(version: 20160330173036) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -164,7 +164,10 @@ ActiveRecord::Schema.define(version: 20160330171721) do
     t.boolean  "correct"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+    t.integer  "question_id"
   end
+
+  add_index "options", ["question_id"], name: "index_options_on_question_id", using: :btree
 
   create_table "programs", force: :cascade do |t|
     t.string   "name"
@@ -269,6 +272,7 @@ ActiveRecord::Schema.define(version: 20160330171721) do
   add_index "users", ["cohort_id"], name: "index_users_on_cohort_id", using: :btree
 
   add_foreign_key "activities", "quizzes"
+  add_foreign_key "options", "questions"
   add_foreign_key "quiz_submissions", "quizzes"
   add_foreign_key "quiz_submissions", "users"
 end
