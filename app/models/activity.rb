@@ -1,6 +1,6 @@
 class Activity < ActiveRecord::Base
 
-  has_one :quiz
+  belongs_to :quiz
 
   validates :name, presence: true, length: { maximum: 56 }
   validates :duration, numericality: { only_integer: true }
