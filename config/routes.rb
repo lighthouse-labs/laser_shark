@@ -1,6 +1,6 @@
 LaserShark::Application.routes.draw do
 
-  get 'quizzes/show/:id'
+  resources :quizzes, only: [:show]
 
   match "/websocket", :to => ActionCable.server, via: [:get, :post]
 

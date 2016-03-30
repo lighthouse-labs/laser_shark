@@ -1,7 +1,5 @@
 class Activity < ActiveRecord::Base
 
-  belongs_to :quiz
-
   validates :name, presence: true, length: { maximum: 56 }
   validates :duration, numericality: { only_integer: true }
   validates :start_time, numericality: { only_integer: true }
