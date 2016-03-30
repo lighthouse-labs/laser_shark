@@ -3,10 +3,6 @@ class Admin::SkillsController < Admin::BaseController
   before_action :load_category
   before_action :load_skill, only: [:show, :update]
 
-  def index
-
-  end
-
   def create
     @skill = @category.skills.new(skill_params)
     if @skill.save

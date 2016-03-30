@@ -1,4 +1,4 @@
-.activities-autocomplete-selections .ui-widget-content {
+.ui-widget-content {
   background: #fff;
   font-size: .9em;
   padding: .5em 0;
@@ -10,20 +10,20 @@
   overflow-y: auto;
 }
 
-.activities-autocomplete-selections  .ui-menu-item {
+.ui-menu-item {
   font-family: 'Helvetica Neue', Helvetica, sans-serif;
   border: 0;
   padding-bottom: 1em;
   border-left: 5px solid transparent;
 }
 
-.activities-autocomplete-selections .ui-state-focus {
+.ui-state-focus {
   background: #fff;
   border-left-color: #08c;
   font-weight: 300;
 }
 
-.activities-autocomplete-selections .ui-menu-item .activity-display {
+.ui-menu-item .activity-display {
   display: block;
   font-size: .8em;
   color: #aaa;
@@ -31,8 +31,23 @@
   letter-spacing: 1px;
 }
 
-.activities-autocomplete-selections .ui-state-focus .activity-display {
+.ui-state-focus .activity-display {
   color: #08c;
 }
 
-.ui-autocomplete { z-index:3; }
+.ui-front {
+  position: relative;
+
+  .ui-autocomplete { 
+    z-index: 3; 
+    position: absolute;
+    list-style-type: none;
+    padding-left: 5px;
+    
+    .ui-menu-item {
+      font-size: 14px;
+    }
+
+  }
+}
+

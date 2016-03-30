@@ -2,11 +2,22 @@ class ActivitiesController < ApplicationController
 
   include CourseCalendar # concern
 
-  before_action :require_activity, only: [:show, :edit, :update, :autocomplete]
+  before_action :require_activity, only: [:show, :edit, :update]
   before_action :teacher_required, only: [:new, :create, :edit, :update]
   before_action :check_if_day_unlocked, only: [:show]
   before_action :load_activity_test, only: [:new, :edit]
   before_action :load_day_or_section, only: [:new, :edit, :update]
+
+  def index
+    @activities = Activity
+    @activities = @activities.search(params[:term]) unless params[:term].blank?
+
+    respond_to do |format|
+      format.html
+      format.js { render json: @activities, each_serializer: ActivitySerializer, root: false }
+    end
+  end
+
 
   def new
     @activity = Activity.new(day: params[:day_number])

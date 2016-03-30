@@ -10,18 +10,18 @@
     .form-group
       = f.label :name, "Skill:"
       = f.text_field :name, class: 'form-control'
-
+      
     = f.fields_for :outcomes do |builder|
-      .row
+      .row.outcome-row
         .col-md-2
           = builder.label :text, "Outcome:"
         .col-md-8
-          = builder.text_field :text, class: 'form-control'
+          = builder.text_field :text, class: 'form-control outcomes-autocomplete-field'
           = builder.hidden_field :_destroy
         .col-md-2
           = link_to "remove", "#", class: "remove_fields btn btn-danger btn-sm"
         
-    = link_to_add_fields "Add Outcome", f, :outcomes
+    = link_to_add_fields "Add Outcome", f, :outcomes, "add-outcome-field-button btn-block"
 
   .modal-footer
     button.btn.btn-default type='button' data-dismiss='modal' Cancel

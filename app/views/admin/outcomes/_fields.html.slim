@@ -1,9 +1,8 @@
-fieldset.form-group
-  .row
-    .col-md-2
-      = f.label :text, "Outcome:", class: 'new-outcome-label'
-    .col-md-8
-      = f.text_field :text, class: 'form-control edit-outcome'
-      = f.hidden_field :_destroy
-    .col-md-2
-      = link_to "remove", "#", class: "remove_fields btn btn-danger btn-sm"
+.row.outcome-row
+  .col-md-2
+    = f.label :text, "Outcome:", class: 'new-outcome-label'
+  .col-md-8
+    = f.text_field :text, class: 'form-control edit-outcome'
+    = f.hidden_field :_destroy
+  .col-md-2
+    = link_to "remove", "#", class: "remove_fields btn btn-danger btn-sm"

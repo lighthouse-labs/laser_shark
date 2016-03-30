@@ -6,29 +6,31 @@ ul.breadcrumb
   li Activities
 
 h5 = @skill.name
-ul.list-inline.skill-ul 
-  | Outcomes:
-  - @skill.outcomes.each do |outcome|
-    li.outcome-list 
-      = outcome.text
-      | &nbsp;
-hr
 
 .actions.well
-  .btn.btn-primary.btn-sm data-toggle="modal" data-target="#create-skill-activity-modal"
-    | Add Activity
   .btn.btn-primary.btn-sm data-toggle="modal" data-target="#category-skill-modal-#{@skill.id}"
     | Edit
 
 table.table
   thead
     tr
-      th Activity Name
-      th Type
-      th Day
+      th Outcome
+      th Activities
+      th
 
   tbody
-    / = render partial: 'activity_skill', collection: @activity_skills
+    - @skill.outcomes.each do |outcome|
+      tr
+        td = outcome.text
+        td
+          ul 
+            - outcome.activities.each do |activity|
+              li 
+                = activity.name
+        td
+          .btn.btn-primary.btn-sm data-toggle="modal" data-target="#edit_activity_outcomes_#{outcome.id}"
+            | Add Activity
 
-/ = render 'new_activity_skill_modal'
+          = render 'activity_outcome_modal', outcome: outcome
+
 = render 'admin/categories/edit_skill_modal', skill: @skill

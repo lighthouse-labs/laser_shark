@@ -4,10 +4,12 @@ class Admin::OutcomesController < Admin::BaseController
   before_action :require_category, except: [:index, :new]
 
   def index
-    if params[:outcome_text]
-      @outcomes = Outcome.search(params[:outcome_text])
-    else
-      @outcomes = Outcome.all
+    @outcomes = Outcome
+    @outcomes = @outcomes.search params[:outcome_text] unless params[:outcome_text].blank?
+    @outcomes = @outcomes.search params[:term] unless params[:term].blank?
+    respond_to do |format|
+      format.html
+      format.js { render json: @outcomes, root: false }
     end
   end
 

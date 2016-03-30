@@ -1,0 +1,23 @@
+.modal.fade id="edit_activity_outcomes_#{outcome.id}"
+  .modal-dialog
+    .modal-content.create-outcome-activity-modal
+      .modal-header
+        button.close type='button' data-dismiss='modal'
+          span aria-hidden='true'
+            | &times;
+          span.sr-only
+            | Close
+        h4.modal-title
+          | Add a new activity
+
+        .modal-body
+          = form_for outcome, url: [:admin, outcome], method: 'put', id: 'create-outcome-activity-modal-input' do |f|
+            = f.fields_for :activity_outcomes do |activity_fields|
+              = render "admin/activity_outcomes/fields", f: activity_fields
+                  
+            = link_to_add_fields "Add Activity", f, :activity_outcomes, "add-outcome-activity-field-button btn-block"
+              
+          .modal-footer
+            button.btn.btn-default type='button' data-dismiss='modal'
+              | Cancel
+            = submit_tag 'Save', class: 'btn btn-primary create-outcome-activity-button'

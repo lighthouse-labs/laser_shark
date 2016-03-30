@@ -4,6 +4,8 @@ class Outcome < ActiveRecord::Base
   
   has_many :activity_outcomes, dependent: :destroy
   has_many :activities, through: :activity_outcomes
+
+  accepts_nested_attributes_for :activity_outcomes, reject_if: Proc.new { |ao| ao[:activity_id].blank? }, allow_destroy: true
   
   validates :text, uniqueness: {case_sensitive: false}
 
