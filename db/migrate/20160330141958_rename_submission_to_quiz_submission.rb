@@ -1,5 +1,5 @@
 class RenameSubmissionToQuizSubmission < ActiveRecord::Migration
   def change
-    rename_table :submission, :quiz_submission
+    rename_table :submissions, :quiz_submissions
   end
 end
