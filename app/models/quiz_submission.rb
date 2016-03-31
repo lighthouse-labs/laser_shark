@@ -17,4 +17,13 @@ class QuizSubmission < ActiveRecord::Base
   def to_param
     uuid
   end
+
+  def option_selected?(option)
+    @memo ||= {}
+    option_id = option.is_a?(Option) ? option.id : option
+    unless @memo.has_key?(option_id)
+      @memo[option_id] = answers.map(&:option_id).include?(option_id)
+    end
+    @memo[option_id]
+  end
 end

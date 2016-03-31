@@ -8,5 +8,5 @@ class Question < ActiveRecord::Base
 
   validates :question, presence: true
 
-  validates :activity, presence: true
+  # validates :activity, presence: true
 end

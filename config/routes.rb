@@ -2,7 +2,7 @@ LaserShark::Application.routes.draw do
 
   get 'quiz_submissions/new/:id', to: 'quiz_submissions#new'
 
-  get 'quiz_submissions/create'
+  post 'quiz_submissions', to: 'quiz_submissions#create'
 
   get 'quiz_submissions/show'
 
