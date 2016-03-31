@@ -5,10 +5,14 @@ class window.AutoComplete
     @args = args
     @initAutoComplete()
 
+  render: (ul, item) =>
+    markup = @args.render(item)
+    $('<li>').append(markup).appendTo(ul)
+
   initAutoComplete: ->
     @input.autocomplete(
       source: @args.url,
       select: @args.select
     )
 
-    @input.autocomplete('instance')._renderItem = @args.render
+    @input.autocomplete('instance')._renderItem = @render

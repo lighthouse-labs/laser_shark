@@ -84,6 +84,8 @@
         source src="#{Video::HOST}#{@activity.media_filename}.mp4" type='video/mp4'
       hr
 
+    = activity_presenter.display_outcomes
+
     - if @activity.instructions?
       .instructions
         == markdown @activity.instructions

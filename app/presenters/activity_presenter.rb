@@ -46,4 +46,9 @@ class ActivityPresenter < BasePresenter
 
     link_to 'Edit', path, class: 'btn btn-edit'
   end
+
+  def display_outcomes
+    render "outcomes", activity: activity if activity.outcomes.present?
+  end
+
 end

@@ -2,7 +2,7 @@ window.setupActivityAutoComplete = (input) ->
   new AutoComplete(
     selector: input
     url: '/activities'
-    render: (ul, item) ->
+    render: (item) ->
       if (item.day)
         markup = [
           '<span class="activity-display activity-display-name">' + item.name + '</span>',
@@ -12,7 +12,8 @@ window.setupActivityAutoComplete = (input) ->
       else
         markup = ['<span class="activity-display activity-display-name">' + item.text + '</span>']
 
-      $('<li>').append(markup.join('')).appendTo(ul)
+      markup.join('')
+    
     select: (e, ui) ->
       $(@).val(ui.item.name)
       $(@).next('.hidden-activity-field').val(ui.item.id)
@@ -21,3 +22,21 @@ window.setupActivityAutoComplete = (input) ->
 
 $ ->
   window.setupActivityAutoComplete('.activity-outcomes-autocomplete-field')
+
+  new AutoComplete(
+    selector: '.outcomes-autocomplete-field'
+    url: '/admin/outcomes',
+    render: (item) ->
+      markup = [
+        '<span>',
+        item.text,
+        '</span>'
+      ]
+
+      markup.join('')
+
+    select: (e, ui) ->
+      $(@).val(ui.item.text)
+      $(@).next('.outcome-id-hidden-field').val(ui.item.id)
+      false
+  )

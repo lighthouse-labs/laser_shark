@@ -3,17 +3,6 @@ hr
 
 = simple_form_for @activity, as: :activity, url: @form_url,
   html: { id: 'activity-form', class: 'form-horizontal' }, wrapper: :horizontal_form do |f|
-  
-  - if admin?  
-    .form-group
-      label.col-sm-3.control-label
-        | Outcomes
-      .col-sm-9
-        ul
-        - @activity.outcomes.each do |outcome|
-          li = outcome.text
-        .btn.btn-sm.btn-primary data-toggle="modal" data-target="#edit-activity-outcomes-modal"
-          | Add Outcome
 
   = render "form", f: f
 
@@ -36,5 +25,3 @@ hr
     = link_to '&laquo; Cancel'.html_safe, :back
 
   = render 'editor'
-  
-/ = render 'outcomes_modal', activity: @activity
