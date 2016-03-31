@@ -12,6 +12,7 @@ class ActivitySubmission < ActiveRecord::Base
 
   #after_save :request_code_review
   after_create :create_feedback
+  after_create :create_user_activity_outcomes
   after_destroy :handle_submission_destroy
   after_destroy :destroy_feedback
 
@@ -87,6 +88,12 @@ class ActivitySubmission < ActiveRecord::Base
       type: "CancelAssistanceRequest",
       object: AssistanceRequestSerializer.new(self.code_review_request, root: false).as_json
     }
+  end
+
+  def create_user_activity_outcomes
+    self.activity.activity_outcomes.each do |activity_outcome|
+      self.user.user_activity_outcomes.create(activity_outcome: activity_outcome)
+    end
   end
 
 end
