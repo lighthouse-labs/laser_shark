@@ -46,7 +46,7 @@ class ActivitySubmission < ActiveRecord::Base
   private
 
   def check_data_for_finalized
-    if self.data
+    unless self.data.blank?
       # => TODO handle more than just prep data
       if self.data["lintResults"].zero? && self.data["testFailures"].zero?
         self.finalized = true
