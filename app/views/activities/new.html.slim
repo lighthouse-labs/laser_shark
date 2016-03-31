@@ -1,7 +1,7 @@
 h1 = "#{(day || @activity.section.try(:name)).to_s.upcase}: New Activity"
 hr
 
-= simple_form_for @activity, as: :activity, url: polymorphic_url([@parent, @activity]),
+= simple_form_for @activity, as: :activity, url: @form_url,
   html: { id: 'activity-form', class: 'form-horizontal' }, wrapper: :horizontal_form do |f|
 
   = render "form", f: f
@@ -12,8 +12,10 @@ hr
   h3 Teacher Notes
   #notes-editor.editor = @activity.teacher_notes
 
-  / h3 Optional Test
-  / #test-editor.editor = @activity_test.test
+  - if f.object.section
+    h3 Optional Test
+    pre#test_content style="display:none" = @activity_test.test
+    #test-editor.editor  
 
   .actions.well
     = f.submit 'Create', class: 'btn btn-primary', style: 'margin-right: 10px;'

@@ -26,7 +26,7 @@ table.table
           ul 
             - outcome.activities.each do |activity|
               li 
-                = activity.name
+                = link_to activity.name, day_activity_path(activity.day, activity)
         td
           .btn.btn-primary.btn-sm data-toggle="modal" data-target="#edit_activity_outcomes_#{outcome.id}"
             | Manage Activities

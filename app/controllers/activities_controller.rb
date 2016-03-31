@@ -6,7 +6,8 @@ class ActivitiesController < ApplicationController
   before_action :teacher_required, only: [:new, :create, :edit, :update]
   before_action :check_if_day_unlocked, only: [:show]
   before_action :load_activity_test, only: [:new, :edit]
-  before_action :load_day_or_section, only: [:new, :edit, :update]
+  before_action :load_section, only: [:new, :edit, :update]
+  before_action :load_form_url, only: [:new, :edit]
 
   def index
     @activities = Activity
@@ -18,10 +19,14 @@ class ActivitiesController < ApplicationController
     end
   end
 
-
   def new
     @activity = Activity.new(day: params[:day_number])
-    @activity.section = @section if @section
+    if @section
+      @activity.section = @section 
+      @form_url = [@section, :activities]
+    else
+      @form_url = day_activities_path(params[:day_number])
+    end
   end
 
   def create
@@ -29,7 +34,9 @@ class ActivitiesController < ApplicationController
     if @activity.save(activity_params)
       handle_redirect("Activity Created!")
     else
-      load_day_or_section
+      load_section
+      load_activity_test
+      load_new_url
       render :new
     end
   end
@@ -100,6 +107,7 @@ class ActivitiesController < ApplicationController
 
   def require_activity
     @activity = Activity.find(params[:id])
+    @activity = @activity.becomes(Activity)
   end
 
   def check_if_day_unlocked
@@ -116,12 +124,33 @@ class ActivitiesController < ApplicationController
     end
   end
 
-  def load_day_or_section
-    if params[:day_number]
-      @parent = :day
-    elsif slug = params[:prep_id]
-      @parent = Prep.find_by(slug: slug)
-      @section = @parent
+  def load_section
+    if slug = params[:prep_id]
+      @section = Prep.find_by(slug: slug)
+    end
+  end
+
+  def load_form_url
+    if @activity
+      load_edit_url
+    else
+      load_new_url
+    end
+  end
+
+  def load_new_url
+    @form_url = if params[:day_number]
+      day_activities_path(params[:day_number])
+    else
+      [@section, :activities]
+    end
+  end
+
+  def load_edit_url
+    @form_url = if params[:day_number]
+      day_activity_path(params[:day_number], @activity)
+    else
+      [@section, @activity]
     end
   end
 

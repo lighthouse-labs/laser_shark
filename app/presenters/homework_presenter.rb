@@ -1,0 +1,2 @@
+class HomeworkPresenter < ActivityPresenter
+end

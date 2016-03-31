@@ -3,19 +3,23 @@
     function initEditors() {
       var instructionsEditor = ace.edit("instructions-editor");
       var notesEditor = ace.edit("notes-editor");
-      var testEditor = ace.edit("test-editor");
 
       instructionsEditor.setTheme("ace/theme/monokai");
       notesEditor.setTheme("ace/theme/monokai");
-      testEditor.setTheme("ace/theme/monokai");
+      
 
       instructionsEditor.getSession().setMode("ace/mode/markdown");
       notesEditor.getSession().setMode("ace/mode/markdown");
-      testEditor.getSession().setMode("ace/mode/javascript");
 
       instructionsEditor.setValue($('#instructions_content').text())
       notesEditor.setValue($('#notes_content').text())
-      testEditor.setValue($('#test_content').text())
+      
+      if($('test-editor').length > 0) {
+        var testEditor = ace.edit("test-editor");
+        testEditor.setTheme("ace/theme/monokai");
+        testEditor.getSession().setMode("ace/mode/javascript");
+        testEditor.setValue($('#test_content').text())
+      }
 
       $('#activity-form').submit(function(evt) {
         evt.preventDefault();
