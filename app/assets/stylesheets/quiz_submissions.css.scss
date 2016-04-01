@@ -13,3 +13,30 @@
   margin-top: 8rem;
   padding-bottom: 8rem;
 }
+
+.attempts {
+  width: 300px;
+  list-style: none;
+  line-height: normal;
+  margin: 0 auto;
+  text-align: center;
+  padding: 0;
+
+  li {
+    display:inline-block;
+    border: 1px rgb(52, 73, 94) solid;
+    padding: 0 5px;
+  }
+}
+
+.correct {
+  background-color: rgb(223, 240, 216);
+}
+
+.incorrect {
+  background-color: rgb(242, 222, 222);
+}
+
+.unanswered {
+  border: 1px red solid;
+}

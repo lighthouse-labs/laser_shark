@@ -7,7 +7,6 @@ class QuizSubmissionsController < ApplicationController
   def create
     @quiz_submission = QuizSubmission.new(submission_params)
     @quiz_submission.user = current_user
-    @past_submissions = QuizSubmission.where(user_id: current_user.id).where.not(id: @quiz_submission.id)
     if @quiz_submission.save
       redirect_to quiz_submission_path @quiz_submission.id
     else
@@ -17,7 +16,7 @@ class QuizSubmissionsController < ApplicationController
 
   def show
     @quiz_submission = QuizSubmission.find(params[:id])
-    @past_submissions = QuizSubmission.where(user_id: current_user.id).where.not(id: @quiz_submission.id)
+    @past_submissions = QuizSubmission.where("user_id = ? AND quiz_id = ? AND id != ?", current_user.id, @quiz_submission.quiz_id, @quiz_submission.id)
   end
 
   private
