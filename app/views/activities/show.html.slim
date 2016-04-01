@@ -169,7 +169,6 @@
 
       pre
         = @activity.activity_test.try(:test).blank? ? "There aren't any Mocha tests associated with this activity" : @activity.activity_test.test
-      
 
     = render "prep_section", activity: @activity if @activity.prep? && !teacher?
 
