@@ -26,4 +26,8 @@ class QuizSubmission < ActiveRecord::Base
     end
     @memo[option_id]
   end
+
+  def score
+    answers.inject(0) { |sum, answer| answer.option && answer.option.correct ? sum + 1 : sum }
+  end
 end
