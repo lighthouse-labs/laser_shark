@@ -15,7 +15,7 @@ class Activity < ActiveRecord::Base
 
   validates :name, presence: true, length: { maximum: 56 }
   validates :duration, numericality: { only_integer: true }
-  validates :start_time, numericality: { only_integer: true }
+  validates :start_time, numericality: { only_integer: true }, if: Proc.new{|activity| activity.section.blank?}
   validates :day, presence: true, format: { with: DAY_REGEX, allow_blank: true }, if: Proc.new{|activity| activity.section.blank?}
 
   scope :chronological, -> { order(:start_time) }

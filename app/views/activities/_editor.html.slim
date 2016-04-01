@@ -14,7 +14,7 @@
       instructionsEditor.setValue($('#instructions_content').text())
       notesEditor.setValue($('#notes_content').text())
       
-      if($('test-editor').length > 0) {
+      if($('#test-editor').length > 0) {
         var testEditor = ace.edit("test-editor");
         testEditor.setTheme("ace/theme/monokai");
         testEditor.getSession().setMode("ace/mode/javascript");
@@ -26,7 +26,11 @@
         
         $('#activity-instructions').val(instructionsEditor.getValue());
         $('#activity-notes').val(notesEditor.getValue());
-        $('#activity_activity_test_attributes_test').val(testEditor.getValue());
+        
+        if($('#test-editor').length > 0) {
+          $('#activity_activity_test_attributes_test').val(testEditor.getValue());
+        }
+        
         this.submit();
       });
     }
