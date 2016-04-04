@@ -18,14 +18,14 @@ class ActivityPresenter < BasePresenter
   end
 
   def previous_button
-    if @previous_activity
-      link_to '&laquo; Previous'.html_safe, day_activity_path(activity.day, @previous_activity), class: 'btn btn-previous'
+    if activity.previous
+      link_to '&laquo; Previous'.html_safe, get_activity_path(activity.previous), class: 'btn btn-previous'
     end
   end
 
   def next_button
-    if @next_activity
-      link_to 'Next &raquo;'.html_safe, day_activity_path(activity.day, @next_activity), class: 'btn btn-next'
+    if activity.next
+      link_to 'Next &raquo;'.html_safe, get_activity_path(activity.next), class: 'btn btn-next'
     end
   end
 

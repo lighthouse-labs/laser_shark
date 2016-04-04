@@ -1,5 +1,13 @@
 module ActivitiesHelper
 
+  def get_activity_path(activity)
+    if activity.prep?
+      prep_activity_path(:prep, activity)
+    else
+      day_activity_path(activity.day, activity)
+    end
+  end
+
   def markdown(content)
     options = {
       autolink: true,

@@ -18,7 +18,7 @@ class Activity < ActiveRecord::Base
   validates :start_time, numericality: { only_integer: true }, if: Proc.new{|activity| activity.section.blank?}
   validates :day, presence: true, format: { with: DAY_REGEX, allow_blank: true }, if: Proc.new{|activity| activity.section.blank?}
 
-  scope :chronological, -> { order(:start_time) }
+  scope :chronological, -> { order("start_time, id") }
   scope :for_day, -> (day) { where(day: day.to_s) }
   scope :search, -> (query) { where("lower(name) LIKE :query or lower(day) LIKE :query", query: "%#{query.downcase}%") }
 
@@ -43,11 +43,19 @@ class Activity < ActiveRecord::Base
   end
 
   def next
-    Activity.where('start_time > ? AND day = ?', self.start_time, self.day).order(start_time: :asc).first
+    if prep?
+      self.section.activities.where('activities.id > ?', self.id).first
+    else
+      Activity.where('start_time > ? AND day = ?', self.start_time, self.day).order(start_time: :asc).first
+    end
   end
 
   def previous
-    Activity.where('start_time < ? AND day = ?', self.start_time, self.day).order(start_time: :desc).first
+    if prep?
+      self.section.activities.where('activities.id < ?', self.id).last
+    else
+      Activity.where('start_time < ? AND day = ?', self.start_time, self.day).order(start_time: :desc).first
+    end
   end
 
   def display_duration?

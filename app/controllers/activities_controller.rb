@@ -47,9 +47,6 @@ class ActivitiesController < ApplicationController
   def show
     @setup = day.to_s == 'setup'
 
-    @next_activity = @activity.next
-    @previous_activity = @activity.previous    
-
     # => For prep always create a new submission
     if @activity.section
       @activity_submission = ActivitySubmission.new
@@ -57,9 +54,6 @@ class ActivitiesController < ApplicationController
     else
       @activity_submission = current_user.activity_submissions.where(activity: @activity).first || ActivitySubmission.new
     end
-
-    @next_activity = @activity.next
-    @previous_activity = @activity.previous
 
     @feedback = @activity.feedbacks.find_by(student: current_user)
 
