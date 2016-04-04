@@ -11,7 +11,10 @@ class ActivitiesController < ApplicationController
 
   def index
     @activities = Activity
-    @activities = @activities.search(params[:term]) unless params[:term].blank?
+    unless params[:term].blank?
+      @activities = @activities.search(params[:term])
+      @activities = @activities.where.not(day: nil) 
+    end
 
     respond_to do |format|
       format.html

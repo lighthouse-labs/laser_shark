@@ -56,7 +56,7 @@ class ActivitySubmission < ActiveRecord::Base
   end
 
   def github_url_required?
-    activity && activity.allow_submissions?
+    activity && activity.allow_submissions? && !activity.prep?
   end
 
   def request_code_review
