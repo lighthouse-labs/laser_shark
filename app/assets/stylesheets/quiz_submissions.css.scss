@@ -15,7 +15,8 @@
 }
 
 .attempts {
-  width: 300px;
+  min-width: 300px;
+  max-width: 500px;
   list-style: none;
   line-height: normal;
   margin: 0 auto;
@@ -26,6 +27,14 @@
     display:inline-block;
     border: 1px rgb(52, 73, 94) solid;
     padding: 0 5px;
+    border-style: none;
+
+    .attempt {
+      color: white;
+      &:hover {
+        color: #2f4154;
+      }
+    }
   }
 }
 

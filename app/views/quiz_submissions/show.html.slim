@@ -1,25 +1,47 @@
+== render 'layouts/side_nav'
 .row
   .col-md-8.col-md-push-2
     article.page-content
       .page-header
         h1.text-center
-          Your Results
-        h3.text-center = "#{@quiz_submission.score} /  #{@quiz_submission.answers.count}"
+          i.fa.fa-compass
+          = ' Compass Quiz'
+      p.lead.text-center Your submission was successfully collected. Below is a summary or your answers along with the correct options.
+      hr
+      h2.text-center
+        | Result
+        br
+        span.label.label-primary
+          = submission_score(@quiz_submission)
         h4.text-center Previous Attempts
         ul.attempts
           - @past_submissions.each do |attempt|
-            li= link_to "#{attempt.score} / #{attempt.answers.count}", quiz_submission_path(attempt.id)
-      - @quiz_submission.quiz.questions.each_with_index do |question, question_index|
+            li.label.label-primary= link_to "#{attempt.score} / #{attempt.answers.count}", quiz_submission_path(attempt.id), class: "attempt"
+      hr
+      - if @quiz_submission.quiz.nil?
+        .alert.alert-info.text-center The quiz that this submission is for has been deleted.
+      - else
+        - @quiz_submission.quiz.questions.each_with_index do |question, question_index|
           .submission-question
             h2.text-primary = "Question ##{question_index + 1}"
-            p = question.question
+            /= markdown(question.question)
             .submission-answer
               h3.text-muted = "Question ##{question_index + 1} answer"
               .list-group
                 - question.options.each_with_index do |option, option_index|
-                  div class=(option.correct ? 'list-group-item correct' : 'list-group-item incorrect')
+                  div class="list-group-item #{option.correct? ? 'list-group-item-success' : option.selected?(@quiz_submission) ? 'list-group-item-danger' : ''}"
                     .list-group-item-heading
-                      = label_tag do
-                        = " Option #{option_index + 1}"
+                      input type="radio" disabled=(!option.selected?(@quiz_submission)) checked=(option.selected?(@quiz_submission))
+                      b = " Option #{option_index + 1} "
+                      - if option.correct? || option.selected?(@quiz_submission)
+                        = "(#{option.selected?(@quiz_submission) ? 'selected, ' : ''}#{option.correct? ? 'correct' : 'incorrect'})"
                     .list-group-item-text
-                      p = option.answer
+                      /= markdown(option.answer)
+                      - if option.selected?(@quiz_submission) || option.correct?
+                        /.explanation = markdown(option.explanation)
+                      - else
+                        p
+                          a data-toggle="collapse" href="#option_#{option.id}_explanation" aria-expanded="false" aria-controls="option_#{option.id}_explanation"
+                            | toggle explanation
+                        .collapse id="option_#{option.id}_explanation"
+                          /.explanation = markdown(option.explanation)
