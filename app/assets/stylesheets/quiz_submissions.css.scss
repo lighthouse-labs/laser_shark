@@ -9,9 +9,9 @@
 
 .submission-question {
   border-bottom: 1px solid $gray-lighter;
-  margin-bottom: 8rem;
-  margin-top: 8rem;
-  padding-bottom: 8rem;
+  margin-bottom: 4rem;
+  margin-top: 4rem;
+  padding-bottom: 4rem;
 }
 
 .attempts {
@@ -26,7 +26,7 @@
   li {
     display:inline-block;
     border: 1px rgb(52, 73, 94) solid;
-    padding: 0 5px;
+    padding: 5px 5px;
     border-style: none;
 
     .attempt {
@@ -48,4 +48,17 @@
 
 .unanswered {
   border: 1px red solid;
+}
+
+.list-group-item.disabled,
+.list-group-item-danger,
+.list-group-item-info,
+.list-group-item-success,
+.list-group-item-warning {
+  code {
+    background-color: rgba(127, 127, 127, .2);
+  }
+  .explanation {
+    border-color: inherit;
+  }
 }

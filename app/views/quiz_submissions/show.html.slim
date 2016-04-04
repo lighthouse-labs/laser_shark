@@ -3,17 +3,17 @@
   .col-md-8.col-md-push-2
     article.page-content
       .page-header
-        h1.text-center
+        h2.text-center
           i.fa.fa-compass
           = ' Compass Quiz'
-      p.lead.text-center Your submission was successfully collected. Below is a summary or your answers along with the correct options.
+      p.text-center Your submission was successfully collected. Below is a summary or your answers along with the correct options.
       hr
-      h2.text-center
+      h3.text-center
         | Result
         br
         span.label.label-primary
           = submission_score(@quiz_submission)
-        h4.text-center Previous Attempts
+        h5.text-center Previous Attempts
         ul.attempts
           - @past_submissions.each do |attempt|
             li.label.label-primary= link_to submission_score(attempt), quiz_submission_path(attempt.id), class: "attempt"
@@ -23,10 +23,10 @@
       - else
         - @quiz_submission.quiz.questions.each_with_index do |question, question_index|
           .submission-question
-            h2.text-primary = "Question ##{question_index + 1}"
+            h3.text-primary = "Question ##{question_index + 1}"
             /= markdown(question.question)
             .submission-answer
-              h3.text-muted = "Question ##{question_index + 1} answer"
+              h4.text-muted = "Question ##{question_index + 1} answer"
               .list-group
                 - question.options.each_with_index do |option, option_index|
                   div class="list-group-item #{option.correct? ? 'list-group-item-success' : option.selected?(@quiz_submission) ? 'list-group-item-danger' : ''}"
@@ -36,12 +36,12 @@
                       - if option.correct? || option.selected?(@quiz_submission)
                         = "(#{option.selected?(@quiz_submission) ? 'selected, ' : ''}#{option.correct? ? 'correct' : 'incorrect'})"
                     .list-group-item-text
-                      /= markdown(option.answer)
+                      div= option.answer
                       - if option.selected?(@quiz_submission) || option.correct?
-                        /.explanation = markdown(option.explanation)
+                        .explanation = option.explanation
                       - else
                         p
                           a data-toggle="collapse" href="#option_#{option.id}_explanation" aria-expanded="false" aria-controls="option_#{option.id}_explanation"
                             | toggle explanation
                         .collapse id="option_#{option.id}_explanation"
-                          /.explanation = markdown(option.explanation)
+                          .explanation = option.explanation
