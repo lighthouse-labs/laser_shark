@@ -105,12 +105,6 @@ section.activity-details
     .instructions
       == markdown @activity.instructions
 
-  - if @activity.is_a?(QuizActivity)
-    - if @activity.quiz
-      a href="/quiz_submissions/new/#{@activity.quiz.id}" Take the  quiz.
-    - else
-      a href="#" Take the  quiz.
-
   - if @activity.recordings.length > 0
     .recordings
       h3
