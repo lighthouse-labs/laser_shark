@@ -1,7 +1,7 @@
 class QuizSubmissionsController < ApplicationController
   def new
-    @quiz = Quiz.find(params[:id])
-    @quiz_submission = QuizSubmission.new(quiz: @quiz)
+    quiz = Quiz.find(params[:quiz_id])
+    @quiz_submission = QuizSubmission.new(quiz: quiz)
   end
 
   def create
