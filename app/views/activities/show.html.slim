@@ -105,7 +105,7 @@ section.activity-details
     .instructions
       == markdown @activity.instructions
 
-  - if @activity.type == "QuizActivity"
+  - if @activity.is_a?(QuizActivity)
     - if @activity.quiz
       a href="/quiz_submissions/new/#{@activity.quiz.id}" Take the  quiz.
     - else

@@ -1,4 +1,4 @@
-== render 'layouts/side_nav'
+/== render 'layouts/side_nav'
 .row
   .col-md-8.col-md-push-2
     article.page-content
@@ -16,7 +16,7 @@
         h4.text-center Previous Attempts
         ul.attempts
           - @past_submissions.each do |attempt|
-            li.label.label-primary= link_to "#{attempt.score} / #{attempt.answers.count}", quiz_submission_path(attempt.id), class: "attempt"
+            li.label.label-primary= link_to submission_score(attempt), quiz_submission_path(attempt.id), class: "attempt"
       hr
       - if @quiz_submission.quiz.nil?
         .alert.alert-info.text-center The quiz that this submission is for has been deleted.
