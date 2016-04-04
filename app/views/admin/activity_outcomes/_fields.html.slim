@@ -2,8 +2,9 @@
   .col-md-2
     = label_tag "Activity:"
   .col-md-8.ui-front
-    = text_field_tag :name, f.object.activity.try(:name), class: 'form-control autocomplete activity-outcomes-autocomplete-field'
-    = f.hidden_field :activity_id, class: 'hidden-activity-field'
+    = text_field_tag :name, f.object.item.try(:name), class: 'form-control autocomplete activity-outcomes-autocomplete-field'
+    = f.hidden_field :item_type, class: 'hidden-item-type-field'
+    = f.hidden_field :item_id, class: 'hidden-item-id-field'
     = f.hidden_field :_destroy
   .col-md-2
     = link_to "remove", "#", class: "remove_fields btn btn-danger btn-sm"

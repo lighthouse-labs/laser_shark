@@ -2,10 +2,10 @@ class Outcome < ActiveRecord::Base
 
   belongs_to :skill
   
-  has_many :activity_outcomes, dependent: :destroy
-  has_many :activities, through: :activity_outcomes
+  has_many :item_outcomes, dependent: :destroy
+  has_many :activities, through: :item_outcomes, source: :item, source_type: 'Activity'
 
-  accepts_nested_attributes_for :activity_outcomes, reject_if: Proc.new { |ao| ao[:activity_id].blank? }, allow_destroy: true
+  accepts_nested_attributes_for :item_outcomes, reject_if: Proc.new { |ao| ao[:item_type].blank? }, allow_destroy: true
   
   validates :text, uniqueness: {case_sensitive: false}
 

@@ -7,8 +7,8 @@ class Activity < ActiveRecord::Base
   has_many :recordings, -> { order(created_at: :desc) }
   has_many :feedbacks, as: :feedbackable
 
-  has_many :activity_outcomes, dependent: :destroy
-  has_many :outcomes, through: :activity_outcomes
+  has_many :item_outcomes, as: :item, dependent: :destroy
+  has_many :outcomes, through: :item_outcomes
 
   has_one :activity_test
   accepts_nested_attributes_for :activity_test

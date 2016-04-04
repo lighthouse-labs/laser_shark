@@ -12,10 +12,10 @@
 
         = form_for outcome, url: [:admin, outcome], method: 'put', id: 'create-outcome-activity-modal-input' do |f|
           .modal-body
-            = f.fields_for :activity_outcomes do |activity_fields|
+            = f.fields_for :item_outcomes do |activity_fields|
               = render "admin/activity_outcomes/fields", f: activity_fields
                   
-            = link_to_add_fields "Add Activity", f, :activity_outcomes, "add-outcome-activity-field-button btn-block"
+            = link_to_add_fields "Add Activity", f, :item_outcomes, "add-outcome-activity-field-button btn-block"
               
           .modal-footer
             button.btn.btn-default type='button' data-dismiss='modal'

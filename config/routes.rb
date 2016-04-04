@@ -103,6 +103,7 @@ LaserShark::Application.routes.draw do
         get :feedback
       end
     end
+
     resources :cohorts, except: [:destroy]
     resources :feedbacks, except: [:edit, :update, :destroy]
     resources :teacher_feedbacks, only: [:index]
@@ -116,7 +117,7 @@ LaserShark::Application.routes.draw do
 
     #Outcomes CRUD
     resources :outcomes
-    resources :activity_outcomes, only: [:create, :destroy]
+    resources :item_outcomes, only: [:create, :destroy]
     resources :categories do 
       resources :skills do 
         member do 
@@ -125,6 +126,7 @@ LaserShark::Application.routes.draw do
       end
     end
 
+    
   end
 
   # To test 500 error notifications on production

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160404155532) do
+ActiveRecord::Schema.define(version: 20160404201708) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -53,13 +53,6 @@ ActiveRecord::Schema.define(version: 20160404155532) do
   add_index "activity_messages", ["activity_id"], name: "index_activity_messages_on_activity_id", using: :btree
   add_index "activity_messages", ["cohort_id"], name: "index_activity_messages_on_cohort_id", using: :btree
   add_index "activity_messages", ["user_id"], name: "index_activity_messages_on_user_id", using: :btree
-
-  create_table "activity_outcomes", force: :cascade do |t|
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
-    t.integer  "outcome_id"
-    t.integer  "activity_id"
-  end
 
   create_table "activity_submissions", force: :cascade do |t|
     t.integer  "user_id"
@@ -178,6 +171,17 @@ ActiveRecord::Schema.define(version: 20160404155532) do
     t.float    "rating"
   end
 
+  create_table "item_outcomes", force: :cascade do |t|
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.integer  "outcome_id"
+    t.integer  "activity_id"
+    t.string   "item_type"
+    t.integer  "item_id"
+  end
+
+  add_index "item_outcomes", ["item_id"], name: "index_item_outcomes_on_item_id", using: :btree
+
   create_table "locations", force: :cascade do |t|
     t.string   "name",             limit: 255
     t.datetime "created_at"
@@ -190,16 +194,16 @@ ActiveRecord::Schema.define(version: 20160404155532) do
   create_table "outcome_results", force: :cascade do |t|
     t.integer  "user_id"
     t.integer  "outcome_id"
-    t.string   "source"
-    t.integer  "resultable_id"
-    t.string   "resultable_type"
+    t.string   "source_name"
+    t.integer  "source_id"
+    t.string   "source_type"
     t.float    "rating"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
   end
 
   add_index "outcome_results", ["outcome_id"], name: "index_outcome_results_on_outcome_id", using: :btree
-  add_index "outcome_results", ["resultable_type", "resultable_id"], name: "index_outcome_results_on_resultable_type_and_resultable_id", using: :btree
+  add_index "outcome_results", ["source_type", "source_id"], name: "index_outcome_results_on_source_type_and_source_id", using: :btree
   add_index "outcome_results", ["user_id"], name: "index_outcome_results_on_user_id", using: :btree
 
   create_table "outcome_skills", force: :cascade do |t|

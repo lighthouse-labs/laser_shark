@@ -4,8 +4,8 @@ class CreateOutcomeResults < ActiveRecord::Migration
       t.references :user, index: true, foreign_key: true
       t.references :outcome, index: true, foreign_key: true
       
-      t.string :source
-      t.references :resultable, polymorphic: true, index: true
+      t.string :source_name
+      t.references :source, polymorphic: true, index: true
       t.float :rating
 
       t.timestamps null: false

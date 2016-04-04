@@ -16,7 +16,8 @@ window.setupActivityAutoComplete = (input) ->
     
     select: (e, ui) ->
       $(@).val(ui.item.name)
-      $(@).next('.hidden-activity-field').val(ui.item.id)
+      $(@).siblings('.hidden-item-type-field').first().val("Activity")
+      $(@).siblings('.hidden-item-id-field').first().val(ui.item.id)
       false
   )
 

@@ -26,8 +26,8 @@ class Admin::OutcomesController < Admin::BaseController
   def outcome_params
     params.require(:outcome).permit(
       :text, 
-      activity_outcomes_attributes: [
-        :id, :activity_id, :_destroy
+      item_outcomes_attributes: [
+        :id, :item_type, :item_id, :_destroy
       ]
     )
   end
