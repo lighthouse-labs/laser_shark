@@ -12,7 +12,7 @@ class User < ActiveRecord::Base
 
   has_many :activity_submissions
   has_many :submitted_activities, through: :activity_submissions, source: :activity
-  has_many :user_activity_outcomes
+  has_many :outcome_results
 
   scope :order_by_last_assisted_at, -> {
     order("last_assisted_at ASC NULLS FIRST")

@@ -12,7 +12,7 @@ class ActivitySubmission < ActiveRecord::Base
 
   #after_save :request_code_review
   after_create :create_feedback
-  after_create :create_user_activity_outcomes
+  after_create :create_user_outcome_results
   after_destroy :handle_submission_destroy
   after_destroy :destroy_feedback
 
@@ -49,10 +49,21 @@ class ActivitySubmission < ActiveRecord::Base
   def check_data_for_finalized
     unless self.data.blank?
       # => TODO handle more than just prep data
-      if self.data["lintResults"].zero? && self.data["testFailures"].zero?
-        self.finalized = true
-      end
+      data = get_prep_code_result_data
+
+      self.finalized = data[:lint_results].zero? && data[:test_failures].zero?
     end
+
+    # => Return true so it saves!
+    true
+  end
+
+  def get_prep_code_result_data
+    {
+      lint_results: self.data["lintResults"],
+      test_failures: self.data["testFailures"],
+      test_passes: self.data["testPasses"]
+    }
   end
 
   def github_url_required?
@@ -90,9 +101,12 @@ class ActivitySubmission < ActiveRecord::Base
     }
   end
 
-  def create_user_activity_outcomes
+  def create_user_outcome_results
     self.activity.activity_outcomes.each do |activity_outcome|
-      self.user.user_activity_outcomes.create(activity_outcome: activity_outcome)
+      # => TODO: change the way we calculate ratings
+      if self.activity.prep?
+        self.user.outcome_results.create(outcome: activity_outcome.outcome, resultable: activity_outcome, rating: Prep.evaluate_rating(get_prep_code_result_data))
+      end
     end
   end
 

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160331182801) do
+ActiveRecord::Schema.define(version: 20160404155532) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -187,6 +187,21 @@ ActiveRecord::Schema.define(version: 20160331182801) do
     t.boolean  "has_code_reviews",             default: true
   end
 
+  create_table "outcome_results", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "outcome_id"
+    t.string   "source"
+    t.integer  "resultable_id"
+    t.string   "resultable_type"
+    t.float    "rating"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+  end
+
+  add_index "outcome_results", ["outcome_id"], name: "index_outcome_results_on_outcome_id", using: :btree
+  add_index "outcome_results", ["resultable_type", "resultable_id"], name: "index_outcome_results_on_resultable_type_and_resultable_id", using: :btree
+  add_index "outcome_results", ["user_id"], name: "index_outcome_results_on_user_id", using: :btree
+
   create_table "outcome_skills", force: :cascade do |t|
     t.integer "outcome_id"
     t.integer "skill_id"
@@ -249,17 +264,6 @@ ActiveRecord::Schema.define(version: 20160331182801) do
     t.datetime "updated_at"
   end
 
-  create_table "user_activity_outcomes", force: :cascade do |t|
-    t.integer  "user_id"
-    t.integer  "activity_outcome_id"
-    t.float    "rating"
-    t.datetime "created_at",          null: false
-    t.datetime "updated_at",          null: false
-  end
-
-  add_index "user_activity_outcomes", ["activity_outcome_id"], name: "index_user_activity_outcomes_on_activity_outcome_id", using: :btree
-  add_index "user_activity_outcomes", ["user_id"], name: "index_user_activity_outcomes_on_user_id", using: :btree
-
   create_table "users", force: :cascade do |t|
     t.string   "first_name",             limit: 255
     t.string   "last_name",              limit: 255
@@ -297,6 +301,6 @@ ActiveRecord::Schema.define(version: 20160331182801) do
 
   add_index "users", ["cohort_id"], name: "index_users_on_cohort_id", using: :btree
 
-  add_foreign_key "user_activity_outcomes", "activity_outcomes"
-  add_foreign_key "user_activity_outcomes", "users"
+  add_foreign_key "outcome_results", "outcomes"
+  add_foreign_key "outcome_results", "users"
 end
