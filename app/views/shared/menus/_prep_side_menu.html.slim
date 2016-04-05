@@ -1,10 +1,13 @@
 .panel-group.prep-menu id="accordion" role="tablist" aria-multiselectable="true"
-  - preps.each do |prep|
+  - preps.each_with_index do |prep, i|
+    - if @activity
+      - css_class = (prep.activities.include?(@activity) ? 'in' : '')
+    - else
+      - css_class = (i.zero? ? 'in' : '')
+
     .panel.panel-default
-      .panel-heading role="tab" id="headingOne"
-        = link_to prep.name, '#', data: { parent: '#accordion'}
-      .panel-collapse.collapse.in id=prep.slug role="tabpanel" aria-labelledby="headingOne"
+      .panel-heading role="tab" id="#{prep.slug}"
+        = link_to prep.name, "#collapse_#{prep.slug}", data: { toggle: 'collapse', parent: '#accordion'}, aria: { controls: "collapse_#{prep.slug}", expanded: i.zero? }
+      div class="panel-collapse collapse #{css_class}" id="collapse_#{prep.slug}" role="tabpanel" aria-labelledby="#{prep.slug}"
         .panel-body
           = render "shared/menus/prep_activities", prep: prep
-
-  
