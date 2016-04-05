@@ -1,5 +1,7 @@
 LaserShark::Application.routes.draw do
 
+  resources :questions
+
   resources :quiz_submissions, only: [:create, :show]
 
   resources :quizzes, only: [:show] do
