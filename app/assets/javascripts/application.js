@@ -49,3 +49,4 @@
 //= require activities
 //= require reconnect_holder
 //= require quiz_submissions
+//= require questions
