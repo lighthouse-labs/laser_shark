@@ -38,28 +38,15 @@ if Rails.env.development?
   Cohort.destroy_all
 
   program = Program.create(name: "Web Immersive")
-  location_van = Location.create(name: "Vancouver")
-  location_to = Location.create(name: "Toronto")
-  cohort_van = Cohort.create! name: "Current Cohort Van", code: "current van", location: location_van, start_date: Date.today - 7.days, program: program, code: "van"
-  cohort_tor = Cohort.create! name: "Current Cohort Tor", code: "current tor", location: location_to, start_date: Date.today - 14.days, program: program, code: "toto"
+  locations = [Location.create(name: "Vancouver"), Location.create(name: "Toronto")]
+  cohorts = [
+    Cohort.create!(name: "Current Cohort Van", code: "current van", location: locations[0], start_date: Date.today - 7.days, program: program, code: "van"),
+    Cohort.create!(name: "Current Cohort Tor", code: "current tor", location: locations[1], start_date: Date.today - 14.days, program: program, code: "toto")
+  ]
 
-  10.times do |i|
-    Student.create!(
-      first_name: Faker::Name.first_name,
-      last_name: Faker::Name.last_name,
-      email: Faker::Internet.email,
-      cohort: cohort_van,
-      phone_number: '123-123-1234',
-      github_username: 'useruser',
-      location: location_van,
-      uid: 1000 + i,
-      token: 2000 + i,
-      completed_registration: true
-    )
-  end
-
+  @teachers = []
   10.times do |x|
-    Teacher.create!(
+    @teachers << Teacher.create!(
       first_name: Faker::Name.first_name,
       last_name: Faker::Name.last_name,
       email: Faker::Internet.email,
@@ -70,25 +57,57 @@ if Rails.env.development?
       bio: Faker::Lorem.sentence,
       specialties: Faker::Lorem.sentence,
       quirky_fact: Faker::Lorem.sentence,
-      phone_number: '123-123-1234',
-      github_username: 'useruser',
-      location: location_van,
+      phone_number: Faker::PhoneNumber.phone_number,
+      github_username: Faker::Internet.user_name,
+      location: locations.sample,
     )
   end
 
-  10.times do |i|
-    Student.create!(
-      first_name: Faker::Name.first_name,
-      last_name: Faker::Name.last_name,
-      email: Faker::Internet.email,
-      cohort: cohort_tor,
-      uid: 1011 + i,
-      token: 2011 + i,
-      completed_registration: true,
-      phone_number: '123-123-1234',
-      github_username: 'useruser',
-      location: location_to,
-    )
-  end
+  cohorts.each do |cohort|
+    10.times do |i|
+      student = Student.create!(
+        first_name: Faker::Name.first_name,
+        last_name: Faker::Name.last_name,
+        email: Faker::Internet.email,
+        cohort: cohort,
+        phone_number: Faker::PhoneNumber.phone_number,
+        github_username: Faker::Internet.user_name,
+        location: cohort.location,
+        uid: 1000 + i,
+        token: 2000 + i,
+        completed_registration: true
+      )
+      10.times do |y|
+        teacher = @teachers.sample
+        # create a sampled assistance request
+        ar = AssistanceRequest.create!(
+          requestor: student,
+          assistor_id: teacher.id,
+          start_at: Date.today - 10.minutes,
+          assistance_start_at: Date.today - 10.minutes,
+          assistance_end_at: Date.today - 8.minutes,
+          type: nil,
+          assistance: Assistance.create(
+            assistor_id: teacher.id,
+            assistee_id: student.id,
+            start_at: Date.today - 10.minutes,
+            end_at: Date.today - 8.minutes,
+            notes: Faker::Lorem.sentence,
+            rating: [1,2,3,4].sample
+          ),
+          reason: Faker::Lorem.sentence
+        )
+        # create a student feedback on this AssistanceRequest
+        Feedback.create!(
+          student_id: student.id,
+          teacher_id: teacher.id,
+          notes: Faker::Lorem.sentence,
+          rating: [1,2,3,4].sample,
+          feedbackable_id: ar.assistance.id,
+          feedbackable_type: 'Assistance'
+        )
+      end # 10 loop for assistance
+    end # 10 loop for students
+  end # locations
 
 end
