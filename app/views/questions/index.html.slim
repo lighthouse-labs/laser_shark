@@ -1,2 +1,4 @@
-h1 Questions#index
-p Find me in app/views/questions/index.html.slim
+ul.list-group
+  - @questions.each do |question|
+    = link_to question.question, question_path(question), class: "list-group-item"
+
