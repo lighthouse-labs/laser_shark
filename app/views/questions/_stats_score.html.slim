@@ -1,0 +1,7 @@
+- if questions.find(&:options_correct).try(:answers_count)
+  span.label.label-success = "#{questions.find(&:options_correct).try(:answers_count)} correct"
+- elsif questions.any?
+  span.label.label-warning = '0 correct'
+= ' '
+- if questions.find { |s| s.options_correct.equal?(false) }.try(:answers_count)
+  span.label.label-danger = "#{questions.find { |s| s.options_correct.equal?(false) }.try(:answers_count) || '0'} incorrect"

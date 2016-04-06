@@ -19,7 +19,7 @@ class Question < ActiveRecord::Base
       .joins('LEFT JOIN answers ON answers.option_id = options.id')
     if quiz
       question_stats = question_stats
-        .where('answers.id IN (SELECT answers.id FROM answers JOIN submissions ON submissions.id = answers.submission_id WHERE submissions.quiz_id = ?)', quiz.id)
+        .where('answers.id IN (SELECT answers.id FROM answers JOIN quiz_submissions ON quiz_submissions.id = answers.quiz_submission_id WHERE quiz_submissions.quiz_id = ?)', quiz.id)
     end
     question_stats
   }

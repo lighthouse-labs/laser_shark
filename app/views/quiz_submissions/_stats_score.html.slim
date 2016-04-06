@@ -1,0 +1,6 @@
+b title="correct" = submissions.find(&:options_correct).try(:answers_count) || '0'
+span.text-muted
+  = ', '
+  span title="incorrect" = submissions.find { |s| s.options_correct.equal?(false) }.try(:answers_count) || '0'
+  = ', '
+  span title="omitted" = submissions.find { |s| s.options_correct.nil? }.try(:answers_count) || '0'
