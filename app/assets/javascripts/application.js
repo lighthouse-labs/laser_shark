@@ -50,3 +50,4 @@
 //= require reconnect_holder
 //= require quiz_submissions
 //= require questions
+//= require quizzes

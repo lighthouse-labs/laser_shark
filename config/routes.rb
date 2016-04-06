@@ -4,8 +4,10 @@ LaserShark::Application.routes.draw do
 
   resources :quiz_submissions, only: [:create, :show]
 
-  resources :quizzes, only: [:show] do
+  resources :quizzes, only: [:show, :new, :create] do
     resources :quiz_submissions, only: [:new]
+    get 'add_question', to: 'quizzes#add_question', as: 'add_question'
+    post 'link_question', to: 'quizzes#link_question', as: 'link_question'
   end
 
   match "/websocket", :to => ActionCable.server, via: [:get, :post]
