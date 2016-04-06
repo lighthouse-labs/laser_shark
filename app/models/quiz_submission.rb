@@ -1,12 +1,21 @@
 class QuizSubmission < ActiveRecord::Base
 
-  belongs_to :user
+  belongs_to :student
 
   has_many :answers, dependent: :destroy
 
   belongs_to :quiz
 
   accepts_nested_attributes_for :answers
+
+  scope :stats, -> {
+    select('quiz_submissions.*', 'options.correct AS options_correct', 'COUNT(answers.id) AS answers_count')
+      .group('quiz_submissions.id', 'options.correct')
+      .joins('LEFT JOIN quizzes ON quizzes.id = quiz_submissions.quiz_id')
+      .joins('LEFT JOIN answers ON answers.quiz_submission_id = quiz_submissions.id')
+      .joins('LEFT JOIN options ON answers.option_id = options.id')
+      .order('quiz_submissions.created_at', 'options.correct')
+  }
 
   before_validation on: :create do
     unless uuid
