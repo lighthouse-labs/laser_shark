@@ -1,6 +1,6 @@
 class QuizSubmission < ActiveRecord::Base
 
-  belongs_to :student
+  belongs_to :user
 
   has_many :answers, dependent: :destroy
 
@@ -38,5 +38,12 @@ class QuizSubmission < ActiveRecord::Base
 
   def score
     answers.inject(0) { |sum, answer| answer.option && answer.option.correct ? sum + 1 : sum }
+  end
+
+  def self.average_correct
+    correct_answer_submissions = self.select(&:options_correct)
+    correct_submissions_count = [correct_answer_submissions.length, 1].max
+    correct_answer_sum = correct_answer_submissions.map(&:answers_count).reduce(0, &:+)
+    correct_answer_sum.to_f / correct_submissions_count.to_f
   end
 end

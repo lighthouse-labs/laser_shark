@@ -12,6 +12,17 @@ class Question < ActiveRecord::Base
 
   after_save :ensure_one_option
 
+  scope :stats, -> (quiz) {
+    question_stats = select('questions.*', 'options.correct AS options_correct', 'COUNT(answers.id) AS answers_count')
+      .group('questions.id', 'options.correct')
+      .joins('LEFT JOIN options ON questions.id = options.question_id')
+      .joins('LEFT JOIN answers ON answers.option_id = options.id')
+    if quiz
+      question_stats = question_stats
+        .where('answers.id IN (SELECT answers.id FROM answers JOIN submissions ON submissions.id = answers.submission_id WHERE submissions.quiz_id = ?)', quiz.id)
+    end
+    question_stats
+  }
 
   private
 
