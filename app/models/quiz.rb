@@ -10,11 +10,11 @@ class Quiz < ActiveRecord::Base
 
   # validates :cohort, presence: true
 
-  validates :day, presence: true
+  #validates :day, presence: true
 
-  validate do
-    errors.add(:questions, "insufficient for a quiz; #{QUESTIONS_PER_QUIZ} needed") if questions.length < QUESTIONS_PER_QUIZ
-  end
+  # validate do
+  #   errors.add(:questions, "insufficient for a quiz; #{QUESTIONS_PER_QUIZ} needed") if questions.length < QUESTIONS_PER_QUIZ
+  # end
 
   # before_validation on: :create do
   #   unless uuid
@@ -22,7 +22,4 @@ class Quiz < ActiveRecord::Base
   #   end
   # end
 
-  # def to_param
-  #   uuid
-  # end
 end

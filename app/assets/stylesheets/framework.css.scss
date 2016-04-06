@@ -2,11 +2,12 @@
 @import 'bootstrap';
 @import "font-awesome";
 @import 'flat-ui-pro';
+@import 'chosen';
 
 // Fix issue with .select form flat-ui CC
 
 div.form-group.select {
-  display: block; 
+  display: block;
 }
 
 .navbar-nav > li > a {

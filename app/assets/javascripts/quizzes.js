@@ -1,5 +1,3 @@
 $(function(){
-  $('#link_question').on('submit', function(e){
-    //e.preventDefault();
-  });
+  $('.chosen-select').chosen();
 });
