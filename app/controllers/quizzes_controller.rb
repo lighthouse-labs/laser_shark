@@ -1,5 +1,9 @@
 class QuizzesController < ApplicationController
   before_action :set_quiz, only: [:show, :add_question, :link_question]
+
+  def index
+    @quizzes = Quiz.all
+  end
   def new
     @quiz = Quiz.create
     redirect_to "/quizzes/#{@quiz.id}/add_question"
