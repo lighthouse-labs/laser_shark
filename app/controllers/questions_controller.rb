@@ -1,5 +1,7 @@
 class QuestionsController < ApplicationController
   before_action :set_question, only: [:show, :edit, :update, :destroy]
+  before_action :teacher_required
+
   def index
     @questions = Question.all
   end
@@ -46,5 +48,9 @@ class QuestionsController < ApplicationController
 
   def set_question
     @question = Question.find(params[:id])
+  end
+
+  def teacher_required
+    redirect_to day_path('today'), alert: 'Not allowed' unless teacher?
   end
 end

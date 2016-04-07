@@ -1,5 +1,6 @@
 class QuizzesController < ApplicationController
   before_action :set_quiz, only: [:show, :destroy, :add_question, :link_question, :remove_question]
+  before_action :teacher_required
 
   def index
     @quizzes = Quiz.all
@@ -38,5 +39,9 @@ class QuizzesController < ApplicationController
   private
   def set_quiz
     @quiz = params[:id] && params[:id] != "add_question" ? Quiz.find(params[:id]) : Quiz.find(params[:quiz_id])
+  end
+
+  def teacher_required
+    redirect_to day_path('today'), alert: 'Not allowed' unless teacher?
   end
 end
