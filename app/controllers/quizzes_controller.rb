@@ -23,7 +23,7 @@ class QuizzesController < ApplicationController
   def link_question
     @quiz.questions << Question.find(params[:question][:id])
     if @quiz.save
-      redirect_to "/quizzes/#{@quiz.id}/add_question" if params[:add] == "add"
+      redirect_to quiz_add_question_path(@quiz), notice: "Question was successfully added" if params[:add] == "add"
       redirect_to @quiz, notice: "Questions were successfully added" if params[:add] == "save"
     else
     end

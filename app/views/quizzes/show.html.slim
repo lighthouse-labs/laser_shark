@@ -56,3 +56,5 @@
           br
           = link_to quiz_remove_question_path(@quiz, question), method: :delete,  class: 'text-muted', data: {confirm: 'Are you sure you want to remove this question?'} do
               i.fa.fa-trash title="Delete"
+          end
+        h4= link_to "Add New Question", quiz_add_question_path(@quiz)
