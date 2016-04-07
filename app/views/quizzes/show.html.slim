@@ -50,6 +50,9 @@
       .col-md-6
         h2 Questions
         - @quiz.questions.each_with_index do |question, question_index|
-          h3 = link_to "Question ##{question_index + 1}", question
+          h3 = link_to("Question ##{question_index + 1}", question)
           p = render partial: 'questions/stats_score', locals: { questions: @question_stats.select { |qs| qs.id == question.id } }
-          p = question.question
+          = question.question
+          br
+          = link_to quiz_remove_question_path(@quiz, question), method: :delete,  class: 'text-muted', data: {confirm: 'Are you sure you want to remove this question?'} do
+              i.fa.fa-trash title="Delete"

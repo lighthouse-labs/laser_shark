@@ -1,5 +1,5 @@
 class QuizzesController < ApplicationController
-  before_action :set_quiz, only: [:show, :destroy, :add_question, :link_question]
+  before_action :set_quiz, only: [:show, :destroy, :add_question, :link_question, :remove_question]
 
   def index
     @quizzes = Quiz.all
@@ -24,9 +24,15 @@ class QuizzesController < ApplicationController
     @quiz.questions << Question.find(params[:question][:id])
     if @quiz.save
       redirect_to "/quizzes/#{@quiz.id}/add_question" if params[:add] == "add"
-      redirect_to quiz_path(@quiz.id) if params[:add] == "save"
+      redirect_to @quiz, notice: "Questions were successfully added" if params[:add] == "save"
     else
     end
+  end
+
+  def remove_question
+    question = Question.find(params[:question_id])
+    @quiz.questions.delete(question)
+    redirect_to @quiz, notice: "Question #{question.id} was successfully removed."
   end
 
   private

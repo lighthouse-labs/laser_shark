@@ -8,6 +8,7 @@ LaserShark::Application.routes.draw do
     resources :quiz_submissions, only: [:new]
     get 'add_question', to: 'quizzes#add_question', as: 'add_question'
     post 'link_question', to: 'quizzes#link_question', as: 'link_question'
+    delete 'remove_question/:question_id', to: 'quizzes#remove_question', as: 'remove_question'
   end
 
   match "/websocket", :to => ActionCable.server, via: [:get, :post]
