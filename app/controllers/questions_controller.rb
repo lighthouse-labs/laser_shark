@@ -1,5 +1,5 @@
 class QuestionsController < ApplicationController
-  before_action :set_question, only: [:show, :edit, :update]
+  before_action :set_question, only: [:show, :edit, :update, :destroy]
   def index
     @questions = Question.all
   end
@@ -34,6 +34,8 @@ class QuestionsController < ApplicationController
   end
 
   def destroy
+    @question.destroy
+    redirect_to questions_path
   end
 
   private
