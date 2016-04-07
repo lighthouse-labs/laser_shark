@@ -4,7 +4,7 @@ LaserShark::Application.routes.draw do
 
   resources :quiz_submissions, only: [:create, :show]
 
-  resources :quizzes, only: [:index, :show, :new, :create] do
+  resources :quizzes, only: [:index, :show, :new, :create, :destroy] do
     resources :quiz_submissions, only: [:new]
     get 'add_question', to: 'quizzes#add_question', as: 'add_question'
     post 'link_question', to: 'quizzes#link_question', as: 'link_question'

@@ -1,5 +1,5 @@
 class QuizzesController < ApplicationController
-  before_action :set_quiz, only: [:show, :add_question, :link_question]
+  before_action :set_quiz, only: [:show, :destroy, :add_question, :link_question]
 
   def index
     @quizzes = Quiz.all
@@ -12,6 +12,10 @@ class QuizzesController < ApplicationController
     @submission_stats = @quiz.quiz_submissions.stats
     @question_stats = @quiz.questions.stats(@quiz)
 
+  end
+  def destroy
+    @quiz.destroy
+    redirect_to quizzes_url, notice: "Quiz #{@quiz.id} was successfully destroyed."
   end
   def add_question
     @questions = Question.all
