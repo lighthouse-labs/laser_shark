@@ -1,4 +1,12 @@
-ul.list-group
-  - @questions.each do |question|
-    = link_to question.question, question_path(question), class: "list-group-item"
+article.page-content
+  .page-header
+      h1
+        = 'Questions '
+        a.btn.btn-xs.btn-primary href="#{new_question_path}" New Question
+  - if @questions.empty?
+    p There are currently no questions in the system.
+  - else
+    ul.list-group
+      - @questions.each do |question|
+        = link_to question.question, question_path(question), class: "list-group-item"
 

@@ -32,6 +32,9 @@ $(function () {
       });
     });
     questionOptions.parent().append(lastOptionCopy);
+    $('html, body').animate({
+        scrollTop: lastOptionCopy.offset().top
+    }, 2000);
   });
 });
 
