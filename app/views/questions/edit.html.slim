@@ -1,2 +1,7 @@
-h1 Questions#edit
-p Find me in app/views/questions/edit.html.slim
+.page-header
+  h1
+    = 'Editing '
+    = link_to question_path do
+      b = 'Question: '
+      = @question.id
+= render 'form'
