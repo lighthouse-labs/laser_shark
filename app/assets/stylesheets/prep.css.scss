@@ -1,0 +1,53 @@
+#mocha {
+
+  margin-top: 25px;
+
+  .progress, .duration {
+    display: none;
+  }
+
+  ul {
+    list-style: none;
+  }
+
+  #mocha-report {
+
+    h1 {
+      font-size: 30px;
+    }
+
+    ul { 
+
+      h2 {
+        font-size: 15px;
+      }
+
+      a {
+        display: none;
+      }  
+
+      .pass {
+        color: $link-color;
+      }
+
+      .error {
+        font-size: 9px;
+        color: red;
+        height: 31px;
+        overflow: hidden;
+      }
+    }
+  }
+}
+
+.prep-menu {
+  .list-group-item {
+    border-left: none;
+    border-right: none;
+  }
+
+  .fa {
+    margin-left: 10px;
+    color: $link-color;
+  }
+}

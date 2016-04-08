@@ -1,0 +1,21 @@
+ul.breadcrumb
+  li Categories
+
+hr
+
+.actions.well
+  .btn.btn-primary.btn-sm.create-category-modal-button data-toggle="modal" data-target="#category-modal"
+    | New Category
+
+table.table
+  thead
+    tr
+      th Name
+      th Total Skills
+      th Total Outcomes
+      th Total Activities
+
+  tbody
+    = render @categories
+
+= render 'category_modal'

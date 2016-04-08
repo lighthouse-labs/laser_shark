@@ -15,8 +15,8 @@ $ ->
       tag: tag
 
   getUserDetails = ->
-       
-    list = $('#eventlist')  
+
+    list = $('#eventlist')
     calendar = list.data 'calendar'
     tag = list.data 'tag'
     day = list.data 'day'
@@ -38,8 +38,8 @@ $ ->
     dateYear = startDate.substring(0,4)
     dateMonth = startDate.substring(5,7)
     dateDay = startDate.substring(8,10)
-    startDate = dateMonth + '-' + dateDay + '-' + dateYear
-    currentDate = new Date startDate
+
+    currentDate = new Date dateYear, dateMonth, dateDay
     currentDate.setDate(currentDate.getDate() + (weeks * 7 + days))
     if type is 'start'
       currentDate.setHours(1)
@@ -47,6 +47,6 @@ $ ->
       currentDate.setHours(23)
     return currentDate.toISOString()
 
-  # Only do request if eventlist element exists on page  
+  # Only do request if eventlist element exists on page
   if $('#eventlist').length is 1
     getUserDetails()

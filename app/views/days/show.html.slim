@@ -22,6 +22,17 @@
         = @cohort_feedback[:sad]
 
 = render "days/info", day: day if day.info
+- if !@outcomes.empty?
+  .day-objectives-container
+    .btn.btn-primary.btn-sm id="show-objectives-button"
+      | Show objectives
+    .btn.btn-warning.btn-sm id="hide-objectives-button"
+      | Hide objectives
+    .day-objectives-holder
+      ul
+        - @outcomes.each do |outcome| 
+          li = outcome.text
+
 = render partial: 'activities/activity', collection: @activities
 
 - if teacher?

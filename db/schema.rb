@@ -11,7 +11,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
+<<<<<<< HEAD
 ActiveRecord::Schema.define(version: 20160406162509) do
+=======
+ActiveRecord::Schema.define(version: 20160404201708) do
+>>>>>>> 72aecfc5dfb5eaa2223983dfef69342495d7a9ca
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -27,6 +31,7 @@ ActiveRecord::Schema.define(version: 20160406162509) do
     t.string   "gist_url"
     t.text     "instructions"
     t.text     "teacher_notes"
+<<<<<<< HEAD
     t.string   "file_name"
     t.boolean  "allow_submissions",   default: true
     t.string   "media_filename"
@@ -34,6 +39,15 @@ ActiveRecord::Schema.define(version: 20160406162509) do
     t.integer  "code_review_percent", default: 60
     t.boolean  "allow_feedback",      default: true
     t.integer  "quiz_id"
+=======
+    t.string   "file_name",           limit: 255
+    t.boolean  "allow_submissions",               default: true
+    t.string   "media_filename",      limit: 255
+    t.string   "revisions_gistid",    limit: 255
+    t.integer  "code_review_percent",             default: 60
+    t.boolean  "allow_feedback",                  default: true
+    t.integer  "section_id"
+>>>>>>> 72aecfc5dfb5eaa2223983dfef69342495d7a9ca
   end
 
   add_index "activities", ["quiz_id"], name: "index_activities_on_quiz_id", using: :btree
@@ -65,11 +79,14 @@ ActiveRecord::Schema.define(version: 20160406162509) do
     t.string   "github_url"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "finalized",                default: false
+    t.text     "data"
   end
 
   add_index "activity_submissions", ["activity_id"], name: "index_activity_submissions_on_activity_id", using: :btree
   add_index "activity_submissions", ["user_id"], name: "index_activity_submissions_on_user_id", using: :btree
 
+<<<<<<< HEAD
   create_table "answers", force: :cascade do |t|
     t.datetime "created_at",         null: false
     t.datetime "updated_at",         null: false
@@ -80,6 +97,13 @@ ActiveRecord::Schema.define(version: 20160406162509) do
   add_index "answers", ["option_id"], name: "index_answers_on_option_id", using: :btree
   add_index "answers", ["quiz_submission_id"], name: "index_answers_on_quiz_submission_id", using: :btree
 
+=======
+  create_table "activity_tests", force: :cascade do |t|
+    t.text    "test"
+    t.integer "activity_id"
+  end
+
+>>>>>>> 72aecfc5dfb5eaa2223983dfef69342495d7a9ca
   create_table "assistance_requests", force: :cascade do |t|
     t.integer  "requestor_id"
     t.integer  "assistor_id"
@@ -106,6 +130,18 @@ ActiveRecord::Schema.define(version: 20160406162509) do
     t.datetime "updated_at"
     t.integer  "assistee_id"
     t.integer  "rating"
+    t.text     "student_notes"
+  end
+
+  create_table "categories", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "code_reviews", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "cohorts", force: :cascade do |t|
@@ -154,6 +190,17 @@ ActiveRecord::Schema.define(version: 20160406162509) do
     t.float    "rating"
   end
 
+  create_table "item_outcomes", force: :cascade do |t|
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.integer  "outcome_id"
+    t.integer  "activity_id"
+    t.string   "item_type"
+    t.integer  "item_id"
+  end
+
+  add_index "item_outcomes", ["item_id"], name: "index_item_outcomes_on_item_id", using: :btree
+
   create_table "locations", force: :cascade do |t|
     t.string   "name"
     t.datetime "created_at"
@@ -172,7 +219,38 @@ ActiveRecord::Schema.define(version: 20160406162509) do
     t.integer  "question_id"
   end
 
+<<<<<<< HEAD
   add_index "options", ["question_id"], name: "index_options_on_question_id", using: :btree
+=======
+  create_table "outcome_results", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "outcome_id"
+    t.string   "source_name"
+    t.integer  "source_id"
+    t.string   "source_type"
+    t.float    "rating"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  add_index "outcome_results", ["outcome_id"], name: "index_outcome_results_on_outcome_id", using: :btree
+  add_index "outcome_results", ["source_type", "source_id"], name: "index_outcome_results_on_source_type_and_source_id", using: :btree
+  add_index "outcome_results", ["user_id"], name: "index_outcome_results_on_user_id", using: :btree
+
+  create_table "outcome_skills", force: :cascade do |t|
+    t.integer "outcome_id"
+    t.integer "skill_id"
+  end
+
+  create_table "outcomes", force: :cascade do |t|
+    t.string   "text"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer  "skill_id"
+  end
+
+  add_index "outcomes", ["skill_id"], name: "index_outcomes_on_skill_id", using: :btree
+>>>>>>> 72aecfc5dfb5eaa2223983dfef69342495d7a9ca
 
   create_table "programs", force: :cascade do |t|
     t.string   "name"
@@ -231,6 +309,23 @@ ActiveRecord::Schema.define(version: 20160406162509) do
     t.string   "presenter_name"
   end
 
+  create_table "sections", force: :cascade do |t|
+    t.string   "name"
+    t.string   "slug"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer  "order"
+  end
+
+  create_table "skills", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.integer  "category_id"
+  end
+
+  add_index "skills", ["category_id"], name: "index_skills_on_category_id", using: :btree
+
   create_table "streams", force: :cascade do |t|
     t.string   "title"
     t.string   "description"
@@ -276,9 +371,14 @@ ActiveRecord::Schema.define(version: 20160406162509) do
 
   add_index "users", ["cohort_id"], name: "index_users_on_cohort_id", using: :btree
 
+<<<<<<< HEAD
   add_foreign_key "activities", "quizzes"
   add_foreign_key "answers", "options"
   add_foreign_key "answers", "quiz_submissions"
   add_foreign_key "options", "questions"
   add_foreign_key "quiz_submissions", "quizzes"
+=======
+  add_foreign_key "outcome_results", "outcomes"
+  add_foreign_key "outcome_results", "users"
+>>>>>>> 72aecfc5dfb5eaa2223983dfef69342495d7a9ca
 end

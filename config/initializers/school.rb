@@ -5,4 +5,4 @@ CURRICULUM_UNLOCKING = ENV['CURRICULUM_UNLOCKING'] || 'daily'
 WEEKDAYS             = ENV['WEEKDAYS'].to_s.split(',') # eg: monday,wednesday
 DAY_FEEDBACK_AFTER   = (ENV['DAY_FEEDBACK_AFTER'] || 64_800).to_i # seconds since beginning of day
 
-DAY_REGEX = /\A(w\dd\d)|(w\de)|(setup)\z/
+DAY_REGEX = /\A(w\dd\d)|(w\de)|(setup)|(prep\d)\z/

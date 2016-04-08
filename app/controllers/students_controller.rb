@@ -1,7 +1,8 @@
 class StudentsController < ApplicationController
 
   before_action :disallow_unless_enrolled
-  before_action :teacher_required, only: [:show]
+  before_action :teacher_required, only: [:show, :new_code_review_modal]
+  before_action :load_student, only: [:show, :new_code_review_modal]
 
   def index
     if teacher?
@@ -12,10 +13,6 @@ class StudentsController < ApplicationController
     @students = @cohort.students.active
   end
 
-  def show
-    @student = Student.find(params[:id])
-  end
-
   private
 
   def disallow_unless_enrolled
@@ -24,6 +21,10 @@ class StudentsController < ApplicationController
 
   def teacher_required
     redirect_to(:root, alert: 'Not allowed') unless teacher?
+  end
+
+  def load_student
+    @student = Student.find(params[:id])
   end
 
 end

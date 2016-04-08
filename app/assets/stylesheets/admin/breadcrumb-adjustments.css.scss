@@ -1,0 +1,7 @@
+.breadcrumb > li + li:before {
+    content: "/";
+}
+.breadcrumb > li:after {
+    content: "";
+    margin: 0px;
+}

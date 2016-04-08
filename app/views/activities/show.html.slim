@@ -1,184 +1,177 @@
-- unless current_user.prepping? || current_user.prospect?
-  - content_for :side_nav do
-    == render 'layouts/side_nav'
+- present @activity do |activity_presenter|
+  = activity_presenter.render_sidenav
 
-section.activity-details
-  h1 = @activity.name
+  section.activity-details
+    h1 = activity_presenter.name
 
-  .well
-    .actions
-      .form-group
-        .form-inline
-          .left-actions
-            - if @previous_activity
-              = link_to '&laquo; Previous'.html_safe, day_activity_path(@activity.day, @previous_activity), class: 'btn btn-previous'
-            - if @next_activity
-              = link_to 'Next &raquo;'.html_safe, day_activity_path(@activity.day, @next_activity), class: 'btn btn-next'
-
-          .input-group.duration
-            .input-group-addon
-              i.fa.fa-clock-o
-              | &nbsp;Time
-            .form-control
-              - if weekend? || setup? || (@activity.display_duration?)
-                = duration(@activity)
-              - else
-                = integer_time_to_s(@activity.start_time)
-                | &nbsp;to&nbsp;
-                = integer_time_to_s(@activity.end_time)
-
-    - if @activity.gist_url?
+    .well
       .actions
         .form-group
-          .input-group
-            = link_to @activity.gist_url, { target: "blank", class: "input-group-addon" }
-              i.fa.fa-github.fa-1
-            span.form-control
-              = @activity.gist_url
+          .form-inline
+            .left-actions
+              = activity_presenter.previous_button
+              = activity_presenter.next_button
 
-    div.clearfix
-      - if teacher?
-        button.btn.btn-activity.btn-info data-toggle="collapse" data-target="#student-progress"
-          = @activity.allow_submissions? ? "Submissions" : "Completions"
+            .input-group.duration
+              .input-group-addon
+                i.fa.fa-clock-o
+                | &nbsp;Time
+              .form-control
+                - if weekend? || setup? || (@activity.display_duration?)
+                  = duration(@activity)
+                - else
+                  = integer_time_to_s(@activity.start_time)
+                  | &nbsp;to&nbsp;
+                  = integer_time_to_s(@activity.end_time)
 
-        = link_to 'Edit', edit_day_activity_path(@day, @activity), class: 'btn btn-edit'
-        = link_to '+ Video', new_activity_recording_path(@activity), class: 'btn btn-new-recording'
-        = link_to '+ Message', new_activity_message_path(@activity), class: 'btn btn-new-message'
+      - if @activity.gist_url?
+        .actions
+          .form-group
+            .input-group
+              = link_to @activity.gist_url, { target: "blank", class: "input-group-addon" }
+                i.fa.fa-github.fa-1
+              span.form-control
+                = @activity.gist_url
 
-        - if @activity.revisions_gistid?
-          = link_to "https://gist.github.com/#{@activity.revisions_gistid}/revisions", class: 'btn btn-revisions', target: '_blank'
-            span Revisions
-            | &nbsp;
-            i.fa.fa-external-link
+      div.clearfix
+        - if teacher?
+          button.btn.btn-activity.btn-info data-toggle="collapse" data-target="#student-progress"
+            = activity_presenter.submissions_text
 
-      - else
-        - if current_user.completed_activity?(@activity)
-          - if @activity_submission.github_url?
-            input.form-control.pull-left#activity_view value="#{@activity_submission.github_url}"
-            | &nbsp;
-          = link_to activity_activity_submission_path(@activity), method: :delete, class:'btn btn-activity-incomplete-status'
-            i.fa.fa-times
-            | &nbsp;Cancel Submission
-          - if @feedback
+          = activity_presenter.edit_button
+          = link_to '+ Video', new_activity_recording_path(@activity), class: 'btn btn-new-recording'
+          = link_to '+ Message', new_activity_message_path(@activity), class: 'btn btn-new-message'
+
+          - if @activity.revisions_gistid?
+            = link_to "https://gist.github.com/#{@activity.revisions_gistid}/revisions", class: 'btn btn-revisions', target: '_blank'
+              span Revisions
               | &nbsp;
-              button.btn.btn-activity-complete-status data-toggle="modal" data-target="#feedback_modal" data-feedback-id="#{@feedback.id}"
-                | Feedback
+              i.fa.fa-external-link
+
         - else
-          = form_for @activity_submission, url: activity_activity_submission_path(@activity), method: :post, html: { class: 'form-inline activity-submission-form' }  do |f|
+          - if current_user.completed_activity?(@activity) && !@activity.prep?
+            - if @activity_submission.github_url?
+              input.form-control.pull-left#activity_view value="#{@activity_submission.github_url}"
+              | &nbsp;
+            = link_to activity_activity_submission_path(@activity), method: :delete, class:'btn btn-activity-incomplete-status'
+              i.fa.fa-times
+              | &nbsp;Cancel Submission
+            - if @feedback
+                | &nbsp;
+                button.btn.btn-activity-complete-status data-toggle="modal" data-target="#feedback_modal" data-feedback-id="#{@feedback.id}"
+                  | Feedback
+          - else
+            = activity_presenter.submission_form
+
+    - if teacher?
+      .collapse#student-progress
+        table.table
+          thead
+            th Student
             - if @activity.allow_submissions?
-              input.form-control id="activity_submission_github_url" class="activity_submission_url" name="github_url" placeholder="Enter your Github repo or gist url" type="text"
-              | &nbsp;
-            button.btn.btn-activity-complete-status-no-code-review name="button" type="submit"
-              i.fa.fa-check
-              | &nbsp;Submit
-          = form_for @activity_submission, url: activity_activity_submission_path(@activity), method: :post, html: { class: 'form-inline activity-submission-form' }  do |f|
-            - if @activity.allow_submissions? && current_user.cohort.location.has_code_reviews?
-              | &nbsp;
-              input name="github_url" type="hidden" id="hidden_github_url_input"
-              input name="code_review" type="hidden" value="true"
-              button.btn.btn-activity-complete-status name="button" type="submit" id="student_submit_code_review_button"
-                i.fa.fa-check
-                | &nbsp;Submit & Code Review
+              th Github URL
+            th Completed
+          tbody
+            - cohort.students.sort_by{ |student| student.completed_activity?(@activity) ? 0 : 1 }.each do |student|
+              tr
+                td = "#{student.first_name} #{student.last_name}"
+                - if @activity.allow_submissions?
+                  td = link_to student.github_url(@activity), student.github_url(@activity) if student.completed_activity?(@activity)
+                td = student.completed_activity?(@activity) ? "Yes" : "No"
 
-  - if teacher?
-    .collapse#student-progress
-      table.table
-        thead
-          th Student
-          - if @activity.allow_submissions?
-            th Github URL
-          th Completed
-        tbody
-          - cohort.students.sort_by{ |student| student.completed_activity?(@activity) ? 0 : 1 }.each do |student|
-            tr
-              td = "#{student.first_name} #{student.last_name}"
-              - if @activity.allow_submissions?
-                td = link_to student.github_url(@activity), student.github_url(@activity) if student.completed_activity?(@activity)
-              td = student.completed_activity?(@activity) ? "Yes" : "No"
+    - if @activity.is_a?(Video)
+      video class="video-js vjs-default-skin" controls="true" preload="auto" width="100%" height="300px"
+        source src="#{Video::HOST}#{@activity.media_filename}.mp4" type='video/mp4'
+      hr
 
-  - if @activity.is_a?(Video)
-    video class="video-js vjs-default-skin" controls="true" preload="auto" width="100%" height="300px"
-      source src="#{Video::HOST}#{@activity.media_filename}.mp4" type='video/mp4'
-    hr
+    = activity_presenter.display_outcomes
 
-  - if @activity.instructions?
-    .instructions
-      == markdown @activity.instructions
+    - if @activity.instructions?
+      .instructions
+        == markdown @activity.instructions
 
-  - if @activity.recordings.length > 0
-    .recordings
-      h3
-        | Videos
-      - @activity.recordings.each do |recording|
-        .recording-item
-          .col-sm-2.text-center
-            = link_to recording do
+    - if @activity.recordings.length > 0
+      .recordings
+        h3
+          | Videos
+        - @activity.recordings.each do |recording|
+          .recording-item
+            .col-sm-2.text-center
+              = link_to recording do
+                - if recording.presenter
+                  img src=avatar_for(recording.presenter)
+                - else
+                  span.fa.fa-4x.fa-video-camera
+            .col-sm-10
+              h4.recording-title
+                = link_to recording_title(recording), recording
+              div
+                = "Added: #{format_date_time(recording.created_at)}"
+                - if recording.recorded_at
+                  = ' &bull; '.html_safe
+                  = "Recorded: #{format_date_time(recording.recorded_at)}"
               - if recording.presenter
-                img src=avatar_for(recording.presenter)
-              - else
-                span.fa.fa-4x.fa-video-camera
-          .col-sm-10
-            h4.recording-title
-              = link_to recording_title(recording), recording
-            div
-              = "Added: #{format_date_time(recording.created_at)}"
-              - if recording.recorded_at
+                div
+                  = "Presented by: #{recording.presenter.full_name}"
+              - if recording.presenter_name && !recording.presenter_name.empty?
+                div
+                  = "Guest presenter: #{recording.presenter_name}"
+              div
+                a href=recording.s3_url title="Right click > Save Link As..."
+                  span.fa.fa-file-video-o
+                  |  Download file
                 = ' &bull; '.html_safe
-                = "Recorded: #{format_date_time(recording.recorded_at)}"
-            - if recording.presenter
-              div
-                = "Presented by: #{recording.presenter.full_name}"
-            - if recording.presenter_name && !recording.presenter_name.empty?
-              div
-                = "Guest presenter: #{recording.presenter_name}"
-            div
-              a href=recording.s3_url title="Right click > Save Link As..."
-                span.fa.fa-file-video-o
-                |  Download file
-              = ' &bull; '.html_safe
-              = link_to 'Watch now &raquo;'.html_safe, recording
+                = link_to 'Watch now &raquo;'.html_safe, recording
 
-  - if teacher? && @program.lecture_tips? && @activity.is_a?(Lecture)
-    .lecture-tips
-      h3 = "Lecture Tips / Reminders"
-      == markdown @program.lecture_tips
+    - if teacher? && @program.lecture_tips? && @activity.is_a?(Lecture)
+      .lecture-tips
+        h3 = "Lecture Tips / Reminders"
+        == markdown @program.lecture_tips
 
-  - if teacher? && @activity.teacher_notes?
+    - if teacher? && @activity.teacher_notes?
 
-    hr
-    h3 = "Teacher Notes"
-    .instructions
-      == markdown @activity.teacher_notes
+      hr
+      h3 = "Teacher Notes"
+      .instructions
+        == markdown @activity.teacher_notes
 
-  - if @messages.any?
-    hr
-    h3 = "Messages"
-    .messages
-      - @messages.each do |msg|
-        .message
-          .heading
-            = image_tag(avatar_for(msg.user), size: '50x50')
-            h4 = msg.subject
-            .when
-              = msg.created_at.to_formatted_s(:friendly)
-              - if teacher?
-                br
-                = msg.cohort.name
+    - if @messages.any?
+      hr
+      h3 = "Messages"
+      .messages
+        - @messages.each do |msg|
+          .message
+            .heading
+              = image_tag(avatar_for(msg.user), size: '50x50')
+              h4 = msg.subject
+              .when
+                = msg.created_at.to_formatted_s(:friendly)
+                - if teacher?
+                  br
+                  = msg.cohort.name
 
-          .contents
-            == markdown msg.body
-            - if teacher? && msg.teacher_notes?
-              .teacher-notes
-                h5 Teacher (Internal) Notes
-                == markdown msg.teacher_notes
+            .contents
+              == markdown msg.body
+              - if teacher? && msg.teacher_notes?
+                .teacher-notes
+                  h5 Teacher (Internal) Notes
+                  == markdown msg.teacher_notes
 
-          - if teacher? && current_user == msg.user
-            .actions
-              = link_to edit_activity_message_path(@activity, msg), class: 'edit'
-                i.fa.fa-edit
-              = link_to activity_message_path(@activity, msg), method: :delete, confirm: 'Sure ,lad?', class: 'delete'
-                i.fa.fa-times
+            - if teacher? && current_user == msg.user
+              .actions
+                = link_to edit_activity_message_path(@activity, msg), class: 'edit'
+                  i.fa.fa-edit
+                = link_to activity_message_path(@activity, msg), method: :delete, confirm: 'Sure ,lad?', class: 'delete'
+                  i.fa.fa-times
 
-.modal.fade id="feedback_modal"
-  .modal-dialog
-    .modal-content
+    - if @activity.prep? && teacher?
+      h4 Test Content
+
+      pre
+        = @activity.activity_test.try(:test).blank? ? "There aren't any Mocha tests associated with this activity" : @activity.activity_test.test
+
+    = render "prep_section", activity: @activity if @activity.prep? && !teacher?
+
+  .modal.fade id="feedback_modal"
+    .modal-dialog
+      .modal-content

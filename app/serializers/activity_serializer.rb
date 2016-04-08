@@ -1,3 +1,7 @@
 class ActivitySerializer < ActiveModel::Serializer
-  attributes :id, :day, :name
+
+  root false
+  
+  attributes :id, :day, :name, :type
+
 end
