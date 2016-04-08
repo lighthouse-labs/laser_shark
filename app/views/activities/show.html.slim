@@ -54,7 +54,7 @@ section.activity-details
       - else
         - if current_user.completed_activity?(@activity)
           - if @activity_submission.github_url?
-            input.form-control.pull-left#activity_view value="#{@activity_submission.github_url}" 
+            input.form-control.pull-left#activity_view value="#{@activity_submission.github_url}"
             | &nbsp;
           = link_to activity_activity_submission_path(@activity), method: :delete, class:'btn btn-activity-incomplete-status'
             i.fa.fa-times
@@ -62,7 +62,7 @@ section.activity-details
           - if @feedback
               | &nbsp;
               button.btn.btn-activity-complete-status data-toggle="modal" data-target="#feedback_modal" data-feedback-id="#{@feedback.id}"
-                | Feedback 
+                | Feedback
         - else
           = form_for @activity_submission, url: activity_activity_submission_path(@activity), method: :post, html: { class: 'form-inline activity-submission-form' }  do |f|
             - if @activity.allow_submissions?
@@ -139,9 +139,9 @@ section.activity-details
               = link_to 'Watch now &raquo;'.html_safe, recording
 
   - if teacher? && @program.lecture_tips? && @activity.is_a?(Lecture)
-    .lecture-tips 
+    .lecture-tips
       h3 = "Lecture Tips / Reminders"
-      == markdown @program.lecture_tips 
+      == markdown @program.lecture_tips
 
   - if teacher? && @activity.teacher_notes?
 
@@ -159,7 +159,7 @@ section.activity-details
           .heading
             = image_tag(avatar_for(msg.user), size: '50x50')
             h4 = msg.subject
-            .when 
+            .when
               = msg.created_at.to_formatted_s(:friendly)
               - if teacher?
                 br
@@ -168,7 +168,7 @@ section.activity-details
           .contents
             == markdown msg.body
             - if teacher? && msg.teacher_notes?
-              .teacher-notes 
+              .teacher-notes
                 h5 Teacher (Internal) Notes
                 == markdown msg.teacher_notes
 
