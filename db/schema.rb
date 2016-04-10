@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151222204232) do
+ActiveRecord::Schema.define(version: 20160406223525) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -91,6 +91,13 @@ ActiveRecord::Schema.define(version: 20151222204232) do
     t.datetime "updated_at"
     t.integer  "assistee_id"
     t.integer  "rating"
+    t.text     "student_notes"
+    t.boolean  "imported",      default: false
+  end
+
+  create_table "code_reviews", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "cohorts", force: :cascade do |t|
@@ -105,18 +112,6 @@ ActiveRecord::Schema.define(version: 20151222204232) do
   end
 
   add_index "cohorts", ["program_id"], name: "index_cohorts_on_program_id", using: :btree
-
-  create_table "comments", force: :cascade do |t|
-    t.text     "content"
-    t.integer  "commentable_id"
-    t.string   "commentable_type", limit: 255
-    t.integer  "user_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "comments", ["commentable_id", "commentable_type"], name: "index_comments_on_commentable_id_and_commentable_type", using: :btree
-  add_index "comments", ["user_id"], name: "index_comments_on_user_id", using: :btree
 
   create_table "day_feedbacks", force: :cascade do |t|
     t.string   "mood",                limit: 255

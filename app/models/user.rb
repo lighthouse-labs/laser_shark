@@ -104,8 +104,20 @@ class User < ActiveRecord::Base
     "#{self.first_name} #{self.last_name}"
   end
 
+  def initials
+    "#{self.first_name.first}#{self.last_name.first}"
+  end
+
   def incomplete_activities
     Activity.where.not(id: self.activity_submissions.select(:activity_id)).where("day < ?", CurriculumDay.new(Date.today, cohort).to_s).order(:day).reverse
+  end
+
+  def non_code_reviewed_activity_submissions
+    @activities_struct = Struct.new(:id, :name)
+    @activity_submissions = self.activity_submissions.order(created_at: :desc).with_github_url.select{ |activity_submission| !activity_submission.code_reviewed?}
+    .map do |activity_submission|
+      @activities_struct.new(activity_submission.id ,activity_submission.activity.name)
+    end
   end
 
   class << self
