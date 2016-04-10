@@ -13,17 +13,23 @@
       img src="#{@code_review.assistor.avatar_url}" class='teacher-avatar'
 
     .col-md-10.activity-holder
-      = @code_review.assistance_request.activity_submission.activity.name
-      .code-review-rating
-        | <b class='heading'>Rating:</b> #{@code_review.rating} / 4
+      - if @code_review.try(:assistance_request) && @code_review.try(:assistance_request).try(:activity_submission)
+        = @code_review.assistance_request.activity_submission.activity.name
+        .code-review-rating
+          | <b class='heading'>Rating:</b> #{@code_review.rating} / 4
+      - else
+        |Imported code review
 
   .code-review-teacher-notes
-    - if @code_review.notes.empty?
-      | No observations provided about code submitted.
+    - if @code_review.try(:notes)
+      - if @code_review.notes.empty?
+        | No observations provided about code submitted.
+      - else
+        | <b class='heading'>Observations:</b>
+        .indented
+          = @code_review.notes
     - else
-      | <b class='heading'>Observations:</b>
-      .indented
-        = @code_review.notes
+      | Imported code review
 
   .code-review-teacher-notes
     - if @code_review.try(:student_notes)

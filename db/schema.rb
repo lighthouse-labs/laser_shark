@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160126162225) do
+ActiveRecord::Schema.define(version: 20160406223525) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -92,6 +92,7 @@ ActiveRecord::Schema.define(version: 20160126162225) do
     t.integer  "assistee_id"
     t.integer  "rating"
     t.text     "student_notes"
+    t.boolean  "imported",      default: false
   end
 
   create_table "code_reviews", force: :cascade do |t|
@@ -126,7 +127,7 @@ ActiveRecord::Schema.define(version: 20160126162225) do
   end
 
   create_table "day_infos", force: :cascade do |t|
-    t.string   "day"
+    t.string   "day",         limit: 255
     t.text     "description"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -139,29 +140,19 @@ ActiveRecord::Schema.define(version: 20160126162225) do
     t.integer  "style_rating"
     t.text     "notes"
     t.integer  "feedbackable_id"
-    t.string   "feedbackable_type"
+    t.string   "feedbackable_type", limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
     t.float    "rating"
   end
 
-  create_table "learning_objectives", force: :cascade do |t|
-    t.string   "category"
-    t.string   "title"
-    t.string   "description"
-    t.string   "keywords"
-    t.string   "priority"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
-  end
-
   create_table "locations", force: :cascade do |t|
-    t.string   "name"
+    t.string   "name",             limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "calendar"
-    t.string   "timezone"
-    t.boolean  "has_code_reviews", default: true
+    t.string   "calendar",         limit: 255
+    t.string   "timezone",         limit: 255
+    t.boolean  "has_code_reviews",             default: true
   end
 
   create_table "programs", force: :cascade do |t|
@@ -171,7 +162,7 @@ ActiveRecord::Schema.define(version: 20160126162225) do
     t.datetime "updated_at"
     t.string   "recordings_folder", limit: 255
     t.string   "recordings_bucket", limit: 255
-    t.string   "tag"
+    t.string   "tag",               limit: 255
   end
 
   create_table "recordings", force: :cascade do |t|
@@ -219,11 +210,11 @@ ActiveRecord::Schema.define(version: 20160126162225) do
     t.datetime "updated_at"
     t.integer  "code_review_percent",                default: 80
     t.boolean  "admin",                              default: false, null: false
-    t.string   "company_name"
-    t.string   "company_url"
+    t.string   "company_name",           limit: 255
+    t.string   "company_url",            limit: 255
     t.text     "bio"
-    t.string   "quirky_fact"
-    t.string   "specialties"
+    t.string   "quirky_fact",            limit: 255
+    t.string   "specialties",            limit: 255
     t.integer  "location_id"
     t.boolean  "on_duty",                            default: false
     t.integer  "mentor_id"
