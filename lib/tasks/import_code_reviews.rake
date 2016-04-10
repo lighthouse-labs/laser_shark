@@ -64,8 +64,9 @@ namespace :import do
     def create_code_review(student, teacher, activity_submission, date, rating)
       code_review_request = CodeReviewRequest.create(requestor: student, assistor_id: teacher.id, activity_submission: activity_submission)
       assistance = Assistance.create(assistor: teacher, assistee: student, assistance_request: code_review_request, rating: rating.to_i.floor, imported: true)
-      puts code_review_request.inspect
-      puts assistance.inspect
+      code_review_date = Date.strptime(date, "%m/%d/%Y")
+      code_review_request.update_attributes(created_at: code_review_date, updated_at: code_review_date)
+      assistance.update_attributes(created_at: code_review_date, updated_at: code_review_date)
     end
 
     CSV.foreach(Rails.public_path.join('tor-web.csv')) do |row|
