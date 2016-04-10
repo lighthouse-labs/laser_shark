@@ -48,7 +48,7 @@ class ActivitySubmission < ActiveRecord::Base
 
   def check_data_for_finalized
     unless self.data.blank?
-      # => TODO handle more than just prep data
+      # TODO handle more than just prep data
       data = get_prep_code_result_data
 
       self.finalized = data[:lint_results].zero? && data[:test_failures].zero?
@@ -103,7 +103,7 @@ class ActivitySubmission < ActiveRecord::Base
 
   def create_user_outcome_results
     self.activity.activity_outcomes.each do |activity_outcome|
-      # => TODO: change the way we calculate ratings
+      # TODO: change the way we calculate ratings
       if self.activity.prep?
         self.user.outcome_results.create(outcome: activity_outcome.outcome, resultable: activity_outcome, rating: Prep.evaluate_rating(get_prep_code_result_data))
       end
