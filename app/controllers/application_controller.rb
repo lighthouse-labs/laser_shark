@@ -83,15 +83,14 @@ class ApplicationController < ActionController::Base
   helper_method :cohort
 
   def cohorts
-    @cohorts ||= Cohort.order(start_date: :desc)
+    @cohorts ||= Cohort.most_recent
   end
   helper_method :cohorts
-
-  def code_review_cohorts
-    # The new code review process was started in Jan 2016
-    @code_review_cohorts ||= Cohort.where('start_date > ?', '01-01-2016')
+  
+  def dropdown_cohorts
+    @dropdown_cohorts = cohorts.starts_between(3.months.ago.to_date, 2.weeks.from_now.to_date).group_by(&:location)
   end
-  helper_method :code_review_cohorts
+  helper_method :dropdown_cohorts
 
   def streams
     @streams ||= Stream.order(:title)

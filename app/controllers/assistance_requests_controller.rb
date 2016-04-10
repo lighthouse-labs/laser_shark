@@ -6,11 +6,11 @@ class AssistanceRequestsController < ApplicationController
   def index
     @all_locations = Location.where("id IN (?)", Cohort.all.map(&:location_id).uniq).map{|l| LocationSerializer.new(l, root: false).as_json}
 
-    render component: "RequestQueue", 
+    render component: "RequestQueue",
       props: {
         locations: @all_locations,
         user: UserSerializer.new(current_user).as_json
-      }, 
+      },
       layout: "assistance"
   end
 
@@ -47,7 +47,7 @@ class AssistanceRequestsController < ApplicationController
       format.all { redirect_to(assistance_requests_path) }
     end
   end
-  
+
   def destroy
     ar = AssistanceRequest.find params[:id]
     status = ar.try(:cancel) ? 200 : 409

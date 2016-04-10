@@ -13,7 +13,7 @@ class CohortsController < ApplicationController
     @students = @current_cohort.students
     @max_code_reviews_student = @students.max_by{|student| student.completed_code_review_requests.count}
     @assistance = Assistance.new(assistor: current_user, assistee: @student)
-  end 
+  end
 
   def code_review_modal_content
     render layout: false

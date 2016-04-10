@@ -1,33 +1,29 @@
-= form_for @assistance, url: student_assistances_path(@student, @assistance), method: :post  do |f|
+= form_for @assistance, url: [@cohort, :code_reviews], method: :post  do |f|
+  = f.hidden_field :assistee_id, value: @student.id
+
   .modal-header
     button type="button" class="close" data-dismiss="modal" aria-label="Close"
-      span aria-hidden="true" 
+      span aria-hidden="true"
         | &times;
     h4.modal-title New Code Review
   .modal-body
     label
       | Activity
     .form-group = select_tag :activity_submission_id, options_from_collection_for_select(@activity_submissions, "id", "name"), class: 'form-control', :prompt => "Please choose an activity"
-    label
-      | Student notes
+    label =@student.first_name + ' ' + @student.last_name
+
+    p
+      em
+        | Feedback (in markdown) to be emailed to the student:
     #student-notes.editor
     label
-      |Teacher notes
+      | Teacher
     .form-group = f.text_area :notes, placeholder: 'Please enter some teacher (internal) notes', class: 'form-control'
     .form-group = f.text_area :student_notes, style: 'display: none;'
-    .form-group  
+    .form-group
      label
-      |Rating
-     = f.select :rating, [['Needs improvement', 1], ['Fair', 2], ['Good', 3], ['Excellent', 4]], {selected: 3}, class: 'form-control'
+      | Rating
+     = f.select :rating, [['L1 | Struggling', 1], ['L2 | Slightly behing', 2], ['L3 | On track', 3], ['L4 | Excellent (Needs stretch)', 4]], {selected: 3}, class: 'form-control'
   .modal-footer
     button.btn.btn-default type="button" data-dismiss="modal" Close
     = f.submit "Submit", class: "btn btn-success", id: "new-code-review-submit-button"
-
-- content_for :body do
-css:
-  .editor {
-    width: 100%;
-    height: 250px;
-    margin: auto;
-    margin-bottom: 20px;
-  }

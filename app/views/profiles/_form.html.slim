@@ -4,11 +4,11 @@
     - @user.errors.full_messages.each do |msg|
       li = msg
   hr
-
 / = f.error_notification
-
 .form-group
   .col-sm-offset-3.col-sm-9
+    div.alert.alert-error.invalid-image-selection
+      | Invalid image file selected.
     div.avatar-format
       = image_tag avatar_for(@user) if avatar_for(@user)
     div.col-sm-4.upload-button
@@ -39,3 +39,7 @@
 .form-group
   .col-sm-offset-3.col-sm-9
     = f.button :submit, 'Update'
+
+- content_for :end_of_body do
+  javascript:
+    $(Profile.manageAvatarLoading);

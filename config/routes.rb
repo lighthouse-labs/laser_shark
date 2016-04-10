@@ -15,8 +15,8 @@ LaserShark::Application.routes.draw do
   resource :session, :only => [:new, :destroy]
   # resource :registration, only: [:new, :create]
   resource :profile, only: [:edit, :update]
-  resources :feedbacks, only: [:index, :update] do 
-    member do 
+  resources :feedbacks, only: [:index, :update] do
+    member do
       get :modal_content
     end
   end
@@ -33,8 +33,8 @@ LaserShark::Application.routes.draw do
   end
 
   resources :students, only: [:index, :show] do
-    resources :assistances, only: [:create]
-    member do 
+    resources :code_reviews, only: [:create]
+    member do
       get :new_code_review_modal
     end
   end
@@ -42,12 +42,12 @@ LaserShark::Application.routes.draw do
   resources :incomplete_activities, only: [:index]
   resources :search_activities, only: [:index]
 
-  resources :assistances, only: [:destroy] do
-    member do
-      post :end
-      get :view_code_review_modal
-    end
-  end
+  # resources :code_reviews, only: [:destroy] do
+  #   member do
+  #     post :end
+  #     get :view_code_review_modal
+  #   end
+  # end
 
   # CONTENT BROWSING
   resources :days, param: :number, only: [:show] do
@@ -65,9 +65,8 @@ LaserShark::Application.routes.draw do
 
   resources :cohorts, only: [] do
     resources :students, only: [:index]    # cohort_students_path(@cohort)
-    member do 
-      get :code_reviews
-    end
+    resources :code_reviews
+
     put :switch_to, on: :member
   end
 
@@ -76,21 +75,24 @@ LaserShark::Application.routes.draw do
   resources :streams, only: [:index, :show]
 
   resources :teachers, only: [:index, :show] do
-    member do 
+    member do
       get :feedback
+      post :remove_mentorship
+      post :add_mentorship
     end
   end
 
   # ADMIN
   namespace :admin do
     root to: 'dashboard#show'
-    resources :students, only: [:index, :update] do 
+    resources :students, only: [:index, :update, :edit] do 
       member do 
         post :reactivate
         post :deactivate 
+        get :modal_content
       end
     end
-    resources :teacher_stats, only: [:index, :show] do 
+    resources :teacher_stats, only: [:index, :show] do
       member do
         get :assistance
         get :feedback
@@ -100,8 +102,8 @@ LaserShark::Application.routes.draw do
     resources :feedbacks, except: [:edit, :update, :destroy]
     resources :teacher_feedbacks, only: [:index]
     resources :curriculum_feedbacks, only: [:index]
-    resources :day_feedbacks, except: [:destroy] do 
-      member do 
+    resources :day_feedbacks, except: [:destroy] do
+      member do
         post :archive
         delete :archive, action: :unarchive
       end

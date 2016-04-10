@@ -23,6 +23,8 @@
 //= require ace/theme-monokai
 //= require ace/mode-markdown
 
+//= require default
+
 //= require jquery.raty
 //= require readmore
 //= require jquery.googlecalreader-1.1.min
@@ -49,4 +51,5 @@
 //= require incomplete_activities
 //= require activities
 //= require reconnect_holder
+//= require profile
 //= require code_reviews
