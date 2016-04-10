@@ -68,20 +68,20 @@ namespace :import do
       puts assistance.inspect
     end
 
-    # CSV.foreach(Rails.public_path.join('tor-web.csv')) do |row|
-    #   # Find student
-    #   if (row[0] && row[0].length > 1 && !(['January', 'February', 'March', 'Student'].any? { |term| row[0].include?(term) }))
-    #     student = find_student(row, 'Toronto')
-    #     # Find teacher for each code review and create code review
-    #     row[3..row.length].each_slice(4) do |review|
-    #       if (review[0] && (!review[0].include?("Code Review")) && (review[0] != "Mentor"))
-    #         teacher = find_teacher(review)
-    #         activity = find_activity_submission(review, student)
-    #         create_code_review(student, teacher, activity, review[2], review[3])
-    #       end
-    #     end
-    #   end
-    # end
+    CSV.foreach(Rails.public_path.join('tor-web.csv')) do |row|
+      # Find student
+      if (row[0] && row[0].length > 1 && !(['January', 'February', 'March', 'Student'].any? { |term| row[0].include?(term) }))
+        student = find_student(row, 'Toronto')
+        # Find teacher for each code review and create code review
+        row[3..row.length].each_slice(4) do |review|
+          if (review[0] && (!review[0].include?("Code Review")) && (review[0] != "Mentor"))
+            teacher = find_teacher(review, 'Toronto')
+            activity = find_activity_submission(review, student)
+            create_code_review(student, teacher, activity, review[2], review[3])
+          end
+        end
+      end
+    end
 
     CSV.foreach(Rails.public_path.join('van-web.csv')) do |row|
       # Find student
