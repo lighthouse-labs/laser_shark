@@ -1,0 +1,43 @@
+article.page-content
+  .page-header
+    h1
+      b = 'Question: '
+      = @question.id
+  .row
+    .col-md-6
+      h2 Question
+      / p
+      /   = 'This question is '
+      /   - if @question.active?
+      /     span.label.label-info active
+      /   - else
+      /     span.label.label-warning inactive
+      /   = ' and has appeared in '
+      /   = link_to quizzes_path do
+      /     b = @question.quizzes.count
+      /     = ' quizzes'
+      /   = '.'
+      hr
+      / dl
+      /   dt Activity
+      /   dd = link_to @question.activity do
+      /     i = @question.activity.compass_install.upcase
+            /     = ' '
+      /     b = @question.activity.day
+      /     = " #{@question.activity.title}"
+      dl
+        dt Question text
+        dd = @question.question
+    .col-md-6
+      h2 Options
+      - @question.options.each_with_index do |option, index|
+        div class="panel panel-#{option.correct? ? 'success' : 'default'}"
+          .panel-heading.text-right.clearfix
+            b.pull-left = "Option #{index + 1} "
+            - if option.correct?
+              span.label.label-success correct answer
+            .small = "Selected #{option.answers.count} times"
+          .panel-body
+            = option.answer
+          .panel-footer
+            = option.explanation

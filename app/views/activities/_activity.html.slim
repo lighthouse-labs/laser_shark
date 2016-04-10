@@ -1,4 +1,4 @@
-= link_to day_activity_path(activity.day, activity)
+= link_to (activity.is_a?(QuizActivity) ? new_quiz_quiz_submission_path(activity.quiz) : day_activity_path(activity.day, activity))
   div class=("#{activity.type.downcase} " + 'activity')
     .icon.icon-type title=activity.type
       i class=(icon_for(activity))
@@ -21,7 +21,7 @@
         - else
           i.fa.fa-square-o
       -if teacher?
-        .completed-activities  
+        .completed-activities
           = completed_students(activity)
     .name
       = activity.name

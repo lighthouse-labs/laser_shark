@@ -91,4 +91,30 @@ if Rails.env.development?
     )
   end
 
+  # Quiz Stuff :PI
+  quiz = Quiz.new(day: "w1d1")
+
+  5.times do |i|
+    question = Question.new(question: Faker::Lorem.sentence)
+
+    4.times do |j|
+      option = Option.new(
+        answer: Faker::Lorem.sentence,
+        explanation: Faker::Lorem.paragraph,
+        correct: false
+      )
+      option.correct = true if j + 1 == 4
+      question.options << option
+    end
+    quiz.questions << question
+  end
+  quiz.save!
+  QuizActivity.create!(
+    name: Faker::Commerce.product_name,
+    start_time: 2300,
+    duration: 10,
+    day: "w1d1",
+    quiz: quiz
+  )
+
 end
