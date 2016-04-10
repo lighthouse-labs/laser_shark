@@ -30,23 +30,28 @@ if Rails.env.development?
         else
           Assignment.create!(params)
         end
-        
+
       end
     end
   end
 
   Cohort.destroy_all
-  
+
   program = Program.create(name: "Web Immersive")
-  cohort_van = Cohort.create! name: "Current Cohort Van", code: "current van", location: "Vancouver", start_date: Date.today - 7.days, program: program
-  cohort_tor = Cohort.create! name: "Current Cohort Tor", code: "current tor", location: "Toronto", start_date: Date.today - 14.days, program: program
+  location_van = Location.create(name: "Vancouver")
+  location_to = Location.create(name: "Toronto")
+  cohort_van = Cohort.create! name: "Current Cohort Van", code: "current van", location: location_van, start_date: Date.today - 7.days, program: program, code: "van"
+  cohort_tor = Cohort.create! name: "Current Cohort Tor", code: "current tor", location: location_to, start_date: Date.today - 14.days, program: program, code: "toto"
 
   10.times do |i|
     Student.create!(
       first_name: Faker::Name.first_name,
-      last_name: Faker::Name.last_name, 
+      last_name: Faker::Name.last_name,
       email: Faker::Internet.email,
       cohort: cohort_van,
+      phone_number: '123-123-1234',
+      github_username: 'useruser',
+      location: location_van,
       uid: 1000 + i,
       token: 2000 + i,
       completed_registration: true
@@ -56,7 +61,7 @@ if Rails.env.development?
   10.times do |x|
     Teacher.create!(
       first_name: Faker::Name.first_name,
-      last_name: Faker::Name.last_name, 
+      last_name: Faker::Name.last_name,
       email: Faker::Internet.email,
       uid: 1000 + x,
       token: 2000 + x,
@@ -64,19 +69,25 @@ if Rails.env.development?
       company_name: Faker::Company.name,
       bio: Faker::Lorem.sentence,
       specialties: Faker::Lorem.sentence,
-      quirky_fact: Faker::Lorem.sentence
+      quirky_fact: Faker::Lorem.sentence,
+      phone_number: '123-123-1234',
+      github_username: 'useruser',
+      location: location_van,
     )
   end
 
   10.times do |i|
     Student.create!(
       first_name: Faker::Name.first_name,
-      last_name: Faker::Name.last_name, 
+      last_name: Faker::Name.last_name,
       email: Faker::Internet.email,
       cohort: cohort_tor,
       uid: 1011 + i,
       token: 2011 + i,
-      completed_registration: true
+      completed_registration: true,
+      phone_number: '123-123-1234',
+      github_username: 'useruser',
+      location: location_to,
     )
   end
 
