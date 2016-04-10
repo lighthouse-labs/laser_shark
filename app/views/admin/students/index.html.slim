@@ -19,7 +19,11 @@ table.table
         td = student.full_name
         td = student.email
         td = completed_registration?(student)
-        td = student.cohort.name
+        td
+          - if student.try(:cohort)
+            = student.cohort.name
+          - else
+            = 'N/A'
         td = student.mentor
         td
           .btn.btn-primary.btn-xs.admin-student-edit-button data-toggle="modal" data-target="#student-actions-modal" data-student-id="#{student.id}"
