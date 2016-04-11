@@ -5,6 +5,9 @@
       fieldset
         legend Question
       .form-group
+        = f.label :outcome
+        = f.collection_select :outcome_id, @outcomes, :id, :text, {}, {class: "form-control chosen-select"}
+      .form-group
         = f.label :active do
           = f.check_box :active
           = ' Active'

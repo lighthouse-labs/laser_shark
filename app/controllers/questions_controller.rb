@@ -12,6 +12,7 @@ class QuestionsController < ApplicationController
 
   def new
     @question = Question.new
+    @outcomes = Outcome.all
     2.times { @question.options << Option.new }
   end
 
