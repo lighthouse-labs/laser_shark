@@ -58,6 +58,8 @@ gem 'aws-sdk-core'
 
 gem 'faker'
 
+gem 'interactor-rails', '~> 2.0'
+
 group :development do
   gem 'pry'
   gem 'pry-nav'
