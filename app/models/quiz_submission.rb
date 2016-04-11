@@ -2,9 +2,11 @@ class QuizSubmission < ActiveRecord::Base
 
   belongs_to :user
 
+  belongs_to :quiz
+
   has_many :answers, dependent: :destroy
 
-  belongs_to :quiz
+  has_many :outcome_results, as: :source
 
   accepts_nested_attributes_for :answers
 
@@ -16,6 +18,8 @@ class QuizSubmission < ActiveRecord::Base
       .joins('LEFT JOIN options ON answers.option_id = options.id')
       .order('quiz_submissions.created_at', 'options.correct')
   }
+
+  before_create :add_outcome_results
 
   before_validation on: :create do
     unless uuid
@@ -45,5 +49,24 @@ class QuizSubmission < ActiveRecord::Base
     correct_submissions_count = [correct_answer_submissions.length, 1].max
     correct_answer_sum = correct_answer_submissions.map(&:answers_count).reduce(0, &:+)
     correct_answer_sum.to_f / correct_submissions_count.to_f
+  end
+
+  private
+
+  def add_outcome_results
+    if initial
+      answers.each do |answer|
+        if answer.option.correct
+          outcome_results << OutcomeResult.new(user: current_user, outcome: answer.option.question.outcome, rating: 3)
+        else
+          outcome_results << OutcomeResult.new(user: current_user, outcome: answer.option.question.outcome, rating: 1)
+        end
+      end
+      unless answers.count >= quiz.questions.count
+        answer_question_ids = answers.map { |a| a.option.question.id }
+        unanswered_questions = quiz.questions.select { |question| answer_question_ids.exclude? question.id }
+        unanswered_questions.each { |question| outcome_results << OutcomeResult.new(user: current_user, outcome: question.outcome, rating: 1) }
+      end
+    end
   end
 end
