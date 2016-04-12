@@ -47,3 +47,4 @@
                         .collapse id="option_#{option.id}_explanation"
                           .explanation = option.explanation
       = link_to "Back to Today's Activities", day_path('today'), class: "btn btn-success today-act-link"
+      = link_to "Retake Quiz", new_quiz_quiz_submission_path(@quiz_submission.quiz), class: "btn btn-success today-act-link pull-right"
