@@ -8,6 +8,6 @@ class OutcomeResult < ActiveRecord::Base
   protected
 
   def populate_source
-    self.source_name ||= self.resultable_type
+    self.source_name ||= self.source_type
   end
 end

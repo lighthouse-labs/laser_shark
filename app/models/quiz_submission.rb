@@ -6,8 +6,6 @@ class QuizSubmission < ActiveRecord::Base
 
   has_many :answers, dependent: :destroy
 
-  has_many :outcome_results, as: :source
-
   accepts_nested_attributes_for :answers
 
   scope :stats, -> {
