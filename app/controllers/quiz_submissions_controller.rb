@@ -8,7 +8,7 @@ class QuizSubmissionsController < ApplicationController
     @quiz_submission = QuizSubmission.new(submission_params)
     @quiz_submission.user = current_user
     @quiz_submission.initial = previous_submissions? ? false : true
-    result = AddOutcomeResults.call(quiz_submission: @quiz_submission)
+    result = AddOutcomeResults.call(quiz_submission: @quiz_submission, user: current_user)
     if result.success?
       redirect_to quiz_submission_path @quiz_submission.id
     else
