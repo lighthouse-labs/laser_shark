@@ -13,10 +13,11 @@
         br
         span.label.label-primary
           = submission_score(@quiz_submission)
-        h5.text-center Previous Attempts
-        ul.attempts
-          - @past_submissions.each do |attempt|
-            li.label.label-primary= link_to submission_score(attempt), quiz_submission_path(attempt.id), class: "attempt"
+        - if @past_submissions.count > 0
+          h5.text-center Previous Attempts
+          ul.attempts
+            - @past_submissions.each do |attempt|
+              li.label.label-primary= link_to submission_score(attempt), quiz_submission_path(attempt.id), class: "attempt"
       hr
       - if @quiz_submission.quiz.nil?
         .alert.alert-info.text-center The quiz that this submission is for has been deleted.
@@ -24,7 +25,7 @@
         - @quiz_submission.quiz.questions.each_with_index do |question, question_index|
           .submission-question
             h3.text-primary = "Question ##{question_index + 1}"
-            /= markdown(question.question)
+            == markdown(question.question)
             .submission-answer
               h4.text-muted = "Question ##{question_index + 1} answer"
               .list-group
@@ -45,3 +46,5 @@
                             | toggle explanation
                         .collapse id="option_#{option.id}_explanation"
                           .explanation = option.explanation
+      = link_to "Back to Today's Activities", day_path('today'), class: "btn btn-success quiz-submission-link"
+      = link_to "Retake Quiz", new_quiz_quiz_submission_path(@quiz_submission.quiz), class: "btn btn-success quiz-submission-link pull-right"
