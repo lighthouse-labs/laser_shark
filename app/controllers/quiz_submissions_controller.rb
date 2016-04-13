@@ -10,7 +10,6 @@ class QuizSubmissionsController < ApplicationController
     result = CreateQuizSubmission.call(params: submission_params, user: current_user, quiz: @quiz)
     if result.success?
       @quiz_submission = result.quiz_submission
-      binding.pry
       redirect_to quiz_submission_path @quiz_submission.id
     else
       @quiz_submission = result.quiz_submission
@@ -32,5 +31,4 @@ class QuizSubmissionsController < ApplicationController
   def require_quiz
     @quiz = Quiz.find(params[:quiz_id])
   end
-
 end
