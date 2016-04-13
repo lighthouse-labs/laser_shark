@@ -1,17 +1,19 @@
 class QuizSubmissionsController < ApplicationController
+
+  before_action :require_quiz, only: [:new, :create]
+
   def new
-    quiz = Quiz.find(params[:quiz_id])
-    @quiz_submission = QuizSubmission.new(quiz: quiz)
+    @quiz_submission = @quiz.quiz_submissions.new
   end
 
   def create
-    @quiz_submission = QuizSubmission.new(submission_params)
-    @quiz_submission.user = current_user
-    @quiz_submission.initial = previous_submissions? ? false : true
-    result = AddOutcomeResults.call(quiz_submission: @quiz_submission, user: current_user)
+    result = CreateQuizSubmission.call(params: submission_params, user: current_user, quiz: @quiz)
     if result.success?
+      @quiz_submission = result.quiz_submission
+      binding.pry
       redirect_to quiz_submission_path @quiz_submission.id
     else
+      @quiz_submission = result.quiz_submission
       render :new
     end
   end
@@ -22,11 +24,13 @@ class QuizSubmissionsController < ApplicationController
   end
 
   private
+
   def submission_params
-    params.require(:quiz_submission).permit(:quiz_id, answers_attributes: [:option_id])
+    params.require(:quiz_submission).permit(answers_attributes: [:option_id])
   end
 
-  def previous_submissions?
-    QuizSubmission.where("user_id = ? AND quiz_id = ?", current_user.id, @quiz_submission.quiz_id).count > 0
+  def require_quiz
+    @quiz = Quiz.find(params[:quiz_id])
   end
+
 end

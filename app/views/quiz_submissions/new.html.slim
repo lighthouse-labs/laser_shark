@@ -5,9 +5,9 @@
         h1.text-center
           i.fa.fa-compass
           = ' Compass Quiz'
-      = form_for @quiz_submission do |f|
+      = form_for [@quiz, @quiz_submission] do |f|
         = f.hidden_field :quiz_id
-        - @quiz_submission.quiz.questions.each_with_index do |question, question_index|
+        - @quiz.questions.each_with_index do |question, question_index|
           .submission-question
             h2.text-primary = "Question ##{question_index + 1}"
             p = question.question

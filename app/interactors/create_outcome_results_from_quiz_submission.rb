@@ -26,7 +26,7 @@ class CreateOutcomeResultsFromQuizSubmission
           outcome_results << OutcomeResult.new(user: current_user,
                                                outcome: question.outcome,
                                                rating: 1,
-                                               source: @quiz_submission)
+                                               source: question)
         end
       end
     end
