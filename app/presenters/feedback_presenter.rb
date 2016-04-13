@@ -49,7 +49,9 @@ class FeedbackPresenter < BasePresenter
   end
 
   def teacher_image
-    image_tag(avatar_for(feedback.teacher), size: '75x75', class: 'teacher-avatar')
+    if feedback.teacher
+      image_tag(avatar_for(feedback.teacher), size: '75x75', class: 'teacher-avatar')
+    end
   end
 
   def student_full_name
@@ -62,6 +64,10 @@ class FeedbackPresenter < BasePresenter
 
   def date
     feedback.created_at.to_date.to_s
+  end
+
+  def time
+    feedback.updated_at.strftime(" at %I:%M%p")
   end
 
 end
