@@ -4,7 +4,7 @@ class FeedbackPresenter < BasePresenter
   delegate :notes, :rating, :updated_at, :feedbackable, :technical_rating, :style_rating, :student, :teacher, to: :feedback
 
   def truncated_notes
-    if feedback.notes.present? 
+    if feedback.notes.present?
       truncate feedback.notes, length: 200
     end
   end
@@ -46,6 +46,10 @@ class FeedbackPresenter < BasePresenter
     else
       'N/A'
     end
+  end
+
+  def teacher_image
+    image_tag(avatar_for(feedback.teacher), size: '75x75', class: 'teacher-avatar')
   end
 
   def student_full_name

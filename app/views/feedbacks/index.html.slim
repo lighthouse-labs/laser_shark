@@ -6,7 +6,7 @@ table.table
       th Name
       th Type
       th Teacher
-      th 
+      th
 
   tbody
     - pending_feedbacks.each do |feedback|
@@ -17,9 +17,9 @@ table.table
             td = feedback_presenter.feedbackable_name
             td = feedback_presenter.feedbackable_type
             td = feedback_presenter.teacher_full_name
-            td 
+            td
               button.btn.btn-xs.btn-primary data-toggle="modal" data-target="#feedback_modal" data-feedback-id="#{feedback.id}"
-                | Provide   
+                | Provide
 
 h3 Completed:
 table.table
@@ -30,7 +30,7 @@ table.table
       th Type
       th Teacher
       th Rating
-      th    
+      th
 
   tbody
     - @completed_feedbacks.each do |feedback|
@@ -40,21 +40,24 @@ table.table
             td = feedback_presenter.upcased_day
             td = feedback_presenter.feedbackable_name
             td = feedback_presenter.feedbackable_type
-            td = feedback_presenter.teacher_full_name
+            td
+              = feedback_presenter.teacher_image
+              br
+              = feedback_presenter.teacher_full_name
             td
               .raty-viewer data-score="#{feedback.rating}"
-            td 
+            td
               button.btn.btn-xs data-toggle="modal" data-target="#feedback_modal" data-feedback-id="#{feedback.id}"
-                | Edit    
+                | Edit
 
           - if feedback.notes.present?
             tr
               td
               td colspan="5"
-                p 
+                p
                   | Notes
                 small
-                  em 
+                  em
                     article.read-more = feedback_presenter.notes
               td
 
@@ -66,7 +69,7 @@ table.table
       th Name
       th Type
       th Teacher
-      th 
+      th
 
   tbody
     - @expired_feedbacks.each do |feedback|
@@ -77,10 +80,10 @@ table.table
             td = feedback_presenter.feedbackable_name
             td = feedback_presenter.feedbackable_type
             td = feedback_presenter.teacher_full_name
-            td 
+            td
               button.btn.btn-xs.btn-primary data-toggle="modal" data-target="#feedback_modal" data-feedback-id="#{feedback.id}"
-                | Provide   
-         
+                | Provide
+
 .modal.fade id="feedback_modal"
   .modal-dialog
     .modal-content

@@ -24,12 +24,12 @@ th .current {
   background-repeat: no-repeat;
   background-position: right center;
 }
-th .asc { 
-  background-image: url(up_arrow.gif); 
+th .asc {
+  background-image: url(up_arrow.gif);
 }
 
-th .desc { 
-  background-image: url(down_arrow.gif); 
+th .desc {
+  background-image: url(down_arrow.gif);
 }
 
 .teacher_feedbacks_section {
@@ -59,4 +59,10 @@ th .desc {
 }
 .in-place-edit-text-area {
   font-size: 12px;
+}
+
+.teacher-avatar {
+  border-width: 3px;
+  border-radius: 10px;
+  margin-right: 2px;
 }
