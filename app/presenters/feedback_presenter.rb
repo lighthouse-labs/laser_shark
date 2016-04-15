@@ -4,7 +4,7 @@ class FeedbackPresenter < BasePresenter
   delegate :notes, :rating, :updated_at, :feedbackable, :technical_rating, :style_rating, :student, :teacher, to: :feedback
 
   def truncated_notes
-    if feedback.notes.present? 
+    if feedback.notes.present?
       truncate feedback.notes, length: 200
     end
   end
@@ -48,6 +48,12 @@ class FeedbackPresenter < BasePresenter
     end
   end
 
+  def teacher_image
+    if feedback.teacher
+      image_tag(avatar_for(feedback.teacher), size: '75x75', class: 'teacher-avatar')
+    end
+  end
+
   def student_full_name
     if feedback.student.present?
       feedback.student.first_name + " " + feedback.student.last_name
@@ -58,6 +64,16 @@ class FeedbackPresenter < BasePresenter
 
   def date
     feedback.created_at.to_date.to_s
+  end
+
+  def time
+    feedback.updated_at.strftime(" at %I:%M%p")
+  end
+
+  def reason
+    if feedback.feedbackable.is_a? Assistance
+      feedback.feedbackable.assistance_request.reason ? feedback.feedbackable.assistance_request.reason : "N/A"
+    end
   end
 
 end
