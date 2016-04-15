@@ -5,6 +5,7 @@ table.table
       th Day
       th Name
       th Type
+      th Reason
       th Teacher
       th
 
@@ -18,6 +19,7 @@ table.table
               = feedback_presenter.time
             td = feedback_presenter.feedbackable_name
             td = feedback_presenter.feedbackable_type
+            td = feedback_presenter.reason
             td
               = feedback_presenter.teacher_image
               = feedback_presenter.teacher_full_name
@@ -32,6 +34,7 @@ table.table
       th Day
       th Name
       th Type
+      th Reason
       th Teacher
       th Rating
       th
@@ -46,6 +49,8 @@ table.table
               = feedback_presenter.time
             td = feedback_presenter.feedbackable_name
             td = feedback_presenter.feedbackable_type
+            td
+              = feedback_presenter.reason
             td
               = feedback_presenter.teacher_image
               = feedback_presenter.teacher_full_name
@@ -73,6 +78,7 @@ table.table
       th Day
       th Name
       th Type
+      th Reason
       th Teacher
       th
 
@@ -86,9 +92,9 @@ table.table
               = feedback_presenter.time
             td = feedback_presenter.feedbackable_name
             td = feedback_presenter.feedbackable_type
+            td = feedback_presenter.reason
             td
               = feedback_presenter.teacher_image
-              br
               = feedback_presenter.teacher_full_name
             td
               button.btn.btn-xs.btn-primary data-toggle="modal" data-target="#feedback_modal" data-feedback-id="#{feedback.id}"

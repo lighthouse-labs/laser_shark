@@ -70,4 +70,10 @@ class FeedbackPresenter < BasePresenter
     feedback.updated_at.strftime(" at %I:%M%p")
   end
 
+  def reason
+    if feedback.feedbackable.is_a? Assistance
+      feedback.feedbackable.assistance_request.reason ? feedback.feedbackable.assistance_request.reason : "N/A"
+    end
+  end
+
 end
