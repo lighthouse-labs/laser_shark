@@ -5,12 +5,6 @@ hr
   html: { id: 'activity-form', class: 'form-horizontal' }, wrapper: :horizontal_form do |f|
 
   = render "form", f: f
-  
-  h3 Instructions
-  #instructions-editor.editor = @activity.instructions
-
-  h3 Teacher Notes
-  #notes-editor.editor = @activity.teacher_notes
 
   .actions.well
     = f.submit 'Create', class: 'btn btn-primary', style: 'margin-right: 10px;'
@@ -33,6 +27,9 @@ hr
 
         instructionsEditor.getSession().setMode("ace/mode/markdown");
         notesEditor.getSession().setMode("ace/mode/markdown");
+
+        instructionsEditor.setValue($('#instructions_content').text())
+        notesEditor.setValue($('#notes_content').text())
 
         $('#activity-form').submit(function(evt) {
           evt.preventDefault();

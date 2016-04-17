@@ -6,6 +6,8 @@ LaserShark::Application.routes.draw do
   get 'prep'  => 'setup#show' # temporary
   get 'setup' => 'setup#show' # temporary
 
+  post 'github-hook' => 'github_webhook_events#create'
+
   root to: 'home#show'
   get '/welcome', to: 'welcome#show'
 

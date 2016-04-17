@@ -12,11 +12,15 @@ class Activity < ActiveRecord::Base
   # Below hook should really be after_save (create and update)
   # However, when seeding/mass-creating activties, github API will return error
   after_update :add_revision_to_gist
+  after_create :load_instructions_from_repo, if: :remote_content?
 
   has_many :activity_submissions, -> { order(:user_id) }
   has_many :messages, -> { order(created_at: :desc) }, class_name: 'ActivityMessage'
   has_many :recordings, -> { order(created_at: :desc) }
   has_many :feedbacks, as: :feedbackable
+
+   # optional. Means content stored on server
+  belongs_to :content_repository
 
   # Given the start_time and duration, return the end_time
   def end_time
@@ -46,6 +50,11 @@ class Activity < ActiveRecord::Base
     type != 'Lecture' && type != 'Test'
   end
 
+  def repo_full_name
+    content_repository.try :full_name
+  end
+
+
   protected
 
   def add_revision_to_gist
@@ -55,6 +64,10 @@ class Activity < ActiveRecord::Base
 
   def gist_id
     self.gist_url.split('/').last
+  end
+
+  def load_instructions_from_repo
+    FetchRemoteActivityContent.call(activity: self) # assume success
   end
 
 end

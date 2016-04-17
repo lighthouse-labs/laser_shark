@@ -15,7 +15,32 @@
 = f.input :allow_submissions
 = f.input :allow_feedback
 = f.input :code_review_percent, as: :string, label: 'Probability (percent) to trigger code review'
+= f.input :remote_content
+
+.remote-content-settings
+  = f.association :content_repository
+  = f.input :content_file_path
+
 hr
 
-= f.hidden_field :instructions, id: 'activity-instructions'
+h3 Instructions
+
+- if @activity.remote_content?
+  .alert.alert-warning
+    | This content is remotely managed. You cannot edit it here. Change the "remote content" setting above if you want to change this. 
+    br
+    = link_to 'Edit Contents', "https://github.com/#{@activity.repo_full_name}/edit/master/#{@activity.content_file_path}"
+    br
+    = link_to 'Repository (Master)', "https://github.com/#{@activity.repo_full_name}"
+
+= f.hidden_field :instructions, id: 'activity-instructions', disabled: f.object.remote_content?
+
 = f.hidden_field :teacher_notes, id: 'activity-notes'
+
+pre#instructions_content style="display:none" = @activity.instructions
+#instructions-editor.editor
+
+h3 Teacher Notes
+
+pre#notes_content style="display:none" = @activity.teacher_notes
+#notes-editor.editor

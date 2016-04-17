@@ -27,6 +27,8 @@ gem 'bootstrap-sass', '~> 3.3.5'
 gem 'font-awesome-rails'
 gem 'compass-rails'
 
+gem 'interactor-rails'
+
 gem 'actioncable', github: "rails/actioncable"
 
 gem 'email_validator'

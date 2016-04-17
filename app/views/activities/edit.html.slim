@@ -6,15 +6,6 @@ hr
 
   = render "form", f: f
 
-  h3 Instructions
-  pre#instructions_content style="display:none" = @activity.instructions
-
-  #instructions-editor.editor
-
-  h3 Teacher Notes
-  pre#notes_content style="display:none" = @activity.teacher_notes
-  #notes-editor.editor
-
   .actions.well
     = f.submit 'Update', class: 'btn btn-primary', style: 'margin-right: 10px;'
     = link_to '&laquo; Cancel'.html_safe, day_activity_path(@day, @activity)
@@ -41,9 +32,10 @@ hr
         instructionsEditor.setValue($('#instructions_content').text())
         notesEditor.setValue($('#notes_content').text())
 
+        if ($('#activity-instructions').is(':disabled')) instructionsEditor.setReadOnly(true);
+
         $('#activity-form').submit(function(evt) {
           evt.preventDefault();
-          
           $('#activity-instructions').val(instructionsEditor.getValue());
           $('#activity-notes').val(notesEditor.getValue());
           this.submit();
