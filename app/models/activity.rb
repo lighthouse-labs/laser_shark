@@ -78,8 +78,8 @@ class Activity < ActiveRecord::Base
   protected
 
   def add_revision_to_gist
-    g = ActivityRevision.new(self)
-    g.commit
+    # g = ActivityRevision.new(self)
+    # g.commit
   end
 
   def gist_id

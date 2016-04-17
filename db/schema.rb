@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160413010642) do
+ActiveRecord::Schema.define(version: 20160417194331) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -70,12 +70,17 @@ ActiveRecord::Schema.define(version: 20160413010642) do
     t.string   "github_url"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "finalized",                default: false
+    t.boolean  "finalized",    default: false
     t.text     "data"
   end
 
   add_index "activity_submissions", ["activity_id"], name: "index_activity_submissions_on_activity_id", using: :btree
   add_index "activity_submissions", ["user_id"], name: "index_activity_submissions_on_user_id", using: :btree
+
+  create_table "activity_tests", force: :cascade do |t|
+    t.text    "test"
+    t.integer "activity_id"
+  end
 
   create_table "answers", force: :cascade do |t|
     t.datetime "created_at",         null: false
@@ -86,11 +91,6 @@ ActiveRecord::Schema.define(version: 20160413010642) do
 
   add_index "answers", ["option_id"], name: "index_answers_on_option_id", using: :btree
   add_index "answers", ["quiz_submission_id"], name: "index_answers_on_quiz_submission_id", using: :btree
-
-  create_table "activity_tests", force: :cascade do |t|
-    t.text    "test"
-    t.integer "activity_id"
-  end
 
   create_table "assistance_requests", force: :cascade do |t|
     t.integer  "requestor_id"
@@ -153,18 +153,6 @@ ActiveRecord::Schema.define(version: 20160413010642) do
     t.datetime "updated_at",      null: false
   end
 
-  create_table "comments", force: :cascade do |t|
-    t.text     "content"
-    t.integer  "commentable_id"
-    t.string   "commentable_type", limit: 255
-    t.integer  "user_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "comments", ["commentable_id", "commentable_type"], name: "index_comments_on_commentable_id_and_commentable_type", using: :btree
-  add_index "comments", ["user_id"], name: "index_comments_on_user_id", using: :btree
-
   create_table "day_feedbacks", force: :cascade do |t|
     t.string   "mood"
     t.string   "title"
@@ -179,7 +167,7 @@ ActiveRecord::Schema.define(version: 20160413010642) do
   end
 
   create_table "day_infos", force: :cascade do |t|
-    t.string   "day",         limit: 255
+    t.string   "day"
     t.text     "description"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -192,17 +180,16 @@ ActiveRecord::Schema.define(version: 20160413010642) do
     t.integer  "style_rating"
     t.text     "notes"
     t.integer  "feedbackable_id"
-    t.string   "feedbackable_type", limit: 255
+    t.string   "feedbackable_type"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.float    "rating"
   end
 
   create_table "item_outcomes", force: :cascade do |t|
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.integer  "outcome_id"
-    t.integer  "activity_id"
     t.string   "item_type"
     t.integer  "item_id"
   end
@@ -210,12 +197,12 @@ ActiveRecord::Schema.define(version: 20160413010642) do
   add_index "item_outcomes", ["item_id"], name: "index_item_outcomes_on_item_id", using: :btree
 
   create_table "locations", force: :cascade do |t|
-    t.string   "name",             limit: 255
+    t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "calendar",         limit: 255
-    t.string   "timezone",         limit: 255
-    t.boolean  "has_code_reviews",             default: true
+    t.string   "calendar"
+    t.string   "timezone"
+    t.boolean  "has_code_reviews", default: true
   end
 
   create_table "options", force: :cascade do |t|
@@ -263,9 +250,9 @@ ActiveRecord::Schema.define(version: 20160413010642) do
     t.text     "lecture_tips"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "recordings_folder", limit: 255
-    t.string   "recordings_bucket", limit: 255
-    t.string   "tag",               limit: 255
+    t.string   "recordings_folder"
+    t.string   "recordings_bucket"
+    t.string   "tag"
   end
 
   create_table "questions", force: :cascade do |t|
@@ -322,6 +309,7 @@ ActiveRecord::Schema.define(version: 20160413010642) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer  "order"
+    t.string   "type"
   end
 
   create_table "skills", force: :cascade do |t|
@@ -340,6 +328,17 @@ ActiveRecord::Schema.define(version: 20160413010642) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "user_activity_outcomes", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "activity_outcome_id"
+    t.float    "rating"
+    t.datetime "created_at",          null: false
+    t.datetime "updated_at",          null: false
+  end
+
+  add_index "user_activity_outcomes", ["activity_outcome_id"], name: "index_user_activity_outcomes_on_activity_outcome_id", using: :btree
+  add_index "user_activity_outcomes", ["user_id"], name: "index_user_activity_outcomes_on_user_id", using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "first_name"
@@ -368,8 +367,8 @@ ActiveRecord::Schema.define(version: 20160413010642) do
     t.string   "company_name"
     t.string   "company_url"
     t.text     "bio"
-    t.string   "quirky_fact",            limit: 255
-    t.string   "specialties",            limit: 255
+    t.string   "quirky_fact"
+    t.string   "specialties"
     t.integer  "location_id"
     t.boolean  "on_duty",                default: false
     t.integer  "mentor_id"
@@ -382,8 +381,9 @@ ActiveRecord::Schema.define(version: 20160413010642) do
   add_foreign_key "answers", "options"
   add_foreign_key "answers", "quiz_submissions"
   add_foreign_key "options", "questions"
-  add_foreign_key "quiz_submissions", "quizzes"
   add_foreign_key "outcome_results", "outcomes"
   add_foreign_key "outcome_results", "users"
-
+  add_foreign_key "quiz_submissions", "quizzes"
+  add_foreign_key "user_activity_outcomes", "item_outcomes", column: "activity_outcome_id"
+  add_foreign_key "user_activity_outcomes", "users"
 end
