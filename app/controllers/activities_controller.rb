@@ -104,7 +104,7 @@ class ActivitiesController < ApplicationController
 
   def require_activity
     @activity = Activity.find(params[:id])
-    @activity = @activity.becomes(Activity)
+    # @activity = @activity.becomes(Activity)
   end
 
   def check_if_day_unlocked
