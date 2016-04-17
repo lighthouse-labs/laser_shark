@@ -1,37 +1,32 @@
 class AssistancesController < ApplicationController
 
   before_filter :teacher_required
+  before_filter :load_student, except: [:view_code_review_modal]
+
+  def index
+    @assistance_requests = @student.completed_assistance_requests.reverse
+    @assistance_requests_count = @assistance_requests.count
+    @assistance_requests_average_rating = ((@assistance_requests.inject(0){ |total, ar| total+ar.assistance.rating })/@assistance_requests_count.to_f).round(1)
+    @assistance = Assistance.new(assistor: current_user, assistee: @student)
+  end
 
   def create
-    @student = Student.find params[:student_id]
-    assistance = Assistance.new(:assistor => current_user, :assistee => @student)
-    status = assistance.save ? 200 : 400
-    respond_to do |format|
-      format.json { render(:nothing => true, :status => status) }
-      format.all { redirect_to(assistance_requests_path) }
-    end
-  end
-
-  def end
-    assistance = Assistance.find(params[:id].to_i)
-    status = assistance.end(params[:assistance][:notes], params[:assistance][:rating].to_i) ? 200 : 400
-
-    respond_to do |format|
-      format.json { render(:nothing => true, :status => status) }
-      format.all { redirect_to(assistance_requests_path) }
-    end
-  end
-
-  def destroy
-    assistance = Assistance.find(params[:id].to_i)
-    assistance.destroy
-    redirect_to assistance_requests_path
+    @assistance_request = AssistanceRequest.new(requestor: @student, reason: "Offline assistance requested")
+    @assistance_request.save!
+    @assistance_request.start_assistance(current_user)
+    @assistance = @assistance_request.reload.assistance
+    @assistance.end(params[:assistance][:notes], params[:assistance][:rating].to_i)
+    redirect_to :back
   end
 
   private
 
   def teacher_required
     redirect_to(:root, alert: 'Not allowed') unless teacher?
+  end
+
+  def load_student
+    @student = Student.find(params[:student_id])
   end
 
 end

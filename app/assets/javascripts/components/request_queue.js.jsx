@@ -18,7 +18,6 @@ var RequestQueue = React.createClass({
 
   componentDidMount: function() {
     this.loadQueue();
-    this.subscribeToSocket();
     this.requestNotificationPermission();
   },
 
@@ -53,9 +52,10 @@ var RequestQueue = React.createClass({
 
     }
   },
-  
+
   loadQueue: function() {
-    $.getJSON("/assistance_requests/queue?location=" + this.state.location.name, this.requestSuccess)  
+    $.getJSON("/assistance_requests/queue?location=" + this.state.location.name, this.requestSuccess);
+    this.subscribeToSocket();
   },
 
   requestSuccess: function(response) {
@@ -69,7 +69,10 @@ var RequestQueue = React.createClass({
 
   subscribeToSocket: function() {
     var that = this;
-    App.assistance = App.cable.subscriptions.create("AssistanceChannel", {
+    if(App.assistance)
+      App.assistance.unsubscribe();
+
+    App.assistance = App.cable.subscriptions.create({ channel: "AssistanceChannel", location: this.state.location.name }, {
       rejected: function() {
         window.location.reload()
       },
@@ -103,7 +106,10 @@ var RequestQueue = React.createClass({
             that.handleAssistanceStarted(data.object);
             break;
           case "AssistanceEnded":
-            that.removeFromQueue(data.object.assistance_request)
+            that.handleAssistanceEnd(data.object.assistance_request)
+            break;
+          case "OffineAssistanceCreated":
+            that.updateLastAssisted(data.object);
             break;
           case "StoppedAssisting":
             that.removeFromQueue(data.object.assistance_request);
@@ -151,7 +157,7 @@ var RequestQueue = React.createClass({
         }
       );
     }
-  }, 
+  },
 
   handleCodeReviewRequest: function(codeReviewRequest) {
     var codeReviews = this.state.codeReviews;
@@ -177,6 +183,20 @@ var RequestQueue = React.createClass({
       var activeAssistances = this.state.activeAssistances;
       activeAssistances.push(assistance);
       this.setState({activeAssistances: activeAssistances});
+    }
+  },
+
+  handleAssistanceEnd: function(assistance) {
+    this.removeFromQueue(assistance)
+    this.updateLastAssisted(assistance.requestor)
+  },
+
+  updateLastAssisted: function(student) {
+    var students = this.state.students
+    var ind = this.getStudentIndex(student);
+    if (ind > -1) {
+      students[ind].last_assisted_at = new Date;
+      this.setState({students: students})
     }
   },
 
@@ -221,11 +241,20 @@ var RequestQueue = React.createClass({
 
   getRequestIndex: function(assistanceRequest) {
     var requests = this.state.requests;
-    var ids = requests.map(function(r){ 
+    var ids = requests.map(function(r){
       return r.id;
     });
 
     return ids.indexOf(assistanceRequest.id);
+  },
+
+  getStudentIndex: function(student) {
+    var students = this.state.students;
+    var ids = students.map(function(s){
+      return s.id;
+    });
+
+    return ids.indexOf(student.id);
   },
 
   locationChanged: function(event) {
@@ -241,13 +270,13 @@ var RequestQueue = React.createClass({
       return (
         <div id="cohort-locations">
           Cohort locations:
-          { 
+          {
             this.props.locations.map(function(location) {
               return (
                 <label key={location.id}>
-                  <input 
-                    type="radio" 
-                    value={location.name} 
+                  <input
+                    type="radio"
+                    value={location.name}
                     checked={that.state.location.id == location.id}
                     onChange={that.locationChanged} />
                     { location.name }

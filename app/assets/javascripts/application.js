@@ -18,6 +18,12 @@
 //= require ace-rails-ap
 //= require ace/theme-monokai
 //= require ace/mode-markdown
+//= require default
+//= require ace-rails-ap
+//= require ace/theme-monokai
+//= require ace/mode-markdown
+
+//= require default
 
 //= require jquery.raty
 //= require readmore
@@ -45,3 +51,5 @@
 //= require incomplete_activities
 //= require activities
 //= require reconnect_holder
+//= require profile
+//= require code_reviews

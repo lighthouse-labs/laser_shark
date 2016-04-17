@@ -21,7 +21,7 @@ window.connectToTeachersSocket = ->
   )
 
 $ ->
-  App.userChannel = App.cable.subscriptions.create("UserChannel", 
+  App.userChannel = App.cable.subscriptions.create("UserChannel",
 
     connected: ->
       if $('.reconnect-holder').is(':visible')
@@ -32,7 +32,7 @@ $ ->
 
     cancelAssistanceRequest: ->
       @perform 'cancel_assistance'
-    
+
     received: (data) ->
       handler = new UserChannelHandler data
       handler.processResponse()
