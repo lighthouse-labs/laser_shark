@@ -29,6 +29,11 @@ html
           == yield :side_nav
         .content.col-md-9
           == yield
+      - elsif content_for? :prep_nav
+        aside.side-nav.col-md-4
+          == yield :prep_nav
+        .content.col-md-8.prep-content
+          == yield
       - else
         .content.col-md-12
           == yield

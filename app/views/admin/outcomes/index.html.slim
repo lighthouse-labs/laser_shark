@@ -1,0 +1,24 @@
+= form_tag admin_outcomes_path, class: 'form-inline', method: 'get' do 
+
+  .form-group
+    label for="outcome_text"
+      |Search:
+    input type='text' class='form-control' name='outcome_text' id='outcome_text' value=params[:outcome_text] placeholder='Enter search term'
+  
+  = submit_tag 'Filter', class: 'btn btn-primary'
+
+h1 All Outcomes
+hr
+
+table.table
+  thead
+    tr
+      th Outcome
+      th Skills
+      th Total Activities
+
+  tbody
+    = render @outcomes
+
+- @outcomes.each do |outcome|
+  = render 'admin/categories/edit_outcome_modal', outcome: outcome

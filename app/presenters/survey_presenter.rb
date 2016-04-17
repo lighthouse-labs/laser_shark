@@ -1,0 +1,2 @@
+class SurveyPresenter < ActivityPresenter
+end

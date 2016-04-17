@@ -1,0 +1,28 @@
+= form_for(skill, url: [:admin, skill.category, skill], html: {class: 'outcome-skills-form'}) do |f|
+  .modal-header
+    button.close type='button' data-dismiss='modal'
+      span aria-hidden='true'
+        | &times;
+    h4.modal-title
+      | New Skill
+
+  .modal-body
+    .form-group
+      = f.label :name, "Skill:"
+      = f.text_field :name, class: 'form-control'
+      
+    = f.fields_for :outcomes do |builder|
+      .row.outcome-row
+        .col-md-2
+          = builder.label :text, "Outcome:"
+        .col-md-8
+          = builder.text_field :text, class: 'form-control outcomes-autocomplete-field'
+          = builder.hidden_field :_destroy
+        .col-md-2
+          = link_to "remove", "#", class: "remove_fields btn btn-danger btn-sm"
+        
+    = link_to_add_fields "Add Outcome", f, :outcomes, "add-outcome-field-button btn-block"
+
+  .modal-footer
+    button.btn.btn-default type='button' data-dismiss='modal' Cancel
+    = f.submit 'Update', class: 'btn btn-primary create-skill-activity-button'

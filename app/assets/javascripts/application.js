@@ -12,16 +12,16 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require jquery-ui/autocomplete
 //= require bootstrap-sprockets
 //= require flat-ui-pro
 //= require default
 //= require ace-rails-ap
 //= require ace/theme-monokai
 //= require ace/mode-markdown
-//= require default
-//= require ace-rails-ap
-//= require ace/theme-monokai
-//= require ace/mode-markdown
+//= require ace/mode-javascript
+//= require jslint
+//= require eslint
 
 //= require default
 
@@ -51,5 +51,7 @@
 //= require incomplete_activities
 //= require activities
 //= require reconnect_holder
+
+//= require prep
 //= require profile
 //= require code_reviews

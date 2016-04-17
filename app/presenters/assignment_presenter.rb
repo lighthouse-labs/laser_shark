@@ -1,0 +1,2 @@
+class AssignmentPresenter < ActivityPresenter
+end

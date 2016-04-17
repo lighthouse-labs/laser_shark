@@ -1,26 +1,35 @@
 class Activity < ActiveRecord::Base
 
-  validates :name, presence: true, length: { maximum: 56 }
-  validates :duration, numericality: { only_integer: true }
-  validates :start_time, numericality: { only_integer: true }
-  validates :day, presence: true, format: { with: DAY_REGEX, allow_blank: true }
+  belongs_to :section
 
-  scope :chronological, -> { order(:start_time) }
-  scope :for_day, -> (day) { where(day: day.to_s) }
-  scope :search, -> (query) { where("lower(name) LIKE ?", "%"+query.downcase+"%") }
-
-  # Below hook should really be after_save (create and update)
-  # However, when seeding/mass-creating activties, github API will return error
-  after_update :add_revision_to_gist
-  after_create :load_instructions_from_repo, if: :remote_content?
+  # optional. Means content stored on server
+  belongs_to :content_repository
 
   has_many :activity_submissions, -> { order(:user_id) }
   has_many :messages, -> { order(created_at: :desc) }, class_name: 'ActivityMessage'
   has_many :recordings, -> { order(created_at: :desc) }
   has_many :feedbacks, as: :feedbackable
 
-   # optional. Means content stored on server
-  belongs_to :content_repository
+  has_many :item_outcomes, as: :item, dependent: :destroy
+  has_many :outcomes, through: :item_outcomes
+
+  has_one :activity_test
+  accepts_nested_attributes_for :activity_test
+
+  validates :name, presence: true, length: { maximum: 56 }
+  validates :duration, numericality: { only_integer: true }
+  validates :start_time, numericality: { only_integer: true }, if: Proc.new{|activity| activity.section.blank?}
+  validates :day, presence: true, format: { with: DAY_REGEX, allow_blank: true }, if: Proc.new{|activity| activity.section.blank?}
+
+  scope :chronological, -> { order("start_time, id") }
+  scope :for_day, -> (day) { where(day: day.to_s) }
+  scope :search, -> (query) { where("lower(name) LIKE :query or lower(day) LIKE :query", query: "%#{query.downcase}%") }
+
+  # Below hook should really be after_save (create and update)
+  # However, when seeding/mass-creating activties, github API will return error
+  after_update :add_revision_to_gist
+  after_create :load_instructions_from_repo, if: :remote_content?
+
 
   # Given the start_time and duration, return the end_time
   def end_time
@@ -39,11 +48,19 @@ class Activity < ActiveRecord::Base
   end
 
   def next
-    Activity.where('start_time > ? AND day = ?', self.start_time, self.day).order(start_time: :asc).first
+    if prep?
+      self.section.activities.where('activities.id > ?', self.id).first
+    else
+      Activity.where('start_time > ? AND day = ?', self.start_time, self.day).order(start_time: :asc).first
+    end
   end
 
   def previous
-    Activity.where('start_time < ? AND day = ?', self.start_time, self.day).order(start_time: :desc).first
+    if prep?
+      self.section.activities.where('activities.id < ?', self.id).last
+    else
+      Activity.where('start_time < ? AND day = ?', self.start_time, self.day).order(start_time: :desc).first
+    end
   end
 
   def display_duration?
@@ -54,6 +71,9 @@ class Activity < ActiveRecord::Base
     content_repository.try :full_name
   end
 
+  def prep?
+    self.section
+  end
 
   protected
 

@@ -1,41 +1,18 @@
-h1 = "#{day.to_s.upcase}: New Activity"
+h1 = "#{(day || @activity.section.try(:name)).to_s.upcase}: New Activity"
 hr
 
-= simple_form_for @activity, as: :activity, url: day_activities_path(day, @activity),
+= simple_form_for @activity, as: :activity, url: @form_url,
   html: { id: 'activity-form', class: 'form-horizontal' }, wrapper: :horizontal_form do |f|
 
   = render "form", f: f
 
+  - if f.object.section
+    h3 Optional Test
+    pre#test_content style="display:none" = @activity_test.test
+    #test-editor.editor  
+
   .actions.well
     = f.submit 'Create', class: 'btn btn-primary', style: 'margin-right: 10px;'
-    = link_to '&laquo; Cancel'.html_safe, day_path(day)
+    = link_to '&laquo; Cancel'.html_safe, :back
 
-  - content_for :end_of_body do
-    css:
-      .editor {
-        width: 100%;
-        height: 300px;
-        margin-bottom: 10px;
-      }
-    javascript:
-      function initEditors() {
-        var instructionsEditor = ace.edit("instructions-editor");
-        var notesEditor = ace.edit("notes-editor");
-
-        instructionsEditor.setTheme("ace/theme/monokai");
-        notesEditor.setTheme("ace/theme/monokai");
-
-        instructionsEditor.getSession().setMode("ace/mode/markdown");
-        notesEditor.getSession().setMode("ace/mode/markdown");
-
-        instructionsEditor.setValue($('#instructions_content').text())
-        notesEditor.setValue($('#notes_content').text())
-
-        $('#activity-form').submit(function(evt) {
-          evt.preventDefault();
-          $('#activity-instructions').val(instructionsEditor.getValue());
-          $('#activity-notes').val(notesEditor.getValue());
-          this.submit();
-        });
-      }
-      $(initEditors); // regular document ready
+  = render 'editor'

@@ -6,7 +6,7 @@
     hr
 
 = f.input :name
-= f.input :day
+= f.input :day if day
 = f.input :start_time, as: :string
 = f.input :duration, as: :string
 = f.input :gist_url, as: :string
@@ -44,3 +44,9 @@ h3 Teacher Notes
 
 pre#notes_content style="display:none" = @activity.teacher_notes
 #notes-editor.editor
+
+- if f.object.section
+  = f.hidden_field :section_id
+  = f.simple_fields_for :activity_test, @activity_test do |test|
+    = test.hidden_field :test
+

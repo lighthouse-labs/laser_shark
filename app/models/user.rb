@@ -12,6 +12,7 @@ class User < ActiveRecord::Base
 
   has_many :activity_submissions
   has_many :submitted_activities, through: :activity_submissions, source: :activity
+  has_many :outcome_results
 
   scope :order_by_last_assisted_at, -> {
     order("last_assisted_at ASC NULLS FIRST")
@@ -93,7 +94,11 @@ class User < ActiveRecord::Base
   end
 
   def completed_activity?(activity)
-    submitted_activities.include?(activity)
+    if activity.section 
+      !activity_submissions.where(finalized: true, activity: activity).empty?
+    else
+      submitted_activities.include?(activity)
+    end
   end
 
   def github_url(activity)

@@ -1,0 +1,15 @@
+tr
+  td 
+    = link_to skill.name, [:admin, skill.category, skill]
+  td 
+    = skill.outcomes.pluck(:text).join(', ')
+
+  td
+  td
+    .btn.btn-primary.btn-sm data-toggle="modal" data-target="#category-skill-modal-#{skill.id}"
+      | Edit
+  td
+    = link_to 'Delete', [:admin, skill.category, skill], 
+      data: { confirm: "This delete will cascade all the way through it's children. \nAre you sure you want to delete?" },
+      method: 'delete',
+      class: 'btn btn-sm btn-danger'

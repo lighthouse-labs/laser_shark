@@ -37,6 +37,7 @@ ActiveRecord::Schema.define(version: 20160413010642) do
     t.integer  "content_repository_id"
     t.string   "content_file_path"
     t.boolean  "remote_content"
+    t.integer  "section_id"
   end
 
   add_index "activities", ["content_repository_id"], name: "index_activities_on_content_repository_id", using: :btree
@@ -69,6 +70,8 @@ ActiveRecord::Schema.define(version: 20160413010642) do
     t.string   "github_url"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "finalized",                default: false
+    t.text     "data"
   end
 
   add_index "activity_submissions", ["activity_id"], name: "index_activity_submissions_on_activity_id", using: :btree
@@ -83,6 +86,11 @@ ActiveRecord::Schema.define(version: 20160413010642) do
 
   add_index "answers", ["option_id"], name: "index_answers_on_option_id", using: :btree
   add_index "answers", ["quiz_submission_id"], name: "index_answers_on_quiz_submission_id", using: :btree
+
+  create_table "activity_tests", force: :cascade do |t|
+    t.text    "test"
+    t.integer "activity_id"
+  end
 
   create_table "assistance_requests", force: :cascade do |t|
     t.integer  "requestor_id"
@@ -114,6 +122,12 @@ ActiveRecord::Schema.define(version: 20160413010642) do
     t.boolean  "imported",      default: false
   end
 
+  create_table "categories", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "code_reviews", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -139,6 +153,18 @@ ActiveRecord::Schema.define(version: 20160413010642) do
     t.datetime "updated_at",      null: false
   end
 
+  create_table "comments", force: :cascade do |t|
+    t.text     "content"
+    t.integer  "commentable_id"
+    t.string   "commentable_type", limit: 255
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "comments", ["commentable_id", "commentable_type"], name: "index_comments_on_commentable_id_and_commentable_type", using: :btree
+  add_index "comments", ["user_id"], name: "index_comments_on_user_id", using: :btree
+
   create_table "day_feedbacks", force: :cascade do |t|
     t.string   "mood"
     t.string   "title"
@@ -153,7 +179,7 @@ ActiveRecord::Schema.define(version: 20160413010642) do
   end
 
   create_table "day_infos", force: :cascade do |t|
-    t.string   "day"
+    t.string   "day",         limit: 255
     t.text     "description"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -166,19 +192,30 @@ ActiveRecord::Schema.define(version: 20160413010642) do
     t.integer  "style_rating"
     t.text     "notes"
     t.integer  "feedbackable_id"
-    t.string   "feedbackable_type"
+    t.string   "feedbackable_type", limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
     t.float    "rating"
   end
 
+  create_table "item_outcomes", force: :cascade do |t|
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.integer  "outcome_id"
+    t.integer  "activity_id"
+    t.string   "item_type"
+    t.integer  "item_id"
+  end
+
+  add_index "item_outcomes", ["item_id"], name: "index_item_outcomes_on_item_id", using: :btree
+
   create_table "locations", force: :cascade do |t|
-    t.string   "name"
+    t.string   "name",             limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "calendar"
-    t.string   "timezone"
-    t.boolean  "has_code_reviews", default: true
+    t.string   "calendar",         limit: 255
+    t.string   "timezone",         limit: 255
+    t.boolean  "has_code_reviews",             default: true
   end
 
   create_table "options", force: :cascade do |t|
@@ -192,14 +229,43 @@ ActiveRecord::Schema.define(version: 20160413010642) do
 
   add_index "options", ["question_id"], name: "index_options_on_question_id", using: :btree
 
+  create_table "outcome_results", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "outcome_id"
+    t.string   "source_name"
+    t.integer  "source_id"
+    t.string   "source_type"
+    t.float    "rating"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  add_index "outcome_results", ["outcome_id"], name: "index_outcome_results_on_outcome_id", using: :btree
+  add_index "outcome_results", ["source_type", "source_id"], name: "index_outcome_results_on_source_type_and_source_id", using: :btree
+  add_index "outcome_results", ["user_id"], name: "index_outcome_results_on_user_id", using: :btree
+
+  create_table "outcome_skills", force: :cascade do |t|
+    t.integer "outcome_id"
+    t.integer "skill_id"
+  end
+
+  create_table "outcomes", force: :cascade do |t|
+    t.string   "text"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer  "skill_id"
+  end
+
+  add_index "outcomes", ["skill_id"], name: "index_outcomes_on_skill_id", using: :btree
+
   create_table "programs", force: :cascade do |t|
     t.string   "name"
     t.text     "lecture_tips"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "recordings_folder"
-    t.string   "recordings_bucket"
-    t.string   "tag"
+    t.string   "recordings_folder", limit: 255
+    t.string   "recordings_bucket", limit: 255
+    t.string   "tag",               limit: 255
   end
 
   create_table "questions", force: :cascade do |t|
@@ -250,6 +316,23 @@ ActiveRecord::Schema.define(version: 20160413010642) do
     t.string   "presenter_name"
   end
 
+  create_table "sections", force: :cascade do |t|
+    t.string   "name"
+    t.string   "slug"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer  "order"
+  end
+
+  create_table "skills", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.integer  "category_id"
+  end
+
+  add_index "skills", ["category_id"], name: "index_skills_on_category_id", using: :btree
+
   create_table "streams", force: :cascade do |t|
     t.string   "title"
     t.string   "description"
@@ -285,8 +368,8 @@ ActiveRecord::Schema.define(version: 20160413010642) do
     t.string   "company_name"
     t.string   "company_url"
     t.text     "bio"
-    t.string   "quirky_fact"
-    t.string   "specialties"
+    t.string   "quirky_fact",            limit: 255
+    t.string   "specialties",            limit: 255
     t.integer  "location_id"
     t.boolean  "on_duty",                default: false
     t.integer  "mentor_id"
@@ -300,4 +383,7 @@ ActiveRecord::Schema.define(version: 20160413010642) do
   add_foreign_key "answers", "quiz_submissions"
   add_foreign_key "options", "questions"
   add_foreign_key "quiz_submissions", "quizzes"
+  add_foreign_key "outcome_results", "outcomes"
+  add_foreign_key "outcome_results", "users"
+
 end
