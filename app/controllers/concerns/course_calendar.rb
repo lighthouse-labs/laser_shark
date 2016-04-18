@@ -33,7 +33,7 @@ module CourseCalendar
     else
       d
     end
-    @day = CurriculumDay.new(@day, cohort) if @day.is_a?(String)
+    @day = CurriculumDay.new(@day, cohort) if (@day.is_a?(String) && !@day.include?('prep'))
     @day
   end
 
@@ -54,6 +54,7 @@ module CourseCalendar
   end
 
   def allowed_day?
+    return true if params[:prep_id]
     # return true if day == 'setup' # setup always allowed, for now - KV
     unless current_user.can_access_day?(day)
       if today?

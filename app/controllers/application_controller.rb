@@ -86,7 +86,7 @@ class ApplicationController < ActionController::Base
     @cohorts ||= Cohort.most_recent
   end
   helper_method :cohorts
-
+  
   def dropdown_cohorts
     @dropdown_cohorts = cohorts.starts_between(3.months.ago.to_date, 2.weeks.from_now.to_date).group_by(&:location)
   end
@@ -96,6 +96,11 @@ class ApplicationController < ActionController::Base
     @streams ||= Stream.order(:title)
   end
   helper_method :streams
+
+  def preps
+    @preps ||= Prep.all
+  end
+  helper_method :preps
 
   def pending_feedbacks
     current_user.feedbacks.pending.reverse_chronological_order.where.not(feedbackable: nil).not_expired

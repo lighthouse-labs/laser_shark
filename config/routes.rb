@@ -3,7 +3,11 @@ LaserShark::Application.routes.draw do
   match "/websocket", :to => ActionCable.server, via: [:get, :post]
 
   get '/i/:code', to: 'invitations#show' # student/teacher invitation handler
-  get 'prep'  => 'setup#show' # temporary
+  # get 'prep'  => 'setup#show' # temporary
+  resources :prep, controller: 'preps', :only => [:index, :new, :create, :show, :edit, :update] do 
+    resources :activities
+  end
+
   get 'setup' => 'setup#show' # temporary
 
   root to: 'home#show'
@@ -14,9 +18,10 @@ LaserShark::Application.routes.draw do
   get '/auth/github', as: 'github_session'
   resource :session, :only => [:new, :destroy]
   # resource :registration, only: [:new, :create]
+
   resource :profile, only: [:edit, :update]
-  resources :feedbacks, only: [:index, :update] do 
-    member do 
+  resources :feedbacks, only: [:index, :update] do
+    member do
       get :modal_content
     end
   end
@@ -33,17 +38,21 @@ LaserShark::Application.routes.draw do
   end
 
   resources :students, only: [:index, :show] do
-    resources :assistances, only: [:create]
+    resources :code_reviews, only: [:create]
+    member do
+      get :new_code_review_modal
+    end
   end
 
   resources :incomplete_activities, only: [:index]
   resources :search_activities, only: [:index]
 
-  resources :assistances, only: [:destroy] do
-    member do
-      post :end
-    end
-  end
+  # resources :code_reviews, only: [:destroy] do
+  #   member do
+  #     post :end
+  #     get :view_code_review_modal
+  #   end
+  # end
 
   # CONTENT BROWSING
   resources :days, param: :number, only: [:show] do
@@ -53,7 +62,7 @@ LaserShark::Application.routes.draw do
     resource :info, only: [:edit, :update], controller: 'day_infos'
   end
 
-  resources :activities, only: [] do
+  resources :activities, only: [:index] do
     resource :activity_submission, only: [:create, :destroy]
     resources :messages, controller: 'activity_messages'
     resources :recordings, only: [:new, :create]
@@ -61,6 +70,8 @@ LaserShark::Application.routes.draw do
 
   resources :cohorts, only: [] do
     resources :students, only: [:index]    # cohort_students_path(@cohort)
+    resources :code_reviews
+
     put :switch_to, on: :member
   end
 
@@ -69,7 +80,7 @@ LaserShark::Application.routes.draw do
   resources :streams, only: [:index, :show]
 
   resources :teachers, only: [:index, :show] do
-    member do 
+    member do
       get :feedback
       post :remove_mentorship
       post :add_mentorship
@@ -86,22 +97,36 @@ LaserShark::Application.routes.draw do
         get :modal_content
       end
     end
-    resources :teacher_stats, only: [:index, :show] do 
+    resources :teacher_stats, only: [:index, :show] do
       member do
         get :assistance
         get :feedback
       end
     end
+
     resources :cohorts, except: [:destroy]
     resources :feedbacks, except: [:edit, :update, :destroy]
     resources :teacher_feedbacks, only: [:index]
     resources :curriculum_feedbacks, only: [:index]
-    resources :day_feedbacks, except: [:destroy] do 
-      member do 
+    resources :day_feedbacks, except: [:destroy] do
+      member do
         post :archive
         delete :archive, action: :unarchive
       end
     end
+
+    #Outcomes CRUD
+    resources :outcomes
+    resources :item_outcomes, only: [:create, :destroy]
+    resources :categories do 
+      resources :skills do 
+        member do 
+          get :autocomplete
+        end
+      end
+    end
+
+    
   end
 
   # To test 500 error notifications on production

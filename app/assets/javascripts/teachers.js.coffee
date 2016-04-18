@@ -63,5 +63,4 @@ $ ->
     addMentorship(id, -> 
       $(that).css('display', 'none')
       $(that).attr('disabled', false)
-      $(that).siblings('.remove-mentor-button').css('display', 'inline-block')
-      )
+      $(that).siblings('.remove-mentor-button').css('display', 'inline-block'))

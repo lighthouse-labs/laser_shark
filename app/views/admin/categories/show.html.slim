@@ -1,0 +1,25 @@
+ul.breadcrumb
+  li = link_to 'Categories', [:admin, :categories]
+  li = @category.name
+
+h1 = @category.name
+hr
+
+.actions.well
+  .btn.btn-primary.btn-sm data-toggle="modal" data-target="#new-category-outcome-modal"
+    | New Skill
+
+table.table
+  thead
+    tr
+      th Skill
+      th Outcomes
+      th Total Activities
+
+  tbody
+    = render @category.skills
+
+= render 'new_skill_modal', skill: @category.skills.new
+
+- @category.skills.each do |skill|
+  = render 'edit_skill_modal', skill: skill

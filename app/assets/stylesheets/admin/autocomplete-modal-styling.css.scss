@@ -1,0 +1,53 @@
+.ui-widget-content {
+  background: #fff;
+  font-size: .9em;
+  padding: .5em 0;
+  border-color: #ddd;
+  box-shadow: 0 .1em .2em rgba(187, 187, 187, 0.64);
+  line-height: 1.2;
+  max-height: 20em;
+  overflow: hidden;
+  overflow-y: auto;
+}
+
+.ui-menu-item {
+  font-family: 'Helvetica Neue', Helvetica, sans-serif;
+  border: 0;
+  padding-bottom: 1em;
+  border-left: 5px solid transparent;
+}
+
+.ui-state-focus {
+  background: #fff;
+  border-left-color: #08c;
+  font-weight: 300;
+}
+
+.ui-menu-item .activity-display {
+  display: block;
+  font-size: .8em;
+  color: #aaa;
+  margin-top: .6em;
+  letter-spacing: 1px;
+}
+
+.ui-state-focus .activity-display {
+  color: #08c;
+}
+
+.ui-front {
+  position: relative;
+
+  .ui-autocomplete { 
+    z-index: 3; 
+    position: absolute;
+    list-style-type: none;
+    padding-left: 5px;
+    
+    .ui-menu-item {
+      font-size: 14px;
+    }
+
+  }
+}
+

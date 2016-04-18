@@ -1,0 +1,2 @@
+class LecturePresenter < ActivityPresenter
+end

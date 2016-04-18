@@ -1,0 +1,8 @@
+ ul.list-group
+  - prep.activities.chronological.each do |activity|
+    li class="list-group-item #{@activity && @activity.eql?(activity) ? 'active' : ''}"
+      = link_to activity.name, [prep, activity]
+      = content_tag(:i, nil, class: 'fa fa-check') if current_user.completed_activity?(activity)
+
+  - if teacher?
+    li.list-group-item = link_to "Create Activity", [:new, prep, :activity]
