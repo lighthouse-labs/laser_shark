@@ -1,10 +1,12 @@
 LaserShark::Application.routes.draw do
 
+  resources :projects, only: [:index, :show]
+
   match "/websocket", :to => ActionCable.server, via: [:get, :post]
 
   get '/i/:code', to: 'invitations#show' # student/teacher invitation handler
   # get 'prep'  => 'setup#show' # temporary
-  resources :prep, controller: 'preps', :only => [:index, :new, :create, :show, :edit, :update] do 
+  resources :prep, controller: 'preps', :only => [:index, :new, :create, :show, :edit, :update] do
     resources :activities
   end
 
@@ -90,10 +92,10 @@ LaserShark::Application.routes.draw do
   # ADMIN
   namespace :admin do
     root to: 'dashboard#show'
-    resources :students, only: [:index, :update, :edit] do 
-      member do 
+    resources :students, only: [:index, :update, :edit] do
+      member do
         post :reactivate
-        post :deactivate 
+        post :deactivate
         get :modal_content
       end
     end
@@ -118,15 +120,15 @@ LaserShark::Application.routes.draw do
     #Outcomes CRUD
     resources :outcomes
     resources :item_outcomes, only: [:create, :destroy]
-    resources :categories do 
-      resources :skills do 
-        member do 
+    resources :categories do
+      resources :skills do
+        member do
           get :autocomplete
         end
       end
     end
 
-    
+
   end
 
   # To test 500 error notifications on production
