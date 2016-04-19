@@ -7,7 +7,9 @@
 
     .panel.panel-default
       .panel-heading role="tab" id="#{prep.slug}"
-        = link_to prep.name, "#collapse_#{prep.slug}", data: { toggle: 'collapse', parent: '#accordion'}, aria: { controls: "collapse_#{prep.slug}", expanded: i.zero? }
+        = link_to "#collapse_#{prep.slug}", data: { toggle: 'collapse', parent: '#accordion'}, aria: { controls: "collapse_#{prep.slug}", expanded: i.zero? } do
+            = prep.name
+            = " (#{number_with_precision prep.duration_in_hours, precision: 0}h)"
       div class="panel-collapse collapse #{css_class}" id="collapse_#{prep.slug}" role="tabpanel" aria-labelledby="#{prep.slug}"
         .panel-body
           = render "shared/menus/prep_activities", prep: prep
