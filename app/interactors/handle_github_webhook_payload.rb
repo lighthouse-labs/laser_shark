@@ -20,8 +20,6 @@ class HandleGithubWebhookPayload
 
   def process_commit(commit)
     return unless commit['modified'].present?
-
-    puts "FILES:"
     commit['modified'].each do |file_path|
       process_file(file_path)
     end
