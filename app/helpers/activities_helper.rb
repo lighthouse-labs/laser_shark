@@ -52,12 +52,14 @@ module ActivitiesHelper
       'fa fa-book'
     when "test"
       'fa fa-gavel'
+    when "quizactivity"
+      'fa fa-question'
     end
   end
 
   def activity_type_options
     [
-      'Assignment', 
+      'Assignment',
       'Task',
       'Lecture',
       'Homework',

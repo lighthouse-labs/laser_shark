@@ -1,13 +1,14 @@
-@import 'flat-ui-pro/variables';
-@import 'bootstrap';
+@import "flat-ui-pro/variables";
+@import "bootstrap";
 @import "font-awesome";
-@import 'flat-ui-pro';
-@import 'jquery-ui/datepicker';
+@import "flat-ui-pro";
+@import "jquery-ui/datepicker";
+@import "chosen";
 
 // Fix issue with .select form flat-ui CC
 
 div.form-group.select {
-  display: block; 
+  display: block;
 }
 
 .navbar-nav > li > a {

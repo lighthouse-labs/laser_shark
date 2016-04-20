@@ -262,7 +262,10 @@ ActiveRecord::Schema.define(version: 20160420082108) do
     t.integer  "created_by_user_id"
     t.datetime "created_at",         null: false
     t.datetime "updated_at",         null: false
+    t.integer  "outcome_id"
   end
+
+  add_index "questions", ["outcome_id"], name: "index_questions_on_outcome_id", using: :btree
 
   create_table "questions_quizzes", id: false, force: :cascade do |t|
     t.integer "question_id"
@@ -384,6 +387,7 @@ ActiveRecord::Schema.define(version: 20160420082108) do
   add_foreign_key "options", "questions"
   add_foreign_key "outcome_results", "outcomes"
   add_foreign_key "outcome_results", "users"
+  add_foreign_key "questions", "outcomes"
   add_foreign_key "quiz_submissions", "quizzes"
   add_foreign_key "user_activity_outcomes", "item_outcomes", column: "activity_outcome_id"
   add_foreign_key "user_activity_outcomes", "users"

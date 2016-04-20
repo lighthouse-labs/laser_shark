@@ -1,0 +1,40 @@
+= form_for @question do |f|
+  /= render partial: 'shared/form_errors', locals: {model: @question}
+  .row
+    .col-md-6
+      fieldset
+        legend Question
+      .form-group
+        = f.label :outcome
+        = f.collection_select :outcome_id, @outcomes, :id, :text, {}, {class: "form-control chosen-select"}
+      .form-group
+        = f.label :active do
+          = f.check_box :active
+          = ' Active'
+        p
+          small Uncheck this box to prevent this question from appearing in quizzes.
+      hr
+      .form-group
+        = f.label :question
+        = f.text_area :question, rows: 14, class: 'form-control markdown'
+    .col-md-6
+      fieldset
+        legend Options
+        = f.fields_for :options do |option_f|
+          .question-option
+            .form-group
+              = option_f.label :answer
+              = option_f.text_area :answer, rows: 4, class: 'form-control markdown'
+            .form-group
+              = option_f.label :explanation
+              = option_f.text_area :explanation, rows: 4, class: 'form-control markdown'
+            .form-group
+              = option_f.label :correct do
+                = option_f.check_box :correct
+                | &nbsp;Correct answer
+              = option_f.label :_destroy, class: 'pull-right' do
+                = option_f.check_box :_destroy
+                | &nbsp;Remove option
+      .form-group
+        button.btn.btn-default#add-question-option Add Option
+        = f.submit class: 'btn btn-primary pull-right'
