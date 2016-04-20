@@ -6,7 +6,7 @@ hr
 
   = render "form", f: f
 
-  - if f.object.section
+  - if @activity.evaluates_code?
     h3 Optional Test
     pre#test_content style="display:none" = @activity_test.test
     #test-editor.editor  

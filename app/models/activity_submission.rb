@@ -20,10 +20,11 @@ class ActivitySubmission < ActiveRecord::Base
     Time.now
   end
 
+  # if there is code evaluation, allow multiple submissions
   validates :user_id, uniqueness: { 
     scope: :activity_id,
     message: "only one submission per activity" 
-  }, if: Proc.new {|activity_submission| !activity_submission.activity.section}
+  }, unless: Proc.new {|activity_submission| activity_submission.activity.evaluates_code? }
 
   validates :github_url, 
     presence: :true, 
@@ -67,7 +68,7 @@ class ActivitySubmission < ActiveRecord::Base
   end
 
   def github_url_required?
-    activity && activity.allow_submissions? && !activity.prep?
+    activity && activity.allow_submissions? && !activity.evaluates_code?
   end
 
   def request_code_review

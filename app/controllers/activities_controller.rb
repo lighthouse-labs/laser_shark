@@ -45,8 +45,8 @@ class ActivitiesController < ApplicationController
   end
 
   def show
-    # => For prep always create a new submission
-    if @activity.section
+    # => If it evaluates code, we take multiple submissions (always a new submission)
+    if @activity.evaluates_code?
       @activity_submission = ActivitySubmission.new
       @last_submission = current_user.activity_submissions.where(activity: @activity).last
     else
@@ -144,8 +144,10 @@ class ActivitiesController < ApplicationController
   def load_edit_url
     @form_url = if params[:day_number]
       day_activity_path(params[:day_number], @activity)
-    else
-      [@section, @activity]
+    elsif @section && @section.is_a?(Prep)
+      prep_activity_path(@section, @activity)
+    #elsif @section && @section.is_a?(Project)
+      # project_activity_path <= Not yet supported - KV
     end
   end
 

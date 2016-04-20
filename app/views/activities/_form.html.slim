@@ -15,6 +15,7 @@
 = f.input :allow_submissions
 = f.input :allow_feedback
 = f.input :code_review_percent, as: :string, label: 'Probability (percent) to trigger code review'
+= f.input :evaluates_code
 = f.input :remote_content
 
 .remote-content-settings
@@ -45,7 +46,7 @@ h3 Teacher Notes
 pre#notes_content style="display:none" = @activity.teacher_notes
 #notes-editor.editor
 
-- if f.object.section
+- if @activity.evaluates_code?
   = f.hidden_field :section_id
   = f.simple_fields_for :activity_test, @activity_test do |test|
     = test.hidden_field :test

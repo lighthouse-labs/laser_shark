@@ -25,7 +25,7 @@
 
       code#code_content.hidden = @last_submission.data["code"] if @last_submission
       #prep_test_editor.editor data-finalized="#{@last_submission.try(:finalized)}"
-      = hidden_field_tag :test_content, activity.activity_test.test
+      = hidden_field_tag :test_content, activity.activity_test.try(:test)
       
       - if show_results
         button.run-test.btn.btn-success.btn-block Evaluate 

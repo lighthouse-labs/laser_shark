@@ -94,8 +94,8 @@ class User < ActiveRecord::Base
   end
 
   def completed_activity?(activity)
-    if activity.section 
-      !activity_submissions.where(finalized: true, activity: activity).empty?
+    if activity.evaluates_code?
+      activity_submissions.where(finalized: true, activity: activity).any?
     else
       submitted_activities.include?(activity)
     end

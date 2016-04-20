@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160417194331) do
+ActiveRecord::Schema.define(version: 20160420082108) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -38,6 +38,7 @@ ActiveRecord::Schema.define(version: 20160417194331) do
     t.string   "content_file_path"
     t.boolean  "remote_content"
     t.integer  "section_id"
+    t.boolean  "evaluates_code"
   end
 
   add_index "activities", ["content_repository_id"], name: "index_activities_on_content_repository_id", using: :btree
