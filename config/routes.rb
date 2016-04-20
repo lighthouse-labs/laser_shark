@@ -1,6 +1,8 @@
 LaserShark::Application.routes.draw do
 
-  resources :projects, only: [:index, :show, :new, :create]
+  resources :projects, only: [:index, :show, :new, :create] do
+    resources :activities
+  end
 
   match "/websocket", :to => ActionCable.server, via: [:get, :post]
 
