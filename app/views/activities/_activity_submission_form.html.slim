@@ -1,10 +1,10 @@
 = form_for @activity_submission, url: activity_activity_submission_path(@activity), method: :post, html: { class: 'form-inline activity-submission-form' }  do |f|
   = f.hidden_field :data
   
-  - if @activity.allow_submissions? && !@activity.prep?
+  - if @activity.allow_submissions?
     = f.text_field :github_url, class: 'activity_submission_url form-control', placeholder: "Enter your Github repo or gist url"
-    
     | &nbsp;
-    button.btn.btn-activity-complete-status-no-code-review name="button" type="submit"
-      i.fa.fa-check
-      | &nbsp;Submit
+
+  button.btn.btn-activity-complete-status-no-code-review name="button" type="submit"
+    i.fa.fa-check
+    | &nbsp;Mark Completed

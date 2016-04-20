@@ -102,10 +102,10 @@ class ActivitySubmission < ActiveRecord::Base
   end
 
   def create_user_outcome_results
-    self.activity.activity_outcomes.each do |activity_outcome|
+    self.activity.item_outcomes.each do |item_outcome|
       # TODO: change the way we calculate ratings
       if self.activity.prep?
-        self.user.outcome_results.create(outcome: activity_outcome.outcome, resultable: activity_outcome, rating: Prep.evaluate_rating(get_prep_code_result_data))
+        self.user.outcome_results.create(outcome: item_outcome.outcome, resultable: item_outcome, rating: Prep.evaluate_rating(get_prep_code_result_data))
       end
     end
   end

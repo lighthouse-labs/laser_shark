@@ -1,6 +1,6 @@
 class ActivitySubmissionsController < ApplicationController
 
-  include CourseCalendar # concern
+  # include CourseCalendar # concern
 
   before_filter :retrieve_activity
 

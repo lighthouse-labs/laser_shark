@@ -49,7 +49,7 @@
               i.fa.fa-external-link
 
         - else
-          - if current_user.completed_activity?(@activity) && !@activity.prep?
+          - if current_user.completed_activity?(@activity)
             - if @activity_submission.github_url?
               input.form-control.pull-left#activity_view value="#{@activity_submission.github_url}" 
               | &nbsp;
