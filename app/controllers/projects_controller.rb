@@ -1,5 +1,5 @@
 class ProjectsController < ApplicationController
-  before_action :find_project, only: [:show]
+  before_action :find_project, only: [:show, :edit, :update]
   def index
     @projects = Project.all
   end
@@ -15,6 +15,17 @@ class ProjectsController < ApplicationController
     @project.slug = @project.name.gsub(/\s+/, "").downcase
     if @project.save
       redirect_to action: :index, notice: "#{@project.name} created."
+    else
+      render :new
+    end
+  end
+
+  def edit
+  end
+
+  def update
+    if @project.update(project_params)
+      redirect_to @project
     else
       render :new
     end
