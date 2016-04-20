@@ -1,17 +1,18 @@
-h4 Upon completion of this activity you will be able to:
+- if teacher? || activity.item_outcomes.any? 
+  h4 Upon completion of this activity you will be able to:
 
-ul
-  - activity.item_outcomes.each do |item_outcome|
-    li 
-      = item_outcome.outcome.text
-      - if admin?
-        = link_to [:admin, item_outcome], class: 'text-danger', method: 'delete' do
-          i.fa.fa-times
+  ul
+    - activity.item_outcomes.each do |item_outcome|
+      li 
+        = item_outcome.outcome.try :text
+        - if admin?
+          = link_to [:admin, item_outcome], class: 'text-danger', method: 'delete' do
+            i.fa.fa-times
 
-  - if admin?
-    li 
-      .btn.btn-primary.btn-sm data-toggle="modal" data-target="#add_outcome_modal"
-        | Add Outcome
+    - if admin?
+      li 
+        .btn.btn-primary.btn-sm data-toggle="modal" data-target="#add_outcome_modal"
+          | Add Outcome
 
 - if admin?
   = render 'add_outcome_modal', activity: activity

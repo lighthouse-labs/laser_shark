@@ -1,7 +1,9 @@
  ul.list-group
   - prep.activities.chronological.each do |activity|
-    li class="list-group-item #{@activity && @activity.eql?(activity) ? 'active' : ''}"
-      = link_to activity.name, prep_activity_path(prep, activity)
+    li class="list-group-item #{@activity && @activity.eql?(activity) ? 'selected' : ''}"
+      = link_to prep_activity_path(prep, activity) do
+        i class=(icon_for(activity))
+        = " #{activity.name}"
       = content_tag(:i, nil, class: 'fa fa-check') if current_user.completed_activity?(activity)
 
   - if teacher?

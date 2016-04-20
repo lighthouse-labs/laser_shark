@@ -1,7 +1,15 @@
 class ActivityPresenter < BasePresenter
   presents :activity
 
-  delegate :name, to: :activity
+  def name
+    result = ""
+    if activity.section
+      result += "<small>#{activity.section.name}</small><br>"
+    end
+    result += content_tag(:i, nil, class: icon_for(activity))
+    result += " #{activity.name}"
+    result.html_safe
+  end
 
   def render_sidenav
     if activity.prep?

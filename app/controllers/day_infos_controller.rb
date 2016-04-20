@@ -6,16 +6,12 @@ class DayInfosController < ApplicationController
   before_action :load_day_info, only: [:edit, :update]
 
   def edit
-    @setup = (@day_info.day == 'setup')
   end
 
   def update
     if @day_info.update day_info_params
-      if @day_info.day == 'setup'
-        redirect_to setup_path
-      else
-        redirect_to day_path(day.raw_date)
-      end
+      redirect_to day_path(day.raw_date)
+    end
     else
       render :edit
     end

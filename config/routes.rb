@@ -8,7 +8,7 @@ LaserShark::Application.routes.draw do
     resources :activities
   end
 
-  get 'setup' => 'setup#show' # temporary
+  # get 'setup' => 'setup#show' # temporary
 
   post 'github-hook' => 'github_webhook_events#create'
 

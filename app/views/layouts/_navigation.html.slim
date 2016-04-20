@@ -15,10 +15,10 @@ nav.navbar.navbar-inverse.navbar-fixed-top role="navigation"
             span.visible-xs-inline
               | Home
         li
-          = link_to setup_path, title: 'Setup'
+          = link_to prep_index_path, title: 'Prep Work'
             i.fa.fa-fw.fa-paper-plane-o
             span.non-tablet-label
-              | Setup
+              | Prep Work
         - if student?
           li
             = link_to '#', title: 'Search Activities', :id => 'search-activities-button'

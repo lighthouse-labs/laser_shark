@@ -17,7 +17,7 @@
                 i.fa.fa-clock-o
                 | &nbsp;Time
               .form-control
-                - if weekend? || setup? || (@activity.display_duration?)
+                - if weekend? || @activity.display_duration?
                   = duration(@activity)
                 - else
                   = integer_time_to_s(@activity.start_time)

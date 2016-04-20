@@ -39,7 +39,7 @@ describe 'Authentication' do
     # Should redirect to prep page when completed registration but prepping (not assigned type to Student/Teacher) 
     it "redirects to prep page (instead of registration page) if prepping" do
       visit github_session_path
-      expect(current_path).to eq(setup_path)
+      expect(current_path).to eq(prep_index_path)
     end
   end
 

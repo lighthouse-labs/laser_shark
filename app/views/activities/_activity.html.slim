@@ -2,7 +2,7 @@
   div class=("#{activity.type.downcase} " + 'activity')
     .icon.icon-type title=activity.type
       i class=(icon_for(activity))
-    - if weekend? || setup? || (activity.display_duration?)
+    - if weekend? || activity.display_duration?
       .time.time-duration
         br
         = duration activity

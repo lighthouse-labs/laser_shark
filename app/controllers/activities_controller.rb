@@ -45,8 +45,6 @@ class ActivitiesController < ApplicationController
   end
 
   def show
-    @setup = day.to_s == 'setup'
-
     # => For prep always create a new submission
     if @activity.section
       @activity_submission = ActivitySubmission.new

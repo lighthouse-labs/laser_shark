@@ -61,11 +61,35 @@ header > nav {
 
 main {
   $side-nav-width: 240px;
+  &.container { 
+    margin-left: 0px;
+    // width: 1400px;
+  }
+
   aside.side-nav {
     // @media (min-width: $screen-sm-min) {
     //   float: left;
     //   width: $side-nav-width;
     // }
+    i.fa {
+      width: 18px;
+      text-align: center;
+    }
+    .panel {
+      &.selected {
+        .panel-heading { 
+          a, i {
+            color: $brand-primary;  
+          }
+        }
+      }
+      .list-group-item.selected {
+        a, i {
+          color: $brand-primary;  
+        }
+      }  
+    }
+    
   }
   .content {
     // @media (min-width: $screen-sm-min) {

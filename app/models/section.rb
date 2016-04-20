@@ -1,5 +1,8 @@
 class Section < ActiveRecord::Base
+  
   has_many :activities
+
+  default_scope { order(order: :asc) }
 
   validates :slug, presence: true, uniqueness: true
 

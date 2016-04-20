@@ -48,6 +48,8 @@ module ActivitiesHelper
       'fa fa-list-alt'
     when "video"
       'fa fa-video-camera'
+    when 'reading'
+      'fa fa-book'
     when "test"
       'fa fa-gavel'
     end

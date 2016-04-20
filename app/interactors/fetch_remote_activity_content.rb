@@ -10,6 +10,7 @@ class FetchRemoteActivityContent
     activity.instructions = content
     activity.save
   rescue Octokit::NotFound => e
+    puts "!! FAILED TO FETCH '#{file_path}' FROM GITHUB !!"
     context.fail! error: e.message
   end
 
