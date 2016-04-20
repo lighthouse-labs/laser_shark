@@ -4,8 +4,12 @@
   p This Rails app was (recently) developed by Lighthouse Labs students (and staff) for Lighthouse Labs students. You will use it on a constant basis to interact with the course curriculum.
 
   - if current_user
-    = link_to day_path('today'), class: 'btn btn-hg btn-success'
-      span Get to Work! &raquo;
+    - if current_user.type.blank?
+      = link_to prep_index_path, class: 'btn btn-hg btn-success'
+        span Get Prepping! &raquo;
+    - else
+      = link_to day_path('today'), class: 'btn btn-hg btn-success'
+        span Get to Work! &raquo;
 
   - else
     p In order to use Laser Sharks, login via Github...

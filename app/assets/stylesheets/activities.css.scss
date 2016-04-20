@@ -1,5 +1,40 @@
 .activity-details {
 
+  aside { 
+    background: #eee; 
+    font-size: .85em; 
+    margin: 2em 0; 
+    padding: .5em 1.5em; 
+  }
+
+  kbd { 
+    border: 1px solid gray; 
+    color: darkgray;
+    border-radius: .25em; 
+    padding: .125em .25em;
+    background-color: rgba(0,0,0,0);
+  }
+  
+  aside {
+    kbd {
+      color: black;
+    }
+  }
+
+  aside > h3:first-child { 
+    margin-top: 1em; 
+    font-size: 1.5em;
+  }
+
+  @media (min-width: 46em) {
+    aside { float: right; margin: 0 0 1em 2em; width: 24em; }
+  }
+
+  @media (min-width: 88em) {
+    aside { margin-right: -14em; }
+  }
+
+
   h1:first-child {
     margin-top: -12px;
   }
