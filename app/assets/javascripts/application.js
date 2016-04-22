@@ -15,6 +15,7 @@
 //= require jquery-ui/autocomplete
 //= require bootstrap-sprockets
 //= require flat-ui-pro
+//= require chosen.jquery.min
 //= require default
 //= require ace-rails-ap
 //= require ace/theme-monokai
@@ -51,7 +52,9 @@
 //= require incomplete_activities
 //= require activities
 //= require reconnect_holder
-
 //= require prep
 //= require profile
 //= require code_reviews
+//= require quiz_submissions
+//= require questions
+//= require quizzes

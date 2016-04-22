@@ -1,0 +1,20 @@
+article.page-content
+  .page-header
+      h1
+        = 'Questions '
+        a.btn.btn-xs.btn-primary href="#{new_question_path}" New Question
+  - if @questions.empty?
+    p There are currently no questions in the system.
+  - else
+    .table-responsive
+      table.table
+        - @questions.each do |question|
+          tr
+            td = link_to truncate(question.question, length: 100), question, class: 'text-inherit'
+            td.text-right = link_to 'view', question
+            td.text-right = link_to 'edit', edit_question_path(question)
+            td.text-right
+              = link_to question, method: :delete, class: 'text-muted pull-right', data: {confirm: "Are you sure you want to delete question #{question.id}?"} do
+                i.fa.fa-trash title="Delete"
+
+

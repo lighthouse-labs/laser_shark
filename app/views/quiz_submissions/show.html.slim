@@ -1,0 +1,12 @@
+.row
+  .col-md-8.col-md-push-2
+    article.page-content
+      .page-header
+        h2.text-center
+          i.fa.fa-compass
+          = ' Compass Quiz'
+      p.text-center Your submission was successfully collected. Below is a summary or your answers along with the correct options.
+      hr
+      = render 'submission_details', submission: @quiz_submission
+      = link_to "Back to Today's Activities", day_path('today'), class: "btn btn-success quiz-submission-link"
+      = link_to "Retake Quiz", new_quiz_quiz_submission_path(@quiz_submission.quiz), class: "btn btn-success quiz-submission-link pull-right"

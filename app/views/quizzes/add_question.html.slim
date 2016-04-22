@@ -1,0 +1,6 @@
+= form_tag("/quizzes/#{@quiz.id}/link_question", method: "post", id: "link_question")
+  .form-group
+    = label_tag('question[id]', "Question: ",  class: "label")
+    = collection_select(:question, :id, @questions, :id, :question, {}, {class: "form-control chosen-select"})
+  = submit_tag("Add More", { class: "btn btn-primary", name: "add", value: "add" })
+  = submit_tag("Done", { class: "btn btn-primary", name: "add", value: "save" })

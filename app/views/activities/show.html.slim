@@ -1,6 +1,6 @@
 - present(@activity, ActivityPresenter) do |activity_presenter|
   = activity_presenter.render_sidenav
-  
+
   section.activity-details
     h1 = activity_presenter.name
 
@@ -51,7 +51,7 @@
         - else
           - if current_user.completed_activity?(@activity)
             - if @activity_submission.github_url?
-              input.form-control.pull-left#activity_view value="#{@activity_submission.github_url}" 
+              input.form-control.pull-left#activity_view value="#{@activity_submission.github_url}"
               | &nbsp;
             = link_to activity_activity_submission_path(@activity), method: :delete, class:'btn btn-activity-incomplete-status'
               i.fa.fa-times
@@ -59,7 +59,7 @@
             - if @feedback
                 | &nbsp;
                 button.btn.btn-activity-complete-status data-toggle="modal" data-target="#feedback_modal" data-feedback-id="#{@feedback.id}"
-                  | Feedback 
+                  | Feedback
           - else
             = activity_presenter.submission_form
 
@@ -89,6 +89,16 @@
     - if @activity.instructions?
       .instructions
         == markdown @activity.instructions
+
+    - if @activity.is_a?(QuizActivity)
+      - if submission = @activity.quiz.latest_submission_by(current_user)
+        = render 'quiz_submissions/submission_details', submission: submission
+
+      = link_to 'Take Quiz', new_quiz_quiz_submission_path(@activity.quiz, activity_id: @activity.id), class: 'btn btn-primary'
+
+      - if teacher?
+        | &nbsp;
+        = link_to 'Quiz Details', @activity.quiz, class: 'btn btn-primary'
 
     - if @activity.recordings.length > 0
       .recordings
@@ -124,9 +134,9 @@
                 = link_to 'Watch now &raquo;'.html_safe, recording
 
     - if teacher? && @program.lecture_tips? && @activity.is_a?(Lecture)
-      .lecture-tips 
+      .lecture-tips
         h3 = "Lecture Tips / Reminders"
-        == markdown @program.lecture_tips 
+        == markdown @program.lecture_tips
 
     - if teacher? && @activity.teacher_notes?
 
@@ -144,7 +154,7 @@
             .heading
               = image_tag(avatar_for(msg.user), size: '50x50')
               h4 = msg.subject
-              .when 
+              .when
                 = msg.created_at.to_formatted_s(:friendly)
                 - if teacher?
                   br
@@ -153,7 +163,7 @@
             .contents
               == markdown msg.body
               - if teacher? && msg.teacher_notes?
-                .teacher-notes 
+                .teacher-notes
                   h5 Teacher (Internal) Notes
                   == markdown msg.teacher_notes
 

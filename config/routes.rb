@@ -1,10 +1,21 @@
 LaserShark::Application.routes.draw do
 
+  resources :questions
+
+  resources :quiz_submissions, only: [:show]
+
+  resources :quizzes, only: [:index, :show, :new, :create, :destroy] do
+    resources :quiz_submissions, only: [:new, :create]
+    get 'add_question', to: 'quizzes#add_question', as: 'add_question'
+    post 'link_question', to: 'quizzes#link_question', as: 'link_question'
+    delete 'remove_question/:question_id', to: 'quizzes#remove_question', as: 'remove_question'
+  end
+
   match "/websocket", :to => ActionCable.server, via: [:get, :post]
 
   get '/i/:code', to: 'invitations#show' # student/teacher invitation handler
   # get 'prep'  => 'setup#show' # temporary
-  resources :prep, controller: 'preps', :only => [:index, :new, :create, :show, :edit, :update] do 
+  resources :prep, controller: 'preps', :only => [:index, :new, :create, :show, :edit, :update] do
     resources :activities
   end
 
@@ -92,10 +103,10 @@ LaserShark::Application.routes.draw do
   # ADMIN
   namespace :admin do
     root to: 'dashboard#show'
-    resources :students, only: [:index, :update, :edit] do 
-      member do 
+    resources :students, only: [:index, :update, :edit] do
+      member do
         post :reactivate
-        post :deactivate 
+        post :deactivate
         get :modal_content
       end
     end
@@ -120,15 +131,15 @@ LaserShark::Application.routes.draw do
     #Outcomes CRUD
     resources :outcomes
     resources :item_outcomes, only: [:create, :destroy]
-    resources :categories do 
-      resources :skills do 
-        member do 
+    resources :categories do
+      resources :skills do
+        member do
           get :autocomplete
         end
       end
     end
 
-    
+
   end
 
   # To test 500 error notifications on production
