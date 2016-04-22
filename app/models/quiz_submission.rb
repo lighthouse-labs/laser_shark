@@ -23,6 +23,10 @@ class QuizSubmission < ActiveRecord::Base
     end
   end
 
+  def other_submissions_by_user
+    user.quiz_submissions.where(quiz_id: quiz_id).where.not(id: self.id)
+  end
+
   def to_param
     uuid
   end

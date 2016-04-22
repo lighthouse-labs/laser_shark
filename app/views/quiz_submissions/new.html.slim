@@ -5,7 +5,7 @@
         h1.text-center
           i.fa.fa-compass
           = ' Compass Quiz'
-      = form_for [@quiz, @quiz_submission] do |f|
+      = form_for [@quiz, @quiz_submission], url: [@quiz, @quiz_submission, activity_id: params[:activity_id]] do |f|
         = f.hidden_field :quiz_id
         - @quiz.questions.each_with_index do |question, question_index|
           .submission-question

@@ -14,6 +14,8 @@ class User < ActiveRecord::Base
   has_many :submitted_activities, through: :activity_submissions, source: :activity
   has_many :outcome_results
 
+  has_many :quiz_submissions
+
   scope :order_by_last_assisted_at, -> {
     order("last_assisted_at ASC NULLS FIRST")
   }
@@ -96,13 +98,15 @@ class User < ActiveRecord::Base
   def completed_activity?(activity)
     if activity.evaluates_code?
       activity_submissions.where(finalized: true, activity: activity).any?
+    elsif activity.is_a?(QuizActivity)
+      activity.quiz.latest_submission_by(self).present?
     else
       submitted_activities.include?(activity)
     end
   end
 
   def github_url(activity)
-    activity_submissions.where(activity: activity).first.github_url if completed_activity?(activity)
+    activity_submissions.where(activity: activity).first.try(:github_url) if completed_activity?(activity)
   end
 
   def full_name

@@ -8,6 +8,10 @@ class Quiz < ActiveRecord::Base
 
   has_and_belongs_to_many :questions
 
+  def latest_submission_by(user)
+    quiz_submissions.where(user_id: user.id).order(id: :desc).first
+  end
+
   # validates :cohort, presence: true
 
   #validates :day, presence: true

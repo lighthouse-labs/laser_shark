@@ -10,7 +10,16 @@ class QuizSubmissionsController < ApplicationController
     result = CreateQuizSubmission.call(params: submission_params, user: current_user, quiz: @quiz)
     if result.success?
       @quiz_submission = result.quiz_submission
-      redirect_to quiz_submission_path @quiz_submission.id
+      if params[:activity_id].present?
+        @activity = Activity.find params[:activity_id]
+        if @activity.day?
+          redirect_to day_activity_path(@activity.day, @activity)
+        else
+          redirect_to prep_activity_path(@activity.section, @activity)
+        end
+      else
+        redirect_to quiz_submission_path(@quiz_submission.id, section_id: params[:section_id], day: params[:day])
+      end
     else
       @quiz_submission = result.quiz_submission
       render :new
@@ -18,8 +27,8 @@ class QuizSubmissionsController < ApplicationController
   end
 
   def show
-    @quiz_submission = QuizSubmission.find(params[:id])
-    @past_submissions = QuizSubmission.where("user_id = ? AND quiz_id = ? AND id != ?", current_user.id, @quiz_submission.quiz_id, @quiz_submission.id)
+    @quiz_submission = current_user.quiz_submissions.find(params[:id])
+    @quiz = @quiz_submission.quiz
   end
 
   private

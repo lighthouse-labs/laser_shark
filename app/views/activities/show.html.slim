@@ -90,6 +90,16 @@
       .instructions
         == markdown @activity.instructions
 
+    - if @activity.is_a?(QuizActivity)
+      - if submission = @activity.quiz.latest_submission_by(current_user)
+        = render 'quiz_submissions/submission_details', submission: submission
+
+      = link_to 'Take Quiz', new_quiz_quiz_submission_path(@activity.quiz, activity_id: @activity.id), class: 'btn btn-primary'
+
+      - if teacher?
+        | &nbsp;
+        = link_to 'Quiz Details', @activity.quiz, class: 'btn btn-primary'
+
     - if @activity.recordings.length > 0
       .recordings
         h3
