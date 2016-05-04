@@ -9,6 +9,7 @@
 
 if Rails.env.development?
   # => Create activities and content for cohort
+  assignments = []
   1.upto(8).each do |week|
     1.upto(5).each do |day|
 
@@ -28,7 +29,7 @@ if Rails.env.development?
         if time == 900
           Lecture.create!(params)
         else
-          Assignment.create!(params)
+          assignments << Assignment.create!(params)
         end
 
       end
@@ -107,6 +108,16 @@ if Rails.env.development?
           feedbackable_type: 'Assistance'
         )
       end # 10 loop for assistance
+      # student submissions
+      # HACK does not prevent duplicate submissions
+
+      assignments.sample(10).each do |activity|
+        ActivitySubmission.create!(
+          user: student,
+          github_url: Faker::Internet.url('github.com'),
+          activity: activity
+        )
+      end
     end # 10 loop for students
   end # locations
 
