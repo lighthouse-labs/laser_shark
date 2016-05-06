@@ -8,6 +8,15 @@
 # Environment variables (ENV['...']) can be set in the file .env file.
 
 if Rails.env.development?
+  # make some setup tasks
+  DayInfo.create!(day: "setup")
+  Assignment.create!({
+    name: "What eva",
+    day: "setup",
+    start_time: 900,
+    duration: rand(20..60),
+    instructions: Faker::Lorem.paragraphs.join("<br/><br/>")
+  })
   # => Create activities and content for cohort
   assignments = []
   1.upto(8).each do |week|
@@ -27,6 +36,7 @@ if Rails.env.development?
         }
 
         if time == 900
+          params[:allow_submissions] = false
           Lecture.create!(params)
         else
           assignments << Assignment.create!(params)
@@ -108,9 +118,9 @@ if Rails.env.development?
           feedbackable_type: 'Assistance'
         )
       end # 10 loop for assistance
+
       # student submissions
       # HACK does not prevent duplicate submissions
-
       assignments.sample(10).each do |activity|
         ActivitySubmission.create!(
           user: student,
