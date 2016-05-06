@@ -9,9 +9,9 @@
   .modal-body
     label
       | Activity
-    .form-group = select_tag :activity_submission_id, options_from_collection_for_select(@activity_submissions, "id", "name"), class: 'form-control', :prompt => "Please choose an activity"
+    .form-group = select_tag :activity_id, option_groups_from_collection_for_select(@activities, :activities, :name, :id, :name ), class: 'form-control', :prompt => "Please choose an activity"
     label =@student.first_name + ' ' + @student.last_name
-
+  
     p
       em
         | Feedback (in markdown) to be emailed to the student:

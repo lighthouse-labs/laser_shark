@@ -1,7 +1,7 @@
 class AssistanceRequest < ActiveRecord::Base
   belongs_to :requestor, :class_name => User
   belongs_to :assistance, dependent: :delete
-  belongs_to :activity_submission
+  belongs_to :activity
 
   validates :requestor, :presence => true
 

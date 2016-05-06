@@ -11,7 +11,7 @@ class ActivitySubmissionsController < ApplicationController
       )
     if @activity_submission.save
       if params[:code_review]
-        code_review = @activity_submission.create_code_review_request(requestor_id: current_user.id)
+        code_review = @activity_submission.create_code_review_request(requestor_id: current_user.id, activity_id: @activity.id)
 
         # => Send the code review to all teachers
         ActionCable.server.broadcast "assistance", {

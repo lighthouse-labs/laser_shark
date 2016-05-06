@@ -120,6 +120,32 @@ class User < ActiveRecord::Base
     end
   end
 
+  def code_reviewed_activitiy_submissions
+    @activities_struct = Struct.new(:id, :name)
+    @activity_submissions = self.activity_submissions.order(created_at: :desc).with_github_url.select{ |activity_submission| activity_submission.code_reviewed?}
+    .map do |activity_submission|
+      @activities_struct.new(activity_submission.id ,activity_submission.activity.name)
+    end
+  end
+
+  def activities_grouped(day)
+    activities_struct = Struct.new(:id, :name)
+    activitiy_group = Struct.new(:name, :activities)
+    activity_groups = []
+    submitted = non_code_reviewed_activity_submissions
+    ids = submitted.map { |d| d.id }
+    reviewed = code_reviewed_activitiy_submissions
+    ids << reviewed.map { |d| d.id }
+    # HACK I feel like I could query this more directly, but life is short and AR joined queries are long
+    not_submitted = Activity.where.not(id: ids).where(allow_submissions: true).where("day <= ?", day.to_s).order(:day => :desc).select(:id, :name, :day).map { |d|
+      activities_struct.new(d.id, d.name)
+    }
+    activity_groups << activitiy_group.new("Submitted", submitted)
+    activity_groups << activitiy_group.new("Not Submitted", not_submitted)
+    activity_groups << activitiy_group.new("Reviewed", reviewed)
+    activity_groups
+  end
+
   class << self
     def authenticate_via_github(auth)
       @user = where(uid: auth["uid"]).first

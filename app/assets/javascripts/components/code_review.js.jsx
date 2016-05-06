@@ -23,13 +23,13 @@ var CodeReview = React.createClass({
       return (
         <div>
           <p>
-            <b>Activity:</b> 
-            <a href={"/days/" + codeReview.activity_submission.activity.day + "/activities/" + codeReview.activity_submission.activity.id}>
+            <b>Activity:</b>
+            <a href={"/days/" + codeReview.activity.day + "/activities/" + codeReview.activity.id}>
               {codeReview.activity_submission.activity.name}
             </a>
           </p>
           <p>
-            <b>Submission URL:</b> 
+            <b>Submission URL:</b>
             <a target="_blank" href={codeReview.activity_submission.github_url}>
               {codeReview.activity_submission.github_url}
             </a>
@@ -37,7 +37,7 @@ var CodeReview = React.createClass({
         </div>
       )
   },
-  
+
   render: function() {
     var codeReview = this.props.codeReview;
     var student = codeReview.requestor;
@@ -45,7 +45,7 @@ var CodeReview = React.createClass({
     return (
       <RequestItem student={student} location={this.props.location}>
         <p className="assistance-timestamp">
-          Generated code review 
+          Generated code review
           <abbr className="timeago" title="{codeReview.start_at}">
             <TimeAgo date={codeReview.start_at} />
           </abbr>

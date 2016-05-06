@@ -1,4 +1,5 @@
 class CodeReviewsController < ApplicationController
+  include CourseCalendar
 
   before_filter :teacher_required
   before_action :load_cohort
@@ -16,14 +17,15 @@ class CodeReviewsController < ApplicationController
   def new
     @student = @cohort.students.find params[:student_id]
     @activity_submissions = @student.non_code_reviewed_activity_submissions
+    @activities = @student.activities_grouped(today)
     @assistance = Assistance.new(assistor: current_user, assistee: @student)
     render :new_modal, layout: false
   end
 
   def create
     code_review_request = CodeReviewRequest.new(
-      requestor_id: params[:assistance][:assistee_id], 
-      activity_submission_id: params[:activity_submission_id]
+      requestor_id: params[:assistance][:assistee_id],
+      activity_id: params[:activity_id]
     )
 
     code_review_request.save!

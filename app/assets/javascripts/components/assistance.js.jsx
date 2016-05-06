@@ -21,15 +21,15 @@ var Assistance = React.createClass({
     var assistance = this.props.assistance;
     var assistanceRequest = assistance.assistance_request;
 
-    if(assistanceRequest.activity_submission) {
-      var activityUrl = "/days/" + assistanceRequest.activity_submission.activity.day + "/activities/" + assistanceRequest.activity_submission.activity.id
+    if(assistanceRequest.activity) {
+      var activityUrl = "/days/" + assistanceRequest.activity.day + "/activities/" + assistanceRequest.activity.id
 
       return (
         <div>
           <p>
             <b>Activity:</b>
             <a href={activityUrl}>
-              {assistanceRequest.activity_submission.activity.name}
+              {assistanceRequest.activity.name}
             </a>
           </p>
           <p>

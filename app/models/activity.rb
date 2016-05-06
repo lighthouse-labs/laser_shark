@@ -14,6 +14,7 @@ class Activity < ActiveRecord::Base
   after_update :add_revision_to_gist
 
   has_many :activity_submissions, -> { order(:user_id) }
+  has_many :assistances, -> { order(:user_id)}
   has_many :messages, -> { order(created_at: :desc) }, class_name: 'ActivityMessage'
   has_many :recordings, -> { order(created_at: :desc) }
   has_many :feedbacks, as: :feedbackable

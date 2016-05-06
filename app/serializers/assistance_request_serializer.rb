@@ -4,7 +4,7 @@ class AssistanceRequestSerializer < ActiveModel::Serializer
 
   attributes :id, :reason, :start_at, :position_in_queue
 
-  has_one :activity_submission
+  has_one :activity
   has_one :requestor, serializer: UserSerializer
 
 end

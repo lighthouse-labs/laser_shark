@@ -1,10 +1,10 @@
 class ActivitySubmission < ActiveRecord::Base
-  
+
   belongs_to :user
   belongs_to :activity
-  
+
   has_one :code_review_request, dependent: :destroy
-  
+
   #after_save :request_code_review
   after_create :create_feedback
   after_destroy :handle_submission_destroy
@@ -17,8 +17,8 @@ class ActivitySubmission < ActiveRecord::Base
   validates :user_id, uniqueness: { scope: :activity_id,
     message: "only one submission per activity" }
 
-  validates :github_url, 
-    presence: :true, 
+  validates :github_url,
+    presence: :true,
     format: { with: URI::regexp(%w(http https)), message: "must be a valid format" },
     if: :github_url_required?
 
@@ -31,7 +31,7 @@ class ActivitySubmission < ActiveRecord::Base
   scope :not_code_reviewed, -> {
     where(code_review_request: nil)
   }
-  
+
   def code_reviewed?
     self.try(:code_review_request).try(:assistance)
   end
@@ -44,7 +44,7 @@ class ActivitySubmission < ActiveRecord::Base
 
   def request_code_review
     if self.activity.allow_submissions? && should_code_review? && self.code_review_request == nil
-      self.create_code_review_request(requestor_id: self.user.id)
+      self.create_code_review_request(requestor_id: self.user.id, activity_id: self.activity.id)
     end
   end
 

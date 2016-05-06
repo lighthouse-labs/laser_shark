@@ -5,5 +5,5 @@ class CodeReviewSerializer < ActiveModel::Serializer
   attributes :id, :start_at
 
   has_one :requestor, serializer: UserSerializer
-  has_one :activity_submission
+  has_one :activity
 end
