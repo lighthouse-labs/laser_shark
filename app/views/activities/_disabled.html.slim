@@ -1,4 +1,5 @@
-div class=("#{activity.type.downcase} " + 'activity' + ( enabled ? '' : ' disabled' ))
+
+div class=("#{activity.type.downcase} " + 'activity ' + 'disabled')
   .icon.icon-type title=activity.type
     i class=(icon_for(activity))
   - if weekend? || setup? || (activity.display_duration?)
@@ -20,7 +21,7 @@ div class=("#{activity.type.downcase} " + 'activity' + ( enabled ? '' : ' disabl
       - else
         i.fa.fa-square-o
     -if teacher?
-      .completed-activities
+      .completed-activities  
         = completed_students(activity)
   .name
     = activity.name

@@ -35,6 +35,14 @@
       color: $gray-light;
     }
   }
+  
+  &.disabled:hover {
+    box-shadow: 0 0 0 0;
+    .name {
+      color: #798795;
+    }
+  }
+
   .icon {
     font-size: 36px;
     height: 100px;
