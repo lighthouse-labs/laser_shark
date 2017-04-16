@@ -14,12 +14,12 @@ class ActivitySubmission < ActiveRecord::Base
     Time.now
   end
 
+  before_validation :ensure_url_scheme
   validates :user_id, uniqueness: { scope: :activity_id,
     message: "only one submission per activity" }
-
   validates :github_url, 
     presence: :true, 
-    format: { with: URI::regexp(%w(http https)), message: "must be a valid format" },
+    format: { with: /^https?:\/\/(www\.|gist\.)?github\.com/, multiline: true, message: "must be a valid github link!" },
     if: :github_url_required?
 
   scope :with_github_url, -> {
@@ -37,6 +37,10 @@ class ActivitySubmission < ActiveRecord::Base
   end
 
   private
+
+  def ensure_url_scheme
+    self.github_url = "https://#{self.github_url}" unless self.github_url =~ /^https?/
+  end
 
   def github_url_required?
     activity && activity.allow_submissions?
