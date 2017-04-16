@@ -138,7 +138,7 @@ section.activity-details
               = ' &bull; '.html_safe
               = link_to 'Watch now &raquo;'.html_safe, recording
 
-  - if teacher? && @program.lecture_tips? && @activity.is_a?(Lecture)
+  - if @activity.is_a?(Lecture) && teacher? && @program.lecture_tips?
     .lecture-tips 
       h3 = "Lecture Tips / Reminders"
       == markdown @program.lecture_tips 
